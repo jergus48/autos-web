@@ -67,7 +67,37 @@
     });
   }
 
+  function initNav() {
+    var burger = document.getElementById("vexBurger");
+    var links = document.getElementById("vexLinks");
+    if (!burger || !links) return;
+    burger.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var open = links.classList.toggle("open");
+      burger.classList.toggle("open", open);
+      burger.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    // close when a link is tapped
+    links.querySelectorAll("a").forEach(function (a) {
+      a.addEventListener("click", function () {
+        links.classList.remove("open");
+        burger.classList.remove("open");
+        burger.setAttribute("aria-expanded", "false");
+      });
+    });
+    // close when tapping outside
+    document.addEventListener("click", function (e) {
+      if (!links.contains(e.target) && !burger.contains(e.target)) {
+        links.classList.remove("open");
+        burger.classList.remove("open");
+        burger.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
+  function start() { init(); initNav(); }
+
   if (document.readyState === "loading")
-    document.addEventListener("DOMContentLoaded", init);
-  else init();
+    document.addEventListener("DOMContentLoaded", start);
+  else start();
 })();
