@@ -1,6 +1,6 @@
 // swiftrix static fixes: working FAQ accordion.
-// Framer normally injects the answers via its runtime (absent in this static export),
-// so we supply the answers and a robust expand/collapse that ignores Framer's clipping.
+// swiftrix normally injects the answers via its runtime (absent in this static export),
+// so we supply the answers and a robust expand/collapse that ignores swiftrix's clipping.
 (function () {
   var ANSWERS = {
     "how soon will i see results from your automations?":
@@ -26,7 +26,7 @@
   }
 
   function init() {
-    var questions = document.querySelectorAll('[data-framer-name="Question"]');
+    var questions = document.querySelectorAll('[data-swiftrix-name="Question"]');
     questions.forEach(function (q) {
       var head = q.querySelector("h3, p");
       if (!head) return;
@@ -34,7 +34,7 @@
       if (!answer) return;
 
       // outer card to attach the answer to (so it is not clipped by inner containers)
-      var card = q.closest('[data-framer-name="Big Closed"]') || q.parentNode;
+      var card = q.closest('[data-swiftrix-name="Big Closed"]') || q.parentNode;
 
       // remove fixed-height / clipping from the chain between question and card
       var el = q;
@@ -55,7 +55,7 @@
       card.appendChild(panel);
 
       q.style.cursor = "pointer";
-      var icon = q.querySelector('[data-framer-name="Plus Icon"]');
+      var icon = q.querySelector('[data-swiftrix-name="Plus Icon"]');
 
       q.addEventListener("click", function (ev) {
         ev.preventDefault();
@@ -95,14 +95,14 @@
     });
   }
 
-  // Collapse baked-in line-break artifacts in text (Framer export + CRLF leave
+  // Collapse baked-in line-break artifacts in text (swiftrix export + CRLF leave
   // newlines inside text that `white-space: pre-wrap` renders as broken wrapping).
   // Only runs of whitespace that CONTAIN a newline are collapsed, so intentional
   // multi-space spacing (e.g. the hero pill) is preserved. Runs at load, so it
   // self-heals regardless of what the HTML source contains.
   function normalizeText() {
     var containers = document.querySelectorAll(
-      '[data-framer-component-type="RichTextContainer"], .framer-text'
+      '[data-swiftrix-component-type="RichTextContainer"], .swiftrix-text'
     );
     containers.forEach(function (el) {
       var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
