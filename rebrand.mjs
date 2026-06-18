@@ -6,8 +6,8 @@ let h = fs.readFileSync(file, "utf8");
 const R = [
   // ---- meta / head ----
   ['Agelix is a SaaS growth agency delivering high-converting ad campaigns, optimized funnels, and qualified demos to boost MRR and drive predictable growth for SaaS startups and scale-ups.',
-   'Vexomate is a software automation studio building reliable, custom workflows and AI integrations that eliminate manual work and save teams hours every week.'],
-  ['Agelix – SaaS Growth Agency', 'Vexomate – Software Automation Studio'],
+   'swiftrix is a software automation studio building reliable, custom workflows and AI integrations that eliminate manual work and save teams hours every week.'],
+  ['Agelix – SaaS Growth Agency', 'swiftrix – Software Automation Studio'],
 
   // ---- hero ----
   ['RISE ABOVE THE NOISE   ·   BE SEEN - BE HEARD', 'ELIMINATE THE BUSYWORK   ·   AUTOMATE EVERYTHING'],
@@ -123,7 +123,7 @@ for (const [from, to] of R) {
 
 // brand name everywhere (after specific phrases handled)
 const agelixCount = h.split("Agelix").length - 1;
-h = h.split("Agelix").join("Vexomate");
+h = h.split("Agelix").join("swiftrix");
 report.push("Agelix replaced: " + agelixCount);
 
 fs.writeFileSync(file, h, "utf8");

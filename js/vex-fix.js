@@ -95,7 +95,28 @@
     });
   }
 
-  function start() { init(); initNav(); }
+  // Collapse baked-in line-break artifacts in text (Framer export + CRLF leave
+  // newlines inside text that `white-space: pre-wrap` renders as broken wrapping).
+  // Only runs of whitespace that CONTAIN a newline are collapsed, so intentional
+  // multi-space spacing (e.g. the hero pill) is preserved. Runs at load, so it
+  // self-heals regardless of what the HTML source contains.
+  function normalizeText() {
+    var containers = document.querySelectorAll(
+      '[data-framer-component-type="RichTextContainer"], .framer-text'
+    );
+    containers.forEach(function (el) {
+      var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+      var nodes = [], n;
+      while ((n = walker.nextNode())) nodes.push(n);
+      nodes.forEach(function (t) {
+        if (/[\r\n]/.test(t.nodeValue)) {
+          t.nodeValue = t.nodeValue.replace(/[ \t]*[\r\n]+[ \t]*/g, " ");
+        }
+      });
+    });
+  }
+
+  function start() { normalizeText(); init(); initNav(); }
 
   if (document.readyState === "loading")
     document.addEventListener("DOMContentLoaded", start);
