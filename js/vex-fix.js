@@ -1,4 +1,4 @@
-// Vexomate static fixes: working FAQ accordion.
+// swiftrix static fixes: working FAQ accordion.
 // Framer normally injects the answers via its runtime (absent in this static export),
 // so we supply the answers and a robust expand/collapse that ignores Framer's clipping.
 (function () {
@@ -7,7 +7,7 @@
       "Most clients have their first automations live within 1–2 weeks. Larger multi-system workflows are rolled out in phases, so you start saving time almost immediately rather than waiting for everything at once.",
     "do i have to pay upfront for your services?":
       "No. We scope the work and agree on clear milestones first. You only commit once you know exactly what we're building and the time it will save you.",
-    "will vexomate work for small teams and startups?":
+    "will swiftrix work for small teams and startups?":
       "Absolutely. Small teams often see the biggest gains, because manual work eats a larger share of their day. Every build is tailored to your size, budget, and tools.",
     "which tools and platforms do you integrate with?":
       "Virtually anything with an API — CRMs, spreadsheets, email, Slack, databases, payment systems, and custom internal tools. If it has an interface, we can usually automate it.",
@@ -15,7 +15,7 @@
       "Both. We start by mapping and diagnosing your workflows to remove waste, then build the automations. Ongoing optimization is part of every engagement.",
     "can i cancel anytime if i'm not satisfied?":
       "Yes. There are no long lock-in contracts. If we're not delivering value you're free to stop — though our 99% retention suggests most teams stay.",
-    "what makes vexomate different from other providers?":
+    "what makes swiftrix different from other providers?":
       "We're engineers, not a generic agency. Every automation is custom-built for your stack, monitored continuously, and backed by our uptime guarantee.",
     "do you build the automations or just advise on strategy?":
       "We build. Strategy is included, but you walk away with working, production-ready automations — not just a deck of recommendations."
