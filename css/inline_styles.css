@@ -8037,6 +8037,10 @@ NavigationContainer [data-swiftrix-component-type=NavigationContainer]>*,
     --swiftrix-text-stroke-width: initial;
     --swiftrix-text-transform: none
   }
+
+  .swiftrix-KwQlq .swiftrix-13mvkj7 {
+    flex-flow: column;
+  }
 }
 
 .swiftrix-KwQlq[data-border=true]:after,
