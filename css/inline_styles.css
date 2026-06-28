@@ -8231,3 +8231,9 @@ NavigationContainer [data-swiftrix-component-type=NavigationContainer]>*,
 html body {
   background: var(--token-a854a841-fad0-428c-9de8-47cad3fc72c8, rgb(255, 255, 255));
 }
+
+@media (max-width:450px) and (min-width:0) {
+  .swiftrix-text.swiftrix-styles-preset-hf73s4 {
+    width: 250px;
+  }
+}

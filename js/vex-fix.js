@@ -18,7 +18,25 @@
     "what makes swiftrix different from other providers?":
       "We're engineers, not a generic agency. Every automation is custom-built for your stack, monitored continuously, and backed by our uptime guarantee.",
     "do you build the automations or just advise on strategy?":
-      "We build. Strategy is included, but you walk away with working, production-ready automations — not just a deck of recommendations."
+      "We build. Strategy is included, but you walk away with working, production-ready automations — not just a deck of recommendations.",
+
+    // Lithuanian (/lt)
+    "kaip greitai pamatysiu jūsų automatizacijų rezultatus?":
+      "Dauguma klientų pirmąsias automatizacijas paleidžia per 1–2 savaites. Didesni, kelias sistemas apimantys procesai diegiami etapais, todėl laiką pradedate taupyti beveik iš karto.",
+    "ar reikia mokėti iš anksto už jūsų paslaugas?":
+      "Ne. Pirmiausia įvertiname darbą ir susitariame dėl aiškių etapų. Įsipareigojate tik tada, kai tiksliai žinote, ką kuriame ir kiek laiko tai sutaupys.",
+    "ar swiftrix tinka mažoms komandoms ir startuoliams?":
+      "Žinoma. Mažos komandos dažnai gauna didžiausią naudą, nes rankinis darbas joms atima daugiausia laiko. Kiekvieną sprendimą pritaikome pagal jūsų dydį, biudžetą ir įrankius.",
+    "su kokiais įrankiais ir platformomis integruojatės?":
+      "Praktiškai su bet kuo, kas turi API — CRM, skaičiuoklėmis, el. paštu, Slack, duomenų bazėmis, mokėjimų sistemomis ir individualiais vidiniais įrankiais. Jei tai turi sąsają, dažniausiai galime automatizuoti.",
+    "ar užsiimate procesų optimizavimu, ar tik kūrimu?":
+      "Abiem. Pradedame nuo jūsų procesų analizės ir diagnostikos, kad pašalintume nuostolius, tada kuriame automatizacijas. Nuolatinis optimizavimas yra kiekvieno projekto dalis.",
+    "ar galiu bet kada atsisakyti, jei nebūsiu patenkintas?":
+      "Taip. Jokių ilgalaikių įsipareigojimų. Jei neteikiame vertės, galite nutraukti — nors mūsų 99 % klientų išlaikymas rodo, kad dauguma lieka.",
+    "kuo swiftrix skiriasi nuo kitų tiekėjų?":
+      "Esame inžinieriai, o ne įprasta agentūra. Kiekviena automatizacija kuriama individualiai jūsų sistemoms, nuolat stebima ir užtikrinta mūsų veikimo garantija.",
+    "ar kuriate automatizacijas, ar tik konsultuojate dėl strategijos?":
+      "Mes kuriame. Strategija įskaičiuota, bet jūs gaunate veikiančias, paruoštas naudoti automatizacijas — ne tik rekomendacijų skaidres."
   };
 
   function norm(s) {
