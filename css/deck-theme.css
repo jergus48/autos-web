@@ -1,0 +1,441 @@
+/* ============================================================
+   Swiftrix — deck palette overrides
+   Paper #f4f2ef · Ink #0a0a0c · Lime #b0e562
+   Layered on top of the Framer export to finish the re-skin.
+   ============================================================ */
+
+:root {
+  --deck-lime: #b0e562;
+  --deck-lime-deep: #a0d64a;
+  --deck-ink: #0a0a0c;
+  --deck-paper: #f4f2ef;
+}
+
+/* text selection in deck lime */
+::selection { background: var(--deck-lime); color: var(--deck-ink); }
+
+/* Primary CTA buttons carry the lime gradient sentinel (on the <a> itself).
+   Force their label to near-black so it reads on lime. */
+a[style*="linear-gradient(135deg, #c5f07a"] .swiftrix-text,
+a[style*="linear-gradient(135deg, #c5f07a"] p,
+a[style*="linear-gradient(135deg, #c5f07a"] span,
+a:has(div[style*="linear-gradient(135deg, #c5f07a"]) .swiftrix-text,
+a:has(div[style*="linear-gradient(135deg, #c5f07a"]) p {
+  color: var(--deck-ink) !important;
+  -webkit-text-fill-color: var(--deck-ink) !important;
+}
+
+/* Buttons: crisp lift + lime hover feel */
+a[style*="linear-gradient(135deg, #c5f07a"] {
+  transition: transform .18s ease, filter .18s ease;
+}
+a[style*="linear-gradient(135deg, #c5f07a"]:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.04) saturate(1.05);
+}
+
+/* Dark deck base: near-black page, paper text */
+html, body { background-color: var(--deck-ink); color: var(--deck-paper); }
+:root { color-scheme: dark; }
+
+/* ============================================================
+   Modern polish + motion
+   ============================================================ */
+
+html { scroll-behavior: smooth; }
+
+/* ---- scroll progress bar ---- */
+#deck-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0;
+  z-index: 99999; pointer-events: none;
+  background: linear-gradient(90deg, var(--deck-lime), var(--deck-lime-deep));
+  box-shadow: 0 0 12px rgba(176, 229, 98, .7);
+  transition: width .12s linear;
+}
+
+/* ---- scroll reveal: typed entrance animations (hidden state added by JS) ---- */
+.deck-reveal { opacity: 0; will-change: opacity, transform; }
+.deck-reveal.deck-in { opacity: 1; }
+
+/* elegant rise — headings, FAQ rows */
+.deck-up {
+  transform: translateY(34px);
+  transition: opacity .7s cubic-bezier(.22,.61,.36,1),
+              transform .75s cubic-bezier(.22,.61,.36,1);
+}
+.deck-up.deck-in { transform: none; }
+
+/* spring pop — cards */
+.deck-pop {
+  transform: translateY(26px) scale(.9);
+  transition: opacity .5s ease,
+              transform .62s cubic-bezier(.34, 1.56, .64, 1);
+}
+.deck-pop.deck-in { transform: none; }
+
+/* bouncy badge — section eyebrows */
+.deck-badge {
+  transform: scale(.4);
+  transition: opacity .45s ease,
+              transform .6s cubic-bezier(.34, 1.8, .5, 1);
+}
+.deck-badge.deck-in { transform: none; }
+
+/* icon badge springs in after its card pops */
+.deck-pop.deck-in [data-swiftrix-name="Icon Container"] {
+  animation: deckIconPop .6s cubic-bezier(.34, 1.7, .5, 1) .12s both;
+}
+@keyframes deckIconPop {
+  0%   { transform: scale(0) rotate(-25deg); }
+  62%  { transform: scale(1.14) rotate(6deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+/* ---- nav: glassy shrink on scroll ---- */
+.vex-nav {
+  transition: padding .3s ease, box-shadow .3s ease, background .3s ease;
+}
+.vex-nav.scrolled {
+  padding-top: 7px; padding-bottom: 7px;
+  background: rgba(14, 14, 16, .82);
+  -webkit-backdrop-filter: saturate(1.5) blur(16px);
+  backdrop-filter: saturate(1.5) blur(16px);
+  box-shadow: rgba(0, 0, 0, .55) 0 14px 40px 0;
+  border-color: rgba(176, 229, 98, .2) !important;
+}
+
+/* ---- nav links: sliding lime underline ---- */
+.vex-links a { position: relative; }
+.vex-links a::after {
+  content: ""; position: absolute; left: 0; right: 100%; bottom: -5px;
+  height: 2px; border-radius: 2px; background: var(--deck-lime);
+  transition: right .28s cubic-bezier(.22,.61,.36,1);
+}
+.vex-links a:hover::after { right: 0; }
+@media (max-width: 860px) { .vex-links a::after { display: none; } }
+
+/* ---- content cards: hover lift + lime ring ---- */
+[data-swiftrix-name="Why Us Card"],
+[data-swiftrix-name="Process Card"],
+[data-swiftrix-name="Benefits Card"],
+[data-swiftrix-name="Card"] {
+  transition: transform .32s cubic-bezier(.22,.61,.36,1),
+              box-shadow .32s ease, outline-color .32s ease !important;
+  outline: 1px solid transparent; outline-offset: -1px;
+}
+[data-swiftrix-name="Why Us Card"]:hover,
+[data-swiftrix-name="Process Card"]:hover,
+[data-swiftrix-name="Benefits Card"]:hover,
+[data-swiftrix-name="Card"]:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 24px 50px -20px rgba(0, 0, 0, .7),
+              0 0 0 1px rgba(176, 229, 98, .25),
+              0 10px 40px -12px rgba(176, 229, 98, .22) !important;
+  outline-color: rgba(176, 229, 98, .9) !important;
+}
+
+/* ---- icon badges: pop on card hover ---- */
+[data-swiftrix-name="Icon Container"] {
+  transition: transform .32s cubic-bezier(.34,1.56,.64,1) !important;
+}
+[data-swiftrix-name="Why Us Card"]:hover [data-swiftrix-name="Icon Container"],
+[data-swiftrix-name="Process Card"]:hover [data-swiftrix-name="Icon Container"],
+[data-swiftrix-name="Benefits Card"]:hover [data-swiftrix-name="Icon Container"],
+[data-swiftrix-name="Card"]:hover [data-swiftrix-name="Icon Container"] {
+  transform: translateY(-2px) scale(1.08) rotate(-3deg) !important;
+}
+
+/* ---- primary buttons: lime glow on hover ---- */
+a[style*="linear-gradient(135deg, #c5f07a"]:hover,
+.vex-cta:hover {
+  box-shadow: 0 16px 34px -10px rgba(160, 214, 74, .75) !important;
+}
+
+/* ---- deck-style lime marker on the hero keyword (sweeps in) ---- */
+.deck-hl {
+  padding: 0 .12em;
+  margin: 0 -.04em;
+  border-radius: .08em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  background-image: linear-gradient(0deg, var(--deck-lime), var(--deck-lime));
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  color: var(--deck-ink);
+  animation: deckHlSweep .9s cubic-bezier(.22,.61,.36,1) .45s both;
+}
+@keyframes deckHlSweep {
+  0%   { background-size: 0% 100%; color: inherit; }
+  45%  { color: inherit; }
+  65%  { color: var(--deck-ink); }
+  100% { background-size: 100% 100%; color: var(--deck-ink); }
+}
+
+/* ---- deck-style eyebrow labels (mono, uppercase, tracked) ---- */
+[data-swiftrix-name="Section Badge 1"] .swiftrix-text {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace !important;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-weight: 500;
+}
+
+/* ---- brand logos: flip the black partner marks to light for the dark bg ----
+   Partner logos + the footer wordmark (swiftrixLogo2) sit on the dark bg → whiten.
+   But the swiftrixLogo.png S-mark sits on a LIME app-badge → must stay dark, so it
+   is excluded here (nav handles its own copy via .vex-logo). */
+[data-swiftrix-name="Logo"] img:not([src$="swiftrixLogo.png"]) {
+  filter: invert(1) brightness(1.9) contrast(1.05);
+  opacity: .72;
+  transition: opacity .3s ease;
+}
+[data-swiftrix-name="Logo"]:hover img:not([src$="swiftrixLogo.png"]) { opacity: 1; }
+
+/* nav brand mark → light */
+.vex-logo img { filter: invert(1) brightness(1.9); }
+
+/* dark UI glyphs on dark surfaces → light (FAQ +, arrows) */
+[data-swiftrix-name="Plus Icon"] img,
+[data-swiftrix-name="Arrow"] img,
+[data-swiftrix-name="Arrow Container"] img,
+[data-swiftrix-name="Arrrow Container"] img {
+  filter: invert(1) brightness(1.8);
+}
+
+/* ---- nicer focus ring for keyboard users ---- */
+a:focus-visible, button:focus-visible, [role="button"]:focus-visible {
+  outline: 2px solid var(--deck-lime);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* decorative gradient backdrops are reprocessed at the raster level to
+   dark-with-lime (see recolor_images.py), so no CSS filter is needed here. */
+
+/* ---- ambient lime glow washes (behind content, additive on black) ---- */
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(60% 40% at 18% 0%, rgba(176, 229, 98, .10), transparent 70%),
+    radial-gradient(50% 40% at 100% 30%, rgba(176, 229, 98, .07), transparent 70%);
+}
+
+/* ============================================================
+   Reformatted stat grid (replaces the Framer dome block)
+   ============================================================ */
+/* Lives in the narrow CENTER slot of the "Why Us" bento (features left/right),
+   so it must fit its container: always 2x2, never wider than the slot. */
+.vex-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 380px) { .vex-stats { grid-template-columns: 1fr; } }
+
+.vex-stat {
+  background: linear-gradient(180deg, #15161a 0%, #101115 100%);
+  border: 1px solid #24252c;
+  border-radius: 18px;
+  padding: 20px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  transition: transform .32s cubic-bezier(.22,.61,.36,1), border-color .32s ease, box-shadow .32s ease;
+}
+.vex-stat:hover {
+  transform: translateY(-6px);
+  border-color: rgba(176, 229, 98, .55);
+  box-shadow: 0 24px 50px -24px rgba(0,0,0,.75), 0 0 34px -14px rgba(176,229,98,.4);
+}
+.vex-stat-ic {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: grid; place-items: center;
+  color: #0a0a0c;
+  background: linear-gradient(135deg, #c5f07a 0%, #a0d64a 100%);
+  box-shadow: 0 8px 20px -8px rgba(176, 229, 98, .55);
+}
+.vex-stat-ic svg { width: 21px; height: 21px; display: block; }
+.vex-stat-num {
+  font-size: clamp(26px, 2.3vw, 36px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  color: #f4f2ef;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.vex-stat-lbl {
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: #9a9a95;
+}
+
+/* ============================================================
+   Finishing pass
+   ============================================================ */
+
+/* "We are not an agency": the S-badge container is exported stretched (112x64);
+   make it square so the mark isn't distorted. */
+.swiftrix-1kvhdcc { width: 64px !important; min-width: 64px !important; }
+
+/* drop the banded raster backdrop (visible seam on dark); the card's own
+   border-shadow panel look is cleaner without it */
+[data-swiftrix-name="Testimonial"] img[src*="u7bpd6"] { display: none !important; }
+
+/* Benefits: turn the floating text items into real cards */
+[data-swiftrix-name="Benefits Card"] {
+  background: linear-gradient(180deg, #15161a 0%, #101115 100%) !important;
+  border: 1px solid #24252c !important;
+  border-radius: 18px !important;
+  padding: 20px 22px !important;
+  box-sizing: border-box !important;
+  height: auto !important;
+  min-height: 140px;
+}
+/* title (styled by deck-motion.js) vs description */
+.deck-bt {
+  display: block;
+  font-weight: 600;
+  font-size: 1.05em;
+  color: #f4f2ef;
+  margin: 8px 0 4px;
+}
+[data-swiftrix-name="Benefits Card"] [data-swiftrix-name="Heading"] p {
+  color: #9a9a95 !important;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+}
+
+/* secondary dark pills (e.g. "Other Services" contact): tie into the lime theme */
+a.swiftrix-rDUM3 {
+  border: 1px solid rgba(176, 229, 98, .35) !important;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+a.swiftrix-rDUM3:hover {
+  border-color: rgba(176, 229, 98, .8) !important;
+  box-shadow: 0 10px 28px -12px rgba(176, 229, 98, .35);
+}
+
+/* ============================================================
+   Section redesign: crisp accents instead of blur mud
+   ============================================================ */
+
+/* cards get a sharp lime corner wash (the blurred blobs are removed by JS) */
+[data-swiftrix-name="Process Card"],
+[data-swiftrix-name="Card"],
+[data-swiftrix-name="Why Us Card"] { position: relative; }
+[data-swiftrix-name="Process Card"]::before,
+[data-swiftrix-name="Card"]::before,
+[data-swiftrix-name="Why Us Card"]::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: radial-gradient(240px 170px at 100% 0%, rgba(176, 229, 98, .12), transparent 70%);
+  pointer-events: none;
+}
+
+/* deck-mono accents: step numbers, V/S, eyebrows */
+.deck-step {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  letter-spacing: .1em;
+  color: var(--deck-lime) !important;
+  -webkit-text-fill-color: var(--deck-lime) !important;
+}
+.deck-eyebrow {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  font-size: 13px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--deck-lime);
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+/* comparison: Swiftrix column glows lime, "Other Agencies" column recedes */
+.swiftrix-xz7nvo {
+  box-shadow: inset 0 0 0 1px rgba(176, 229, 98, .45),
+              0 0 44px -16px rgba(176, 229, 98, .3) !important;
+}
+.swiftrix-qkeeb6 {
+  filter: saturate(.45) brightness(.8);
+  transition: filter .35s ease;
+}
+.swiftrix-qkeeb6:hover { filter: none; }
+
+/* about card: keep the section out of its own stacking context —
+   position:relative here paints a visible center seam over the split
+   background siblings, so no positioned decorations on this section. */
+
+/* hero eyebrow pill: kill the grey glass overlay, use the deck's dark pill + mono lime */
+.swiftrix-147ii86 {
+  background: rgba(18, 18, 21, .8) !important;
+  border: 1px solid rgba(176, 229, 98, .3) !important;
+  box-shadow: 0 0 24px -10px rgba(176, 229, 98, .25) !important;
+}
+.swiftrix-147ii86 p {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace !important;
+  font-style: normal !important;
+  font-size: 12.5px !important;
+  letter-spacing: .14em !important;
+  color: var(--deck-lime) !important;
+  -webkit-text-fill-color: var(--deck-lime) !important;
+}
+
+/* V/S badge: center the label properly on the dark medallion
+   (Framer gives it a 40% line-height that breaks vertical centering) */
+[data-swiftrix-name="Versus Container"] [data-swiftrix-name="Text"] {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+[data-swiftrix-name="Versus Container"] .deck-step {
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  font-size: 15px !important;
+  margin: 0 !important;
+  width: auto !important;
+  min-width: max-content !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+}
+
+/* Why Us bento: widen this section beyond the 1200 content cap and push the
+   side card columns out to the edges (space-between keeps the stats centered).
+   Scoped to this section's unique classes so other sections keep 1200. */
+@media (min-width: 1100px) {
+  .swiftrix-jlz22x, .swiftrix-1k873kl, .swiftrix-gr6q86 {
+    width: min(1360px, 95vw) !important;
+    max-width: min(1360px, 95vw) !important;
+  }
+  .swiftrix-gr6q86 {
+    justify-content: space-between !important;
+    gap: 0 !important;
+  }
+  /* cap all three columns so space-between opens real gaps between them */
+  .swiftrix-irv2ty, .swiftrix-1hxgr57 {
+    flex: 0 0 auto !important;
+    width: 360px !important;
+    max-width: 360px !important;
+  }
+  .swiftrix-2z8d11 {
+    flex: 0 0 auto !important;
+    width: 400px !important;
+    max-width: 400px !important;
+  }
+}
+
+/* ---- honor reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .deck-reveal { opacity: 1 !important; transform: none !important; }
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}

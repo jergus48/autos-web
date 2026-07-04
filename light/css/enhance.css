@@ -1,0 +1,134 @@
+/* ============================================================
+   Light build — motion + structural upgrades (ported from the
+   dark build's deck layer, restyled for the purple/light theme).
+   ============================================================ */
+
+:root { --lx-accent: #7c3aed; --lx-accent2: #a855f7; --lx-ink: #191919; --lx-muted: #6b6675; }
+
+html { scroll-behavior: smooth; }
+
+/* ---- scroll progress bar ---- */
+#deck-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0;
+  z-index: 99999; pointer-events: none;
+  background: linear-gradient(90deg, var(--lx-accent2), var(--lx-accent));
+  box-shadow: 0 0 12px rgba(124, 58, 237, .5);
+  transition: width .12s linear;
+}
+
+/* ---- scroll reveal: typed entrance animations (motion only) ---- */
+.deck-reveal { opacity: 0; will-change: opacity, transform; }
+.deck-reveal.deck-in { opacity: 1; }
+.deck-up { transform: translateY(34px); transition: opacity .7s cubic-bezier(.22,.61,.36,1), transform .75s cubic-bezier(.22,.61,.36,1); }
+.deck-up.deck-in { transform: none; }
+.deck-pop { transform: translateY(26px) scale(.9); transition: opacity .5s ease, transform .62s cubic-bezier(.34,1.56,.64,1); }
+.deck-pop.deck-in { transform: none; }
+.deck-badge { transform: scale(.4); transition: opacity .45s ease, transform .6s cubic-bezier(.34,1.8,.5,1); }
+.deck-badge.deck-in { transform: none; }
+.deck-pop.deck-in [data-swiftrix-name="Icon Container"] { animation: deckIconPop .6s cubic-bezier(.34,1.7,.5,1) .12s both; }
+@keyframes deckIconPop { 0%{transform:scale(0) rotate(-25deg);} 62%{transform:scale(1.14) rotate(6deg);} 100%{transform:scale(1) rotate(0);} }
+
+/* ---- nav: shrink + glass on scroll ---- */
+.vex-nav { transition: padding .3s ease, box-shadow .3s ease, background .3s ease; }
+.vex-nav.scrolled {
+  padding-top: 7px; padding-bottom: 7px;
+  background: rgba(255, 255, 255, .85);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  backdrop-filter: saturate(1.4) blur(14px);
+  box-shadow: rgba(80, 60, 140, .16) 0 12px 36px 0;
+}
+.vex-links a { position: relative; }
+.vex-links a::after {
+  content: ""; position: absolute; left: 0; right: 100%; bottom: -5px;
+  height: 2px; border-radius: 2px; background: var(--lx-accent);
+  transition: right .28s cubic-bezier(.22,.61,.36,1);
+}
+.vex-links a:hover::after { right: 0; }
+@media (max-width: 860px) { .vex-links a::after { display: none; } }
+
+/* ---- card hover polish ---- */
+[data-swiftrix-name="Why Us Card"],
+[data-swiftrix-name="Process Card"],
+[data-swiftrix-name="Card"] {
+  transition: transform .32s cubic-bezier(.22,.61,.36,1), box-shadow .32s ease !important;
+}
+[data-swiftrix-name="Why Us Card"]:hover,
+[data-swiftrix-name="Process Card"]:hover,
+[data-swiftrix-name="Card"]:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 24px 48px -24px rgba(80, 60, 140, .35) !important;
+}
+[data-swiftrix-name="Icon Container"] { transition: transform .32s cubic-bezier(.34,1.56,.64,1) !important; }
+
+/* ---- reformatted stat grid (light cards) ---- */
+.vex-stats {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px; width: 100%; max-width: 100%; min-width: 0; margin: 0;
+  box-sizing: border-box; position: relative; z-index: 1;
+}
+@media (max-width: 380px) { .vex-stats { grid-template-columns: 1fr; } }
+.vex-stat {
+  background: #fff; border: 1px solid #ece7f7; border-radius: 18px;
+  padding: 20px 18px 18px; display: flex; flex-direction: column; gap: 12px; min-width: 0;
+  box-shadow: 0 12px 32px -20px rgba(80, 60, 140, .3);
+  transition: transform .32s cubic-bezier(.22,.61,.36,1), border-color .32s ease, box-shadow .32s ease;
+}
+.vex-stat:hover {
+  transform: translateY(-6px); border-color: rgba(124, 58, 237, .5);
+  box-shadow: 0 22px 44px -20px rgba(80, 60, 140, .42);
+}
+.vex-stat-ic {
+  width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
+  color: #fff; background: linear-gradient(135deg, var(--lx-accent2), var(--lx-accent));
+  box-shadow: 0 8px 20px -8px rgba(124, 58, 237, .5);
+}
+.vex-stat-ic svg { width: 21px; height: 21px; display: block; }
+.vex-stat-num {
+  font-size: clamp(26px, 2.3vw, 36px); font-weight: 700; line-height: 1.05;
+  letter-spacing: -1px; color: var(--lx-ink); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.vex-stat-lbl { font-size: 13.5px; line-height: 1.4; color: var(--lx-muted); }
+
+/* ---- benefits: turn run-together text into real cards ---- */
+[data-swiftrix-name="Benefits Card"] {
+  background: #fff !important; border: 1px solid #ece7f7 !important;
+  border-radius: 18px !important; padding: 20px 22px !important; box-sizing: border-box !important;
+  height: auto !important; min-height: 140px;
+  box-shadow: 0 12px 32px -22px rgba(80, 60, 140, .3);
+}
+.deck-bt { display: block; font-weight: 600; font-size: 1.05em; color: var(--lx-ink); margin: 8px 0 4px; }
+[data-swiftrix-name="Benefits Card"] [data-swiftrix-name="Heading"] p {
+  color: var(--lx-muted) !important; font-size: 16px !important; line-height: 1.5 !important;
+}
+
+/* ---- deck-mono accents (purple) ---- */
+.deck-step {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace !important;
+  font-style: normal !important; font-weight: 600 !important; letter-spacing: .1em;
+  color: var(--lx-accent) !important; -webkit-text-fill-color: var(--lx-accent) !important;
+}
+.deck-eyebrow {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  font-size: 13px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--lx-accent); text-align: center; margin-bottom: 14px;
+}
+.deck-hl {
+  padding: 0 .12em; margin: 0 -.04em; border-radius: .08em;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  background-image: linear-gradient(0deg, var(--lx-accent), var(--lx-accent2));
+  background-repeat: no-repeat; background-size: 100% 100%; color: #fff;
+  animation: deckHlSweep .9s cubic-bezier(.22,.61,.36,1) .45s both;
+}
+@keyframes deckHlSweep {
+  0% { background-size: 0% 100%; color: inherit; }
+  45% { color: inherit; }
+  65% { color: #fff; }
+  100% { background-size: 100% 100%; color: #fff; }
+}
+
+/* ---- reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .deck-reveal { opacity: 1 !important; transform: none !important; }
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}
