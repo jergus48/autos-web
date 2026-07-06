@@ -433,6 +433,30 @@ a.swiftrix-rDUM3:hover {
   }
 }
 
+/* ---- hero eyebrow pill: responsive fix ---- */
+@media (max-width: 809.98px) {
+  .swiftrix-147ii86 {
+    width: auto !important;
+    max-width: calc(100% - 10px) !important;
+    padding: 5px 10px !important;
+    box-sizing: border-box !important;
+  }
+  .swiftrix-1t524kk {
+    white-space: normal !important;
+    word-break: break-word !important;
+    text-align: center !important;
+  }
+  .swiftrix-147ii86 p {
+    font-size: 10.5px !important;
+    letter-spacing: .1em !important;
+  }
+  /* hide the decorative side shapes that stick out */
+  .swiftrix-1bc33to,
+  .swiftrix-f5mdp3 {
+    display: none !important;
+  }
+}
+
 /* ---- honor reduced motion ---- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
