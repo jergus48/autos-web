@@ -378,6 +378,7 @@ a.swiftrix-rDUM3:hover {
   background: rgba(18, 18, 21, .8) !important;
   border: 1px solid rgba(176, 229, 98, .3) !important;
   box-shadow: 0 0 24px -10px rgba(176, 229, 98, .25) !important;
+  width: max-content !important;
 }
 .swiftrix-147ii86 p {
   font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace !important;
