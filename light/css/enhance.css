@@ -126,6 +126,17 @@ html { scroll-behavior: smooth; }
   100% { background-size: 100% 100%; color: #fff; }
 }
 
+/* ---- mobile safety: never allow sideways scroll ---- */
+html { overflow-x: clip; }
+/* keep the hero eyebrow pill inside the viewport on phones */
+.swiftrix-147ii86 { max-width: calc(100vw - 28px); box-sizing: border-box; }
+.swiftrix-147ii86 p { white-space: normal !important; }
+@media (max-width: 600px) {
+  .swiftrix-147ii86 p { font-size: clamp(9px, 2.7vw, 12px) !important; letter-spacing: .02em !important; }
+  .vex-stats { gap: 10px; }
+  .dts-switch { transform: scale(.9); transform-origin: bottom right; }
+}
+
 /* ---- reduced motion ---- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
