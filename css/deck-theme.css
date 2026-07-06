@@ -378,19 +378,22 @@ a.swiftrix-rDUM3:hover {
   background: rgba(18, 18, 21, .8) !important;
   border: 1px solid rgba(176, 229, 98, .3) !important;
   box-shadow: 0 0 24px -10px rgba(176, 229, 98, .25) !important;
+  overflow: hidden !important;
+  width: auto !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
 }
-.swiftrix-147ii86 { max-width: calc(100vw - 28px); box-sizing: border-box; }
+.swiftrix-1t524kk {
+  white-space: nowrap !important;
+}
 .swiftrix-147ii86 p {
   font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace !important;
   font-style: normal !important;
-  font-size: clamp(9px, 2.7vw, 12.5px) !important;
+  font-size: clamp(9px, 2.2vw, 12.5px) !important;
   letter-spacing: .12em !important;
   color: var(--deck-lime) !important;
   -webkit-text-fill-color: var(--deck-lime) !important;
-  white-space: normal !important;
-  text-align: center;
 }
-@media (max-width: 600px) { .swiftrix-147ii86 p { letter-spacing: .04em !important; } }
 
 /* V/S badge: center the label properly on the dark medallion
    (Framer gives it a 40% line-height that breaks vertical centering) */
@@ -439,20 +442,9 @@ a.swiftrix-rDUM3:hover {
 
 /* ---- hero eyebrow pill: responsive fix ---- */
 @media (max-width: 809.98px) {
-  .swiftrix-147ii86 {
-    width: auto !important;
-    max-width: calc(100% - 10px) !important;
-    padding: 5px 10px !important;
-    box-sizing: border-box !important;
-  }
-  .swiftrix-1t524kk {
-    white-space: normal !important;
-    word-break: break-word !important;
-    text-align: center !important;
-  }
   .swiftrix-147ii86 p {
-    font-size: 10.5px !important;
-    letter-spacing: .1em !important;
+    font-size: 9.5px !important;
+    letter-spacing: .06em !important;
   }
   /* hide the decorative side shapes that stick out */
   .swiftrix-1bc33to,
