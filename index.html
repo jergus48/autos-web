@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>html,body{background:#0a0a0b;margin:0}</style>
+  <style>html,body{background:#0a0a0b;margin:0}body{opacity:0;transition:opacity .25s ease}html.vex-ready body{opacity:1}</style>
+  <script>setTimeout(function(){document.documentElement.classList.add('vex-ready')},2000)</script>
   <title>Swiftrix – Software Automation Studio</title>
   <meta name="description"
     content="swiftrix is a software automation studio building reliable, custom workflows and AI integrations that eliminate manual work and save teams hours every week.">
