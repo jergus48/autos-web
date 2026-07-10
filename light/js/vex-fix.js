@@ -3,10 +3,8 @@
 // so we supply the answers and a robust expand/collapse that ignores swiftrix's clipping.
 (function () {
   var ANSWERS = {
-    "how soon will i see results from your automations?":
-      "Most clients have their first automations live within 1–2 weeks. Larger multi-system workflows are rolled out in phases, so you start saving time almost immediately rather than waiting for everything at once.",
     "do i have to pay upfront for your services?":
-      "No. We scope the work and agree on clear milestones first. You only commit once you know exactly what we're building and the time it will save you.",
+      "We ask for a 30–50% upfront payment to start the work, with the balance due on delivery. Live automations are then kept running under a monthly upkeep fee that covers monitoring, maintenance, and support.",
     "will swiftrix work for small teams and startups?":
       "Absolutely. Small teams often see the biggest gains, because manual work eats a larger share of their day. Every build is tailored to your size, budget, and tools.",
     "which tools and platforms do you integrate with?":
@@ -14,17 +12,15 @@
     "do you handle process optimization or just builds?":
       "Both. We start by mapping and diagnosing your workflows to remove waste, then build the automations. Ongoing optimization is part of every engagement.",
     "can i cancel anytime if i'm not satisfied?":
-      "Yes. There are no long lock-in contracts. If we're not delivering value you're free to stop — though our 99% retention suggests most teams stay.",
+      "Yes. There are no long lock-in contracts. If we're not delivering value you're free to stop — though most teams choose to stay.",
     "what makes swiftrix different from other providers?":
       "We're engineers, not a generic agency. Every automation is custom-built for your stack, monitored continuously, and backed by our uptime guarantee.",
     "do you build the automations or just advise on strategy?":
       "We build. Strategy is included, but you walk away with working, production-ready automations — not just a deck of recommendations.",
 
     // Lithuanian (/lt)
-    "kaip greitai pamatysiu jūsų automatizacijų rezultatus?":
-      "Dauguma klientų pirmąsias automatizacijas paleidžia per 1–2 savaites. Didesni, kelias sistemas apimantys procesai diegiami etapais, todėl laiką pradedate taupyti beveik iš karto.",
     "ar reikia mokėti iš anksto už jūsų paslaugas?":
-      "Ne. Pirmiausia įvertiname darbą ir susitariame dėl aiškių etapų. Įsipareigojate tik tada, kai tiksliai žinote, ką kuriame ir kiek laiko tai sutaupys.",
+      "Prašome 30–50 % išankstinio mokėjimo darbui pradėti, o likusią sumą sumokate po pristatymo. Veikiančios automatizacijos toliau prižiūrimos už mėnesinį priežiūros mokestį, apimantį stebėseną, priežiūrą ir palaikymą.",
     "ar swiftrix tinka mažoms komandoms ir startuoliams?":
       "Žinoma. Mažos komandos dažnai gauna didžiausią naudą, nes rankinis darbas joms atima daugiausia laiko. Kiekvieną sprendimą pritaikome pagal jūsų dydį, biudžetą ir įrankius.",
     "su kokiais įrankiais ir platformomis integruojatės?":
@@ -32,7 +28,7 @@
     "ar užsiimate procesų optimizavimu, ar tik kūrimu?":
       "Abiem. Pradedame nuo jūsų procesų analizės ir diagnostikos, kad pašalintume nuostolius, tada kuriame automatizacijas. Nuolatinis optimizavimas yra kiekvieno projekto dalis.",
     "ar galiu bet kada atsisakyti, jei nebūsiu patenkintas?":
-      "Taip. Jokių ilgalaikių įsipareigojimų. Jei neteikiame vertės, galite nutraukti — nors mūsų 99 % klientų išlaikymas rodo, kad dauguma lieka.",
+      "Taip. Jokių ilgalaikių įsipareigojimų. Jei neteikiame vertės, galite nutraukti — nors dauguma komandų nusprendžia likti.",
     "kuo swiftrix skiriasi nuo kitų tiekėjų?":
       "Esame inžinieriai, o ne įprasta agentūra. Kiekviena automatizacija kuriama individualiai jūsų sistemoms, nuolat stebima ir užtikrinta mūsų veikimo garantija.",
     "ar kuriate automatizacijas, ar tik konsultuojate dėl strategijos?":
