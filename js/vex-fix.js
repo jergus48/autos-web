@@ -130,19 +130,7 @@
     });
   }
 
-  function reveal() { document.documentElement.classList.add("vex-ready"); }
-
-  function start() {
-    normalizeText(); init(); initNav();
-    // Reveal only after text is normalized and fonts are ready, so the ugly
-    // pre-normalization / fallback-font frame never shows. Timeout is a safety net.
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(reveal);
-      setTimeout(reveal, 1500);
-    } else {
-      reveal();
-    }
-  }
+  function start() { normalizeText(); init(); initNav(); }
 
   if (document.readyState === "loading")
     document.addEventListener("DOMContentLoaded", start);
