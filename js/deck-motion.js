@@ -295,6 +295,9 @@
       vsBadge();     // dark + lime V/S badge
     }
     hideTargets();   // hide before first paint (no flash)
+    // Structural transforms are done: reveal the stat region (CSS hides the raw
+    // dome via html:not(.deck-ready) until now, so no un-reformatted flash).
+    document.documentElement.classList.add("deck-ready");
     // Reveal once fully loaded so on-screen items fade in and the rest wait for scroll.
     whenLoaded(function () { startReveals(); failsafe(); });
   }

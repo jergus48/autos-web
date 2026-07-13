@@ -151,3 +151,9 @@ html { overflow-x: clip; }
   .deck-reveal { opacity: 1 !important; transform: none !important; }
   *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
 }
+
+/* Prevent raw stat-dome flash: hide the un-reformatted stat block until
+   deck-motion.js swaps it for the clean .vex-stats grid. Once the raw
+   "Why Us Card 2" cards are replaced the :has() stops matching and the
+   region reveals itself. .deck-ready on <html> is the JS-ran failsafe. */
+html:not(.deck-ready) [data-swiftrix-name="Container"]:has([data-swiftrix-name="Why Us Card 2"]) { visibility: hidden; }
