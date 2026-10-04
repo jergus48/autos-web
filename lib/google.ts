@@ -3,7 +3,6 @@ import { q } from '@/lib/db';
 export const SCOPES = [
   'https://www.googleapis.com/auth/calendar.events',
   'https://www.googleapis.com/auth/meetings.space.readonly',
-  'https://www.googleapis.com/auth/drive.readonly',
 ];
 
 const hasClient = () => !!(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET);
@@ -99,7 +98,7 @@ export async function createMeeting(o: { summary: string; description?: string; 
   };
 }
 
-// Transcript via the Meet REST API; falls back to exporting the transcript Doc from Drive.
+// Transcript via the Meet REST API (Drive export is only attempted if the account granted Drive access).
 export async function fetchTranscript(meetCode: string): Promise<{ state: string; text?: string }> {
   const recs = await gjson(`https://meet.googleapis.com/v2/conferenceRecords?filter=${encodeURIComponent(`space.meeting_code="${meetCode}"`)}`);
   const records: any[] = recs.conferenceRecords || [];

@@ -20,10 +20,9 @@ export default function Privacy() {
       <p>An administrator can connect one Google account to the app. The app then uses Google APIs only to:</p>
       <ul>
         <li>create Google Calendar events with a Google Meet link and send the invitation to the contact a staff member entered;</li>
-        <li>read the transcript of Meet meetings created through the app, so it can be shown on the company record;</li>
-        <li>export the transcript document of those meetings from Google Drive when the Meet API cannot return it.</li>
+        <li>read the transcript of Meet meetings created through the app, so it can be shown on the company record.</li>
       </ul>
-      <p>The app does not read any other calendar events, files or emails. Google data is not sold, not used for advertising, and not used to train AI models. The app's use of information received from Google APIs follows the Google API Services User Data Policy, including the Limited Use requirements.</p>
+      <p>The app does not read any other calendar events, Drive files or emails. Google data is not sold, not used for advertising, and not used to train AI models. The app's use of information received from Google APIs follows the Google API Services User Data Policy, including the Limited Use requirements.</p>
       <p>Only an OAuth refresh token is stored for the connected account. It can be revoked at any time at myaccount.google.com/permissions or by removing the connection in the app.</p>
 
       <h2>Where data is stored and who sees it</h2>
