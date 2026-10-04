@@ -99,11 +99,33 @@
   Object.keys(f).forEach(function (k) { f[k].addEventListener('input', render) })
   render()
 
+  // Fallback for when the AI doesn't pick the time out of the description:
+  // "2-3 valandas kasdien", "pusę dienos", "10 hours a week", "dvi vadybininkės".
+  function guessTime(text) {
+    var s = text.toLowerCase()
+    var per = /(per dien|kasdien|kiekvien\w* dien|a day|per day|daily|every day)/.test(s) ? 'day'
+      : /(per savait|kas savait|a week|per week|weekly)/.test(s) ? 'week'
+      : /(per mėn|kas mėn|a month|per month|monthly)/.test(s) ? 'month' : null
+    var amount = 0
+    var m = s.match(/(\d+(?:[.,]\d+)?)\s*(?:[-–]\s*(\d+(?:[.,]\d+)?))?\s*(?:val|valand|h\b|hours?|hrs?)/)
+    if (m) {
+      var a = parseFloat(m[1].replace(',', '.')), b = m[2] ? parseFloat(m[2].replace(',', '.')) : a
+      amount = (a + b) / 2
+    } else if (/(pus[eę] dienos|half a day)/.test(s)) { amount = 4; per = 'day' }
+    else if (/(vis[aą] dien|full day|whole day)/.test(s)) { amount = 8; per = 'day' }
+    if (!amount || !per) return null
+    var people = /\b(dvi|du|two|2)\s+\S*(vadybinink|darbuotoj|administrator|people|staff|employees|managers)/.test(s) ? 2
+      : /\b(trys|three|3)\s+\S*(vadybinink|darbuotoj|administrator|people|staff|employees|managers)/.test(s) ? 3 : 1
+    return { amount: amount, per: per, people: people }
+  }
+
   window.SwiftrixCalc = {
     // Fill the time from the AI's reading of the problem, unless the visitor
     // has already typed their own numbers.
-    prefill: function (t) {
-      if (!t || !(t.amount > 0) || n(f.amount)) return
+    prefill: function (t, text) {
+      if (n(f.amount)) return
+      if (!t || !(t.amount > 0)) t = guessTime(text || '')
+      if (!t) return
       f.amount.value = String(Math.round(t.amount * 10) / 10)
       if (t.per === 'day' || t.per === 'week' || t.per === 'month') f.per.value = t.per
       if (t.people > 0) f.people.value = String(Math.round(t.people))

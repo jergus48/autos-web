@@ -208,7 +208,7 @@
     qsEl.textContent = ''
     r.questions.forEach(function (q) { qsEl.appendChild(el('li', null, q)) })
 
-    if (window.SwiftrixCalc && r.relevant) window.SwiftrixCalc.prefill(r.time)
+    if (window.SwiftrixCalc && r.relevant) window.SwiftrixCalc.prefill(r.time, problemEl.value)
     ideasCard.hidden = false
     bookCard.hidden = false
     if (r.relevant && r.email.body) showLead(r.email)
