@@ -16,6 +16,7 @@
     lt: {
       think: ['Analizuoju jūsų problemą…', 'Ieškau tinkamiausių sprendimų…', 'Peržiūriu mūsų ankstesnius projektus…', 'Rašau laišką mūsų komandai…'],
       understood: 'Kaip supratome', offTopic: 'Atsakymas',
+      retryHint: 'Aprašykite darbą ar problemą savo įmonėje, kurią norėtumėte palengvinti — pvz. kas ją daro, kiek laiko užima, kokias programas naudojate.', retry: 'Aprašyti kitaip',
       kind: { agent: 'DI agentas', automation: 'Automatizacija', integration: 'Integracija', app: 'Programa' },
       cx: { simple: 'Paprasta', medium: 'Vidutinio sudėtingumo', complex: 'Sudėtinga' },
       tooShort: 'Aprašykite problemą plačiau — bent vienu ar dviem sakiniais.',
@@ -33,6 +34,7 @@
     en: {
       think: ['Analysing your problem…', 'Looking for the best-fitting solutions…', 'Checking our past projects…', 'Writing the email to our team…'],
       understood: 'What we understood', offTopic: 'Reply',
+      retryHint: 'Describe a task or problem in your business you’d like to make easier — e.g. who does it, how long it takes, which software you use.', retry: 'Describe it differently',
       kind: { agent: 'AI agent', automation: 'Automation', integration: 'Integration', app: 'Custom app' },
       cx: { simple: 'Simple', medium: 'Medium complexity', complex: 'Complex' },
       tooShort: 'Describe the problem in a bit more detail — at least a sentence or two.',
@@ -164,6 +166,20 @@
     u.appendChild(el('b', null, r.relevant ? T.understood : T.offTopic))
     u.appendChild(document.createTextNode(r.understanding))
     ideasEl.appendChild(u)
+
+    // Declined (chit-chat, a test, a poem request…): point back to the form
+    // instead of leaving a dead end.
+    if (!r.relevant) {
+      ideasEl.appendChild(el('p', 'lead-note', T.retryHint))
+      var again = el('button', 'btn btn-ghost', T.retry)
+      again.type = 'button'
+      again.addEventListener('click', function () {
+        problemEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        problemEl.focus()
+        problemEl.select()
+      })
+      ideasEl.appendChild(again)
+    }
 
     if (r.relevant && r.solutions.length) {
       var sols = el('div', 'sols')
