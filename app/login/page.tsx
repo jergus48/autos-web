@@ -26,6 +26,7 @@ export default function Login() {
         <button className="btn" disabled={busy}>{busy ? 'Signing in...' : 'Sign in'}</button>
         {err && <div className="err">{err}</div>}
       </form>
+      <p className="mini" style={{ marginTop: 14 }}><a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a></p>
     </div>
   );
 }

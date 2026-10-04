@@ -48,3 +48,24 @@ create table if not exists calls (
 create index if not exists calls_company_idx on calls(company_id);
 create index if not exists calls_user_idx on calls(user_id);
 create index if not exists calls_created_idx on calls(created_at);
+
+create table if not exists settings (
+  key text primary key,
+  value text
+);
+create table if not exists meetings (
+  id serial primary key,
+  company_id int references companies(id) on delete cascade,
+  user_id int references users(id) on delete set null,
+  event_id text,
+  meet_url text,
+  meet_code text,
+  html_link text,
+  attendee_email text,
+  start_at timestamptz,
+  end_at timestamptz,
+  transcript text,
+  transcript_state text,
+  created_at timestamptz default now()
+);
+create index if not exists meetings_company_idx on meetings(company_id);

@@ -1,4 +1,5 @@
 'use client';
+import GoogleConnect from '@/components/GoogleConnect';
 import { useCallback, useEffect, useState } from 'react';
 import { COUNTRIES } from '@/lib/countries';
 import { OUTCOMES, ago, outcomeLabel, outcomeTone } from '@/lib/outcomes';
@@ -111,6 +112,8 @@ export default function Admin() {
         <div className="l"><img src="/swiftrix-s.png" alt="" />ADMIN</div>
         <div className="r"><a className="btn ghost sm" href="/">Back to my list</a></div>
       </div>
+
+      <GoogleConnect />
 
       <div className="row" style={{ marginBottom: 16 }}>
         <div className="tabs">

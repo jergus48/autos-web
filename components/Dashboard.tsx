@@ -264,7 +264,7 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
                     </td>
                   </tr>
                   {open === c.id && (
-                    <tr className="logrow"><td colSpan={6}><CallLogger companyId={c.id} onSaved={load} /></td></tr>
+                    <tr className="logrow"><td colSpan={6}><CallLogger companyId={c.id} defaultEmail={c.email || ''} onSaved={load} /></td></tr>
                   )}
                 </Fragment>
               );

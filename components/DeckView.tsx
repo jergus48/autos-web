@@ -42,7 +42,7 @@ export default function DeckView({ deck, company, shareToken, readOnly }: { deck
             {company.id && (
               <div className="card" style={{ borderColor: '#3d5a14' }}>
                 <h3>LOG THIS CALL</h3>
-                <CallLogger companyId={company.id} />
+                <CallLogger companyId={company.id} defaultEmail={company.email || ''} />
               </div>
             )}
             <div className="card">
