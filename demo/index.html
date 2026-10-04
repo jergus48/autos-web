@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI agent demo – Swiftrix</title>
+  <meta name="description" content="Try an AI agent: it reads an order email, checks your systems, logs the order in a sheet and drafts the reply to your customer.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AI agent demo – Swiftrix">
+  <meta property="og:description" content="From email to order — without the manual work. Watch an AI agent at work.">
+  <link rel="icon" href="/assets/images/swiftrixLogo.png">
+  <link rel="alternate" hreflang="lt" href="https://www.swiftrix.eu/lt/demo">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&display=swap">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/demo/demo.css">
+  <script>try { if (/[?&]theme=light/.test(location.search) || (!/[?&]theme=dark/.test(location.search) && localStorage.getItem('swiftrix-theme') === 'light')) document.documentElement.setAttribute('data-theme', 'light') } catch (e) {}</script>
+</head>
+<body>
+  <nav class="nav">
+    <a class="nav-logo" href="/" data-home aria-label="Swiftrix">
+      <img class="logo-dark" src="/assets/images/swiftrixLogo.png" alt="Swiftrix">
+      <img class="logo-light" src="/light/assets/images/swiftrixLogo.png" alt="Swiftrix">
+    </a>
+    <a class="nav-back" href="/" data-home>← Back to the site</a>
+    <button class="theme-btn" type="button" data-theme-toggle aria-label="Switch light / dark theme">
+      <svg class="moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+    <a class="btn btn-primary" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book a call</a>
+  </nav>
+
+  <main class="wrap">
+    <header class="hero">
+      <span class="badge"><i></i>AI agent demo</span>
+      <h1>From email to order — <em>without the manual work</em></h1>
+      <p>Pick an email and watch an AI agent read it, check your systems, log the order in a sheet and draft the reply to your customer. All that’s left for you is to approve it.</p>
+    </header>
+
+    <div class="app">
+      <section class="panel" aria-label="Inbox">
+        <div class="panel-head"><span class="step-no">1</span>Inbox</div>
+        <ul class="mail-list" id="mail-list" role="tablist"></ul>
+        <div class="panel-body">
+          <div id="reader"
+            data-placeholder="Paste an order, a quote request or any other email your business receives…"
+            data-privacy="Don’t paste personal data. The email is processed by an AI model and not stored by us."></div>
+          <div class="run-row"><button class="btn btn-primary" id="run" type="button">Run the agent</button></div>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-agent" aria-label="Agent">
+        <div class="panel-head"><span class="step-no">2</span>Agent<span class="pill" id="agent-pill"><i></i><span></span></span></div>
+        <div class="panel-body">
+          <div class="systems"><span class="sys" data-sys="mail"></span><span class="sys" data-sys="crm"></span><span class="sys" data-sys="stock"></span><span class="sys" data-sys="sheet"></span></div>
+          <ul class="steps" id="steps" aria-live="polite"></ul>
+        </div>
+      </section>
+
+      <section class="panel panel-result" aria-label="Result">
+        <div class="panel-head"><span class="step-no">3</span>Result<span class="pill" id="result-pill"><i></i><span></span></span></div>
+        <div class="panel-body" id="result-body" aria-live="polite"></div>
+      </section>
+    </div>
+
+    <section class="panel sheet" aria-label="Orders sheet">
+      <div class="panel-head"><span class="xls">X</span>Orders.xlsx</div>
+      <div class="sheet-scroll"><table><thead><tr id="sheet-head"></tr></thead><tbody id="sheet-body"></tbody></table></div>
+    </section>
+
+    <section class="block">
+      <h2>How is this different from ChatGPT?</h2>
+      <p class="lead">ChatGPT answers when you ask it. An agent does the work on its own — connected to your systems and following your rules.</p>
+      <div class="cards">
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3M15 7V3M6 7h12v4a6 6 0 0 1-12 0V7zM12 17v4"/></svg></div>
+          <h3>Connected to your systems</h3>
+          <p>It reads your mailbox, checks prices and stock in your catalog and customer history in your CRM, and writes to your Excel, Google Sheets or ERP.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3>Works on its own, around the clock</h3>
+          <p>An email came in overnight or at the weekend? By the time you open your inbox, the order is logged and the reply is drafted.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
+          <h3>You stay in charge</h3>
+          <p>Replies go out only once you approve them — or automatically, if you decide so. The agent flags anything unclear, and you can see everything it did.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>What else AI agents can do</h2>
+      <p class="lead">The order agent is just one example. We build agents where your team loses the most time.</p>
+      <div class="cards">
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
+          <h3>Email & order agent</h3>
+          <p>Moves orders, invoices and enquiries from your inbox into your systems.</p>
+          <span class="tag">← This demo</span>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div>
+          <h3>Customer service agent</h3>
+          <p>Answers customer questions by email or website chat around the clock, books appointments and hands complex cases to a person.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></div>
+          <h3>Documents & reports agent</h3>
+          <p>Prepares quotes, invoices and reports, and checks documents for missing data.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+          <h3>Sales agent</h3>
+          <p>Qualifies new enquiries, follows up with customers on time and keeps your CRM up to date, so no lead slips through.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <h2>Want an agent like this for your business?</h2>
+      <p>In a 15-minute call we’ll work out which repetitive job an agent could take over in your company.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book a call</a>
+        <a class="btn btn-ghost" href="/assistant">Describe your problem</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Swiftrix · <a href="/" data-home>swiftrix.eu</a></footer>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/js/pages.js" defer></script>
+  <script src="/demo/demo.js" defer></script>
+</body>
+</html>
