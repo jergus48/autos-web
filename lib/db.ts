@@ -1,13 +1,14 @@
 import { Pool } from 'pg';
 import fs from 'fs';
 import path from 'path';
+import { SUPABASE_CA } from './supabaseCa';
 
 // TLS stays verified. Supabase signs with its own CA, so trust it explicitly:
 // either PEM text in DATABASE_CA_CERT, or the file certs/supabase-ca.crt.
 function loadCa(): string | undefined {
   if (process.env.DATABASE_CA_CERT) return process.env.DATABASE_CA_CERT.replace(/\\n/g, '\n');
   const p = path.join(process.cwd(), 'certs', 'supabase-ca.crt');
-  return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : undefined;
+  return fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : SUPABASE_CA;
 }
 
 const g = globalThis as any;
