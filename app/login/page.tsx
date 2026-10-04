@@ -12,7 +12,8 @@ export default function Login() {
     const r = await fetch('/api/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email: fd.get('email'), password: fd.get('password') }) });
     if (r.ok) location.href = '/';
     else {
-      setErr((await r.json()).error || 'Login failed');
+      const j = await r.json().catch(() => ({} as any));
+      setErr((j.error || 'Login failed') + (j.code ? ` (${j.code})` : ` [HTTP ${r.status}]`));
       setBusy(false);
     }
   }
