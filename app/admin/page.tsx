@@ -13,12 +13,21 @@ type Stats = {
   followupsDue: number;
   companies: { n: number; untouched: number };
 };
+type Co = { id: number; name: string; website?: string; phone?: string; country?: string; owner_id: number; owner_email?: string; last_outcome?: string; last_at?: string; last_by?: string; call_count: number };
 type Feed = { id: number; outcome: string; note?: string; followup_at?: string; created_at: string; user_email?: string; name: string; website?: string; country?: string; phone?: string };
 
 const pct = (a: number, b: number) => (b ? Math.round((a / b) * 100) + '%' : '-');
 
 export default function Admin() {
-  const [tab, setTab] = useState<'calls' | 'users'>('calls');
+  const [tab, setTab] = useState<'calls' | 'companies' | 'users'>('calls');
+  const [cos, setCos] = useState<Co[]>([]);
+  const [sel, setSel] = useState<Set<number>>(new Set());
+  const [cq, setCq] = useState('');
+  const [cOwner, setCOwner] = useState('');
+  const [cCountry, setCCountry] = useState('');
+  const [cState, setCState] = useState('');
+  const [target, setTarget] = useState('');
+  const [cmsg, setCmsg] = useState('');
   const [days, setDays] = useState(7);
   const [stats, setStats] = useState<Stats | null>(null);
   const [feed, setFeed] = useState<Feed[]>([]);
@@ -39,6 +48,36 @@ export default function Admin() {
     if (c.ok) setFeed(await c.json());
   }, [days, fu, fo, fc]);
   useEffect(() => { loadCalls(); }, [loadCalls]);
+
+  async function loadCos() {
+    const r = await fetch('/api/admin/companies');
+    if (r.ok) setCos(await r.json());
+  }
+  useEffect(() => { if (tab === 'companies') loadCos(); }, [tab]);
+
+  const shownCos = cos.filter((c) => {
+    const q = cq.trim().toLowerCase();
+    return (!q || [c.name, c.website, c.phone].some((v) => (v || '').toLowerCase().includes(q))) &&
+      (!cOwner || String(c.owner_id) === cOwner) && (!cCountry || c.country === cCountry) &&
+      (!cState || (cState === 'never' ? !c.call_count : cState === 'called' ? c.call_count > 0 : c.last_outcome === cState));
+  });
+  const allSel = shownCos.length > 0 && shownCos.every((c) => sel.has(c.id));
+  async function moveSelected() {
+    if (!sel.size || !target) return;
+    const r = await fetch('/api/admin/companies', { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ids: [...sel], ownerId: Number(target) }) });
+    const j = await r.json();
+    setCmsg(r.ok ? `Moved ${j.moved} companies` : j.error);
+    setSel(new Set());
+    loadCos();
+  }
+  async function deleteSelected() {
+    if (!sel.size || !confirm(`Delete ${sel.size} companies with their decks and call log?`)) return;
+    const r = await fetch('/api/admin/companies', { method: 'DELETE', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ids: [...sel] }) });
+    const j = await r.json();
+    setCmsg(r.ok ? `Deleted ${j.deleted} companies` : j.error);
+    setSel(new Set());
+    loadCos();
+  }
 
   async function loadUsers() {
     const r = await fetch('/api/admin/users');
@@ -76,6 +115,7 @@ export default function Admin() {
       <div className="row" style={{ marginBottom: 16 }}>
         <div className="tabs">
           <button className={tab === 'calls' ? 'on' : ''} onClick={() => setTab('calls')}>Call dashboard</button>
+          <button className={tab === 'companies' ? 'on' : ''} onClick={() => setTab('companies')}>Companies</button>
           <button className={tab === 'users' ? 'on' : ''} onClick={() => setTab('users')}>Users</button>
         </div>
         {tab === 'calls' && (
@@ -176,6 +216,54 @@ export default function Admin() {
             </table>
           </div>
         </>
+      )}
+
+      {tab === 'companies' && (
+        <div className="card">
+          <div className="toolbar">
+            <input style={{ flex: 1, minWidth: 180 }} placeholder="Search name, website, phone..." value={cq} onChange={(e) => setCq(e.target.value)} />
+            <select value={cOwner} onChange={(e) => setCOwner(e.target.value)}>
+              <option value="">All callers</option>
+              {users.map((u) => <option key={u.id} value={u.id}>{u.email}</option>)}
+            </select>
+            <select value={cCountry} onChange={(e) => setCCountry(e.target.value)}>
+              <option value="">All countries</option>
+              {COUNTRIES.map((c) => <option key={c.code} value={c.code}>{c.label}</option>)}
+            </select>
+            <select value={cState} onChange={(e) => setCState(e.target.value)}>
+              <option value="">Any status</option>
+              <option value="never">Never called</option>
+              <option value="called">Called</option>
+              {OUTCOMES.map((o) => <option key={o.code} value={o.code}>{o.label}</option>)}
+            </select>
+          </div>
+          <div className="toolbar" style={{ background: sel.size ? '#16200a' : undefined, padding: sel.size ? 10 : 0, borderRadius: 8 }}>
+            <b style={{ fontSize: 13 }}>{sel.size} selected</b>
+            <select value={target} onChange={(e) => setTarget(e.target.value)}>
+              <option value="">Move selected to...</option>
+              {users.map((u) => <option key={u.id} value={u.id}>{u.email}</option>)}
+            </select>
+            <button className="btn sm" disabled={!sel.size || !target} onClick={moveSelected}>Move</button>
+            <button className="btn ghost sm" disabled={!sel.size} onClick={deleteSelected}>Delete selected</button>
+            {cmsg && <span style={{ color: 'var(--g)', fontSize: 13 }}>{cmsg}</span>}
+            <span style={{ marginLeft: 'auto', color: 'var(--mute)', fontSize: 12 }}>{shownCos.length} of {cos.length} companies</span>
+          </div>
+          <table className="t">
+            <thead><tr><th style={{ width: 30 }}><input type="checkbox" checked={allSel} onChange={() => setSel(allSel ? new Set() : new Set(shownCos.map((c) => c.id)))} /></th><th>COMPANY</th><th>COUNTRY</th><th>ASSIGNED TO</th><th>LAST CALL</th></tr></thead>
+            <tbody>
+              {shownCos.map((c) => (
+                <tr key={c.id}>
+                  <td><input type="checkbox" checked={sel.has(c.id)} onChange={() => { const n = new Set(sel); n.has(c.id) ? n.delete(c.id) : n.add(c.id); setSel(n); }} /></td>
+                  <td><b>{c.name}</b><div style={{ color: 'var(--mute)', fontSize: 12 }}>{c.website}{c.phone ? ` · ${c.phone}` : ''}</div></td>
+                  <td>{(c.country || '').toUpperCase()}</td>
+                  <td>{c.owner_email || '-'}</td>
+                  <td>{c.call_count ? <><span className={`pill oc-${outcomeTone(c.last_outcome)}`}>{outcomeLabel(c.last_outcome)}</span><div style={{ fontSize: 11.5, color: 'var(--mute)', marginTop: 3 }}>{c.last_by} · {ago(c.last_at)} · {c.call_count} call{c.call_count > 1 ? 's' : ''}</div></> : <span className="pill">never called</span>}</td>
+                </tr>
+              ))}
+              {!shownCos.length && <tr><td colSpan={5} style={{ color: 'var(--mute)', padding: 24 }}>No companies match.</td></tr>}
+            </tbody>
+          </table>
+        </div>
       )}
 
       {tab === 'users' && (

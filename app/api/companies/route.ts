@@ -31,11 +31,18 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const s = (await getSession())!;
+  if (s.role !== 'admin') return NextResponse.json({ error: 'Only the admin can add companies' }, { status: 403 });
   const b = await req.json();
   if (!b.name?.trim()) return NextResponse.json({ error: 'Name required' }, { status: 400 });
   const country = parseCountry(b.country) || inferCountry(b.website, b.phone);
+  let owner = s.uid;
+  if (b.assignTo && Number(b.assignTo) !== s.uid) {
+    const u = await q('select id from users where id=$1', [Number(b.assignTo)]);
+    if (!u[0]) return NextResponse.json({ error: 'Unknown user' }, { status: 400 });
+    owner = u[0].id;
+  }
   const rows = await q('insert into companies(owner_id,name,email,phone,website,country) values($1,$2,$3,$4,$5,$6) returning *', [
-    s.uid, b.name.trim(), b.email || null, b.phone || null, b.website || null, country,
+    owner, b.name.trim(), b.email || null, b.phone || null, b.website || null, country,
   ]);
   return NextResponse.json(rows[0]);
 }

@@ -46,6 +46,9 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
   const [filter, setFilter] = useState('all');
   const [cfilter, setCfilter] = useState('all');
   const [smart, setSmart] = useState(true);
+  const [users, setUsers] = useState<{ id: number; email: string; role: string }[]>([]);
+  const [assignOne, setAssignOne] = useState('me');
+  const [assignImport, setAssignImport] = useState('split');
   const fileRef = useRef<HTMLInputElement>(null);
   const [jobs, setJobs] = useState<Record<number, { name: string; start: number; done?: boolean }>>({});
   const [now, setNow] = useState(Date.now());
@@ -61,6 +64,10 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
     if (r.ok) setRows(await r.json());
   }
   useEffect(() => { load(); }, []);
+  useEffect(() => {
+    if (!admin) return;
+    fetch('/api/admin/users').then((r) => (r.ok ? r.json() : [])).then(setUsers);
+  }, [admin]);
 
   const shown = useMemo(() => {
     const f = FILTERS.find((x) => x.v === filter)!;
@@ -80,7 +87,7 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
   async function add(e: React.FormEvent) {
     e.preventDefault();
     if (!form.name.trim()) return;
-    await fetch('/api/companies', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(form) });
+    await fetch('/api/companies', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...form, assignTo: assignOne === 'me' ? undefined : Number(assignOne) }) });
     setForm({ name: '', email: '', phone: '', website: '', country: '' });
     load();
   }
@@ -88,6 +95,7 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
   async function upload(f: File) {
     const fd = new FormData();
     fd.append('file', f);
+    fd.append('assignTo', assignImport);
     const r = await fetch('/api/companies/import', { method: 'POST', body: fd });
     const j = await r.json();
     setMsg(r.ok ? `Imported ${j.added} companies (${Object.entries(j.byCountry || {}).map(([k, v]) => `${String(k).toUpperCase()} ${v}`).join(', ')})` : j.error || 'Import failed');
@@ -146,6 +154,7 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
         <div className="kpi good"><b>{stats.good}</b><span>interested / meeting / email sent</span></div>
       </div>
 
+      {admin && (
       <div className="card" style={{ marginBottom: 18 }}>
         <h3>ADD COMPANY</h3>
         <form className="row" onSubmit={add}>
@@ -157,15 +166,25 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
             <option value="">Country: auto-detect</option>
             {COUNTRIES.map((c) => <option key={c.code} value={c.code}>{c.label}</option>)}
           </select>
+          <select value={assignOne} onChange={(e) => setAssignOne(e.target.value)} title="Who gets this company">
+            <option value="me">Assign to: me</option>
+            {users.filter((u) => u.role === 'user').map((u) => <option key={u.id} value={u.id}>Assign to: {u.email}</option>)}
+          </select>
           <button className="btn">Add</button>
-          <span style={{ color: 'var(--mute)' }}>or</span>
+          <span style={{ color: 'var(--mute)' }}>or upload Excel:</span>
+          <select value={assignImport} onChange={(e) => setAssignImport(e.target.value)} title="Who gets the imported companies">
+            <option value="split">Split evenly between callers</option>
+            <option value="me">All to me</option>
+            {users.filter((u) => u.role === 'user').map((u) => <option key={u.id} value={u.id}>All to {u.email}</option>)}
+          </select>
           <input ref={fileRef} type="file" accept=".xlsx,.xls,.csv" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
         </form>
         <div style={{ color: 'var(--mute)', fontSize: 12, marginTop: 8 }}>
-          Excel/CSV columns: name, email, phone, website, country (optional). With no country the app reads it from the website domain (.lt .de .at .ch) or the phone prefix, otherwise English. The deck language follows the country: LT = Lithuanian, DE / AT / CH = German, other = English.
+          Excel/CSV columns: name, email, phone, website, country (optional). Callers only see the companies assigned to them; reassign anytime in Admin, Companies. With no country the app reads it from the website domain (.lt .de .at .ch) or the phone prefix, otherwise English. The deck language follows the country: LT = Lithuanian, DE / AT / CH = German, other = English.
         </div>
         {msg && <div className="err">{msg}</div>}
       </div>
+      )}
 
       {Object.entries(jobs).map(([id, j]) => {
         const t = (now - j.start) / 1000;
@@ -240,7 +259,7 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
                         ) : (
                           <button className="btn sm" disabled={busy[c.id]} onClick={() => generate(c)}>{busy[c.id] ? 'Researching... ~40s' : 'Generate'}</button>
                         )}
-                        <button className="btn ghost sm" onClick={() => del(c)}>x</button>
+                        {admin && <button className="btn ghost sm" onClick={() => del(c)} title="Delete company">x</button>}
                       </div>
                     </td>
                   </tr>
@@ -250,7 +269,7 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
                 </Fragment>
               );
             })}
-            {!shown.length && <tr><td colSpan={6} style={{ color: 'var(--mute)', padding: 24 }}>{rows.length ? 'Nothing matches this filter.' : 'No companies yet. Add one above or upload a spreadsheet.'}</td></tr>}
+            {!shown.length && <tr><td colSpan={6} style={{ color: 'var(--mute)', padding: 24 }}>{rows.length ? 'Nothing matches this filter.' : admin ? 'No companies yet. Add one above or upload a spreadsheet.' : 'No companies assigned to you yet. Ask your admin to assign some.'}</td></tr>}
           </tbody>
         </table>
       </div>

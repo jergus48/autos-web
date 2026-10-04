@@ -5,8 +5,9 @@ import { parseCountry } from '@/lib/countries';
 
 export async function DELETE(_: Request, { params }: { params: Promise<{ id: string }> }) {
   const s = (await getSession())!;
+  if (s.role !== 'admin') return NextResponse.json({ error: 'Only the admin can delete companies' }, { status: 403 });
   const { id } = await params;
-  await q('delete from companies where id=$1 and owner_id=$2', [id, s.uid]);
+  await q('delete from companies where id=$1', [id]);
   return NextResponse.json({ ok: true });
 }
 
