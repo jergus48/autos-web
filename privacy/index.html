@@ -29,10 +29,9 @@ ul{padding-left:20px}li{margin:4px 0}
 <p>An administrator can connect one Google account to the outreach app. The app then uses Google APIs only to:</p>
 <ul>
 <li>create Google Calendar events with a Google Meet link and send the invitation to the contact a staff member entered;</li>
-<li>read the transcript of Meet meetings created through the app, so it can be shown on the company record;</li>
-<li>export the transcript document of those meetings from Google Drive when the Meet API cannot return it.</li>
+<li>read the transcript of Meet meetings created through the app, so it can be shown on the company record.</li>
 </ul>
-<p>The app does not read any other calendar events, files or emails. Google data is not sold, not used for advertising and not used to train AI models. Use of information received from Google APIs follows the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements. Only an OAuth refresh token is stored for the connected account, and it can be revoked at any time at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</p>
+<p>The app does not read any other calendar events, Drive files or emails. Google data is not sold, not used for advertising and not used to train AI models. Use of information received from Google APIs follows the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements. Only an OAuth refresh token is stored for the connected account, and it can be revoked at any time at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</p>
 <h2>Where data is stored and who sees it</h2>
 <p>Outreach data is stored in a database hosted by Supabase and served through Vercel. It is visible only to signed-in Swiftrix staff. Text from company websites may be sent to an AI provider (OpenRouter) to write the personalised presentation and script. No passwords or Google data are sent to it.</p>
 <h2>Retention and deletion</h2>
