@@ -1,0 +1,119 @@
+/* DI agents spotlight on the homepage (all four builds): a banner right
+   under the hero that points to the demo and the AI assistant, plus a
+   brighter "AI agents & bots" service card. Dark styles by default; the
+   /light builds mark the banner .swx-spot--light. Fonts (Clash Grotesk,
+   Instrument Sans, Roboto) are already loaded by the homepage. */
+
+.swx-spot {
+  width: min(996px, 100%); box-sizing: border-box; position: relative; overflow: hidden;
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 36px; align-items: center;
+  padding: 44px; border-radius: 30px; text-align: left;
+  /* The next block's round logo sticks ~95px up out of its card. */
+  margin-bottom: 64px;
+  font-family: "Instrument Sans", system-ui, sans-serif;
+  background:
+    radial-gradient(80% 120% at 0% 0%, rgba(176, 229, 98, .15), transparent 60%),
+    radial-gradient(60% 100% at 100% 100%, rgba(176, 229, 98, .07), transparent 60%),
+    #0b0d10;
+  border: 1px solid rgba(176, 229, 98, .38);
+  box-shadow: 0 30px 80px -40px rgba(176, 229, 98, .5);
+}
+.swx-spot__badge {
+  display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 100px;
+  background: rgba(176, 229, 98, .12); border: 1px solid rgba(176, 229, 98, .35); color: #b0e562;
+  font: 500 12.5px/1.2 ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace; letter-spacing: 1.5px;
+}
+.swx-spot__badge i { width: 7px; height: 7px; border-radius: 50%; background: #b0e562; box-shadow: 0 0 10px #b0e562; animation: swxPulse 1.8s ease-in-out infinite; }
+@keyframes swxPulse { 50% { opacity: .35; } }
+.swx-spot h2 {
+  font-family: "Clash Grotesk", "Instrument Sans", sans-serif; font-weight: 500;
+  font-size: clamp(30px, 3.6vw, 44px); line-height: 1.15; color: #f4f2ef; margin: 18px 0 14px;
+}
+.swx-hl { background: #b0e562; color: #0a0a0c; border-radius: .08em; padding: 0 .12em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.swx-spot p { color: #b2b2b2; font-size: 17px; line-height: 1.55; margin: 0 0 26px; }
+.swx-spot__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.swx-btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 100px;
+  font: 600 16px/1 "Instrument Sans", system-ui, sans-serif; text-decoration: none; white-space: nowrap;
+  transition: transform .18s ease, filter .18s ease, border-color .2s ease;
+}
+.swx-btn--primary { background: linear-gradient(135deg, #c5f07a 0%, #a0d64a 100%); color: #0a0a0c; box-shadow: 0 12px 26px -10px rgba(160, 214, 74, .6); }
+.swx-btn--primary:hover { transform: translateY(-2px); filter: brightness(1.05); }
+.swx-btn--ghost { color: #f4f2ef; border: 1px solid rgba(244, 242, 239, .2); font-weight: 500; }
+.swx-btn--ghost:hover { border-color: rgba(176, 229, 98, .6); }
+.swx-spot__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.swx-spot__grid li {
+  display: grid; gap: 4px; align-content: start; padding: 18px; border-radius: 18px;
+  background: rgba(255, 255, 255, .025); border: 1px solid #181c25; transition: transform .2s ease, border-color .2s ease;
+}
+.swx-spot__grid li:hover { transform: translateY(-3px); border-color: rgba(176, 229, 98, .35); }
+.swx-ico { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; margin-bottom: 8px; background: linear-gradient(135deg, #c5f07a, #a0d64a); color: #0a0a0c; }
+.swx-ico svg { width: 18px; height: 18px; }
+.swx-spot__grid b { font-family: "Clash Grotesk", "Instrument Sans", sans-serif; font-weight: 500; font-size: 16.5px; color: #f4f2ef; }
+.swx-spot__grid small { font-family: Roboto, "Instrument Sans", sans-serif; font-size: 14px; line-height: 1.45; color: #999; }
+@media (max-width: 860px) {
+  .swx-spot { grid-template-columns: minmax(0, 1fr); padding: 30px 22px; gap: 26px; border-radius: 24px; }
+}
+@media (max-width: 480px) {
+  .swx-spot__grid { gap: 10px; }
+  .swx-spot__grid li { padding: 14px; border-radius: 16px; }
+  .swx-ico { width: 32px; height: 32px; margin-bottom: 6px; }
+  .swx-ico svg { width: 16px; height: 16px; }
+  .swx-spot__grid b { font-size: 15px; line-height: 1.25; }
+  .swx-spot__grid small { font-size: 12.5px; }
+  .swx-btn { flex: 1 1 100%; justify-content: center; }
+}
+
+/* light build */
+.swx-spot--light {
+  background:
+    radial-gradient(80% 120% at 0% 0%, rgba(168, 85, 247, .16), transparent 60%),
+    radial-gradient(60% 100% at 100% 100%, rgba(124, 58, 237, .08), transparent 60%),
+    #ffffff;
+  border-color: rgba(124, 58, 237, .25);
+  box-shadow: 0 30px 80px -40px rgba(124, 58, 237, .45);
+}
+.swx-spot--light .swx-spot__badge {
+  background: rgba(124, 58, 237, .07); border-color: rgba(124, 58, 237, .25); color: #7c3aed;
+  font-family: "Instrument Sans", sans-serif; font-style: italic; letter-spacing: .3px; font-size: 13.5px;
+}
+.swx-spot--light .swx-spot__badge i { background: #7c3aed; box-shadow: 0 0 10px #a855f7; }
+.swx-spot--light h2 { color: #191919; }
+.swx-spot--light .swx-hl { background: linear-gradient(0deg, #7c3aed, #a855f7); color: #fff; }
+.swx-spot--light p { color: #4d4d4d; }
+.swx-spot--light .swx-btn--primary { background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%); color: #fff; box-shadow: rgba(139, 61, 242, .7) 0 10px 22px -8px; }
+.swx-spot--light .swx-btn--ghost { color: #191919; border-color: rgba(25, 25, 25, .15); }
+.swx-spot--light .swx-btn--ghost:hover { border-color: rgba(124, 58, 237, .5); }
+.swx-spot--light .swx-spot__grid li { background: #f8f9fa; border-color: transparent; }
+.swx-spot--light .swx-spot__grid li:hover { border-color: rgba(124, 58, 237, .3); }
+.swx-spot--light .swx-ico { background: linear-gradient(135deg, #a855f7, #7c3aed); color: #fff; }
+.swx-spot--light .swx-spot__grid b { color: #191919; }
+.swx-spot--light .swx-spot__grid small { color: #666; }
+
+/* The existing "AI agents & bots" service card: lime (purple on light)
+   border and a filled button instead of the dark secondary one. Framer draws
+   the card border from --border-color, hence the !important overrides of
+   its inline style. */
+[data-swiftrix-name="Servive Card 1"]:has(a[href*="demo"]) {
+  --border-color: rgba(176, 229, 98, .45) !important;
+  box-shadow: 0 24px 60px -34px rgba(176, 229, 98, .45);
+}
+a[data-swiftrix-name="Secondary Button"][href*="demo"] {
+  background: linear-gradient(135deg, #c5f07a 0%, #a0d64a 100%) !important;
+  --border-color: transparent !important;
+  box-shadow: 0 12px 26px -10px rgba(160, 214, 74, .6);
+  transition: transform .18s ease, filter .18s ease;
+}
+a[data-swiftrix-name="Secondary Button"][href*="demo"]:hover { transform: translateY(-2px); filter: brightness(1.05); }
+a[data-swiftrix-name="Secondary Button"][href*="demo"] p { color: #0a0a0c !important; -webkit-text-fill-color: #0a0a0c !important; font-weight: 600 !important; font-style: normal !important; }
+a[data-swiftrix-name="Secondary Button"][href*="demo"] img { filter: brightness(0); }
+body:has(.swx-spot--light) [data-swiftrix-name="Servive Card 1"]:has(a[href*="demo"]) {
+  --border-color: rgba(124, 58, 237, .35) !important;
+  box-shadow: 0 24px 60px -34px rgba(124, 58, 237, .4);
+}
+body:has(.swx-spot--light) a[data-swiftrix-name="Secondary Button"][href*="demo"] {
+  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%) !important;
+  box-shadow: rgba(139, 61, 242, .7) 0 10px 22px -8px;
+}
+body:has(.swx-spot--light) a[data-swiftrix-name="Secondary Button"][href*="demo"] p { color: #fff !important; -webkit-text-fill-color: #fff !important; }
+body:has(.swx-spot--light) a[data-swiftrix-name="Secondary Button"][href*="demo"] img { filter: brightness(0) invert(1); }
