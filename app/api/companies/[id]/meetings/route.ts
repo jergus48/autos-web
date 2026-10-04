@@ -32,10 +32,26 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   if (isNaN(+start)) return NextResponse.json({ error: 'Pick a date and time' }, { status: 400 });
   const minutes = Math.min(180, Math.max(15, Number(b.minutes) || 30));
   const end = new Date(+start + minutes * 60000);
+  const lang = ['de', 'at', 'ch'].includes(c.country) ? 'de' : c.country === 'lt' ? 'lt' : 'en';
+  const intro = {
+    en: `Hi,\n\nThank you for your time on the phone. As agreed, here is our Google Meet where we will walk you through a short presentation prepared for ${c.name} and show examples of our previous work.`,
+    lt: `Sveiki,\n\nDekojame uz pokalbi telefonu. Kaip susitareme, siunciame Google Meet nuoroda, kurioje parodysime jums, ${c.name}, paruosta trumpa pristatyma ir ankstesnius musu darbus.`,
+    de: `Guten Tag,\n\nvielen Dank fuer das Telefonat. Wie besprochen finden Sie hier unser Google Meet, in dem wir Ihnen eine kurze, fuer ${c.name} vorbereitete Praesentation und Beispiele unserer bisherigen Arbeit zeigen.`,
+  }[lang];
+  const deck = (await q('select share_token from decks where company_id=$1 and share_token is not null order by (lang=$2) desc, created_at desc limit 1', [id, lang]))[0];
+  const u = new URL(req.url);
+  const host = req.headers.get('x-forwarded-host') || req.headers.get('host') || u.host;
+  const origin = `${host.startsWith('localhost') ? 'http' : 'https'}://${host}`;
+  const description = [
+    intro,
+    b.note ? String(b.note).slice(0, 500) : '',
+    deck ? `Slides: ${origin}/s/${deck.share_token}` : '',
+    'Swiftrix | swiftrix.eu',
+  ].filter(Boolean).join('\n\n');
   try {
     const m = await createMeeting({
       summary: `Swiftrix x ${c.name}`,
-      description: `Call with Swiftrix: slides and previous work.${b.note ? '\n\n' + String(b.note).slice(0, 500) : ''}`,
+      description,
       start: start.toISOString(),
       end: end.toISOString(),
       timeZone: String(b.timeZone || 'Europe/Vilnius'),
