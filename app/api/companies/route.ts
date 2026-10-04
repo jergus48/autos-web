@@ -23,8 +23,8 @@ export async function GET() {
      left join lateral (
         select count(*)::int n from calls k join companies c2 on c2.id=k.company_id
         where c2.id=c.id or (dom(c.website)<>'' and dom(c2.website)=dom(c.website)) or lower(c2.name)=lower(c.name)) cnt on true
-     where c.owner_id=$1 order by c.created_at desc`,
-    [s.uid]
+     where ($2::boolean or c.owner_id=$1) order by c.created_at desc`,
+    [s.uid, s.role === 'admin']
   );
   return NextResponse.json(rows);
 }

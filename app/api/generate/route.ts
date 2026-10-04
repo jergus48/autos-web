@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   const s = (await getSession())!;
   const { companyId, lang } = await req.json();
   if (!LANGS.includes(lang)) return NextResponse.json({ error: 'Bad language' }, { status: 400 });
-  const rows = await q('select * from companies where id=$1 and owner_id=$2', [companyId, s.uid]);
+  const rows = await q('select * from companies where id=$1 and ($3::boolean or owner_id=$2)', [companyId, s.uid, s.role === 'admin']);
   const c = rows[0];
   if (!c) return NextResponse.json({ error: 'Company not found' }, { status: 404 });
 

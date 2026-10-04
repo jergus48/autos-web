@@ -19,8 +19,8 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
   const { path, value } = await req.json();
   if (typeof path !== 'string' || typeof value !== 'string') return NextResponse.json({ error: 'bad input' }, { status: 400 });
   const rows = await q(
-    'select d.slides,d.script from decks d join companies c on c.id=d.company_id where d.id=$1 and c.owner_id=$2',
-    [id, s.uid]
+    'select d.slides,d.script from decks d join companies c on c.id=d.company_id where d.id=$1 and ($3::boolean or c.owner_id=$2)',
+    [id, s.uid, s.role === 'admin']
   );
   if (!rows[0]) return NextResponse.json({ error: 'not found' }, { status: 404 });
   const [root, ...rest] = path.split('.');
@@ -37,6 +37,6 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
 export async function DELETE(_: Request, { params }: { params: Promise<{ id: string }> }) {
   const s = (await getSession())!;
   const { id } = await params;
-  await q('delete from decks d using companies c where d.id=$1 and c.id=d.company_id and c.owner_id=$2', [id, s.uid]);
+  await q('delete from decks d using companies c where d.id=$1 and c.id=d.company_id and ($3::boolean or c.owner_id=$2)', [id, s.uid, s.role === 'admin']);
   return NextResponse.json({ ok: true });
 }

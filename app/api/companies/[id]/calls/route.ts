@@ -3,8 +3,8 @@ import { q } from '@/lib/db';
 import { getSession } from '@/lib/auth';
 import { VALID_OUTCOMES } from '@/lib/outcomes';
 
-async function owns(uid: number, id: string) {
-  const r = await q('select id from companies where id=$1 and owner_id=$2', [id, uid]);
+async function owns(s: { uid: number; role: string }, id: string) {
+  const r = await q('select id from companies where id=$1 and ($3::boolean or owner_id=$2)', [id, s.uid, s.role === 'admin']);
   return !!r[0];
 }
 
@@ -12,7 +12,7 @@ async function owns(uid: number, id: string) {
 export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
   const s = (await getSession())!;
   const { id } = await params;
-  if (!(await owns(s.uid, id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
+  if (!(await owns(s, id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
   const rows = await q(
     `select k.id,k.outcome,k.note,k.followup_at::text as followup_at,k.created_at,u.email as user_email,(k.user_id=$2) as mine
      from calls k join companies c2 on c2.id=k.company_id left join users u on u.id=k.user_id
@@ -27,7 +27,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const s = (await getSession())!;
   const { id } = await params;
-  if (!(await owns(s.uid, id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
+  if (!(await owns(s, id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
   const b = await req.json();
   if (!VALID_OUTCOMES.includes(b.outcome)) return NextResponse.json({ error: 'Pick an outcome' }, { status: 400 });
   const follow = /^\d{4}-\d{2}-\d{2}$/.test(b.followup_at || '') ? b.followup_at : null;
