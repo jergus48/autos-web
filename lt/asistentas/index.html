@@ -10,29 +10,37 @@
   <meta property="og:description" content="Papasakokite, kas stringa — pasiūlysime, kaip tai išspręsti.">
   <link rel="icon" href="/assets/images/swiftrixLogo.png">
   <link rel="alternate" hreflang="en" href="https://www.swiftrix.eu/assistant">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@400;500&display=swap">
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&display=swap">
   <link rel="stylesheet" href="/css/pages.css">
   <link rel="stylesheet" href="/assistant/assistant.css">
   <script>try { if (/[?&]theme=light/.test(location.search) || (!/[?&]theme=dark/.test(location.search) && localStorage.getItem('swiftrix-theme') === 'light')) document.documentElement.setAttribute('data-theme', 'light') } catch (e) {}</script>
 </head>
 <body>
-  <nav class="nav">
-    <a class="nav-logo" href="/lt" data-home aria-label="Swiftrix">
+  <div class="backdrop" aria-hidden="true"></div>
+  <nav class="vex-nav">
+    <a class="vex-logo" data-site="" href="/lt" aria-label="Swiftrix">
       <img class="logo-dark" src="/assets/images/swiftrixLogo.png" alt="Swiftrix">
       <img class="logo-light" src="/light/assets/images/swiftrixLogo.png" alt="Swiftrix">
     </a>
-    <a class="nav-back" href="/lt" data-home>← Grįžti į svetainę</a>
-    <button class="theme-btn" type="button" data-theme-toggle aria-label="Keisti šviesią / tamsią temą">
-      <svg class="moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-    </button>
-    <a class="btn btn-primary" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Užsisakyti skambutį</a>
+    <div class="vex-links" id="vexLinks">
+      <a data-site="#process" href="/lt#process">Kaip tai veikia</a>
+      <a data-site="#testimonial" href="/lt#testimonial">Atvejų studijos</a>
+      <a data-site="" href="/lt">Apie mus</a>
+      <a data-page="/lt/asistentas" href="/lt/asistentas" aria-current="page">DI asistentas</a>
+      <a data-site="#faq" href="/lt#faq">DUK</a>
+      <a class="vex-mlink" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Užsisakyti skambutį</a>
+    </div>
+    <a class="vex-cta" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Užsisakyti skambutį</a>
+    <button class="vex-burger" id="vexBurger" type="button" aria-label="Meniu" aria-expanded="false"><span></span><span></span><span></span></button>
   </nav>
 
   <main class="wrap">
     <header class="hero">
-      <span class="badge"><i></i>DI asistentas</span>
-      <h1>Papasakokite, kas stringa — <em>pasiūlysime, kaip tai išspręsti</em></h1>
+      <p class="eyebrow"><span>DI ASISTENTAS · NEMOKAMAS ĮVERTINIMAS</span></p>
+      <h1>Papasakokite, kas stringa — pasiūlysime, kaip tai <span class="hl">išspręsti</span></h1>
       <p>Aprašykite pasikartojantį darbą ar problemą savo įmonėje. DI asistentas per kelias sekundes pasiūlys sprendimo idėjų su pavyzdžiais, paruoš laišką mūsų komandai, o pokalbį galėsite užsisakyti čia pat.</p>
     </header>
 
@@ -142,10 +150,10 @@
       </section>
     </div>
 
-    <p class="demo-link">Norite pamatyti DI agentą darbe? <a href="/lt/demo">Išbandykite užsakymų agento demo →</a></p>
+    <p class="demo-link">Norite pamatyti DI agentą darbe? <a data-page="/lt/demo" href="/lt/demo">Išbandykite užsakymų agento demo →</a></p>
   </main>
 
-  <footer>© 2026 Swiftrix · <a href="/lt" data-home>swiftrix.eu</a></footer>
+  <footer>© 2026 Swiftrix · <a data-site="" href="/lt">swiftrix.eu</a></footer>
   <script src="/js/pages.js" defer></script>
   <script src="/assistant/calculator.js" defer></script>
   <script src="/assistant/assistant.js" defer></script>
