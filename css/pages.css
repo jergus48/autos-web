@@ -80,7 +80,7 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   position: relative;
-  overflow-x: hidden;
+  overflow-x: clip; /* not hidden: that would stop the sticky nav */
 }
 ::selection { background: var(--accent); color: var(--accent-ink); }
 a { color: inherit; }
@@ -109,7 +109,8 @@ main, footer { position: relative; z-index: 1; }
 
 /* ---- nav: the homepage's .vex-nav ---- */
 .vex-nav {
-  position: relative; z-index: 50;
+  position: sticky; top: 24px; z-index: 50;
+  line-height: normal; /* the homepage's; body text here uses 1.55, which made the CTA 2px taller */
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
   width: calc(100% - 48px); max-width: 890px; margin: 24px auto 0;
   padding: 10px 14px 10px 24px; box-sizing: border-box;
@@ -122,9 +123,17 @@ main, footer { position: relative; z-index: 1; }
 .vex-logo .logo-light, :root[data-theme="light"] .vex-logo .logo-dark { display: none; }
 :root[data-theme="light"] .vex-logo .logo-light { display: block; }
 .vex-links { display: flex; align-items: center; gap: 22px; }
+.vex-nav { transition: padding .3s ease, box-shadow .3s ease, background .3s ease; }
+/* css/deck-theme.css (dark) and light/css/enhance.css: slimmer once scrolled */
+.vex-nav.scrolled {
+  padding-top: 7px; padding-bottom: 7px;
+  background: rgba(14, 14, 16, .82); border-color: rgba(176, 229, 98, .2);
+  box-shadow: rgba(0, 0, 0, .55) 0 14px 40px 0;
+}
+:root[data-theme="light"] .vex-nav.scrolled { background: rgba(255, 255, 255, .85); box-shadow: rgba(80, 60, 140, .16) 0 12px 36px 0; }
 .vex-links a {
   position: relative; text-decoration: none; color: var(--text); font-family: var(--font-ui);
-  font-size: 16px; font-weight: 500; white-space: nowrap; transition: color .2s;
+  font-size: 17px; font-weight: 500; white-space: nowrap; transition: color .2s;
 }
 .vex-links a:hover, .vex-links a[aria-current="page"] { color: var(--accent); }
 .vex-links a::after {
@@ -139,6 +148,10 @@ main, footer { position: relative; z-index: 1; }
 }
 .vex-cta:hover { filter: brightness(1.06); }
 .vex-mlink, .vex-burger { display: none; }
+@media (min-width: 861px) and (max-width: 1260px) {
+  .vex-links { gap: 18px; }
+  .vex-links a { font-size: 15px; }
+}
 @media (min-width: 861px) and (max-width: 960px) {
   .vex-links { gap: 13px; }
   .vex-links a { font-size: 14px; }
@@ -168,7 +181,6 @@ main, footer { position: relative; z-index: 1; }
   .vex-burger.open span:nth-child(2) { opacity: 0; }
   .vex-burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 }
-@media (max-width: 480px) { .vex-nav { width: calc(100% - 24px); margin-top: 14px; padding-left: 16px; } .vex-logo img { height: 42px; } }
 
 /* ---- theme switch: js/theme-switch.js's look; toggles in place here ---- */
 .dts-switch { position: fixed; top: 22px; right: 24px; z-index: 100000; border: 0; padding: 0; cursor: pointer; background: transparent; -webkit-tap-highlight-color: transparent; }

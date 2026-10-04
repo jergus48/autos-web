@@ -43,6 +43,14 @@
   btn.addEventListener('click', function () { apply(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light', true) })
   document.body.appendChild(btn)
 
+  // Slimmer nav once the page scrolls — js/deck-motion.js on the homepage.
+  var nav = document.querySelector('.vex-nav')
+  if (nav) {
+    var onScroll = function () { nav.classList.toggle('scrolled', window.scrollY > 24) }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+  }
+
   // Mobile menu — same behaviour as js/vex-fix.js initNav() on the homepage.
   var burger = document.getElementById('vexBurger')
   var links = document.getElementById('vexLinks')
