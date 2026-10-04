@@ -74,8 +74,8 @@ async function gjson(url: string, init: RequestInit = {}) {
 }
 
 export async function primaryCalendarEmail() {
-  const j = await gjson('https://www.googleapis.com/calendar/v3/calendars/primary');
-  return j.id as string;
+  const j = await gjson('https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=1&fields=summary');
+  return j.summary as string;
 }
 
 export async function createMeeting(o: { summary: string; description?: string; start: string; end: string; timeZone: string; attendee: string }) {
