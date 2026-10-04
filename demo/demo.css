@@ -1,0 +1,66 @@
+/* Order-agent demo (/demo, /lt/demo) — on top of /css/pages.css. */
+
+/* ---- demo app ---- */
+.app {
+  display: grid; gap: 16px;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr) minmax(0, 1.1fr);
+  align-items: start;
+}
+@media (max-width: 1100px) { .app { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .panel-result { grid-column: 1 / -1; } }
+@media (max-width: 760px) { .app { grid-template-columns: minmax(0, 1fr); } }
+
+/* inbox */
+.mail-list { list-style: none; margin: 0; padding: 6px; border-bottom: 1px solid var(--border); }
+.mail-item {
+  width: 100%; text-align: left; display: grid; grid-template-columns: 1fr auto; gap: 2px 10px;
+  padding: 10px 12px; border-radius: 12px; border: 1px solid transparent; background: none; cursor: pointer;
+}
+.mail-item:hover { background: var(--surface-2); }
+.mail-item[aria-selected="true"] { background: var(--accent-soft); border-color: var(--accent-ring); }
+.mail-from { font-weight: 500; font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mail-time { font-size: 13px; color: var(--faint); }
+.mail-subj { grid-column: 1 / -1; font-size: 14px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mail-item .done-dot { display: none; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-left: 6px; vertical-align: middle; }
+.mail-item.processed .done-dot { display: inline-block; }
+.reader-meta { font-size: 14px; color: var(--muted); margin-bottom: 10px; overflow-wrap: anywhere; }
+.reader-meta b { color: var(--text); font-weight: 500; }
+.reader-body {
+  white-space: pre-wrap; font-size: 15px; line-height: 1.6; margin: 0 0 16px;
+  max-height: 290px; overflow: auto; overflow-wrap: anywhere;
+}
+.own textarea {
+  width: 100%; min-height: 220px; resize: vertical; padding: 12px 14px; border-radius: 12px;
+  background: var(--bg); border: 1px solid var(--border); font-size: 15px; line-height: 1.55;
+}
+.own textarea:focus { outline: none; border-color: var(--accent-ring); box-shadow: 0 0 0 3px var(--accent-soft); }
+.own .hint { font-size: 13px; color: var(--faint); margin: 8px 0 14px; }
+.run-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.run-row .btn-primary { flex: 1 1 auto; padding: 13px 20px; }
+
+/* agent */
+.systems { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.sys {
+  font-size: 12.5px; padding: 4px 10px; border-radius: 100px; color: var(--faint);
+  border: 1px solid var(--border); background: var(--bg); transition: all .25s ease;
+}
+.sys.on { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+.sys.used { color: var(--text); border-color: var(--accent-ring); }
+
+/* sheet */
+.sheet { margin-top: 16px; }
+.sheet .panel-head { gap: 10px; }
+.xls { width: 20px; height: 20px; border-radius: 5px; background: #1f9d55; color: #fff; display: grid; place-items: center; font-size: 11px; font-weight: 600; }
+.sheet-scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 780px; font-size: 14.5px; }
+th, td { border-bottom: 1px solid var(--sheet-grid); border-right: 1px solid var(--sheet-grid); padding: 9px 12px; text-align: left; vertical-align: top; }
+th:last-child, td:last-child { border-right: 0; }
+th { background: var(--sheet-head); color: var(--muted); font-weight: 500; font-size: 13px; position: sticky; top: 0; }
+td.num, th.num { text-align: right; white-space: nowrap; }
+td.no { color: var(--faint); white-space: nowrap; }
+tr.flash td { animation: flash 2.2s ease; }
+@keyframes flash { 0%, 30% { background: var(--accent-soft); } 100% { background: transparent; } }
+.status { display: inline-block; font-size: 12.5px; padding: 2px 9px; border-radius: 100px; white-space: nowrap; }
+.status.ready { background: var(--accent-soft); color: var(--accent); }
+.status.waiting { background: var(--warn-soft); color: var(--warn); }
+.status.review { background: var(--surface-2); color: var(--muted); }
+.empty-row td { color: var(--faint); text-align: center; padding: 26px; }
