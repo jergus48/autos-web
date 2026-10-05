@@ -19,7 +19,7 @@ export async function GET(req: Request) {
          count(k.id) filter (where k.outcome='not_interested')::int not_interested,
          count(k.id) filter (where k.outcome in ('no_answer','voicemail'))::int no_answer,
          count(distinct k.company_id)::int companies,
-         (select count(*)::int from companies c where c.owner_id=u.id) as list_size,
+         (select count(*)::int from companies c where c.country=u.country) as list_size,
          max(k.created_at) last_call
        from users u left join calls k on k.user_id=u.id and k.created_at > ${since}
        group by u.id order by calls desc, u.email`),

@@ -76,3 +76,5 @@ alter table meetings add column if not exists tools text;
 alter table meetings add column if not exists agreement text;
 alter table meetings add column if not exists debrief text;
 alter table meetings add column if not exists debrief_at timestamptz;
+
+alter table users add column if not exists country text;

@@ -4,7 +4,7 @@ import { getSession } from '@/lib/auth';
 import { fetchTranscript } from '@/lib/google';
 
 async function load(s: { uid: number; role: string }, id: string) {
-  const r = await q('select m.* from meetings m join companies c on c.id=m.company_id where m.id=$1 and ($3::boolean or c.owner_id=$2)', [id, s.uid, s.role === 'admin']);
+  const r = await q('select m.* from meetings m join companies c on c.id=m.company_id where m.id=$1 and ($3::boolean or c.country=(select u0.country from users u0 where u0.id=$2))', [id, s.uid, s.role === 'admin']);
   return r[0];
 }
 

@@ -8,7 +8,7 @@ export default async function DeckPage({ params }: { params: Promise<{ id: strin
   if (!s) redirect('/login');
   const { id } = await params;
   const rows = await q(
-    `select d.*, c.name, c.email, c.phone, c.website from decks d join companies c on c.id=d.company_id where d.id=$1 and ($3::boolean or c.owner_id=$2)`,
+    `select d.*, c.name, c.email, c.phone, c.website from decks d join companies c on c.id=d.company_id where d.id=$1 and ($3::boolean or c.country=(select u0.country from users u0 where u0.id=$2))`,
     [id, s.uid, s.role === 'admin']
   );
   const d = rows[0];

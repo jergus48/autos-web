@@ -18,7 +18,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
   const country = b.country ? parseCountry(b.country) : null;
   await q(
     `update companies set name=coalesce($3,name), email=coalesce($4,email), phone=coalesce($5,phone), website=coalesce($6,website), logo_url=coalesce($7,logo_url), country=coalesce($8,country)
-     where id=$1 and ($9::boolean or owner_id=$2)`,
+     where id=$1 and ($9::boolean or country=(select u0.country from users u0 where u0.id=$2))`,
     [id, s.uid, b.name ?? null, b.email ?? null, b.phone ?? null, b.website ?? null, b.logo_url ?? null, country, s.role === 'admin']
   );
   return NextResponse.json({ ok: true });

@@ -4,7 +4,7 @@ import { getSession } from '@/lib/auth';
 import { VALID_OUTCOMES } from '@/lib/outcomes';
 
 async function owns(s: { uid: number; role: string }, id: string) {
-  const r = await q('select id from companies where id=$1 and ($3::boolean or owner_id=$2)', [id, s.uid, s.role === 'admin']);
+  const r = await q('select id from companies where id=$1 and ($3::boolean or country=(select u0.country from users u0 where u0.id=$2))', [id, s.uid, s.role === 'admin']);
   return !!r[0];
 }
 

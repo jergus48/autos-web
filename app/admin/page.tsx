@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { COUNTRIES } from '@/lib/countries';
 import { OUTCOMES, ago, outcomeLabel, outcomeTone } from '@/lib/outcomes';
 
-type U = { id: number; email: string; role: string; decks: number; tokens: number };
+type U = { id: number; email: string; role: string; country?: string | null; decks: number; tokens: number };
 type Stats = {
   days: number;
   totals: { calls: number; interested: number; meetings: number; emails: number; companies: number };
@@ -37,7 +37,7 @@ export default function Admin() {
   const [fc, setFc] = useState('');
   const [users, setUsers] = useState<U[]>([]);
   const [err, setErr] = useState('');
-  const [f, setF] = useState({ email: '', password: '', role: 'user' });
+  const [f, setF] = useState({ email: '', password: '', role: 'user', country: '' });
 
   const loadCalls = useCallback(async () => {
     const qs = new URLSearchParams({ days: String(days) });
@@ -92,7 +92,7 @@ export default function Admin() {
     const r = await fetch('/api/admin/users', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(f) });
     const j = await r.json();
     if (!r.ok) return setErr(j.error);
-    setF({ email: '', password: '', role: 'user' });
+    setF({ email: '', password: '', role: 'user', country: '' });
     loadUsers();
   }
   async function del(u: U) {
@@ -277,15 +277,24 @@ export default function Admin() {
               <input type="email" placeholder="Email" value={f.email} onChange={(e) => setF({ ...f, email: e.target.value })} required />
               <input type="text" placeholder="Password (min 8)" value={f.password} onChange={(e) => setF({ ...f, password: e.target.value })} required />
               <select value={f.role} onChange={(e) => setF({ ...f, role: e.target.value })}><option value="user">Caller</option><option value="admin">Admin</option></select>
+              <select value={f.country} onChange={(e) => setF({ ...f, country: e.target.value })} title="Which country's companies this caller sees">
+                <option value="">Country: none</option>
+                {COUNTRIES.map((c) => <option key={c.code} value={c.code}>{c.label}</option>)}
+              </select>
               <button className="btn">Add user</button>
             </form>
             {err && <div className="err">{err}</div>}
           </div>
           <div className="card">
             <table className="t">
-              <thead><tr><th>EMAIL</th><th>ROLE</th><th>DECKS</th><th>TOKENS USED</th><th></th></tr></thead>
+              <thead><tr><th>EMAIL</th><th>ROLE</th><th>CALLS COMPANIES FROM</th><th>DECKS</th><th>TOKENS USED</th><th></th></tr></thead>
               <tbody>{users.map((u) => (
-                <tr key={u.id}><td>{u.email}</td><td><span className="pill">{u.role}</span></td><td>{u.decks}</td><td>{u.tokens.toLocaleString()}</td>
+                <tr key={u.id}><td>{u.email}</td><td><span className="pill">{u.role}</span></td>
+                  <td>{u.role === 'admin' ? <span style={{ color: 'var(--mute)' }}>all</span> : (
+                    <select value={u.country || ''} onChange={async (e) => { await fetch('/api/admin/users', { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id: u.id, country: e.target.value }) }); loadUsers(); }}>
+                      <option value="">Not set (sees nothing)</option>
+                      {COUNTRIES.map((c) => <option key={c.code} value={c.code}>{c.label}</option>)}
+                    </select>)}</td><td>{u.decks}</td><td>{u.tokens.toLocaleString()}</td>
                   <td><button className="btn ghost sm" onClick={() => del(u)}>Remove</button></td></tr>
               ))}</tbody>
             </table>
