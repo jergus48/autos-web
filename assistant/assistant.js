@@ -16,15 +16,15 @@
     lt: {
       think: ['Analizuoju jūsų problemą…', 'Ieškau tinkamiausių sprendimų…', 'Peržiūriu mūsų ankstesnius projektus…', 'Rašau laišką mūsų komandai…'],
       understood: 'Kaip supratome', offTopic: 'Atsakymas',
-      retryHint: 'Aprašykite darbą ar problemą savo įmonėje, kurią norėtumėte palengvinti — pvz. kas ją daro, kiek laiko užima, kokias programas naudojate.', retry: 'Aprašyti kitaip',
+      retryHint: 'Aprašykite darbą ar problemą savo įmonėje, kurią norėtumėte palengvinti, pvz. kas ją daro, kiek laiko užima, kokias programas naudojate.', retry: 'Aprašyti kitaip',
       kind: { agent: 'DI agentas', automation: 'Automatizacija', integration: 'Integracija', app: 'Programa' },
       cx: { simple: 'Paprasta', medium: 'Vidutinio sudėtingumo', complex: 'Sudėtinga' },
-      tooShort: 'Aprašykite problemą plačiau — bent vienu ar dviem sakiniais.',
-      err: { rate: 'Per daug užklausų iš eilės — pabandykite po kelių minučių.', off: 'DI asistentas šiuo metu nepasiekiamas. Parašykite mums laišką žemiau arba iškart užsisakykite pokalbį.', generic: 'Nepavyko gauti atsakymo. Pabandykite dar kartą.' },
+      tooShort: 'Aprašykite problemą plačiau, bent vienu ar dviem sakiniais.',
+      err: { rate: 'Per daug užklausų iš eilės. Pabandykite po kelių minučių.', off: 'DI asistentas šiuo metu nepasiekiamas. Parašykite mums laišką žemiau arba iškart užsisakykite pokalbį.', generic: 'Nepavyko gauti atsakymo. Pabandykite dar kartą.' },
       needFields: 'Įrašykite vardą, teisingą el. pašto adresą ir pažymėkite sutikimą.',
       sending: 'Siunčiama…', send: 'Siųsti laišką',
-      sent: function () { return 'Ačiū! Laišką gavome ir atsakysime el. paštu. Jei norite greičiau — užsisakykite pokalbį žemiau.' },
-      sendOff: 'Automatinis siuntimas šiuo metu neveikia. Atidarykite laišką savo pašto programoje — jis jau paruoštas:',
+      sent: function () { return 'Ačiū! Laišką gavome ir atsakysime el. paštu. Jei norite greičiau, užsisakykite pokalbį žemiau.' },
+      sendOff: 'Automatinis siuntimas šiuo metu neveikia. Atidarykite laišką savo pašto programoje, jis jau paruoštas:',
       openMail: 'Atidaryti pašto programoje',
       sendErr: 'Nepavyko išsiųsti. Pabandykite dar kartą arba parašykite tiesiai ' + CONTACT + '.',
       rateSend: 'Laiškas jau išsiųstas neseniai. Jei norite ką nors pridėti, parašykite tiesiai ' + CONTACT + '.',
@@ -34,15 +34,15 @@
     en: {
       think: ['Analysing your problem…', 'Looking for the best-fitting solutions…', 'Checking our past projects…', 'Writing the email to our team…'],
       understood: 'What we understood', offTopic: 'Reply',
-      retryHint: 'Describe a task or problem in your business you’d like to make easier — e.g. who does it, how long it takes, which software you use.', retry: 'Describe it differently',
+      retryHint: 'Describe a task or problem in your business you’d like to make easier, e.g. who does it, how long it takes, which software you use.', retry: 'Describe it differently',
       kind: { agent: 'AI agent', automation: 'Automation', integration: 'Integration', app: 'Custom app' },
       cx: { simple: 'Simple', medium: 'Medium complexity', complex: 'Complex' },
-      tooShort: 'Describe the problem in a bit more detail — at least a sentence or two.',
-      err: { rate: 'Too many requests in a row — please try again in a few minutes.', off: 'The AI assistant is unavailable right now. Write to us below or book a call straight away.', generic: 'Couldn’t get an answer. Please try again.' },
+      tooShort: 'Describe the problem in a bit more detail, at least a sentence or two.',
+      err: { rate: 'Too many requests in a row. Please try again in a few minutes.', off: 'The AI assistant is unavailable right now. Write to us below or book a call straight away.', generic: 'Couldn’t get an answer. Please try again.' },
       needFields: 'Please enter your name, a valid email address and tick the consent box.',
       sending: 'Sending…', send: 'Send the email',
       sent: function (n) { return 'Thank you, ' + n + '! We’ve received your email and will reply by email. If you’d like to talk sooner, book a call below.' },
-      sendOff: 'Automatic sending isn’t working right now. Open the email in your mail app — it’s ready to go:',
+      sendOff: 'Automatic sending isn’t working right now. Open the email in your mail app. It’s ready to go:',
       openMail: 'Open in your mail app',
       sendErr: 'Couldn’t send it. Please try again or write to ' + CONTACT + ' directly.',
       rateSend: 'An email was sent from here a moment ago. To add something, write to ' + CONTACT + ' directly.',
@@ -55,22 +55,22 @@
   // the ids /api/assistant may return.
   var CASES = {
     lt: {
-      hakom: ['Dokumentų ir protokolų pasirašymas', 'Suskaitmeninome visą protokolų pasirašymo procesą gamykloje. Darbuotojai prisijungia su savo darbo kortele, mato kiekvieną naują dokumentą, kurį privalo peržiūrėti, ir pasirašo skaitmeniniu būdu — šimtus popierinių formų pakeitėme pilnai sekamu įrašu.', 'hakom.sk'],
-      aluprint: ['Dokumentų ir protokolų pasirašymas', 'Tą pačią kortele paremtą pasirašymo sistemą įdiegėme „Aluprint“ gamybos linijoje, kad vadovybė akimirksniu matytų, jog kiekvienas darbuotojas perskaitė ir patvirtino naujausius protokolus — be jokio popierizmo.', 'aluprint.sk'],
-      gaya: ['Sąskaitų archyvo valymas', 'Sukūrėme su jų skeneriu sujungtą programą, kuri kiekvieną nuskaitytą popierinę sąskaitą patikrina duomenų bazėje ir tiksliai nurodo darbuotojams, kurias galima išmesti — taip atlaisvinama daug saugyklos vietos.', 'gaya.sk'],
-      geosoul: ['Statinių skaičiavimo sistema', 'Individuali programa, atliekanti statinius skaičiavimus jų geotechniniams projektams ir automatiškai sugeneruojanti pritaikytą Word ataskaitą kiekvienam projektui — integruota su jų produktais ir įvertinanti skirtingus inkarų tipus bei grunto sąlygas.', 'geosoul.sk'],
+      hakom: ['Dokumentų ir protokolų pasirašymas', 'Suskaitmeninome visą protokolų pasirašymo procesą gamykloje. Darbuotojai prisijungia su savo darbo kortele, mato kiekvieną naują dokumentą, kurį privalo peržiūrėti, ir pasirašo skaitmeniniu būdu. Šimtus popierinių formų pakeitėme pilnai sekamu įrašu.', 'hakom.sk'],
+      aluprint: ['Dokumentų ir protokolų pasirašymas', 'Tą pačią kortele paremtą pasirašymo sistemą įdiegėme „Aluprint“ gamybos linijoje, kad vadovybė akimirksniu matytų, jog kiekvienas darbuotojas perskaitė ir patvirtino naujausius protokolus, be jokio popierizmo.', 'aluprint.sk'],
+      gaya: ['Sąskaitų archyvo valymas', 'Sukūrėme su jų skeneriu sujungtą programą, kuri kiekvieną nuskaitytą popierinę sąskaitą patikrina duomenų bazėje ir tiksliai nurodo darbuotojams, kurias galima išmesti. Taip atlaisvinama daug saugyklos vietos.', 'gaya.sk'],
+      geosoul: ['Statinių skaičiavimo sistema', 'Individuali programa, atliekanti statinius skaičiavimus jų geotechniniams projektams ir automatiškai sugeneruojanti pritaikytą Word ataskaitą kiekvienam projektui. Ji integruota su jų produktais ir įvertina skirtingus inkarų tipus bei grunto sąlygas.', 'geosoul.sk'],
       unisport: ['Duomenų bazės migracija', 'Automatizavome visą jų didelės senos duomenų bazės perkėlimą iš senos svetainės į naują, kartu išvalydami ir pertvarkydami duomenis, kad kiekvienas įrašas atsidurtų tinkamoje vietoje.', 'unisport-kovac.sk'],
-      urbarlamac: ['Mėnesiniai nuosavybės skaičiavimai', 'Automatizacija, generuojanti bendrijos mėnesinius Excel išmokų skaičiavimus nariams pagal naujausius nuosavybės dokumentus — varginanti rankinė užduotis dabar atliekama automatiškai.', 'urbarlamac.sk'],
-      joinupshift: ['Klipų kūrėjų valdymo portalas', 'Pilnas portalas klipų kūrėjams valdyti nuo pradžios iki pabaigos — pritraukite ir prijunkite juos, valdykite jų paskyras, automatizuokite išmokas ir vienoje suvestinėje stebėkite kiekvieno kūrėjo generuojamus pardavimus, peržiūras ir pajamas.', 'joinupshift.com']
+      urbarlamac: ['Mėnesiniai nuosavybės skaičiavimai', 'Automatizacija, generuojanti bendrijos mėnesinius Excel išmokų skaičiavimus nariams pagal naujausius nuosavybės dokumentus. Varginanti rankinė užduotis dabar atliekama automatiškai.', 'urbarlamac.sk'],
+      joinupshift: ['Klipų kūrėjų valdymo portalas', 'Pilnas portalas klipų kūrėjams valdyti nuo pradžios iki pabaigos: pritraukite ir prijunkite juos, valdykite jų paskyras, automatizuokite išmokas ir vienoje suvestinėje stebėkite kiekvieno kūrėjo generuojamus pardavimus, peržiūras ir pajamas.', 'joinupshift.com']
     },
     en: {
-      hakom: ['Document & Protocol Signing', 'We digitised the entire protocol sign-off process on the factory floor. Workers log in with their factory ID card, see every new document they must review, and sign off digitally — replacing hundreds of paper forms with a fully auditable record.', 'hakom.sk'],
-      aluprint: ['Document & Protocol Signing', 'We rolled out the same card-based signing system across Aluprint’s production line, so management can prove at a glance that every worker has read and accepted the latest protocols — with no paperwork to chase.', 'aluprint.sk'],
-      gaya: ['Invoice Archive Cleanup', 'We built a program wired into their scanner that checks each scanned paper invoice against the database and tells staff exactly which ones can be discarded — freeing up a large amount of storage space.', 'gaya.sk'],
-      geosoul: ['Structural Calculation Engine', 'A custom app that performs the statics calculations for their geotechnical projects and auto-generates a tailored Word report per project — integrated with their products and handling different anchor types and soil conditions.', 'geosoul.sk'],
+      hakom: ['Document & Protocol Signing', 'We digitised the entire protocol sign-off process on the factory floor. Workers log in with their factory ID card, see every new document they must review, and sign off digitally, replacing hundreds of paper forms with a fully auditable record.', 'hakom.sk'],
+      aluprint: ['Document & Protocol Signing', 'We rolled out the same card-based signing system across Aluprint’s production line, so management can prove at a glance that every worker has read and accepted the latest protocols, with no paperwork to chase.', 'aluprint.sk'],
+      gaya: ['Invoice Archive Cleanup', 'We built a program wired into their scanner that checks each scanned paper invoice against the database and tells staff exactly which ones can be discarded, freeing up a large amount of storage space.', 'gaya.sk'],
+      geosoul: ['Structural Calculation Engine', 'A custom app that performs the statics calculations for their geotechnical projects and auto-generates a tailored Word report per project, integrated with their products and handling different anchor types and soil conditions.', 'geosoul.sk'],
       unisport: ['Database Migration', 'We automated the full migration of their very large legacy database from the old website to the new one, cleaning and re-sorting the data on the way so every record landed in the right place.', 'unisport-kovac.sk'],
-      urbarlamac: ['Monthly Ownership Calculations', 'An automation that generates the association’s monthly Excel payout calculations for its members based on the latest land-ownership certificates — a tedious manual task that now runs automatically.', 'urbarlamac.sk'],
-      joinupshift: ['Clipper Recruitment & Management Portal', 'A complete portal for managing clippers end to end — recruit and onboard them, manage their accounts, automate their payouts, and track the sales, views and revenue each clipper generates from one dashboard.', 'joinupshift.com']
+      urbarlamac: ['Monthly Ownership Calculations', 'An automation that generates the association’s monthly Excel payout calculations for its members based on the latest land-ownership certificates, a tedious manual task that now runs automatically.', 'urbarlamac.sk'],
+      joinupshift: ['Clipper Recruitment & Management Portal', 'A complete portal for managing clippers end to end: recruit and onboard them, manage their accounts, automate their payouts, and track the sales, views and revenue each clipper generates from one dashboard.', 'joinupshift.com']
     }
   }[LANG]
 

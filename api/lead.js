@@ -26,20 +26,20 @@ const L = {
 }
 
 function compose(d, t) {
-  const lines = [d.body, '', '— — —', t.contacts + ':', `${t.name}: ${d.name}`]
+  const lines = [d.body, '', '---', t.contacts + ':', `${t.name}: ${d.name}`]
   if (d.company) lines.push(`${t.company}: ${d.company}`)
   lines.push(`${t.email}: ${d.email}`)
   if (d.phone) lines.push(`${t.phone}: ${d.phone}`)
-  if (d.calc) lines.push('', '— — —', d.calc)
+  if (d.calc) lines.push('', '---', d.calc)
   if (d.solutions.length) {
-    lines.push('', '— — —', t.ideas + ':')
+    lines.push('', '---', t.ideas + ':')
     d.solutions.forEach((s, i) => {
       lines.push(`${i + 1}. ${s.title} (${s.kind}, ${s.complexity})`)
       s.steps.forEach(st => lines.push('   - ' + st))
     })
     if (d.cases.length) lines.push(t.cases + ': ' + d.cases.join(', '))
   }
-  lines.push('', '— — —', t.original + ':', d.problem)
+  lines.push('', '---', t.original + ':', d.problem)
   if (d.context) lines.push('', t.context + ': ' + d.context)
   if (d.answers) lines.push('', t.answers + ':', d.answers)
   lines.push('', `swiftrix.eu ${d.lang === 'lt' ? '/lt/asistentas' : '/assistant'}`)
