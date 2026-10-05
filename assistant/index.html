@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI assistant – Swiftrix</title>
-  <meta name="description" content="Describe a problem in your business — the AI assistant suggests how automation or an AI agent could solve it, drafts an email to our team, and you can book a call right here.">
+  <title>AI assistant | Swiftrix</title>
+  <meta name="description" content="Describe a problem in your business. The AI assistant suggests how automation or an AI agent could solve it, drafts an email to our team, and you can book a call right here.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="AI assistant – Swiftrix">
-  <meta property="og:description" content="Tell us what’s slowing you down — we’ll suggest how to fix it.">
+  <meta property="og:title" content="AI assistant | Swiftrix">
+  <meta property="og:description" content="Tell us what’s slowing you down and we’ll suggest how to fix it.">
   <link rel="icon" href="/assets/images/swiftrixLogo.png">
   <link rel="alternate" hreflang="lt" href="https://www.swiftrix.eu/lt/asistentas">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,8 +40,8 @@
   <main class="wrap">
     <header class="hero">
       <p class="eyebrow"><span>AI ASSISTANT · FREE ASSESSMENT</span></p>
-      <h1>Tell us what’s slowing you down — we’ll suggest how to <span class="hl">fix it</span></h1>
-      <p>Describe a repetitive task or a problem in your company. In seconds, the AI assistant suggests solutions with examples and drafts an email to our team — and you can book a call right here.</p>
+      <h1>Tell us what’s slowing you down and we’ll suggest how to <span class="hl">fix it</span></h1>
+      <p>Describe a repetitive task or a problem in your company. In seconds, the AI assistant suggests solutions with examples and drafts an email to our team. You can also book a call right here.</p>
     </header>
 
     <div class="flow">
@@ -88,7 +88,7 @@
       <section class="panel" id="card-calc" aria-labelledby="h-calc">
         <div class="panel-head"><span class="step-no">€</span><span id="h-calc">What does this work cost you?</span></div>
         <div class="panel-body">
-          <p class="lead-note">Enter how much time the manual work takes and what an hour of your staff’s time costs — you’ll see what it costs today and what automating it would save.</p>
+          <p class="lead-note">Enter how much time the manual work takes and what an hour of your staff’s time costs. You’ll see what it costs today and what automating it would save.</p>
           <p class="msg" id="calc-note" hidden></p>
           <div class="calc-grid">
             <div class="field"><label for="c-amount">Time it takes</label><div class="combo"><input class="input" id="c-amount" type="number" min="0" step="0.5" inputmode="decimal" placeholder="e.g. 4"><select class="input" id="c-per" aria-label="Period"><option value="day">hours per day</option><option value="week" selected>hours per week</option><option value="month">hours per month</option></select></div></div>
@@ -96,9 +96,9 @@
             <div class="field"><label for="c-rate">Staff cost</label><div class="combo"><input class="input" id="c-rate" type="number" min="0" step="1" inputmode="decimal" placeholder="e.g. 15"><select class="input" id="c-rate-unit" aria-label="Cost unit"><option value="hour">€ per hour</option><option value="month">€ per month (salary)</option></select></div></div>
             <div class="field"><label for="c-errors">Cost of mistakes or delays per month <span class="opt">(optional)</span></label><input class="input" id="c-errors" type="number" min="0" step="10" inputmode="decimal" placeholder="€"></div>
           </div>
-          <div class="field"><label for="c-share">Share of this work automation would take over: <b id="c-share-val">70 %</b></label><input type="range" id="c-share" min="30" max="95" step="5" value="70"><span class="hint" style="margin:0">This is your assumption — we’ll give a better estimate on a call.</span></div>
+          <div class="field"><label for="c-share">Share of this work automation would take over: <b id="c-share-val">70 %</b></label><input type="range" id="c-share" min="30" max="95" step="5" value="70"><span class="hint" style="margin:0">This is your assumption. We’ll give a better estimate on a call.</span></div>
           <div class="field"><label for="c-invest">Solution price, to work out the payback <span class="opt">(optional)</span></label><input class="input" id="c-invest" type="number" min="0" step="100" inputmode="decimal" placeholder="€"></div>
-          <p class="placeholder" id="calc-empty">Enter the time and the staff cost — the results will appear here.</p>
+          <p class="placeholder" id="calc-empty">Enter the time and the staff cost and the results will appear here.</p>
           <div id="calc-out" hidden>
             <div class="tiles">
               <div class="tile"><span>Costs you now</span><b id="r-now-month"></b><small id="r-now-year"></small></div>
@@ -119,7 +119,7 @@
         <div class="panel-head"><span class="step-no">3</span><span id="h-lead">Email to our team</span></div>
         <div class="panel-body">
           <div id="lead-form">
-            <p class="lead-note">We’ve drafted an email based on your problem. Edit it if you like, add your contact details and send it — a person will reply.</p>
+            <p class="lead-note">We’ve drafted an email based on your problem. Edit it if you like, add your contact details and send it. A person will reply.</p>
             <div class="email-draft">
               <input class="input" id="subject" maxlength="150" aria-label="Email subject">
               <textarea class="textarea" id="body" maxlength="4000" aria-label="Email text"></textarea>
@@ -142,7 +142,7 @@
       <section class="panel" id="card-book" hidden aria-labelledby="h-book">
         <div class="panel-head"><span class="step-no">4</span><span id="h-book">Let’s talk it through</span></div>
         <div class="panel-body">
-          <p class="lead-note">Pick a time that suits you for a 30-minute call — we’ll go through these ideas and your situation. What you wrote above comes with the booking, so we’ll have read it before we talk.</p>
+          <p class="lead-note">Pick a time that suits you for a 30-minute call. We’ll go through these ideas and your situation. What you wrote above comes with the booking, so we’ll have read it before we talk.</p>
           <div class="actions"><button class="btn btn-primary" id="book" type="button">Pick a time</button></div>
           <div id="cal-embed"></div>
           <p class="alt-link" id="cal-alt-wrap" hidden>Calendar not showing? <a id="cal-alt" href="https://cal.com/swiftrix/30-minute-call" target="_blank" rel="noopener">Open it in a new window</a></p>

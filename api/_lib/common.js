@@ -89,12 +89,25 @@ async function ai(opts) {
   const ctrl = new AbortController()
   const timer = setTimeout(() => ctrl.abort(), 25000)
   try {
-    return process.env.OPENROUTER_API_KEY ? await openrouter(opts, ctrl.signal) : await gemini(opts, ctrl.signal)
+    const out = process.env.OPENROUTER_API_KEY ? await openrouter(opts, ctrl.signal) : await gemini(opts, ctrl.signal)
+    if (out.json) out.json = dedash(out.json)
+    return out
   } catch (e) {
     return { status: 502 }
   } finally {
     clearTimeout(timer)
   }
+}
+
+// The site avoids em dashes (they read as AI-written). The prompts ask for
+// none, but small models slip, so every string the model returns is cleaned:
+// a dash opening a line is dropped, any other em dash (or spaced en dash used
+// as one) becomes a comma. Number ranges like 2–3 keep their en dash.
+function dedash(v) {
+  if (typeof v === 'string') return v.replace(/^[ \t]*[—–][ \t]*/gm, '').replace(/[ \t]*—[ \t]*| – /g, ', ')
+  if (Array.isArray(v)) return v.map(dedash)
+  if (v && typeof v === 'object') { const o = {}; for (const k of Object.keys(v)) o[k] = dedash(v[k]); return o }
+  return v
 }
 
 // OpenAI-style strict JSON schema: lower-case types, every property required

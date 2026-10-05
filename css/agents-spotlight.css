@@ -1,5 +1,5 @@
 /* DI agents spotlight on the homepage (all four builds): a section right
-   under the hero that points to the demo and the AI assistant. It is built
+   under the "Most teams are bleeding time" card that points to the demo and the AI assistant. It is built
    like the homepage's own sections (Why us, Process...): the same eyebrow
    badge with its side lines, a centred heading with one marked word, and
    cards in the site's card style. The data-swiftrix-name attributes hook it
@@ -14,8 +14,6 @@
   width: min(996px, 100%); box-sizing: border-box;
   display: flex; flex-direction: column; align-items: center; text-align: center;
   padding: 24px 0 0;
-  /* The next block's round logo sticks ~95px up out of its card. */
-  margin-bottom: 120px;
   font-family: "Instrument Sans", system-ui, sans-serif;
 }
 
@@ -110,7 +108,6 @@
   .swx-spot__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 809px) {
-  .swx-spot { margin-bottom: 110px; }
   .swx-spot h2 { font-size: 34px; }
   .swx-spot__lead { font-size: 16px; }
   .swx-spot__actions { margin-bottom: 36px; }

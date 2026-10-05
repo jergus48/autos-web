@@ -16,20 +16,20 @@
     lt: {
       perMonth: '/mėn.', perYear: '/metus', h: 'val.', days: 'darbo d.', months: 'mėn.',
       per: { day: 'val./d.', week: 'val./sav.', month: 'val./mėn.' }, people: 'žm.',
-      prefilled: 'Laiką užpildėme pagal jūsų aprašymą — pataisykite, jei reikia.',
+      prefilled: 'Laiką užpildėme pagal jūsų aprašymą. Pataisykite, jei reikia.',
       summary: function (c, f) {
         return 'Skaičiuoklė: ' + c.amount + ' ' + T.per[c.per] + ' × ' + c.people + ' ' + T.people + ', ' + f.money(c.rate) + '/val. → dabar ' +
-          f.money(c.costMonth) + '/mėn. (' + f.money(c.costMonth * 12) + '/metus). Jei automatizacija perimtų ' + c.share + ' % — sutaupytų ~' +
+          f.money(c.costMonth) + '/mėn. (' + f.money(c.costMonth * 12) + '/metus). Jei automatizacija perimtų ' + c.share + ' %, sutaupytų ~' +
           f.money(c.saveYear) + '/metus ir ' + f.num(c.hoursFreedYear) + ' val./metus' + (c.payback ? ', atsipirktų per ~' + f.num(c.payback, 1) + ' mėn.' : '.')
       }
     },
     en: {
       perMonth: '/month', perYear: '/year', h: 'h', days: 'working days', months: 'months',
       per: { day: 'h/day', week: 'h/week', month: 'h/month' }, people: 'people',
-      prefilled: 'We filled in the time from your description — adjust it if needed.',
+      prefilled: 'We filled in the time from your description. Adjust it if needed.',
       summary: function (c, f) {
         return 'Calculator: ' + c.amount + ' ' + T.per[c.per] + ' × ' + c.people + ' ' + (c.people === 1 ? 'person' : T.people) + ', ' + f.money(c.rate) + '/h → now ' +
-          f.money(c.costMonth) + '/month (' + f.money(c.costMonth * 12) + '/year). If automation took over ' + c.share + '% — saves ~' +
+          f.money(c.costMonth) + '/month (' + f.money(c.costMonth * 12) + '/year). If automation took over ' + c.share + '%, it would save ~' +
           f.money(c.saveYear) + '/year and ' + f.num(c.hoursFreedYear) + ' h/year' + (c.payback ? ', pays back in ~' + f.num(c.payback, 1) + ' months' : '') + '.'
       }
     }
