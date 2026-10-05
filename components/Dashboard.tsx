@@ -142,6 +142,7 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
         <div className="l"><img src="/swiftrix-s.png" alt="" />SWIFTRIX OUTREACH</div>
         <div className="r">
           <span>{email}</span>
+          <a className="btn ghost sm" href="/calendar">My calendar</a>
           {admin && <a className="btn ghost sm" href="/admin">Admin dashboard</a>}
           <button className="btn ghost sm" onClick={logout}>Sign out</button>
         </div>

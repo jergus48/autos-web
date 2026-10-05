@@ -78,7 +78,7 @@ export async function primaryCalendarEmail() {
   return j.summary as string;
 }
 
-export async function createMeeting(o: { summary: string; description?: string; start: string; end: string; timeZone: string; attendee: string }) {
+export async function createMeeting(o: { summary: string; description?: string; start: string; end: string; timeZone: string; attendees: string[] }) {
   const j = await gjson('https://www.googleapis.com/calendar/v3/calendars/primary/events?conferenceDataVersion=1&sendUpdates=all', {
     method: 'POST',
     body: JSON.stringify({
@@ -86,7 +86,7 @@ export async function createMeeting(o: { summary: string; description?: string; 
       description: o.description || '',
       start: { dateTime: o.start, timeZone: o.timeZone },
       end: { dateTime: o.end, timeZone: o.timeZone },
-      attendees: [{ email: o.attendee }],
+      attendees: o.attendees.map((email) => ({ email })),
       conferenceData: { createRequest: { requestId: crypto.randomUUID(), conferenceSolutionKey: { type: 'hangoutsMeet' } } },
     }),
   });

@@ -239,3 +239,31 @@ tr.logrow td{background:#16161a;padding:14px 16px 18px;border-bottom:1px solid v
 
 .slide .h[style*='55.5']{letter-spacing:-.03em}
 .slide .h[style*='font-size: calc(42']{letter-spacing:-.03em}
+.cal{border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow-x:auto}
+.cal-head,.cal-body{display:grid;grid-template-columns:52px repeat(7,minmax(110px,1fr));min-width:860px}
+.cal-head{border-bottom:1px solid var(--line)}
+.cal-dh{padding:8px 6px;text-align:center;font-size:12px;color:var(--mute);border-left:1px solid var(--line)}
+.cal-dh b{color:var(--fg);font-size:15px;margin-left:4px}
+.cal-dh.today b{color:var(--g)}
+.cal-hours div{font-family:var(--mono);font-size:10px;color:var(--mute);padding:2px 6px;box-sizing:border-box}
+.cal-col{position:relative;border-left:1px solid var(--line)}
+.cal-col.today{background:rgba(184,240,60,.03)}
+.cal-line{border-top:1px solid #1c1c1f;box-sizing:border-box}
+.cal-now{position:absolute;left:0;right:0;height:2px;background:#ff6b6b;z-index:3}
+.cal-ev{position:absolute;left:3px;right:3px;background:#1d2a0b;border:1px solid #3d5a14;border-left:3px solid var(--g);color:var(--fg);border-radius:6px;padding:3px 6px;font-size:12px;text-align:left;cursor:pointer;overflow:hidden;z-index:2;display:block}
+.cal-ev small{display:block;color:var(--mute);font-size:10px}
+.cal-ev.on,.cal-ev:hover{background:#2b3f10}
+.cal-info{display:grid;gap:6px;font-size:13px}
+.cal-info span{display:inline-block;min-width:110px;color:var(--mute);font-size:12px}
+.slots{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:8px;width:100%}
+.slots button{background:#0e0e10;border:1px solid var(--line);color:var(--fg);border-radius:6px;padding:4px 8px;font-family:var(--mono);font-size:12px;cursor:pointer}
+.slots button:hover{border-color:#555}
+.slots button.on{background:var(--g);color:#0a0a0b;border-color:var(--g)}
+.cal-ev.r-interested{background:#14310f;border-color:#2f7a1f;border-left-color:#5fe03c}
+.cal-ev.r-maybe{background:#33290c;border-color:#7a6320;border-left-color:#ffd166}
+.cal-ev.r-not_interested{background:#2d1212;border-color:#6b2222;border-left-color:#ff7a7a}
+.cal-ev.r-no_show{background:#1b1b1d;border-color:#3a3a3e;border-left-color:#8d8d93}
+.cal-ev.r-pending{border-left-color:#ffd166;border-style:dashed}
+.cal-form{display:grid;gap:10px;margin-top:12px}
+.cal-form label{display:grid;gap:4px;font-size:12px;color:var(--mute)}
+.cal-form textarea,.cal-form input{width:100%;box-sizing:border-box}

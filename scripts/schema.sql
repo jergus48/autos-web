@@ -69,3 +69,10 @@ create table if not exists meetings (
   created_at timestamptz default now()
 );
 create index if not exists meetings_company_idx on meetings(company_id);
+
+alter table meetings add column if not exists result text;
+alter table meetings add column if not exists price text;
+alter table meetings add column if not exists tools text;
+alter table meetings add column if not exists agreement text;
+alter table meetings add column if not exists debrief text;
+alter table meetings add column if not exists debrief_at timestamptz;

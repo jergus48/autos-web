@@ -13,7 +13,13 @@ export default function CallLogger({ companyId, defaultEmail, onSaved }: { compa
   const [gOk, setGOk] = useState(false);
   const [mk, setMk] = useState(true);
   const [mEmail, setMEmail] = useState(defaultEmail || '');
-  const [mWhen, setMWhen] = useState('');
+  const [me, setMe] = useState('');
+  const [who, setWho] = useState<'me' | 'other' | 'none'>('me');
+  const [other, setOther] = useState('');
+  const [mDate, setMDate] = useState('');
+  const [mTime, setMTime] = useState('');
+  const [busyDay, setBusyDay] = useState<{ id: number; name: string; start_at: string; end_at: string }[]>([]);
+  const mWhen = mDate && mTime ? `${mDate}T${mTime}` : '';
   const [mMin, setMMin] = useState(30);
   const [open, setOpen] = useState<number | null>(null);
   const [tx, setTx] = useState<Record<number, string>>({});
@@ -35,7 +41,27 @@ export default function CallLogger({ companyId, defaultEmail, onSaved }: { compa
     if (r.ok) setMeetings(await r.json());
   }
   useEffect(() => { load(); loadMeetings(); }, [companyId]);
-  useEffect(() => { fetch('/api/google/status').then((r) => r.json()).then((j) => setGOk(!!j.connected)).catch(() => {}); }, []);
+  useEffect(() => {
+    if (!mDate) { setBusyDay([]); return; }
+    const from = new Date(`${mDate}T00:00`), to = new Date(from.getTime() + 86400000);
+    if (isNaN(+from)) return;
+    fetch(`/api/meetings?mine=1&from=${encodeURIComponent(from.toISOString())}&to=${encodeURIComponent(to.toISOString())}`)
+      .then((r) => (r.ok ? r.json() : [])).then(setBusyDay).catch(() => {});
+  }, [mDate, meetings.length]);
+  const hhmm = (d: Date) => d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  // Free start times (09:00-18:00, every 15 min) that fit the chosen length without touching another call of yours.
+  const freeSlots: string[] = [];
+  if (mDate) {
+    for (let m = 9 * 60; m + mMin <= 18 * 60; m += 15) {
+      const t = `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+      const a = new Date(`${mDate}T${t}`), b = new Date(+a + mMin * 60000);
+      if (+a < Date.now()) continue;
+      if (busyDay.some((x) => new Date(x.start_at) < b && new Date(x.end_at) > a)) continue;
+      freeSlots.push(t);
+    }
+  }
+  const clashNow = !!mWhen && busyDay.some((x) => new Date(x.start_at) < new Date(+new Date(mWhen) + mMin * 60000) && new Date(x.end_at) > new Date(mWhen));
+  useEffect(() => { fetch('/api/google/status').then((r) => r.json()).then((j) => { setGOk(!!j.connected); setMe(j.me || ''); }).catch(() => {}); }, []);
 
   async function pullTranscript(id: number) {
     setTxBusy(id);
@@ -73,7 +99,7 @@ export default function CallLogger({ companyId, defaultEmail, onSaved }: { compa
       const m = await fetch(`/api/companies/${companyId}/meetings`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ email: mEmail, startsAt: mWhen ? new Date(mWhen).toISOString() : '', minutes: mMin, note, timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }),
+        body: JSON.stringify({ email: mEmail, startsAt: mWhen ? new Date(mWhen).toISOString() : '', minutes: mMin, note, callerEmail: who === 'me' ? me : who === 'other' ? other : '', timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }),
       });
       if (!m.ok) { setErr('Call saved, but the Meet was not created: ' + ((await m.json().catch(() => ({}))).error || 'error')); await load(); await loadMeetings(); onSaved?.(); return; }
       await loadMeetings();
@@ -113,8 +139,25 @@ export default function CallLogger({ companyId, defaultEmail, onSaved }: { compa
               {mk && (
                 <>
                   <input style={{ minWidth: 200 }} type="email" placeholder="Their email" value={mEmail} onChange={(e) => setMEmail(e.target.value)} />
-                  <input type="datetime-local" value={mWhen} onChange={(e) => setMWhen(e.target.value)} />
+                  <input type="date" value={mDate} min={new Date().toISOString().slice(0, 10)} onChange={(e) => setMDate(e.target.value)} />
+                  <input type="time" step={900} value={mTime} onChange={(e) => setMTime(e.target.value)} />
                   <select value={mMin} onChange={(e) => setMMin(Number(e.target.value))}><option value={20}>20 min</option><option value={30}>30 min</option><option value={45}>45 min</option><option value={60}>60 min</option></select>
+                  <label className="mini">Send the Meet link to you too:
+                    <select value={who} onChange={(e) => setWho(e.target.value as any)}>
+                      {me && <option value="me">{me} (signed in)</option>}
+                      <option value="other">Another email...</option>
+                      <option value="none">No, only the client</option>
+                    </select>
+                  </label>
+                  {who === 'other' && <input style={{ minWidth: 200 }} type="email" placeholder="Your email" value={other} onChange={(e) => setOther(e.target.value)} />}
+                  {mDate && (
+                    <div className="slots">
+                      {busyDay.length > 0 && <span className="mini">Already booked: {busyDay.map((x) => `${hhmm(new Date(x.start_at))}-${hhmm(new Date(x.end_at))} ${x.name}`).join(', ')}</span>}
+                      <span className="mini" style={{ width: '100%' }}>{freeSlots.length ? `Free start times for ${mMin} min:` : 'No free slot that day for this length, pick another day.'}</span>
+                      {freeSlots.map((t) => <button type="button" key={t} className={mTime === t ? 'on' : ''} onClick={() => setMTime(t)}>{t}</button>)}
+                      {clashNow && <span className="err" style={{ width: '100%' }}>This time overlaps another call of yours.</span>}
+                    </div>
+                  )}
                 </>
               )}
             </>

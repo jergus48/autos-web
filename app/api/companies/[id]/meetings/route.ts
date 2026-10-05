@@ -32,20 +32,27 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
   if (isNaN(+start)) return NextResponse.json({ error: 'Pick a date and time' }, { status: 400 });
   const minutes = Math.min(180, Math.max(15, Number(b.minutes) || 30));
   const end = new Date(+start + minutes * 60000);
+  if (+start < Date.now() - 5 * 60000) return NextResponse.json({ error: 'That time is in the past' }, { status: 400 });
+  const clash = (await q(
+    `select c.name, m.start_at, m.end_at from meetings m join companies c on c.id=m.company_id
+     where m.user_id=$1 and m.start_at < $3 and m.end_at > $2 order by m.start_at limit 1`,
+    [s.uid, start.toISOString(), end.toISOString()]
+  ))[0];
+  if (clash) {
+    const t = (d: Date) => new Date(d).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: String(b.timeZone || 'Europe/Vilnius') });
+    return NextResponse.json({ error: `You already have a call with ${clash.name} at ${t(clash.start_at)}-${t(clash.end_at)}. Pick a free slot.` }, { status: 409 });
+  }
   const lang = ['de', 'at', 'ch'].includes(c.country) ? 'de' : c.country === 'lt' ? 'lt' : 'en';
   const intro = {
     en: `Hi,\n\nThank you for your time on the phone. As agreed, here is our Google Meet where we will walk you through a short presentation prepared for ${c.name} and show examples of our previous work.`,
     lt: `Sveiki,\n\nDekojame uz pokalbi telefonu. Kaip susitareme, siunciame Google Meet nuoroda, kurioje parodysime jums, ${c.name}, paruosta trumpa pristatyma ir ankstesnius musu darbus.`,
     de: `Guten Tag,\n\nvielen Dank fuer das Telefonat. Wie besprochen finden Sie hier unser Google Meet, in dem wir Ihnen eine kurze, fuer ${c.name} vorbereitete Praesentation und Beispiele unserer bisherigen Arbeit zeigen.`,
   }[lang];
-  const deck = (await q('select share_token from decks where company_id=$1 and share_token is not null order by (lang=$2) desc, created_at desc limit 1', [id, lang]))[0];
-  const u = new URL(req.url);
-  const host = req.headers.get('x-forwarded-host') || req.headers.get('host') || u.host;
-  const origin = `${host.startsWith('localhost') ? 'http' : 'https'}://${host}`;
+  const caller = String(b.callerEmail || '').trim();
+  if (caller && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(caller)) return NextResponse.json({ error: 'Enter a valid email for yourself' }, { status: 400 });
   const description = [
     intro,
     b.note ? String(b.note).slice(0, 500) : '',
-    deck ? `Slides: ${origin}/s/${deck.share_token}` : '',
     'Swiftrix | swiftrix.eu',
   ].filter(Boolean).join('\n\n');
   try {
@@ -55,7 +62,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       start: start.toISOString(),
       end: end.toISOString(),
       timeZone: String(b.timeZone || 'Europe/Vilnius'),
-      attendee: email,
+      attendees: [email, ...(caller && caller.toLowerCase() !== email.toLowerCase() ? [caller] : [])],
     });
     const rows = await q(
       'insert into meetings(company_id,user_id,event_id,meet_url,meet_code,html_link,attendee_email,start_at,end_at) values($1,$2,$3,$4,$5,$6,$7,$8,$9) returning id',
