@@ -1,12 +1,12 @@
-// Order-agent demo (/demo in English, /lt/demo in Lithuanian; the language
-// comes from <html lang>). The three sample emails play back pre-written
+// Order-agent demo (/demo in English, /lt/demo in Lithuanian, /de/demo in
+// German; the language comes from <html lang>). The three sample emails play back pre-written
 // agent runs — instant, free, and they show the catalog / CRM / stock lookups
 // a real deployment does. "Your email" goes to /api/agent for a live run,
 // which only extracts and drafts: it has no catalog, so it never quotes prices.
 (function () {
   'use strict'
 
-  var LANG = document.documentElement.lang === 'lt' ? 'lt' : 'en'
+  var LANG = { lt: 'lt', de: 'de' }[document.documentElement.lang] || 'en'
   // Theme handling is shared with the assistant page: /js/pages.js.
 
   var T = {
@@ -57,6 +57,30 @@
         sheet: 'Logged it in the orders sheet', reply: 'Drafted a reply, waiting for your approval'
       },
       sys: { mail: 'Email', crm: 'CRM', stock: 'Stock', sheet: 'Orders sheet' }
+    },
+    de: {
+      own: 'Ihre E-Mail', ownSubj: 'Beliebige E-Mail einfügen', from: 'Von', subject: 'Betreff', to: 'An',
+      run: 'Agent starten', rerun: 'Erneut starten', working: 'Agent arbeitet…',
+      idle: 'Wartet', busy: 'Arbeitet', done: 'Fertig',
+      pick: 'Wählen Sie links eine E-Mail und klicken Sie auf „Agent starten“.',
+      resultIdle: 'Hier erscheinen die Zusammenfassung des Agenten und der Antwortentwurf.',
+      missing: 'Fehlende Angaben', reply: 'Antwortentwurf', approve: 'Freigeben & senden', edit: 'Bearbeiten', editing: 'Fertig bearbeitet',
+      toast: 'Demo-Modus: In einem echten Setup ginge diese Antwort aus Ihrem eigenen Postfach an den Kunden.',
+      empty: 'Die Tabelle ist noch leer. Starten Sie den Agenten.',
+      cols: ['Nr.', 'Kunde', 'Artikel / Leistung', 'Menge', 'Betrag', 'Lieferung', 'Status'],
+      status: { ready: 'Bereit', waiting: 'Info fehlt', review: 'Prüfen' },
+      tooShort: 'Die E-Mail ist zu kurz. Fügen Sie mindestens ein paar Sätze ein.',
+      reading: 'Lese die E-Mail…',
+      liveNote: 'Im Live-Modus ist der Agent nicht mit Ihrem Katalog verbunden und prüft daher keine Preise oder Bestände. In einem echten Setup arbeitet er mit Ihrem CRM, ERP oder Excel.',
+      err: { rate: 'Zu viele Versuche hintereinander. Bitte versuchen Sie es in ein paar Minuten erneut.', off: 'Der Live-Modus ist gerade ausgeschaltet. Probieren Sie die Beispiel-E-Mails aus.', generic: 'Die E-Mail konnte nicht verarbeitet werden. Versuchen Sie es erneut oder nehmen Sie ein Beispiel.' },
+      live: {
+        type: { order: 'E-Mail gelesen: eine Bestellung', quote: 'E-Mail gelesen: eine Preisanfrage', question: 'E-Mail gelesen: eine Kundenfrage', complaint: 'E-Mail gelesen: eine Reklamation', other: 'E-Mail gelesen: keine Bestellung und keine Anfrage' },
+        sender: 'Absender erkannt: ', noSender: 'Die Firma des Absenders steht nicht in der E-Mail',
+        items: function (n) { return n ? n + (n === 1 ? ' Position' : ' Positionen') + ' erfasst' : 'Keine Artikel- oder Leistungspositionen gefunden' },
+        missing: function (n) { return n ? (n === 1 ? '1 Angabe fehlt, deshalb habe ich eine Rückfrage' : n + ' Angaben fehlen, deshalb habe ich Rückfragen') + ' in die Antwort aufgenommen' : 'Alle nötigen Angaben sind vorhanden' },
+        sheet: 'In die Bestelltabelle eingetragen', reply: 'Antwort vorbereitet, wartet auf Ihre Freigabe'
+      },
+      sys: { mail: 'E-Mail', crm: 'CRM', stock: 'Lager', sheet: 'Bestelltabelle' }
     }
   }[LANG]
 
@@ -183,6 +207,68 @@
           items: [['Coffee beans “Espresso”, 1 kg (as #1042 × 2)', '12 pcs', '€226.80'], ['Sugar sticks, 1000 pcs (as #1042)', '2 boxes', '€23.00'], ['Paper cups 300 ml, 1000 pcs', '2 boxes', '€64.00'], ['Oat drink Barista, 1 l', '12 pcs', '€30.00']],
           missing: [],
           reply: { subject: 'RE: order', body: 'Hi Justė,\n\nwe’ve got your order:\n- coffee “Espresso” 1 kg: 12 pcs (double last time)\n- sugar sticks: 2 boxes\n- paper cups 300 ml: 2 boxes\n- oat drink Barista 1 l: 12 pcs (yes, we have it!)\nTotal: €343.80 + VAT.\n\nWe’ll deliver on Tuesday as usual, to Vokiečių St. 10.\n\nHave a good day!' }
+        }
+      }
+    ],
+    de: [
+      {
+        id: 'build', fromName: 'Thomas Becker', fromEmail: 't.becker@baurhythmus.de', time: '08:47',
+        subject: 'Bestellung für die Baustelle Lindenstraße',
+        body: 'Guten Tag,\n\nwir möchten folgendes Material für unsere Baustelle Lindenstraße 68 in Leipzig bestellen:\n- Zement CEM II/A-LL 42,5 R, 40 Sack à 25 kg\n- Betonstahl B500 Ø12, 1,2 t\n- Mauersteine 25 cm, 6 Paletten\n\nGeliefert werden müsste am 15. Oktober bis 10 Uhr. Angenommen wird die Ware von unserem Bauleiter Markus, Tel. +49 151 0000000.\nBitte stellen Sie die Rechnung auf die Baurhythmus GmbH aus.\n\nVielen Dank\nThomas Becker\nEinkauf',
+        steps: [
+          ['mail', 'E-Mail gelesen: eine neue Bestellung'],
+          ['crm', 'Kunde im CRM gefunden: Baurhythmus GmbH, Rechnung an die Firma'],
+          ['stock', '3 Artikel dem Katalog zugeordnet und Preise geprüft'],
+          ['stock', 'Bestand geprüft: alle Artikel sind auf Lager'],
+          ['sheet', 'Bestellung eingetragen: 3 Positionen, 2.186,00 € netto'],
+          ['mail', 'Bestätigung an den Kunden vorbereitet, wartet auf Ihre Freigabe']
+        ],
+        result: {
+          summary: 'Neue Bestellung für die Baustelle Lindenstraße 68 in Leipzig: 3 Artikel, Lieferung am 15. Oktober bis 10:00 Uhr. Alle Angaben sind vorhanden.',
+          customer: 'Baurhythmus GmbH', status: 'ready', delivery: '15. Okt. bis 10:00, Lindenstraße 68',
+          items: [['Zement CEM II/A-LL 42,5 R, 25 kg', '40 Sack', '248,00 €'], ['Betonstahl B500 Ø12', '1,2 t', '1.068,00 €'], ['Mauersteine 25 cm', '6 Pal.', '870,00 €']],
+          missing: [],
+          reply: { subject: 'AW: Bestellung für die Baustelle Lindenstraße', body: 'Guten Tag Herr Becker,\n\nvielen Dank für Ihre Bestellung. Wir bestätigen:\n- Zement CEM II/A-LL 42,5 R, 40 Sack: 248,00 €\n- Betonstahl B500 Ø12, 1,2 t: 1.068,00 €\n- Mauersteine 25 cm, 6 Paletten: 870,00 €\nGesamt: 2.186,00 € zzgl. MwSt.\n\nWir liefern am 15. Oktober bis 10 Uhr in die Lindenstraße 68 in Leipzig. Der Fahrer ruft Markus vor der Ankunft an.\nDie Rechnung stellen wir auf die Baurhythmus GmbH aus.\n\nEinen schönen Tag noch!' }
+        }
+      },
+      {
+        id: 'freight', fromName: 'Sabine Krüger', fromEmail: 's.krueger@nordrein.de', time: '09:15',
+        subject: 'Transport nach Posen',
+        body: 'Hallo,\n\nwir müssten 4 Europaletten (ca. 1.800 kg) von unserem Lager in Berlin nach Posen bringen. Verladen werden könnte nächsten Dienstag am Nachmittag. Ware: Haushaltsreiniger, kein Gefahrgut.\n\nWas würde das kosten, und wäre eine Zustellung am Mittwoch möglich?\n\nSabine Krüger\nNordrein Reinigungsmittel GmbH',
+        steps: [
+          ['mail', 'E-Mail gelesen: eine Preisanfrage für einen Transport'],
+          ['crm', 'Neuer Kunde, Karte angelegt: Nordrein Reinigungsmittel GmbH'],
+          ['mail', 'Ladung erfasst: 4 Europaletten, ca. 1.800 kg, kein Gefahrgut'],
+          ['mail', '3 Angaben fehlen, ohne die sich kein Preis berechnen lässt'],
+          ['sheet', 'Anfrage mit Status „Info fehlt“ in die Tabelle eingetragen'],
+          ['mail', 'Antwort mit Rückfragen vorbereitet, wartet auf Ihre Freigabe']
+        ],
+        result: {
+          summary: 'Preisanfrage: 4 Europaletten (ca. 1.800 kg) Berlin → Posen, Verladung nächsten Dienstagnachmittag, Zustellung am Mittwoch gewünscht.',
+          customer: 'Nordrein Reinigungsmittel GmbH', status: 'waiting', delivery: 'Verladung Di, Zustellung Mi',
+          items: [['Transport Berlin → Posen, Haushaltsreiniger (kein Gefahrgut), ca. 1.800 kg', '4 Pal.', '-']],
+          missing: ['Genaue Ladeadresse in Berlin', 'Lieferadresse in Posen und Ansprechpartner vor Ort', 'Ob die Paletten stapelbar sind (und wie hoch)'],
+          reply: { subject: 'AW: Transport nach Posen', body: 'Hallo Frau Krüger,\n\nvielen Dank für Ihre Anfrage. Damit wir Ihnen einen genauen Preis nennen und die Zustellung am Mittwoch bestätigen können, bräuchten wir noch:\n1. Die genaue Ladeadresse in Berlin.\n2. Die Lieferadresse in Posen und einen Ansprechpartner vor Ort.\n3. Sind die Paletten stapelbar, und wie hoch sind sie?\n\nSobald wir die Angaben haben, schicken wir Ihnen den Preis innerhalb einer Stunde.\n\nEinen schönen Tag noch!' }
+        }
+      },
+      {
+        id: 'cafe', fromName: 'Julia', fromEmail: 'julia@cafe-morgenrot.de', time: '10:02',
+        subject: 'bestellung',
+        body: 'hallo, wie letztes mal, nur doppelt so viel kaffee 🙂 und packt bitte 2 kartons von den 300 ml pappbechern dazu. habt ihr haferdrink? wenn ja, 12 stück.\nlieferung wie immer\n\nJulia, Café Morgenrot',
+        steps: [
+          ['mail', 'E-Mail gelesen: eine Nachbestellung'],
+          ['crm', 'Kunde im CRM gefunden: Café Morgenrot, Bergstraße 10, Dresden'],
+          ['crm', 'Letzte Bestellung #1042 nachgeschlagen: Kaffee 6 kg, Zuckersticks 2 Kartons'],
+          ['stock', 'Bestand geprüft: Haferdrink ist verfügbar (34 Stück)'],
+          ['sheet', 'Bestellung eingetragen: 4 Positionen, 343,80 € netto'],
+          ['mail', 'Antwort vorbereitet und die Frage beantwortet, wartet auf Ihre Freigabe']
+        ],
+        result: {
+          summary: 'Nachbestellung wie #1042 mit doppelter Kaffeemenge, dazu Becher und Haferdrink. Übliche Adresse, üblicher Liefertag.',
+          customer: 'Café Morgenrot', status: 'ready', delivery: 'Dienstag, Bergstraße 10',
+          items: [['Kaffeebohnen „Espresso“, 1 kg (wie #1042 × 2)', '12 Stk.', '226,80 €'], ['Zuckersticks, 1000 Stk. (wie #1042)', '2 Kart.', '23,00 €'], ['Pappbecher 300 ml, 1000 Stk.', '2 Kart.', '64,00 €'], ['Haferdrink Barista, 1 l', '12 Stk.', '30,00 €']],
+          missing: [],
+          reply: { subject: 'AW: bestellung', body: 'Hallo Julia,\n\neure Bestellung ist angekommen:\n- Kaffee „Espresso“ 1 kg: 12 Stk. (doppelt so viel wie letztes Mal)\n- Zuckersticks: 2 Kartons\n- Pappbecher 300 ml: 2 Kartons\n- Haferdrink Barista 1 l: 12 Stk. (ja, haben wir!)\nGesamt: 343,80 € zzgl. MwSt.\n\nWir liefern wie gewohnt am Dienstag in die Bergstraße 10.\n\nEinen schönen Tag noch!' }
         }
       }
     ]

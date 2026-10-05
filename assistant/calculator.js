@@ -6,7 +6,7 @@
 (function () {
   'use strict'
 
-  var LANG = document.documentElement.lang === 'lt' ? 'lt' : 'en'
+  var LANG = { lt: 'lt', de: 'de' }[document.documentElement.lang] || 'en'
   var DAYS_PER_MONTH = 21      // working days
   var WEEKS_PER_MONTH = 4.33
   var HOURS_PER_MONTH = 168    // full-time hours, to turn a monthly salary into €/h
@@ -32,10 +32,20 @@
           f.money(c.costMonth) + '/month (' + f.money(c.costMonth * 12) + '/year). If automation took over ' + c.share + '%, it would save ~' +
           f.money(c.saveYear) + '/year and ' + f.num(c.hoursFreedYear) + ' h/year' + (c.payback ? ', pays back in ~' + f.num(c.payback, 1) + ' months' : '') + '.'
       }
+    },
+    de: {
+      perMonth: '/Monat', perYear: '/Jahr', h: 'Std.', days: 'Arbeitstage', months: 'Monate',
+      per: { day: 'Std./Tag', week: 'Std./Woche', month: 'Std./Monat' }, people: 'Pers.',
+      prefilled: 'Den Zeitaufwand haben wir aus Ihrer Beschreibung übernommen. Passen Sie ihn bei Bedarf an.',
+      summary: function (c, f) {
+        return 'Rechner: ' + c.amount + ' ' + T.per[c.per] + ' × ' + c.people + ' ' + T.people + ', ' + f.money(c.rate) + '/Std. → heute ' +
+          f.money(c.costMonth) + '/Monat (' + f.money(c.costMonth * 12) + '/Jahr). Übernimmt eine Automatisierung ' + c.share + ' %, spart das ~' +
+          f.money(c.saveYear) + '/Jahr und ' + f.num(c.hoursFreedYear) + ' Std./Jahr' + (c.payback ? ', Amortisation in ~' + f.num(c.payback, 1) + ' Monaten' : '') + '.'
+      }
     }
   }[LANG]
 
-  var locale = LANG === 'lt' ? 'lt-LT' : 'en-IE'
+  var locale = { lt: 'lt-LT', de: 'de-DE' }[LANG] || 'en-IE'
   var fmt = {
     money: function (v) { return new Intl.NumberFormat(locale, { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(Math.round(v)) },
     num: function (v, d) { return new Intl.NumberFormat(locale, { maximumFractionDigits: d || 0 }).format(v) }
@@ -100,22 +110,22 @@
   render()
 
   // Fallback for when the AI doesn't pick the time out of the description:
-  // "2-3 valandas kasdien", "pusę dienos", "10 hours a week", "dvi vadybininkės".
+  // "2-3 valandas kasdien", "pusę dienos", "10 hours a week", "zwei Mitarbeiterinnen".
   function guessTime(text) {
     var s = text.toLowerCase()
-    var per = /(per dien|kasdien|kiekvien\w* dien|a day|per day|daily|every day)/.test(s) ? 'day'
-      : /(per savait|kas savait|a week|per week|weekly)/.test(s) ? 'week'
-      : /(per mėn|kas mėn|a month|per month|monthly)/.test(s) ? 'month' : null
+    var per = /(per dien|kasdien|kiekvien\w* dien|a day|per day|daily|every day|pro tag|am tag|täglich|jeden tag)/.test(s) ? 'day'
+      : /(per savait|kas savait|a week|per week|weekly|pro woche|in der woche|wöchentlich|jede woche)/.test(s) ? 'week'
+      : /(per mėn|kas mėn|a month|per month|monthly|pro monat|im monat|monatlich|jeden monat)/.test(s) ? 'month' : null
     var amount = 0
-    var m = s.match(/(\d+(?:[.,]\d+)?)\s*(?:[-–]\s*(\d+(?:[.,]\d+)?))?\s*(?:val|valand|h\b|hours?|hrs?)/)
+    var m = s.match(/(\d+(?:[.,]\d+)?)\s*(?:[-–]\s*(\d+(?:[.,]\d+)?))?\s*(?:val|valand|std|stunde|h\b|hours?|hrs?)/)
     if (m) {
       var a = parseFloat(m[1].replace(',', '.')), b = m[2] ? parseFloat(m[2].replace(',', '.')) : a
       amount = (a + b) / 2
-    } else if (/(pus[eę] dienos|half a day)/.test(s)) { amount = 4; per = 'day' }
-    else if (/(vis[aą] dien|full day|whole day)/.test(s)) { amount = 8; per = 'day' }
+    } else if (/(pus[eę] dienos|half a day|halben tag)/.test(s)) { amount = 4; per = 'day' }
+    else if (/(vis[aą] dien|full day|whole day|ganzen tag)/.test(s)) { amount = 8; per = 'day' }
     if (!amount || !per) return null
-    var people = /\b(dvi|du|two|2)\s+\S*(vadybinink|darbuotoj|administrator|people|staff|employees|managers)/.test(s) ? 2
-      : /\b(trys|three|3)\s+\S*(vadybinink|darbuotoj|administrator|people|staff|employees|managers)/.test(s) ? 3 : 1
+    var people = /\b(dvi|du|two|zwei|2)\s+\S*(vadybinink|darbuotoj|administrator|people|staff|employees|managers|mitarbeiter|kolleg|personen|leute)/.test(s) ? 2
+      : /\b(trys|three|drei|3)\s+\S*(vadybinink|darbuotoj|administrator|people|staff|employees|managers|mitarbeiter|kolleg|personen|leute)/.test(s) ? 3 : 1
     return { amount: amount, per: per, people: people }
   }
 

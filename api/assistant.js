@@ -63,8 +63,14 @@ const SCHEMA = {
   required: ['relevant', 'understanding', 'solutions', 'cases', 'questions', 'email']
 }
 
+// Lithuanian and German say DI / KI, not AI; German addresses the visitor as "Sie".
+const NOTE = {
+  lt: ' (say "DI", not "AI": "DI agentas", "DI asistentas")',
+  de: ' (formal "Sie"; say "KI", not "AI": "KI-Agent", "KI-Assistent")'
+}
+
 function instructions(lang) {
-  const ui = lang === 'lt' ? 'Lithuanian' : 'English'
+  const ui = { lt: 'Lithuanian', de: 'German' }[lang] || 'English'
   const cases = CASE_IDS.map(id => `- ${id}: ${CASES[id]}`).join('\n')
   return `You are the solution assistant on swiftrix.eu. Swiftrix is a small software automation studio that builds:
 - process automations and integrations between the tools a business already uses;
@@ -88,9 +94,9 @@ Fill in the JSON schema:
 ${cases}
 - questions: 2–3 short questions Swiftrix would ask to scope it (volumes, systems in use, who approves what). Never ask for something the visitor already told you; build on it instead (e.g. if they named their system, ask whether it has an API or how data gets in today).
 - time: how much time the manual work takes, ONLY if the visitor says so: amount in hours per day, week or month (e.g. "half a day" = 4 per day, "2–3 hours a day" = 2.5 per day) and how many people do it (0 if not said). If they don't say how long it takes, amount 0.
-- email: a short email FROM the visitor TO the Swiftrix team, first person, in the language the visitor wrote in. Describe their situation and what they want solved, say which suggested approach interests them most (the first one), and ask to discuss the options. Start with a plain greeting ("Sveiki," / "Hello,") on its own line, then 2–3 short paragraphs separated by blank lines. Specific subject line. No name in the greeting, no signature, no placeholders, since contact details are added separately. Don't add facts the visitor didn't give.
+- email: a short email FROM the visitor TO the Swiftrix team, first person, in the language the visitor wrote in. Describe their situation and what they want solved, say which suggested approach interests them most (the first one), and ask to discuss the options. Start with a plain greeting ("Sveiki," / "Guten Tag," / "Hello,") on its own line, then 2–3 short paragraphs separated by blank lines. Specific subject line. No name in the greeting, no signature, no placeholders, since contact details are added separately. Don't add facts the visitor didn't give.
 
-Write understanding, solutions and questions in ${ui}${lang === 'lt' ? ' (say "DI", not "AI": "DI agentas", "DI asistentas")' : ''}. Never promise prices, timelines or guaranteed results. Never use em dashes (—) in any text; use commas, colons or full stops instead.`
+Write understanding, solutions and questions in ${ui}${NOTE[lang] || ''}. Never promise prices, timelines or guaranteed results. Never use em dashes (—) in any text; use commas, colons or full stops instead.`
 }
 
 function sanitizeTime(t) {
@@ -100,11 +106,12 @@ function sanitizeTime(t) {
   return { amount: num(t.amount, per === 'day' ? 24 : per === 'week' ? 168 : 744), per, people: Math.round(num(t.people, 500)) }
 }
 
-// Small models ignore the "say DI, not AI" instruction now and then.
-function diForAi(s) { return s.replace(/\bAI(?=\s|-|$)/g, 'DI') }
+// Small models ignore the "say DI / KI, not AI" instruction now and then.
+const LOCAL_AI = { lt: 'DI', de: 'KI' }
+function localAi(s, lang) { return s.replace(/\bAI(?=\s|-|$)/g, LOCAL_AI[lang]) }
 
 function sanitize(x, lang) {
-  if (lang === 'lt') x = JSON.parse(JSON.stringify(x), (k, v) => (typeof v === 'string' ? diForAi(v) : v))
+  if (LOCAL_AI[lang]) x = JSON.parse(JSON.stringify(x), (k, v) => (typeof v === 'string' ? localAi(v, lang) : v))
   const e = x.email || {}
   return {
     relevant: x.relevant !== false,
@@ -133,7 +140,7 @@ module.exports = async function handler(req, res) {
   const problem = clip(body && body.problem, 2500)
   const context = clip(body && body.context, 200)
   const answers = clip(body && body.answers, 1500)
-  const lang = body && body.lang === 'lt' ? 'lt' : 'en'
+  const lang = body && (body.lang === 'lt' || body.lang === 'de') ? body.lang : 'en'
   if (problem.length < 30) return send(res, 400, { error: 'length' })
 
   let user = 'PROBLEM:\n"""\n' + problem + '\n"""'

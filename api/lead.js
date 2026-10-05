@@ -24,6 +24,8 @@ const L = {
   lt: { contacts: 'Kontaktai', name: 'Vardas', company: 'Įmonė', email: 'El. paštas', phone: 'Telefonas', ideas: 'Ką pasiūlė DI asistentas', cases: 'Panašūs projektai', original: 'Pradinis problemos aprašymas', context: 'Apie įmonę', answers: 'Atsakymai į klausimus' },
   en: { contacts: 'Contact', name: 'Name', company: 'Company', email: 'Email', phone: 'Phone', ideas: 'What the AI assistant suggested', cases: 'Similar projects', original: 'Original problem description', context: 'About the company', answers: 'Answers to questions' }
 }
+L.de = L.en // German leads: the visitor's email is in German, the labels stay English for the team
+const PAGE = { en: '/assistant', lt: '/lt/asistentas', de: '/de/assistent' }
 
 function compose(d, t) {
   const lines = [d.body, '', '---', t.contacts + ':', `${t.name}: ${d.name}`]
@@ -42,7 +44,7 @@ function compose(d, t) {
   lines.push('', '---', t.original + ':', d.problem)
   if (d.context) lines.push('', t.context + ': ' + d.context)
   if (d.answers) lines.push('', t.answers + ':', d.answers)
-  lines.push('', `swiftrix.eu ${d.lang === 'lt' ? '/lt/asistentas' : '/assistant'}`)
+  lines.push('', `swiftrix.eu ${PAGE[d.lang]}`)
   return lines.join('\n')
 }
 
@@ -55,7 +57,7 @@ module.exports = async function handler(req, res) {
 
   const ideas = body.ideas && typeof body.ideas === 'object' ? body.ideas : {}
   const d = {
-    lang: body.lang === 'lt' ? 'lt' : 'en',
+    lang: body.lang === 'lt' || body.lang === 'de' ? body.lang : 'en',
     name: oneLine(clip(body.name, 100)),
     email: oneLine(clip(body.email, 150)),
     company: oneLine(clip(body.company, 150)),
