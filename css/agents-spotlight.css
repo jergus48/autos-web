@@ -1,91 +1,151 @@
-/* DI agents spotlight on the homepage (all four builds): a banner right
-   under the hero that points to the demo and the AI assistant. It replaced
-   the small "AI agents & bots" card under Other services. Dark styles by
-   default; the /light builds mark the banner .swx-spot--light. Fonts (Clash
-   Grotesk, Instrument Sans, Roboto) are already loaded by the homepage. */
+/* DI agents spotlight on the homepage (all four builds): a section right
+   under the hero that points to the demo and the AI assistant. It is built
+   like the homepage's own sections (Why us, Process...): the same eyebrow
+   badge with its side lines, a centred heading with one marked word, and
+   cards in the site's card style. The data-swiftrix-name attributes hook it
+   into js/deck-motion.js, so the badge, heading and cards get the same
+   reveal and hover motion as the rest of the page. Dark styles by default;
+   the /light builds mark the section .swx-spot--light. Fonts (Clash Grotesk,
+   Instrument Sans, Roboto) are already loaded by the homepage. */
 
 .swx-spot {
-  width: min(996px, 100%); box-sizing: border-box; position: relative; overflow: hidden;
-  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 36px; align-items: center;
-  padding: 44px; border-radius: 30px; text-align: left;
+  --swx-accent: #b0e562;
+  --swx-hl-ink: #0a0a0c;
+  width: min(996px, 100%); box-sizing: border-box;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: 24px 0 0;
   /* The next block's round logo sticks ~95px up out of its card. */
-  margin-bottom: 64px;
+  margin-bottom: 120px;
   font-family: "Instrument Sans", system-ui, sans-serif;
-  background:
-    radial-gradient(80% 120% at 0% 0%, rgba(176, 229, 98, .15), transparent 60%),
-    radial-gradient(60% 100% at 100% 100%, rgba(176, 229, 98, .07), transparent 60%),
-    #0b0d10;
-  border: 1px solid rgba(176, 229, 98, .38);
-  box-shadow: 0 30px 80px -40px rgba(176, 229, 98, .5);
-}
-.swx-spot__badge {
-  display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 100px;
-  background: rgba(176, 229, 98, .12); border: 1px solid rgba(176, 229, 98, .35); color: #b0e562;
-  font: 500 12.5px/1.2 ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace; letter-spacing: 1.5px;
-}
-.swx-spot__badge i { width: 7px; height: 7px; border-radius: 50%; background: #b0e562; box-shadow: 0 0 10px #b0e562; animation: swxPulse 1.8s ease-in-out infinite; }
-@keyframes swxPulse { 50% { opacity: .35; } }
-.swx-spot h2 {
-  font-family: "Clash Grotesk", "Instrument Sans", sans-serif; font-weight: 500;
-  font-size: clamp(30px, 3.6vw, 44px); line-height: 1.15; color: #f4f2ef; margin: 18px 0 14px;
-}
-.swx-hl { background: #b0e562; color: #0a0a0c; border-radius: .08em; padding: 0 .12em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
-.swx-spot p { color: #b2b2b2; font-size: 17px; line-height: 1.55; margin: 0 0 26px; }
-.swx-spot__actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.swx-btn {
-  display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border-radius: 100px;
-  font: 600 16px/1 "Instrument Sans", system-ui, sans-serif; text-decoration: none; white-space: nowrap;
-  transition: transform .18s ease, filter .18s ease, border-color .2s ease;
-}
-.swx-btn--primary { background: linear-gradient(135deg, #c5f07a 0%, #a0d64a 100%); color: #0a0a0c; box-shadow: 0 12px 26px -10px rgba(160, 214, 74, .6); }
-.swx-btn--primary:hover { transform: translateY(-2px); filter: brightness(1.05); }
-.swx-btn--ghost { color: #f4f2ef; border: 1px solid rgba(244, 242, 239, .2); font-weight: 500; }
-.swx-btn--ghost:hover { border-color: rgba(176, 229, 98, .6); }
-.swx-spot__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.swx-spot__grid li {
-  display: grid; gap: 4px; align-content: start; padding: 18px; border-radius: 18px;
-  background: rgba(255, 255, 255, .025); border: 1px solid #181c25; transition: transform .2s ease, border-color .2s ease;
-}
-.swx-spot__grid li:hover { transform: translateY(-3px); border-color: rgba(176, 229, 98, .35); }
-.swx-ico { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; margin-bottom: 8px; background: linear-gradient(135deg, #c5f07a, #a0d64a); color: #0a0a0c; }
-.swx-ico svg { width: 18px; height: 18px; }
-.swx-spot__grid b { font-family: "Clash Grotesk", "Instrument Sans", sans-serif; font-weight: 500; font-size: 16.5px; color: #f4f2ef; }
-.swx-spot__grid small { font-family: Roboto, "Instrument Sans", sans-serif; font-size: 14px; line-height: 1.45; color: #999; }
-@media (max-width: 860px) {
-  .swx-spot { grid-template-columns: minmax(0, 1fr); padding: 30px 22px; gap: 26px; border-radius: 24px; }
-}
-@media (max-width: 480px) {
-  .swx-spot__grid { gap: 10px; }
-  .swx-spot__grid li { padding: 14px; border-radius: 16px; }
-  .swx-ico { width: 32px; height: 32px; margin-bottom: 6px; }
-  .swx-ico svg { width: 16px; height: 16px; }
-  .swx-spot__grid b { font-size: 15px; line-height: 1.25; }
-  .swx-spot__grid small { font-size: 12.5px; }
-  .swx-btn { flex: 1 1 100%; justify-content: center; }
 }
 
-/* light build */
-.swx-spot--light {
-  background:
-    radial-gradient(80% 120% at 0% 0%, rgba(168, 85, 247, .16), transparent 60%),
-    radial-gradient(60% 100% at 100% 100%, rgba(124, 58, 237, .08), transparent 60%),
-    #ffffff;
-  border-color: rgba(124, 58, 237, .25);
-  box-shadow: 0 30px 80px -40px rgba(124, 58, 237, .45);
+/* eyebrow badge: same pill + side-line art as the site's "Section Badge" */
+.swx-tag-wrap { width: 100%; display: flex; justify-content: center; overflow: hidden; padding: 14px 0; }
+.swx-tag {
+  position: relative; display: inline-flex; align-items: center; gap: 6px;
+  height: 40px; box-sizing: border-box; padding: 8px 14px 8px 8px; border-radius: 100px;
+  background: #0a0a0c; border: 1px solid #0b0d10; box-shadow: rgba(73, 73, 73, .2) 0 2px 3px 0;
 }
-.swx-spot--light .swx-spot__badge {
-  background: rgba(124, 58, 237, .07); border-color: rgba(124, 58, 237, .25); color: #7c3aed;
-  font-family: "Instrument Sans", sans-serif; font-style: italic; letter-spacing: .3px; font-size: 13.5px;
+.swx-tag__line { position: absolute; top: calc(50% - 27px); width: 251px; height: 54px; pointer-events: none; }
+.swx-tag__line--l { left: -189px; }
+.swx-tag__line--r { right: -189px; }
+.swx-tag__ico { width: 24px; height: 24px; display: grid; place-items: center; color: var(--swx-accent); }
+.swx-tag__ico svg { width: 18px; height: 18px; }
+.swx-tag__txt {
+  font: italic 500 13px/1.5 ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  text-transform: uppercase; letter-spacing: .14em; color: #b2b2b2; white-space: nowrap;
 }
-.swx-spot--light .swx-spot__badge i { background: #7c3aed; box-shadow: 0 0 10px #a855f7; }
+
+.swx-spot h2 {
+  font-family: "Clash Grotesk", "Instrument Sans", sans-serif; font-weight: 500;
+  font-size: 48px; line-height: 1.2; color: #f4f2ef; margin: 2px 0 16px;
+}
+/* one marked word, swept in like the hero's (see .deck-hl in deck-theme.css) */
+.swx-hl {
+  padding: 0 .12em; margin: 0 -.04em; border-radius: .08em;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  background-image: linear-gradient(0deg, var(--swx-accent), var(--swx-accent));
+  background-repeat: no-repeat; background-size: 100% 100%; color: var(--swx-hl-ink);
+}
+.deck-reveal:not(.deck-in) .swx-hl { background-size: 0 100%; color: inherit; }
+.deck-in .swx-hl { animation: swxHlSweep .9s cubic-bezier(.22, .61, .36, 1) .35s both; }
+@keyframes swxHlSweep {
+  0% { background-size: 0 100%; color: inherit; }
+  45% { color: inherit; }
+  65% { color: var(--swx-hl-ink); }
+  100% { background-size: 100% 100%; color: var(--swx-hl-ink); }
+}
+
+.swx-spot__lead { max-width: 620px; margin: 0 0 30px; color: #b2b2b2; font-size: 17px; font-weight: 500; line-height: 1.5; }
+
+.swx-spot__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 48px; }
+.swx-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 16px 30px; border-radius: 100px; box-sizing: border-box;
+  font: 600 16px/24px "Instrument Sans", system-ui, sans-serif; text-decoration: none; white-space: nowrap;
+  transition: transform .18s ease, filter .18s ease, box-shadow .18s ease, border-color .2s ease;
+}
+/* same fill and inset shadow as the hero's "Claim Your Automation Audit" */
+.swx-btn--primary {
+  background: linear-gradient(135deg, #c5f07a 0%, #a0d64a 100%); color: #0a0a0c;
+  box-shadow: rgba(77, 77, 77, .28) 4px 4px 18px 0 inset;
+}
+.swx-btn--primary:hover {
+  transform: translateY(-2px); filter: brightness(1.04) saturate(1.05);
+  box-shadow: rgba(77, 77, 77, .28) 4px 4px 18px 0 inset, 0 16px 34px -10px rgba(160, 214, 74, .75);
+}
+/* secondary: the site's dark pill (as the eyebrow badges) */
+.swx-btn--ghost {
+  background: #0a0a0c; color: #f4f2ef; font-weight: 500;
+  border: 1px solid #181c25; box-shadow: rgba(73, 73, 73, .2) 0 2px 3px 0;
+}
+.swx-btn--ghost:hover { transform: translateY(-2px); border-color: rgba(176, 229, 98, .55); }
+
+/* cards: same surface as the "Why us" cards; hover lift + lime ring come
+   from deck-theme.css via data-swiftrix-name="Card" */
+.swx-spot__grid {
+  width: 100%; list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; text-align: left;
+}
+.swx-spot__grid li {
+  padding: 24px; border-radius: 20px; box-sizing: border-box;
+  background: #0b0d10; border: 1px solid #13161e;
+}
+.swx-card__head { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 8px; }
+.swx-ico {
+  flex: 0 0 auto; width: 37px; height: 37px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--swx-accent); color: #0a0a0c;
+}
+.swx-ico svg { width: 18px; height: 18px; }
+.swx-spot__grid b {
+  font-family: "Clash Grotesk", "Instrument Sans", sans-serif; font-weight: 500;
+  font-size: 18px; line-height: 1.25; color: #f4f2ef;
+}
+.swx-spot__grid small {
+  display: block; font-family: Roboto, "Instrument Sans", sans-serif; font-weight: 500;
+  font-size: 15px; line-height: 1.4; color: #999;
+}
+
+@media (max-width: 960px) {
+  .swx-spot__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 809px) {
+  .swx-spot { margin-bottom: 110px; }
+  .swx-spot h2 { font-size: 34px; }
+  .swx-spot__lead { font-size: 16px; }
+  .swx-spot__actions { margin-bottom: 36px; }
+}
+@media (max-width: 560px) {
+  .swx-spot__grid { gap: 10px; }
+  .swx-spot__grid li { padding: 16px; border-radius: 18px; }
+  .swx-card__head { gap: 10px; margin-bottom: 6px; }
+  .swx-ico { width: 32px; height: 32px; }
+  .swx-ico svg { width: 16px; height: 16px; }
+  .swx-spot__grid b { font-size: 16px; }
+  .swx-spot__grid small { font-size: 13px; }
+  .swx-spot__actions { width: 100%; }
+  .swx-btn { flex: 1 1 100%; }
+}
+
+/* light build: the light theme's purple tokens */
+.swx-spot--light { --swx-accent: #923bf6; --swx-hl-ink: #fff; }
+.swx-spot--light .swx-tag { background: #fff; border-color: #edeff3; box-shadow: rgba(182, 182, 182, .2) 0 2px 3px 0; }
+.swx-spot--light .swx-tag__txt {
+  font-family: "Instrument Sans", sans-serif; font-weight: 400; text-transform: none; letter-spacing: normal; color: #4d4d4d;
+}
 .swx-spot--light h2 { color: #191919; }
-.swx-spot--light .swx-hl { background: linear-gradient(0deg, #7c3aed, #a855f7); color: #fff; }
-.swx-spot--light p { color: #4d4d4d; }
-.swx-spot--light .swx-btn--primary { background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%); color: #fff; box-shadow: rgba(139, 61, 242, .7) 0 10px 22px -8px; }
-.swx-spot--light .swx-btn--ghost { color: #191919; border-color: rgba(25, 25, 25, .15); }
-.swx-spot--light .swx-btn--ghost:hover { border-color: rgba(124, 58, 237, .5); }
-.swx-spot--light .swx-spot__grid li { background: #f8f9fa; border-color: transparent; }
-.swx-spot--light .swx-spot__grid li:hover { border-color: rgba(124, 58, 237, .3); }
-.swx-spot--light .swx-ico { background: linear-gradient(135deg, #a855f7, #7c3aed); color: #fff; }
+.swx-spot--light .swx-hl { background-image: linear-gradient(0deg, #7c3aed, #a855f7); }
+.swx-spot--light .swx-spot__lead { color: #4d4d4d; }
+.swx-spot--light .swx-btn--primary {
+  background: linear-gradient(180deg, #9f54f7 0%, #8523f5 100%); color: #fff;
+  box-shadow: rgba(178, 178, 178, .28) 4px 4px 18px 0 inset;
+}
+.swx-spot--light .swx-btn--primary:hover {
+  box-shadow: rgba(178, 178, 178, .28) 4px 4px 18px 0 inset, 0 16px 34px -10px rgba(133, 35, 245, .55);
+}
+.swx-spot--light .swx-btn--ghost { background: #fff; color: #191919; border-color: #e6e9ee; box-shadow: rgba(182, 182, 182, .2) 0 2px 3px 0; }
+.swx-spot--light .swx-btn--ghost:hover { border-color: rgba(146, 59, 246, .5); }
+.swx-spot--light .swx-spot__grid li { background: #f8f9fa; border-color: #e6e9ee; }
+.swx-spot--light .swx-ico { color: #fff; }
 .swx-spot--light .swx-spot__grid b { color: #191919; }
 .swx-spot--light .swx-spot__grid small { color: #666; }
