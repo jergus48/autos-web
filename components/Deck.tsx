@@ -57,7 +57,7 @@ function Win({ img, bar, children }: { img?: string; bar?: boolean; children?: a
       {bar && (
         <div className="wbar"><i /><i /><i /></div>
       )}
-      {img && <img className="shot" src={`/portfolio/${img}.jpg`} alt="" style={{ objectPosition: img === 'hakom' ? 'center top' : 'left top', top: bar ? U(29) : 0, height: bar ? U(362) : '100%' }} />}
+      {img && <img className="shot" src={`/portfolio/${img}.jpg`} alt="" style={{ objectPosition: 'left top', top: bar ? U(29) : 0, height: bar ? U(362) : '100%' }} />}
       {children}
     </div>
   );
@@ -171,7 +171,7 @@ export default function Deck({ slides, lang, edit = false, deckId }: { slides: a
         {f.works.map((w, i) => (
           <Slide key={w.name} n={next()} dark>
             <CaseCol lab={w.tag} name={w.name} nameText={w.name} sub={w.sub} blocks={[{ label: f.ui.problem.toUpperCase(), text: w.problem }, { label: f.ui.solution.toUpperCase(), text: w.solution }]} />
-            <Win img={w.img} bar={w.img === 'upshift'} />
+            <Win img={w.img} bar />
             <Stats items={w.stats} />
           </Slide>
         ))}
