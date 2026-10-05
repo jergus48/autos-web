@@ -1,7 +1,7 @@
 export async function llmJson<T = any>(system: string, user: string): Promise<{ data: T; tokens: number }> {
-  const key = process.env.OPENROUTER_API_KEY;
+  const key = process.env.OPENROUTER_API_KEY?.trim();
   if (!key) throw new Error('OPENROUTER_API_KEY missing');
-  const model = process.env.OPENROUTER_MODEL || 'openai/gpt-4o-mini';
+  const model = process.env.OPENROUTER_MODEL?.trim() || 'openai/gpt-4o-mini';
   let lastErr = '';
   for (let attempt = 0; attempt < 2; attempt++) {
     const r = await fetch('https://openrouter.ai/api/v1/chat/completions', {
