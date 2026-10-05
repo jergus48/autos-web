@@ -1,4 +1,5 @@
-// Solution assistant (/assistant in English, /lt/asistentas in Lithuanian).
+// Solution assistant (/assistant in English, /lt/asistentas in Lithuanian,
+// /de/assistent in German).
 // 1. The visitor describes a problem  →  /api/assistant returns solution ideas,
 //    matching past projects, scoping questions and an email draft to Swiftrix.
 // 2. They can answer the questions to refine the ideas.
@@ -8,7 +9,7 @@
 (function () {
   'use strict'
 
-  var LANG = document.documentElement.lang === 'lt' ? 'lt' : 'en'
+  var LANG = { lt: 'lt', de: 'de' }[document.documentElement.lang] || 'en'
   var CAL_LINK = 'swiftrix/30-minute-call'
   var CONTACT = 'info@swiftrix.eu'
 
@@ -48,10 +49,28 @@
       rateSend: 'An email was sent from here a moment ago. To add something, write to ' + CONTACT + ' directly.',
       calFail: 'The calendar couldn’t be loaded.',
       notesPrefix: 'From the swiftrix.eu AI assistant'
+    },
+    de: {
+      think: ['Analysiere Ihr Problem…', 'Suche die passendsten Lösungen…', 'Prüfe unsere bisherigen Projekte…', 'Schreibe die E-Mail an unser Team…'],
+      understood: 'So haben wir es verstanden', offTopic: 'Antwort',
+      retryHint: 'Beschreiben Sie eine Aufgabe oder ein Problem in Ihrem Unternehmen, das Sie vereinfachen möchten, z. B. wer es erledigt, wie lange es dauert und welche Software Sie nutzen.', retry: 'Anders beschreiben',
+      kind: { agent: 'KI-Agent', automation: 'Automatisierung', integration: 'Integration', app: 'Individuelle App' },
+      cx: { simple: 'Einfach', medium: 'Mittlerer Aufwand', complex: 'Komplex' },
+      tooShort: 'Beschreiben Sie das Problem etwas genauer, mindestens in ein oder zwei Sätzen.',
+      err: { rate: 'Zu viele Anfragen hintereinander. Bitte versuchen Sie es in ein paar Minuten erneut.', off: 'Der KI-Assistent ist gerade nicht erreichbar. Schreiben Sie uns unten oder buchen Sie direkt ein Gespräch.', generic: 'Es kam keine Antwort. Bitte versuchen Sie es erneut.' },
+      needFields: 'Bitte geben Sie Ihren Namen und eine gültige E-Mail-Adresse ein und bestätigen Sie die Einwilligung.',
+      sending: 'Wird gesendet…', send: 'E-Mail senden',
+      sent: function (n) { return 'Vielen Dank, ' + n + '! Wir haben Ihre E-Mail erhalten und antworten per E-Mail. Wenn Sie früher sprechen möchten, buchen Sie unten ein Gespräch.' },
+      sendOff: 'Der automatische Versand funktioniert gerade nicht. Öffnen Sie die E-Mail in Ihrem Mailprogramm. Sie ist bereits vorbereitet:',
+      openMail: 'Im Mailprogramm öffnen',
+      sendErr: 'Das Senden hat nicht geklappt. Bitte versuchen Sie es erneut oder schreiben Sie direkt an ' + CONTACT + '.',
+      rateSend: 'Von hier wurde gerade erst eine E-Mail gesendet. Wenn Sie etwas ergänzen möchten, schreiben Sie direkt an ' + CONTACT + '.',
+      calFail: 'Der Kalender konnte nicht geladen werden.',
+      notesPrefix: 'Vom KI-Assistenten auf swiftrix.eu'
     }
   }[LANG]
 
-  // The site's own case-study wording (index.html / lt/index.html), keyed by
+  // The site's own case-study wording (index.html, lt/ and de/), keyed by
   // the ids /api/assistant may return.
   var CASES = {
     lt: {
@@ -71,6 +90,15 @@
       unisport: ['Database Migration', 'We automated the full migration of their very large legacy database from the old website to the new one, cleaning and re-sorting the data on the way so every record landed in the right place.', 'unisport-kovac.sk'],
       urbarlamac: ['Monthly Ownership Calculations', 'An automation that generates the association’s monthly Excel payout calculations for its members based on the latest land-ownership certificates, a tedious manual task that now runs automatically.', 'urbarlamac.sk'],
       joinupshift: ['Clipper Recruitment & Management Portal', 'A complete portal for managing clippers end to end: recruit and onboard them, manage their accounts, automate their payouts, and track the sales, views and revenue each clipper generates from one dashboard.', 'joinupshift.com']
+    },
+    de: {
+      hakom: ['Digitale Protokollfreigabe', 'Wir haben die gesamte Protokollfreigabe in der Fertigung digitalisiert. Mitarbeitende melden sich mit ihrem Werksausweis an, sehen jedes neue Dokument, das sie prüfen müssen, und bestätigen es digital. Hunderte Papierformulare wurden so durch einen lückenlos nachvollziehbaren Nachweis ersetzt.', 'hakom.sk'],
+      aluprint: ['Digitale Protokollfreigabe', 'Dasselbe ausweisbasierte Freigabesystem haben wir in der Produktionslinie von Aluprint eingeführt. So sieht die Geschäftsleitung auf einen Blick, dass alle Mitarbeitenden die aktuellen Protokolle gelesen und bestätigt haben, ganz ohne Papierkram.', 'aluprint.sk'],
+      gaya: ['Bereinigung des Rechnungsarchivs', 'Wir haben ein an den Scanner angebundenes Programm entwickelt, das jede gescannte Papierrechnung mit der Datenbank abgleicht und genau anzeigt, welche entsorgt werden können. Das hat viel Lagerfläche frei gemacht.', 'gaya.sk'],
+      geosoul: ['Statik-Berechnungsprogramm', 'Eine individuelle Anwendung, die die statischen Berechnungen für geotechnische Projekte durchführt und für jedes Projekt automatisch einen passenden Word-Bericht erstellt. Sie ist mit den Produkten des Kunden verknüpft und berücksichtigt verschiedene Ankertypen und Bodenverhältnisse.', 'geosoul.sk'],
+      unisport: ['Datenbankmigration', 'Wir haben die komplette Migration einer sehr großen Altdatenbank von der alten auf die neue Website automatisiert und die Daten dabei bereinigt und neu sortiert, sodass jeder Datensatz am richtigen Platz gelandet ist.', 'unisport-kovac.sk'],
+      urbarlamac: ['Monatliche Eigentumsabrechnung', 'Eine Automatisierung, die die monatlichen Excel-Auszahlungsberechnungen der Genossenschaft für ihre Mitglieder auf Basis der aktuellen Grundbuchauszüge erstellt. Eine mühsame Handarbeit, die jetzt automatisch läuft.', 'urbarlamac.sk'],
+      joinupshift: ['Portal für Clipper-Recruiting & -Verwaltung', 'Ein komplettes Portal, um Clipper von A bis Z zu verwalten: gewinnen und einarbeiten, Konten verwalten, Auszahlungen automatisieren und in einem Dashboard verfolgen, welche Verkäufe, Aufrufe und Umsätze jeder Clipper erzielt.', 'joinupshift.com']
     }
   }[LANG]
 

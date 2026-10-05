@@ -51,8 +51,25 @@ const SCHEMA = {
   required: ['type', 'summary', 'items', 'missing', 'reply']
 }
 
-function instructions(lang) {
-  const ui = lang === 'lt' ? 'Lithuanian' : 'English'
+// The reply must be in the email's own language. The small model often
+// slips into the page's language (or the examples' one), so the language is
+// detected here and named in the prompt. Diacritics decide first, then
+// common words; anything else counts as English.
+function emailLanguage(text) {
+  const t = text.toLowerCase()
+  if (/[ąčęėįšųūž]/.test(t)) return 'Lithuanian'
+  if (/[äöüß]/.test(t)) return 'German'
+  const words = re => (t.match(re) || []).length
+  const de = words(/\b(und|der|die|das|bitte|wir|sie|ihre?|mit|für|danke|grüße|hallo)\b/g)
+  const lt = words(/\b(laba|diena|sveiki|aciu|prasome|norime|uzsakym\w*|pristatym\w*|ir|su)\b/g)
+  const en = words(/\b(the|and|please|we|you|with|for|thanks|hello|order)\b/g)
+  if (de > en && de >= lt) return 'German'
+  if (lt > en && lt > de) return 'Lithuanian'
+  return 'English'
+}
+
+function instructions(lang, replyLang) {
+  const ui = { lt: 'Lithuanian', de: 'German' }[lang] || 'English'
   const today = new Date().toISOString().slice(0, 10)
   return `You are the order-intake agent in a public demo on swiftrix.eu. A website visitor pasted an email that a business might receive.
 
@@ -65,7 +82,7 @@ Fill in:
 - items: each product or service requested, with quantity and unit as written. Empty for "other".
 - delivery: the date/time as written, with the resolved date in brackets if it's relative (today is ${today}), e.g. "next Tuesday (2026-03-10)"; address and on-site contact. Only if stated.
 - missing: in ${ui}, the specific details the SENDER still has to provide to fulfil THIS request that the email doesn't give (e.g. delivery address, exact quantities, a date). Empty if nothing is missing. Don't ask for things the request doesn't need. Questions the SENDER asks (price, discount, stock, whether a date is possible) are NOT missing information: the business answers those, so they go in the reply, never in this list.
-- reply: a short, polite draft reply written AS the business that received the email (the supplier), TO the sender, in the SAME language as the email, addressed to the sender by first name if known (in the vocative case in Lithuanian). Short paragraphs separated by blank lines; a list if there are several items or questions. Confirm what was understood and ask for anything missing. If the sender asks something this demo can't answer (price, discount, stock, delivery date), acknowledge the question and say you'll come back with an answer shortly. End with one short friendly closing line such as "Gražios dienos!" / "Have a good day!", never a sign-off like "Pagarbiai," or "Regards," and no name. Never state prices, totals, stock levels or delivery promises, as this demo has no catalog. For type "other", reply politely that the message doesn't look like an order or enquiry.
+- reply: a short, polite draft reply written AS the business that received the email (the supplier), TO the sender, in ${replyLang} (the language the email is written in), addressed to the sender by first name if known (in the vocative case in Lithuanian). Short paragraphs separated by blank lines; a list if there are several items or questions. Confirm what was understood and ask for anything missing. If the sender asks something this demo can't answer (price, discount, stock, delivery date), acknowledge the question and say you'll come back with an answer shortly. End with one short friendly closing line in ${replyLang} (Lithuanian: "Gražios dienos!", German: "Einen schönen Tag noch!", English: "Have a good day!"), never a sign-off like "Pagarbiai," / "Mit freundlichen Grüßen," / "Regards," and no name. Never state prices, totals, stock levels or delivery promises, as this demo has no catalog. For type "other", reply politely that the message doesn't look like an order or enquiry.
 
 Never invent facts that the email doesn't contain; leave fields empty instead. Never use em dashes (—) in any text; use commas, colons or full stops instead.`
 }
@@ -94,10 +111,10 @@ module.exports = async function handler(req, res) {
 
   const body = await readBody(req)
   const email = body && typeof body.email === 'string' ? body.email.trim() : ''
-  const lang = body && body.lang === 'lt' ? 'lt' : 'en'
+  const lang = body && (body.lang === 'lt' || body.lang === 'de') ? body.lang : 'en'
   if (email.length < 40 || email.length > MAX_CHARS) return send(res, 400, { error: 'length' })
 
-  const out = await ai({ system: instructions(lang), user: 'EMAIL:\n"""\n' + email + '\n"""', schema: SCHEMA, maxTokens: 1500 })
+  const out = await ai({ system: instructions(lang, emailLanguage(email)), user: 'EMAIL:\n"""\n' + email + '\n"""', schema: SCHEMA, maxTokens: 1500 })
   if (out.status !== 200) return send(res, out.status, { error: out.status === 429 ? 'rate' : out.status === 503 ? 'off' : 'model' })
   return send(res, 200, { result: sanitize(out.json) })
 }

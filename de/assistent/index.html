@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="de" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KI-Assistent | Swiftrix</title>
+  <meta name="description" content="Beschreiben Sie ein Problem in Ihrem Unternehmen. Der KI-Assistent schlägt vor, wie eine Automatisierung oder ein KI-Agent es lösen könnte, und entwirft eine E-Mail an unser Team. Ein Gespräch buchen Sie gleich hier.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="KI-Assistent | Swiftrix">
+  <meta property="og:description" content="Erzählen Sie uns, was Sie ausbremst, und wir zeigen Ihnen, wie es sich lösen lässt.">
+  <link rel="icon" href="/assets/images/swiftrixLogo.png">
+  <link rel="alternate" hreflang="en" href="https://www.swiftrix.eu/assistant">
+  <link rel="alternate" hreflang="lt" href="https://www.swiftrix.eu/lt/asistentas">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&display=swap">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/assistant/assistant.css">
+  <script>try { if (/[?&]theme=light/.test(location.search) || (!/[?&]theme=dark/.test(location.search) && localStorage.getItem('swiftrix-theme') === 'light')) document.documentElement.setAttribute('data-theme', 'light') } catch (e) {}</script>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <nav class="vex-nav">
+    <a class="vex-logo" data-site="" href="/de" aria-label="Swiftrix">
+      <img class="logo-dark" src="/assets/images/swiftrixLogo.png" alt="Swiftrix">
+      <img class="logo-light" src="/light/assets/images/swiftrixLogo.png" alt="Swiftrix">
+    </a>
+    <div class="vex-links" id="vexLinks">
+      <a data-site="#process" href="/de#process">So funktioniert's</a>
+      <a data-site="#testimonial" href="/de#testimonial">Referenzen</a>
+      <a data-site="" href="/de">Über uns</a>
+      <a data-page="/de/assistent" href="/de/assistent" aria-current="page">KI-Assistent</a>
+      <a data-site="#faq" href="/de#faq">FAQ</a>
+      <a class="vex-mlink" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Termin buchen</a>
+    </div>
+    <a class="vex-cta" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Termin buchen</a>
+    <button class="vex-burger" id="vexBurger" type="button" aria-label="Menü" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="wrap">
+    <header class="hero">
+      <p class="eyebrow"><span>KI-ASSISTENT · KOSTENLOSE EINSCHÄTZUNG</span></p>
+      <h1>Erzählen Sie uns, was Sie ausbremst, und wir zeigen Ihnen, wie es sich <span class="hl">lösen</span> lässt</h1>
+      <p>Beschreiben Sie eine wiederkehrende Aufgabe oder ein Problem in Ihrem Unternehmen. Der KI-Assistent schlägt in wenigen Sekunden Lösungsideen mit Beispielen vor und entwirft eine E-Mail an unser Team. Ein Gespräch können Sie gleich hier buchen.</p>
+    </header>
+
+    <div class="flow">
+      <section class="panel" id="card-problem" aria-labelledby="h-problem">
+        <div class="panel-head"><span class="step-no">1</span><span id="h-problem">Ihr Problem</span></div>
+        <div class="panel-body">
+          <div class="field">
+            <label for="problem">Was kostet in Ihrem Unternehmen zu viel Zeit oder macht Probleme?</label>
+            <textarea class="textarea" id="problem" maxlength="2500" placeholder="Z. B.: Wir bekommen täglich rund 40 Bestellungen per E-Mail, und eine Mitarbeiterin überträgt sie von Hand in Excel und die Buchhaltung. Das dauert ein paar Stunden, und es passieren Fehler."></textarea>
+          </div>
+          <span class="label">Oder starten Sie mit:</span>
+          <div class="chips">
+            <button class="chip" type="button" data-starter="Bestellungen kommen per E-Mail, und unsere Mitarbeiter tragen sie von Hand ein in ">Bestellungen per E-Mail</button>
+            <button class="chip" type="button" data-starter="Wir bekommen jeden Tag viele gleiche Kundenfragen zu ">Kundenanfragen</button>
+            <button class="chip" type="button" data-starter="Rechnungen und Dokumente bearbeiten wir von Hand: ">Rechnungen & Dokumente</button>
+            <button class="chip" type="button" data-starter="Jede Woche oder jeden Monat erstellen wir Berichte von Hand aus ">Berichte</button>
+            <button class="chip" type="button" data-starter="Dieselben Daten pflegen wir in mehreren Systemen: ">Daten zwischen Systemen</button>
+            <button class="chip" type="button" data-starter="Anfragen und Interessenten gehen verloren, weil wir sie verfolgen über ">Vertrieb & CRM</button>
+          </div>
+          <div class="field">
+            <label for="context">Ihre Branche und Unternehmensgröße (optional)</label>
+            <input class="input" id="context" maxlength="200" placeholder="z. B. Logistik, 20 Mitarbeitende">
+          </div>
+          <div class="actions"><button class="btn btn-primary" id="ask" type="button">Lösungsideen erhalten</button></div>
+          <p class="msg" id="ask-msg" role="alert"></p>
+          <div class="thinking" id="thinking" hidden aria-live="polite"></div>
+          <p class="hint">Bitte keine personenbezogenen oder vertraulichen Daten eingeben. Die Beschreibung wird von einem KI-Modell verarbeitet und von uns nicht gespeichert, solange Sie die E-Mail nicht selbst absenden.</p>
+        </div>
+      </section>
+
+      <section class="panel" id="card-ideas" hidden aria-labelledby="h-ideas">
+        <div class="panel-head"><span class="step-no">2</span><span id="h-ideas">Lösungsideen</span></div>
+        <div class="panel-body">
+          <div id="ideas" aria-live="polite" data-cases="Ähnliche Projekte von uns"></div>
+          <div class="refine" id="refine" hidden>
+            <h3 class="sub-h">Genauere Ideen gewünscht? Beantworten Sie ein paar Fragen</h3>
+            <ul class="qs" id="questions"></ul>
+            <textarea class="textarea" id="answers" maxlength="1500" placeholder="Ihre Antworten…" aria-label="Antworten auf die Fragen"></textarea>
+            <div class="actions" style="margin-top:12px"><button class="btn btn-ghost" id="refine-btn" type="button">Ideen aktualisieren</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="card-calc" aria-labelledby="h-calc">
+        <div class="panel-head"><span class="step-no">€</span><span id="h-calc">Was kostet Sie diese Arbeit?</span></div>
+        <div class="panel-body">
+          <p class="lead-note">Geben Sie ein, wie viel Zeit die manuelle Arbeit kostet und was eine Stunde Ihrer Mitarbeitenden kostet. Sie sehen dann, was die Arbeit heute kostet und was Sie mit Automatisierung sparen würden.</p>
+          <p class="msg" id="calc-note" hidden></p>
+          <div class="calc-grid">
+            <div class="field"><label for="c-amount">Zeitaufwand</label><div class="combo"><input class="input" id="c-amount" type="number" min="0" step="0.5" inputmode="decimal" placeholder="z. B. 4"><select class="input" id="c-per" aria-label="Zeitraum"><option value="day">Std. pro Tag</option><option value="week" selected>Std. pro Woche</option><option value="month">Std. pro Monat</option></select></div></div>
+            <div class="field"><label for="c-people">Wie viele Personen erledigen das</label><input class="input" id="c-people" type="number" min="1" step="1" value="1" inputmode="numeric"></div>
+            <div class="field"><label for="c-rate">Personalkosten</label><div class="combo"><input class="input" id="c-rate" type="number" min="0" step="1" inputmode="decimal" placeholder="z. B. 35"><select class="input" id="c-rate-unit" aria-label="Einheit"><option value="hour">€ pro Stunde</option><option value="month">€ pro Monat (Gehalt)</option></select></div></div>
+            <div class="field"><label for="c-errors">Kosten durch Fehler oder Verzögerungen pro Monat <span class="opt">(optional)</span></label><input class="input" id="c-errors" type="number" min="0" step="10" inputmode="decimal" placeholder="€"></div>
+          </div>
+          <div class="field"><label for="c-share">Anteil, den eine Automatisierung übernimmt: <b id="c-share-val">70 %</b></label><input type="range" id="c-share" min="30" max="95" step="5" value="70"><span class="hint" style="margin:0">Das ist Ihre Annahme. Eine genauere Einschätzung geben wir Ihnen im Gespräch.</span></div>
+          <div class="field"><label for="c-invest">Kosten der Lösung, falls Sie die Amortisation sehen möchten <span class="opt">(optional)</span></label><input class="input" id="c-invest" type="number" min="0" step="100" inputmode="decimal" placeholder="€"></div>
+          <p class="placeholder" id="calc-empty">Geben Sie Zeitaufwand und Personalkosten ein, dann erscheinen hier die Ergebnisse.</p>
+          <div id="calc-out" hidden>
+            <div class="tiles">
+              <div class="tile"><span>Kostet heute</span><b id="r-now-month"></b><small id="r-now-year"></small></div>
+              <div class="tile hl"><span>Sie würden sparen</span><b id="r-save-year"></b><small id="r-save-month"></small></div>
+              <div class="tile"><span>Gewonnene Zeit</span><b id="r-hours"></b><small id="r-days"></small></div>
+              <div class="tile" id="r-payback-box" hidden><span>Amortisiert in</span><b id="r-payback"></b><small>bei den angegebenen Kosten der Lösung</small></div>
+            </div>
+            <div class="bars">
+              <div class="bar-row"><span class="bar-label">Heute</span><div class="bar"><i id="bar-now"></i></div><span class="bar-val" id="bar-now-val"></span></div>
+              <div class="bar-row"><span class="bar-label">Mit Automatisierung</span><div class="bar"><i id="bar-after" class="after"></i></div><span class="bar-val" id="bar-after-val"></span></div>
+            </div>
+            <p class="hint">Gerechnet mit 21 Arbeitstagen und 168 Arbeitsstunden pro Monat. Das Ergebnis ist ein Richtwert.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="card-lead" hidden aria-labelledby="h-lead">
+        <div class="panel-head"><span class="step-no">3</span><span id="h-lead">E-Mail an unser Team</span></div>
+        <div class="panel-body">
+          <div id="lead-form">
+            <p class="lead-note">Auf Basis Ihres Problems haben wir eine E-Mail vorbereitet. Passen Sie sie an, wenn Sie möchten, ergänzen Sie Ihre Kontaktdaten und senden Sie sie ab. Ein Mensch antwortet Ihnen.</p>
+            <div class="email-draft">
+              <input class="input" id="subject" maxlength="150" aria-label="Betreff">
+              <textarea class="textarea" id="body" maxlength="4000" aria-label="Text der E-Mail"></textarea>
+            </div>
+            <div class="form-grid">
+              <div class="field"><label for="name">Name <b>*</b></label><input class="input" id="name" autocomplete="name" maxlength="100"></div>
+              <div class="field"><label for="email">E-Mail <b>*</b></label><input class="input" id="email" type="email" autocomplete="email" maxlength="150"></div>
+              <div class="field"><label for="company">Unternehmen</label><input class="input" id="company" autocomplete="organization" maxlength="150"></div>
+              <div class="field"><label for="phone">Telefon</label><input class="input" id="phone" type="tel" autocomplete="tel" maxlength="40"></div>
+            </div>
+            <div class="hp" aria-hidden="true"><label>Website <input id="website" tabindex="-1" autocomplete="off"></label></div>
+            <label class="consent"><input type="checkbox" id="consent"><span>Ich bin einverstanden, dass Swiftrix mich zu dieser Anfrage kontaktiert. Die Daten werden nur für die Antwort verwendet.</span></label>
+            <div class="actions"><button class="btn btn-primary" id="send" type="button">E-Mail senden</button></div>
+            <p class="msg" id="send-msg" role="alert"></p>
+          </div>
+          <div class="done-box" id="lead-done" hidden><span class="ok"></span><span></span></div>
+        </div>
+      </section>
+
+      <section class="panel" id="card-book" hidden aria-labelledby="h-book">
+        <div class="panel-head"><span class="step-no">4</span><span id="h-book">Lassen Sie uns darüber sprechen</span></div>
+        <div class="panel-body">
+          <p class="lead-note">Wählen Sie einen passenden Termin für ein 30-minütiges Gespräch. Wir gehen die Ideen und Ihre Situation gemeinsam durch. Was Sie oben geschrieben haben, sehen wir vor dem Gespräch.</p>
+          <div class="actions"><button class="btn btn-primary" id="book" type="button">Termin wählen</button></div>
+          <div id="cal-embed"></div>
+          <p class="alt-link" id="cal-alt-wrap" hidden>Der Kalender öffnet sich nicht? <a id="cal-alt" href="https://cal.com/swiftrix/30-minute-call" target="_blank" rel="noopener">In einem neuen Fenster öffnen</a></p>
+        </div>
+      </section>
+    </div>
+
+    <p class="demo-link">Möchten Sie einen KI-Agenten bei der Arbeit sehen? <a data-page="/de/demo" href="/de/demo">Testen Sie die Demo des Bestell-Agenten →</a></p>
+  </main>
+
+  <footer>© 2026 Swiftrix · <a data-site="" href="/de">swiftrix.eu</a></footer>
+  <script src="/js/pages.js" defer></script>
+  <script src="/assistant/calculator.js" defer></script>
+  <script src="/assistant/assistant.js" defer></script>
+</body>
+</html>

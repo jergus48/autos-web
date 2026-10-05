@@ -32,7 +32,23 @@
     "kuo swiftrix skiriasi nuo kitų tiekėjų?":
       "Esame inžinieriai, o ne įprasta agentūra. Kiekviena automatizacija kuriama individualiai jūsų sistemoms, nuolat stebima ir užtikrinta mūsų veikimo garantija.",
     "ar kuriate automatizacijas, ar tik konsultuojate dėl strategijos?":
-      "Mes kuriame. Strategija įskaičiuota, bet jūs gaunate veikiančias, paruoštas naudoti automatizacijas, ne tik rekomendacijų skaidres."
+      "Mes kuriame. Strategija įskaičiuota, bet jūs gaunate veikiančias, paruoštas naudoti automatizacijas, ne tik rekomendacijų skaidres.",
+
+    // German (/de)
+    "muss ich für ihre leistungen im voraus bezahlen?":
+      "Zum Start bitten wir um eine Anzahlung von 30–50 %, der Rest ist bei Lieferung fällig. Laufende Automatisierungen betreuen wir danach gegen eine monatliche Pauschale für Monitoring, Wartung und Support.",
+    "eignet sich swiftrix auch für kleine teams und start-ups?":
+      "Auf jeden Fall. Kleine Teams profitieren oft am meisten, weil Handarbeit bei ihnen einen größeren Teil des Tages frisst. Jede Lösung passen wir an Ihre Größe, Ihr Budget und Ihre Tools an.",
+    "mit welchen tools und plattformen arbeiten sie?":
+      "Mit praktisch allem, was eine API hat: CRMs, Tabellen, E-Mail, Slack, Datenbanken, Zahlungssysteme und eigene interne Tools. Wenn es eine Schnittstelle gibt, können wir es meist automatisieren.",
+    "optimieren sie auch prozesse oder bauen sie nur?":
+      "Beides. Wir analysieren zuerst Ihre Abläufe, um Verschwendung zu beseitigen, und bauen dann die Automatisierungen. Laufende Optimierung gehört zu jedem Projekt dazu.",
+    "kann ich jederzeit kündigen, wenn ich nicht zufrieden bin?":
+      "Ja. Es gibt keine langen Vertragsbindungen. Wenn wir keinen Mehrwert liefern, können Sie jederzeit aufhören, auch wenn die meisten Teams bleiben.",
+    "was unterscheidet swiftrix von anderen anbietern?":
+      "Wir sind Ingenieure, keine Agentur von der Stange. Jede Automatisierung wird individuell für Ihre Systeme gebaut, laufend überwacht und durch unsere Verfügbarkeitsgarantie abgesichert.",
+    "bauen sie die automatisierungen oder beraten sie nur zur strategie?":
+      "Wir bauen. Die Strategie ist inklusive, aber am Ende haben Sie funktionierende, produktionsreife Automatisierungen und nicht nur eine Präsentation mit Empfehlungen."
   };
 
   function norm(s) {
