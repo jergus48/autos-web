@@ -66,7 +66,7 @@
       {
         id: 'build', fromName: 'Tomas Petrauskas', fromEmail: 'tomas.p@statyburitmas.lt', time: '08:47',
         subject: 'Užsakymas objektui Žirmūnų g.',
-        body: 'Laba diena,\n\nnorėtume užsakyti medžiagas objektui Žirmūnų g. 68, Vilniuje:\n– cementas CEM II/A-LL 42,5 R, 40 maišų po 25 kg\n– armatūra A500 Ø12, 1,2 t\n– mūro blokeliai 250 mm, 6 paletės\n\nPristatyti reikėtų spalio 15 d. iki 10 val. Krovinį priims darbų vadovas Mindaugas, tel. +370 612 00000.\nSąskaitą prašome išrašyti UAB „Statybų ritmas“.\n\nAčiū,\nTomas Petrauskas\nTiekimo vadybininkas',
+        body: 'Laba diena,\n\nnorėtume užsakyti medžiagas objektui Žirmūnų g. 68, Vilniuje:\n- cementas CEM II/A-LL 42,5 R, 40 maišų po 25 kg\n- armatūra A500 Ø12, 1,2 t\n- mūro blokeliai 250 mm, 6 paletės\n\nPristatyti reikėtų spalio 15 d. iki 10 val. Krovinį priims darbų vadovas Mindaugas, tel. +370 612 00000.\nSąskaitą prašome išrašyti UAB „Statybų ritmas“.\n\nAčiū,\nTomas Petrauskas\nTiekimo vadybininkas',
         steps: [
           ['mail', 'Perskaičiau laišką: tai naujas užsakymas'],
           ['crm', 'Radau klientą CRM: UAB „Statybų ritmas“, sąskaitos išrašomos įmonei'],
@@ -80,7 +80,7 @@
           customer: 'UAB „Statybų ritmas“', status: 'ready', delivery: 'Spalio 15 d. iki 10:00, Žirmūnų g. 68',
           items: [['Cementas CEM II/A-LL 42,5 R, 25 kg', '40 maiš.', '248,00 €'], ['Armatūra A500 Ø12', '1,2 t', '1 068,00 €'], ['Mūro blokeliai 250 mm', '6 pal.', '870,00 €']],
           missing: [],
-          reply: { subject: 'RE: Užsakymas objektui Žirmūnų g.', body: 'Laba diena, Tomai,\n\načiū už užsakymą. Patvirtiname:\n– cementas CEM II/A-LL 42,5 R, 40 maišų: 248,00 €\n– armatūra A500 Ø12, 1,2 t: 1 068,00 €\n– mūro blokeliai 250 mm, 6 paletės: 870,00 €\nIš viso: 2 186,00 € + PVM.\n\nPristatysime spalio 15 d. iki 10 val. į Žirmūnų g. 68, Vilniuje. Prieš atvykdamas vairuotojas paskambins Mindaugui.\nSąskaitą išrašysime UAB „Statybų ritmas“.\n\nGražios dienos!' }
+          reply: { subject: 'RE: Užsakymas objektui Žirmūnų g.', body: 'Laba diena, Tomai,\n\načiū už užsakymą. Patvirtiname:\n- cementas CEM II/A-LL 42,5 R, 40 maišų: 248,00 €\n- armatūra A500 Ø12, 1,2 t: 1 068,00 €\n- mūro blokeliai 250 mm, 6 paletės: 870,00 €\nIš viso: 2 186,00 € + PVM.\n\nPristatysime spalio 15 d. iki 10 val. į Žirmūnų g. 68, Vilniuje. Prieš atvykdamas vairuotojas paskambins Mindaugui.\nSąskaitą išrašysime UAB „Statybų ritmas“.\n\nGražios dienos!' }
         }
       },
       {
@@ -120,7 +120,7 @@
           customer: 'Kavinė „Rytinė“', status: 'ready', delivery: 'Antradienį, Vokiečių g. 10',
           items: [['Kava pupelėmis „Espresso“, 1 kg (pagal #1042 × 2)', '12 vnt.', '226,80 €'], ['Cukraus lazdelės, 1000 vnt. (pagal #1042)', '2 dėž.', '23,00 €'], ['Popieriniai puodeliai 300 ml, 1000 vnt.', '2 dėž.', '64,00 €'], ['Avižinis gėrimas Barista, 1 l', '12 vnt.', '30,00 €']],
           missing: [],
-          reply: { subject: 'RE: užsakymas', body: 'Labas, Juste,\n\nužsakymą gavome:\n– kava „Espresso“ 1 kg: 12 vnt. (dvigubai nei praeitą kartą)\n– cukraus lazdelės: 2 dėž.\n– popieriniai puodeliai 300 ml: 2 dėž.\n– avižinis gėrimas Barista 1 l: 12 vnt. (taip, turime!)\nIš viso: 343,80 € + PVM.\n\nPristatysime antradienį, kaip įprastai, į Vokiečių g. 10.\n\nGražios dienos!' }
+          reply: { subject: 'RE: užsakymas', body: 'Labas, Juste,\n\nužsakymą gavome:\n- kava „Espresso“ 1 kg: 12 vnt. (dvigubai nei praeitą kartą)\n- cukraus lazdelės: 2 dėž.\n- popieriniai puodeliai 300 ml: 2 dėž.\n- avižinis gėrimas Barista 1 l: 12 vnt. (taip, turime!)\nIš viso: 343,80 € + PVM.\n\nPristatysime antradienį, kaip įprastai, į Vokiečių g. 10.\n\nGražios dienos!' }
         }
       }
     ],
@@ -128,7 +128,7 @@
       {
         id: 'build', fromName: 'Tomas Petrauskas', fromEmail: 'tomas.p@statyburitmas.lt', time: '08:47',
         subject: 'Order for the Žirmūnų St. site',
-        body: 'Hello,\n\nwe’d like to order materials for our site at Žirmūnų St. 68, Vilnius:\n– cement CEM II/A-LL 42.5 R, 40 bags of 25 kg\n– rebar A500 Ø12, 1.2 t\n– masonry blocks 250 mm, 6 pallets\n\nDelivery needed on 15 October before 10 am. Our site manager Mindaugas will receive it, tel. +370 612 00000.\nPlease invoice UAB “Statybų ritmas”.\n\nThanks,\nTomas Petrauskas\nProcurement manager',
+        body: 'Hello,\n\nwe’d like to order materials for our site at Žirmūnų St. 68, Vilnius:\n- cement CEM II/A-LL 42.5 R, 40 bags of 25 kg\n- rebar A500 Ø12, 1.2 t\n- masonry blocks 250 mm, 6 pallets\n\nDelivery needed on 15 October before 10 am. Our site manager Mindaugas will receive it, tel. +370 612 00000.\nPlease invoice UAB “Statybų ritmas”.\n\nThanks,\nTomas Petrauskas\nProcurement manager',
         steps: [
           ['mail', 'Read the email: it’s a new order'],
           ['crm', 'Found the customer in the CRM: UAB “Statybų ritmas”, invoiced to the company'],
@@ -142,7 +142,7 @@
           customer: 'UAB “Statybų ritmas”', status: 'ready', delivery: '15 Oct before 10:00, Žirmūnų St. 68',
           items: [['Cement CEM II/A-LL 42.5 R, 25 kg', '40 bags', '€248.00'], ['Rebar A500 Ø12', '1.2 t', '€1,068.00'], ['Masonry blocks 250 mm', '6 pallets', '€870.00']],
           missing: [],
-          reply: { subject: 'RE: Order for the Žirmūnų St. site', body: 'Hello Tomas,\n\nthank you for your order. Confirmed:\n– cement CEM II/A-LL 42.5 R, 40 bags: €248.00\n– rebar A500 Ø12, 1.2 t: €1,068.00\n– masonry blocks 250 mm, 6 pallets: €870.00\nTotal: €2,186.00 + VAT.\n\nWe’ll deliver on 15 October before 10 am to Žirmūnų St. 68, Vilnius. The driver will call Mindaugas before arriving.\nThe invoice will be issued to UAB “Statybų ritmas”.\n\nHave a good day!' }
+          reply: { subject: 'RE: Order for the Žirmūnų St. site', body: 'Hello Tomas,\n\nthank you for your order. Confirmed:\n- cement CEM II/A-LL 42.5 R, 40 bags: €248.00\n- rebar A500 Ø12, 1.2 t: €1,068.00\n- masonry blocks 250 mm, 6 pallets: €870.00\nTotal: €2,186.00 + VAT.\n\nWe’ll deliver on 15 October before 10 am to Žirmūnų St. 68, Vilnius. The driver will call Mindaugas before arriving.\nThe invoice will be issued to UAB “Statybų ritmas”.\n\nHave a good day!' }
         }
       },
       {
@@ -182,7 +182,7 @@
           customer: 'Café “Rytinė”', status: 'ready', delivery: 'Tuesday, Vokiečių St. 10',
           items: [['Coffee beans “Espresso”, 1 kg (as #1042 × 2)', '12 pcs', '€226.80'], ['Sugar sticks, 1000 pcs (as #1042)', '2 boxes', '€23.00'], ['Paper cups 300 ml, 1000 pcs', '2 boxes', '€64.00'], ['Oat drink Barista, 1 l', '12 pcs', '€30.00']],
           missing: [],
-          reply: { subject: 'RE: order', body: 'Hi Justė,\n\nwe’ve got your order:\n– coffee “Espresso” 1 kg: 12 pcs (double last time)\n– sugar sticks: 2 boxes\n– paper cups 300 ml: 2 boxes\n– oat drink Barista 1 l: 12 pcs (yes, we have it!)\nTotal: €343.80 + VAT.\n\nWe’ll deliver on Tuesday as usual, to Vokiečių St. 10.\n\nHave a good day!' }
+          reply: { subject: 'RE: order', body: 'Hi Justė,\n\nwe’ve got your order:\n- coffee “Espresso” 1 kg: 12 pcs (double last time)\n- sugar sticks: 2 boxes\n- paper cups 300 ml: 2 boxes\n- oat drink Barista 1 l: 12 pcs (yes, we have it!)\nTotal: €343.80 + VAT.\n\nWe’ll deliver on Tuesday as usual, to Vokiečių St. 10.\n\nHave a good day!' }
         }
       }
     ]
