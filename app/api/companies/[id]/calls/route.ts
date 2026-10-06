@@ -42,6 +42,13 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
   const { id } = await params;
   const { callId } = await req.json();
   // you can only undo your own log entries
-  await q('delete from calls where id=$1 and company_id=$2 and user_id=$3', [callId, id, s.uid]);
+  // (the history also lists calls on duplicate companies matched by domain or name, so match the same way as GET)
+  if (!(await owns(s, id))) return NextResponse.json({ error: 'not found' }, { status: 404 });
+  await q(
+    `delete from calls where id=$1 and user_id=$3 and company_id in (
+       select c2.id from companies c2 join companies c on c.id=$2
+       where c2.id=c.id or (dom(c.website)<>'' and dom(c2.website)=dom(c.website)) or lower(c2.name)=lower(c.name))`,
+    [callId, id, s.uid]
+  );
   return NextResponse.json({ ok: true });
 }
