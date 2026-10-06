@@ -78,6 +78,7 @@ export default function Calendar({ email, admin }: { email: string; admin: boole
         <div className="r">
           <span>{email}</span>
           <a className="btn ghost sm" href="/">Companies</a>
+          <a className="btn ghost sm" href="/sources">Sources</a>
         </div>
       </div>
 
@@ -140,6 +141,7 @@ export default function Calendar({ email, admin }: { email: string; admin: boole
           <div className="row" style={{ marginTop: 12 }}>
             {sel.meet_url && <a className="btn sm" href={sel.meet_url} target="_blank" rel="noreferrer">Join Google Meet</a>}
             {sel.share_token && <a className="btn ghost sm" href={`/s/${sel.share_token}`} target="_blank" rel="noreferrer">Open slides</a>}
+            {!sel.share_token && sel.deck_id && <a className="btn sm" href={`/deck/${sel.deck_id}`}>Generate slides for this meeting</a>}
             {sel.deck_id && <a className="btn ghost sm" href={`/deck/${sel.deck_id}`}>Deck, script and call log</a>}
             {sel.html_link && <a className="btn ghost sm" href={sel.html_link} target="_blank" rel="noreferrer">Google Calendar event</a>}
           </div>

@@ -8,7 +8,7 @@ type U = { id: number; email: string; role: string; country?: string | null; dec
 type Stats = {
   days: number;
   totals: { calls: number; interested: number; meetings: number; emails: number; companies: number };
-  perUser: { id: number; email: string; calls: number; interested: number; meetings: number; emails: number; not_interested: number; no_answer: number; companies: number; list_size: number; last_call?: string }[];
+  perUser: { id: number; email: string; calls: number; interested: number; meetings: number; emails: number; not_interested: number; no_answer: number; companies: number; list_size: number; slides: number; slides_early: number; last_call?: string }[];
   perDay: { day: string; n: number; good: number }[];
   outcomes: { outcome: string; n: number }[];
   followupsDue: number;
@@ -170,13 +170,13 @@ export default function Admin() {
           <div className="card" style={{ marginTop: 18 }}>
             <h3>CALLERS</h3>
             <table className="t">
-              <thead><tr><th>CALLER</th><th>CALLS</th><th>COMPANIES REACHED</th><th>INTERESTED</th><th>MEETINGS</th><th>EMAILS</th><th>NO ANSWER</th><th>NOT INTERESTED</th><th>HIT RATE</th><th>LIST SIZE</th><th>LAST CALL</th></tr></thead>
+              <thead><tr><th>CALLER</th><th>CALLS</th><th>COMPANIES REACHED</th><th>INTERESTED</th><th>MEETINGS</th><th>EMAILS</th><th>NO ANSWER</th><th>NOT INTERESTED</th><th>HIT RATE</th><th>LIST SIZE</th><th title="Slides generated, and how many before the client agreed to a meeting">SLIDES (EARLY)</th><th>LAST CALL</th></tr></thead>
               <tbody>
                 {stats.perUser.map((u) => (
                   <tr key={u.id}>
                     <td><a href="#" onClick={(e) => { e.preventDefault(); setFu(String(u.id)); }}><b>{u.email}</b></a></td>
                     <td>{u.calls}</td><td>{u.companies}</td><td>{u.interested}</td><td>{u.meetings}</td><td>{u.emails}</td><td>{u.no_answer}</td><td>{u.not_interested}</td>
-                    <td>{pct(u.interested + u.meetings + u.emails, u.calls)}</td><td>{u.list_size}</td><td>{u.last_call ? ago(u.last_call) : '-'}</td>
+                    <td>{pct(u.interested + u.meetings + u.emails, u.calls)}</td><td>{u.list_size}</td><td>{u.slides}{u.slides_early ? <span style={{ color: '#ffb86b' }}> ({u.slides_early} early)</span> : null}</td><td>{u.last_call ? ago(u.last_call) : '-'}</td>
                   </tr>
                 ))}
               </tbody>

@@ -20,6 +20,8 @@ export async function GET(req: Request) {
          count(k.id) filter (where k.outcome in ('no_answer','voicemail'))::int no_answer,
          count(distinct k.company_id)::int companies,
          (select count(*)::int from companies c where c.country=u.country) as list_size,
+         (select count(*)::int from decks d where d.slides_by=u.id and d.slides_at > ${since}) as slides,
+         (select count(*)::int from decks d where d.slides_by=u.id and d.slides_at > ${since} and d.slides_early) as slides_early,
          max(k.created_at) last_call
        from users u left join calls k on k.user_id=u.id and k.created_at > ${since}
        group by u.id order by calls desc, u.email`),

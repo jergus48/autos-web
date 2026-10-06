@@ -9,8 +9,9 @@ export async function GET() {
   const s = (await getSession())!;
   const rows = await q(
     `select c.*,
-        (select json_agg(json_build_object('id',d.id,'lang',d.lang,'share_token',d.share_token,'created_at',d.created_at) order by d.created_at desc)
+        (select json_agg(json_build_object('id',d.id,'lang',d.lang,'share_token',d.share_token,'created_at',d.created_at,'has_slides',(d.slides is not null),'has_presenter',(d.presenter is not null),'slides_early',d.slides_early) order by d.created_at desc)
            from decks d where d.company_id=c.id) as decks,
+        (exists(select 1 from calls k0 where k0.company_id=c.id and k0.outcome='meeting_booked') or exists(select 1 from meetings m0 where m0.company_id=c.id)) as agreed,
         lc.outcome as last_outcome, lc.note as last_note, lc.created_at as last_at, lc.followup_at as last_followup,
         lc.email as last_by, (lc.user_id is distinct from $1) as last_by_other,
         coalesce(cnt.n,0) as call_count

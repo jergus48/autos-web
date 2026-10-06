@@ -78,3 +78,8 @@ alter table meetings add column if not exists debrief text;
 alter table meetings add column if not exists debrief_at timestamptz;
 
 alter table users add column if not exists country text;
+
+alter table decks add column if not exists presenter jsonb;
+alter table decks add column if not exists slides_at timestamptz;
+alter table decks add column if not exists slides_by int references users(id) on delete set null;
+alter table decks add column if not exists slides_early boolean;

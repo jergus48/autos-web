@@ -4,9 +4,9 @@ import CallLogger from './CallLogger';
 import { COUNTRIES, langFor } from '@/lib/countries';
 import { ago, outcomeLabel, outcomeTone } from '@/lib/outcomes';
 
-type Deck = { id: number; lang: string; share_token: string; created_at: string };
+type Deck = { id: number; lang: string; share_token: string; created_at: string; has_slides?: boolean; has_presenter?: boolean; slides_early?: boolean };
 type Company = {
-  id: number; name: string; email?: string; phone?: string; website?: string; logo_url?: string; status: string; country?: string; decks: Deck[] | null;
+  id: number; name: string; email?: string; phone?: string; website?: string; logo_url?: string; status: string; country?: string; decks: Deck[] | null; agreed?: boolean;
   last_outcome?: string; last_note?: string; last_at?: string; last_followup?: string; last_by?: string; last_by_other?: boolean; call_count: number;
 };
 
@@ -15,8 +15,12 @@ const STAGES = [
   { at: 7, label: 'Finding their logo...', short: 'Logo' },
   { at: 11, label: 'Searching the web for news and size...', short: 'Web search' },
   { at: 17, label: 'Writing the research brief...', short: 'Research' },
-  { at: 28, label: 'Designing 4 project ideas and mockups...', short: 'Ideas' },
-  { at: 40, label: 'Writing the call script...', short: 'Script' },
+  { at: 26, label: 'Writing the call script...', short: 'Call script' },
+];
+
+const SLIDE_STAGES = [
+  { at: 0, label: 'Designing 4 project ideas and mockups...', short: 'Slides' },
+  { at: 32, label: 'Writing your presenter script...', short: 'Presenter script' },
 ];
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -48,7 +52,7 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
   const [smart, setSmart] = useState(true);
   const [users, setUsers] = useState<{ id: number; email: string; role: string }[]>([]);
   const fileRef = useRef<HTMLInputElement>(null);
-  const [jobs, setJobs] = useState<Record<number, { name: string; start: number; done?: boolean }>>({});
+  const [jobs, setJobs] = useState<Record<number, { name: string; start: number; done?: boolean; kind: 'prep' | 'slides' }>>({});
   const [now, setNow] = useState(Date.now());
 
   useEffect(() => {
@@ -105,21 +109,48 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
     await fetch(`/api/companies/${c.id}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ country }) });
   }
 
-  async function generate(c: Company) {
+  async function post(body: object) {
+    const r = await fetch('/api/generate', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+    const j = await r.json().catch(() => ({ error: 'Server error (timeout?)' }));
+    return { ok: r.ok, status: r.status, j };
+  }
+  function fail(c: Company, error: string) {
+    setBusy((b) => ({ ...b, [c.id]: false }));
+    setMsg(`${c.name}: ${error}`);
+    setJobs((js) => { const n = { ...js }; delete n[c.id]; return n; });
+    load();
+  }
+
+  // Before the call: research + call script, no slides.
+  async function prepare(c: Company) {
     const l = lang[c.id] || langFor(c.country);
     setBusy((b) => ({ ...b, [c.id]: true }));
-    setJobs((j) => ({ ...j, [c.id]: { name: c.name, start: Date.now() } }));
+    setJobs((j) => ({ ...j, [c.id]: { name: c.name, start: Date.now(), kind: 'prep' } }));
     setMsg('');
-    const r = await fetch('/api/generate', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ companyId: c.id, lang: l }) });
-    const j = await r.json().catch(() => ({ error: 'Server error (timeout?)' }));
+    const a = await post({ companyId: c.id, lang: l, stage: 'prep' });
+    if (!a.ok) return fail(c, a.j.error);
     setBusy((b) => ({ ...b, [c.id]: false }));
     setJobs((js) => ({ ...js, [c.id]: { ...js[c.id], done: true } }));
-    if (r.ok) location.href = `/deck/${j.deckId}`;
-    else {
-      setMsg(`${c.name}: ${j.error}`);
-      setJobs((js) => { const n = { ...js }; delete n[c.id]; return n; });
-      load();
+    location.href = `/deck/${a.j.deckId}`;
+  }
+
+  // After the client agreed to a meeting (or manually): slides + presenter script.
+  async function makeSlides(c: Company, deck: Deck) {
+    let manual = false;
+    if (!c.agreed) {
+      if (!confirm('The client has not agreed to a meeting yet. Slides are for the Google Meet, not the cold call.\n\nGenerate them anyway? This is recorded as "generated early".')) return;
+      manual = true;
     }
+    setBusy((b) => ({ ...b, [c.id]: true }));
+    setJobs((j) => ({ ...j, [c.id]: { name: c.name, start: Date.now(), kind: 'slides' } }));
+    setMsg('');
+    const a = await post({ companyId: c.id, lang: deck.lang, stage: 'slides', deckId: deck.id, manual });
+    if (!a.ok) return fail(c, a.j.error);
+    const b = await post({ companyId: c.id, lang: deck.lang, stage: 'presenter', deckId: deck.id });
+    if (!b.ok) return fail(c, 'Slides are ready, but the presenter script failed: ' + b.j.error + ' Open the deck and use "Generate presenter script".');
+    setBusy((x) => ({ ...x, [c.id]: false }));
+    setJobs((js) => ({ ...js, [c.id]: { ...js[c.id], done: true } }));
+    location.href = `/deck/${deck.id}`;
   }
 
   async function del(c: Company) {
@@ -140,6 +171,7 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
         <div className="r">
           <span>{email}</span>
           <a className="btn ghost sm" href="/calendar">My calendar</a>
+          <a className="btn ghost sm" href="/sources">Sources</a>
           {admin && <a className="btn ghost sm" href="/admin">Admin dashboard</a>}
           <button className="btn ghost sm" onClick={logout}>Sign out</button>
         </div>
@@ -177,8 +209,9 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
 
       {Object.entries(jobs).map(([id, j]) => {
         const t = (now - j.start) / 1000;
-        const pct = j.done ? 100 : Math.min(92, 92 * (1 - Math.exp(-t / 20)));
-        const stage = [...STAGES].reverse().find((x) => t >= x.at) || STAGES[0];
+        const pct = j.done ? 100 : Math.min(92, 92 * (1 - Math.exp(-t / (j.kind === 'slides' ? 28 : 20))));
+        const list = j.kind === 'slides' ? SLIDE_STAGES : STAGES;
+        const stage = [...list].reverse().find((x) => t >= x.at) || list[0];
         return (
           <div key={id} className="card job">
             <div className="row" style={{ justifyContent: 'space-between' }}>
@@ -187,7 +220,7 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
               <span className="mono">{Math.round(pct)}% · {Math.floor(t)}s</span>
             </div>
             <div className="track"><div className="fill" style={{ width: pct + '%' }} /></div>
-            <div className="steps">{STAGES.map((x) => <span key={x.label} className={j.done || t >= x.at ? 'on' : ''}>{x.short}</span>)}</div>
+            <div className="steps">{list.map((x) => <span key={x.label} className={j.done || t >= x.at ? 'on' : ''}>{x.short}</span>)}</div>
           </div>
         );
       })}
@@ -203,7 +236,7 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
           <label className="mini"><input type="checkbox" checked={smart} onChange={(e) => setSmart(e.target.checked)} /> Smart order (follow-ups, then new)</label>
         </div>
         <table className="t">
-          <thead><tr><th></th><th>COMPANY</th><th>CONTACT</th><th>COUNTRY</th><th>CALL STATUS</th><th style={{ width: 360 }}>ACTIONS</th></tr></thead>
+          <thead><tr><th></th><th>COMPANY</th><th>CONTACT</th><th>COUNTRY</th><th>CALL STATUS</th><th style={{ width: 420 }}>ACTIONS</th></tr></thead>
           <tbody>
             {shown.map((c) => {
               const l = lang[c.id] || langFor(c.country);
@@ -242,11 +275,19 @@ export default function Dashboard({ email, admin }: { email: string; admin: bool
                         </select>
                         {ex ? (
                           <>
-                            <a className="btn sm" href={`/deck/${ex.id}`}>Open slides + script</a>
-                            <button className="btn ghost sm" disabled={busy[c.id]} title="Write a brand new deck (uses tokens)" onClick={() => { if (confirm('Generate a new deck? The current one stays saved.')) generate(c); }}>{busy[c.id] ? 'Working...' : 'Regenerate'}</button>
+                            <a className={'btn sm' + (ex.has_slides ? ' ghost' : '')} href={`/deck/${ex.id}`}>{ex.has_slides ? 'Call script' : 'Call script + research'}</a>
+                            {ex.has_slides ? (
+                              <>
+                                <a className="btn sm" href={`/deck/${ex.id}`} title="Slides and what to say while presenting them">Slides + presenter script</a>
+                                <button className="btn ghost sm" disabled={busy[c.id]} title="Write new slides (uses tokens)" onClick={() => { if (confirm('Regenerate the slides and presenter script? The current ones are replaced.')) makeSlides(c, ex); }}>{busy[c.id] ? 'Working...' : 'Regenerate slides'}</button>
+                                {ex.slides_early && <span className="pill" title="Generated before the client agreed to a meeting">early</span>}
+                              </>
+                            ) : (
+                              <button className={'btn sm' + (c.agreed ? '' : ' ghost')} disabled={busy[c.id]} title={c.agreed ? 'The client agreed to a meeting' : 'Slides are for the meeting. Generating now is recorded as early.'} onClick={() => makeSlides(c, ex)}>{busy[c.id] ? 'Working... ~50s' : c.agreed ? 'Generate slides' : 'Slides (early)'}</button>
+                            )}
                           </>
                         ) : (
-                          <button className="btn sm" disabled={busy[c.id]} onClick={() => generate(c)}>{busy[c.id] ? 'Researching... ~40s' : 'Generate'}</button>
+                          <button className="btn sm" disabled={busy[c.id]} title="Research and call script. Slides come after the client agrees to a meeting." onClick={() => prepare(c)}>{busy[c.id] ? 'Researching... ~30s' : 'Prepare call'}</button>
                         )}
                         {admin && <button className="btn ghost sm" onClick={() => del(c)} title="Delete company">x</button>}
                       </div>

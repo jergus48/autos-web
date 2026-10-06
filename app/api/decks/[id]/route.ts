@@ -19,7 +19,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
   const { path, value } = await req.json();
   if (typeof path !== 'string' || typeof value !== 'string') return NextResponse.json({ error: 'bad input' }, { status: 400 });
   const rows = await q(
-    'select d.slides,d.script from decks d join companies c on c.id=d.company_id where d.id=$1 and ($3::boolean or c.country=(select u0.country from users u0 where u0.id=$2))',
+    'select d.slides,d.script,d.presenter from decks d join companies c on c.id=d.company_id where d.id=$1 and ($3::boolean or c.country=(select u0.country from users u0 where u0.id=$2))',
     [id, s.uid, s.role === 'admin']
   );
   if (!rows[0]) return NextResponse.json({ error: 'not found' }, { status: 404 });
@@ -27,6 +27,10 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
   if (root === 'script') {
     if (!setPath(rows[0].script, rest.join('.'), value)) return NextResponse.json({ error: 'bad path' }, { status: 400 });
     await q('update decks set script=$2 where id=$1', [id, rows[0].script]);
+  } else if (root === 'presenter') {
+    const pr = rows[0].presenter || {};
+    if (!setPath(pr, rest.join('.'), value)) return NextResponse.json({ error: 'bad path' }, { status: 400 });
+    await q('update decks set presenter=$2 where id=$1', [id, pr]);
   } else if (root === 'slides') {
     if (!setPath(rows[0].slides, rest.join('.'), value)) return NextResponse.json({ error: 'bad path' }, { status: 400 });
     await q('update decks set slides=$2 where id=$1', [id, rows[0].slides]);
