@@ -133,6 +133,7 @@ export default function DeckView({ deck, company, shareToken, readOnly }: { deck
             )}
             <div className="card">
               <h3>RESEARCH</h3>
+              {!r.pagesRead?.length && <p className="mini" style={{ color: '#ffb86b', marginBottom: 8, display: 'block' }}>The website could not be read, so this research may be thin. Check the website address on the company and regenerate.</p>}
               <p>{r.summary}</p>
               <p style={{ marginTop: 8 }}><b>Size:</b> {r.size}</p>
               <p style={{ marginTop: 8 }}><b>Likely pain points</b></p>

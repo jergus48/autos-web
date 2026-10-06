@@ -1,7 +1,7 @@
 import * as cheerio from 'cheerio';
 import sharp from 'sharp';
 
-const UA = 'Mozilla/5.0 (compatible; OutreachStudio/1.0)';
+const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
 
 export function normUrl(u?: string | null) {
   if (!u) return '';
@@ -50,7 +50,16 @@ export async function readSite(website: string): Promise<SiteInfo> {
   const base = normUrl(website);
   const empty: SiteInfo = { text: '', logo: '', title: '', description: '', pagesRead: [] };
   if (!base) return empty;
-  const r = await get(base);
+  // some sites only answer on www., or only on http: try the plain address first, then the variants
+  let r: Response | null = null;
+  try {
+    const u = new URL(base);
+    const alt = u.host.startsWith('www.') ? u.host.slice(4) : 'www.' + u.host;
+    for (const cand of [base, `${u.protocol}//${alt}${u.pathname}`, base.replace(/^https:/, 'http:')]) {
+      r = await get(cand);
+      if (r && r.ok) break;
+    }
+  } catch {}
   if (!r || !r.ok) return empty;
   const finalUrl = r.url || base;
   const html = await r.text();

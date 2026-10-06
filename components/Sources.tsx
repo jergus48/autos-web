@@ -1,71 +1,71 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FIXED, LANGS, LANG_NAMES, Lang } from '@/lib/fixed';
-import { ABOUT, FAQ, FLOW } from '@/lib/sources';
+import { SRC } from '@/lib/sources';
 
 export default function Sources({ email }: { email: string }) {
   const [lang, setLang] = useState<Lang>('en');
   const [open, setOpen] = useState<number | null>(0);
+  useEffect(() => {
+    try { const l = localStorage.getItem('sourcesLang') as Lang | null; if (l && LANGS.includes(l)) setLang(l); } catch {}
+  }, []);
+  const pick = (l: Lang) => { setLang(l); setOpen(0); try { localStorage.setItem('sourcesLang', l); } catch {} };
   const f = FIXED[lang];
+  const x = SRC[lang];
 
   return (
     <div className="wrap">
       <div className="nav">
         <div className="l"><img src="/swiftrix-s.png" alt="" />SWIFTRIX SOURCES</div>
         <div className="r">
-          <span>{email}</span>
+          {LANGS.map((l) => <button key={l} className={'btn sm' + (lang === l ? '' : ' ghost')} onClick={() => pick(l)}>{LANG_NAMES[l]}</button>)}
           <a className="btn ghost sm" href="/">Companies</a>
           <a className="btn ghost sm" href="/calendar">My calendar</a>
         </div>
       </div>
 
       <div className="card" style={{ marginBottom: 16 }}>
-        <h3>WHO WE ARE</h3>
-        <p style={{ marginBottom: 10 }}>{ABOUT.who}</p>
-        <p className="mini" style={{ marginBottom: 12 }}>{ABOUT.contact}</p>
-        <h3>THE 30-SECOND ANSWER</h3>
-        <p>{ABOUT.pitch30}</p>
+        <h3>{x.ui.who}</h3>
+        <p style={{ marginBottom: 10 }}>{x.who}</p>
+        <p className="mini" style={{ marginBottom: 12 }}>{x.contact}</p>
+        <h3>{x.ui.pitch}</h3>
+        <p>{x.pitch30}</p>
       </div>
 
       <div className="card" style={{ marginBottom: 16 }}>
-        <h3>HOW A LEAD GOES THROUGH THE APP</h3>
-        <ol style={{ paddingLeft: 20, display: 'grid', gap: 6 }}>{FLOW.map((x, i) => <li key={i}>{x}</li>)}</ol>
+        <h3>{x.ui.flow}</h3>
+        <ol style={{ paddingLeft: 20, display: 'grid', gap: 6 }}>{x.flow.map((t, i) => <li key={i}>{t}</li>)}</ol>
       </div>
 
       <div className="card" style={{ marginBottom: 16 }}>
-        <h3>WHAT WE BUILD</h3>
+        <h3>{x.ui.build}</h3>
         <div className="src-grid">
-          {ABOUT.whatWeDo.map((x) => (
-            <div key={x.t}><b>{x.t}</b><p className="mini" style={{ display: 'block', marginTop: 4 }}>{x.d}</p></div>
+          {x.whatWeDo.map((w) => (
+            <div key={w.t}><b>{w.t}</b><p className="mini" style={{ display: 'block', marginTop: 4 }}>{w.d}</p></div>
           ))}
         </div>
-        <h3 style={{ marginTop: 18 }}>HOW WE WORK</h3>
-        <p>{ABOUT.howWeWork.map((x, i) => `${i + 1}. ${x}`).join('   ')}</p>
-        <h3 style={{ marginTop: 18 }}>THREE WAYS TO START</h3>
+        <h3 style={{ marginTop: 18 }}>{x.ui.work}</h3>
+        <p>{x.howWeWork.map((t, i) => `${i + 1}. ${t}`).join('   ')}</p>
+        <h3 style={{ marginTop: 18 }}>{x.ui.ways}</h3>
         <div className="src-grid">
-          {ABOUT.ways.map((x) => (
-            <div key={x.t}><b>{x.t}</b><p className="mini" style={{ display: 'block', marginTop: 4 }}>{x.d}</p></div>
+          {x.ways.map((w) => (
+            <div key={w.t}><b>{w.t}</b><p className="mini" style={{ display: 'block', marginTop: 4 }}>{w.d}</p></div>
           ))}
         </div>
       </div>
 
       <div className="card" style={{ marginBottom: 16 }}>
-        <h3>QUESTIONS YOU MAY BE ASKED</h3>
-        {FAQ.map((x, i) => (
+        <h3>{x.ui.faq}</h3>
+        {x.faq.map((it, i) => (
           <div key={i} className="faq">
-            <button type="button" className={open === i ? 'on' : ''} onClick={() => setOpen(open === i ? null : i)}>{x.q}</button>
-            {open === i && <p>{x.a}</p>}
+            <button type="button" className={open === i ? 'on' : ''} onClick={() => setOpen(open === i ? null : i)}>{it.q}</button>
+            {open === i && <p>{it.a}</p>}
           </div>
         ))}
       </div>
 
       <div className="card">
-        <div className="row" style={{ justifyContent: 'space-between', marginBottom: 6 }}>
-          <h3 style={{ margin: 0 }}>PREVIOUS PROJECTS</h3>
-          <div className="row">
-            {LANGS.map((l) => <button key={l} className={'btn sm' + (lang === l ? '' : ' ghost')} onClick={() => setLang(l)}>{LANG_NAMES[l]}</button>)}
-          </div>
-        </div>
+        <h3>{x.ui.projects}</h3>
         <p className="mini" style={{ marginBottom: 14, display: 'block' }}>{f.worksIntro.text}</p>
         <div className="src-works">
           {f.works.map((w) => (

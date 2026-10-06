@@ -23,6 +23,11 @@ export async function buildPrep(c: Company, lang: Lang) {
   const site = await readSite(c.website || '');
   const host = hostOf(c);
   const search = await webSearch(`${c.name} ${host} company what they do, size, services`);
+  if (!site.text && !search.answer && !search.results.length) {
+    throw new Error(
+      `Could not read ${c.website || 'a website (none saved for this company)'} and the web search returned nothing, so there is nothing to research. Check the website address (and the TAVILY_API_KEYS in Vercel), then try again. Nothing was generated.`
+    );
+  }
 
   let tokens = 0;
 
