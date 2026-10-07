@@ -279,3 +279,31 @@ tr.logrow td{background:#16161a;padding:14px 16px 18px;border-bottom:1px solid v
 .faq button{width:100%;text-align:left;background:none;border:0;color:var(--fg);font:inherit;padding:12px 2px;cursor:pointer}
 .faq button.on{color:var(--g)}
 .faq p{padding:0 2px 14px;color:#cfcfd4;line-height:1.55}
+
+/* ---------- public partner application (/join) ---------- */
+.join{max-width:520px;margin:7vh auto 60px;padding:0 16px}
+.join .logoRow{margin-bottom:14px}
+.join .langs{display:flex;justify-content:center;gap:6px;margin-bottom:16px}
+.join .langs a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;padding:4px 10px;border-radius:99px;border:1px solid var(--line);color:var(--mute);text-decoration:none}
+.join .langs a.on{color:#0a0a0b;background:var(--g);border-color:var(--g)}
+.joinForm,.joinDone{display:grid;gap:8px;text-align:left}
+.joinForm h1,.joinDone h1{font-size:22px;margin-bottom:2px}
+.joinForm .lead,.joinDone p{color:var(--mute);font-size:14px;line-height:1.55;margin-bottom:8px}
+.lbl{font-size:13px;color:var(--mute);margin-top:6px}
+.hint{font-size:12px;color:#6c6c72;line-height:1.5}
+.joinForm textarea{resize:vertical;min-height:110px;line-height:1.5}
+.joinForm .mini{margin-top:-2px}
+.joinForm .consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.5;color:var(--mute);margin-top:8px}
+.joinForm .consent input{width:auto;margin-top:3px}
+.joinForm .consent a{color:var(--g)}
+.joinForm .btn{margin-top:10px;padding:11px 14px}
+.joinForm .signin{text-align:center;font-size:13px;color:var(--mute);margin-top:6px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+/* ---------- admin: partner applications ---------- */
+.apps{margin-bottom:18px;border-color:#7a5a14;background:#14110a}
+.app{display:grid;gap:8px;padding:12px 0;border-bottom:1px solid var(--line)}
+.app:last-child{border-bottom:0}
+.app .who{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:14px}
+.app .exp{white-space:pre-wrap;font-size:13.5px;line-height:1.55;color:#cfcfd3;background:#0e0e10;border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.app .acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}

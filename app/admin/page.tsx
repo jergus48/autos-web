@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { COUNTRIES } from '@/lib/countries';
 import { OUTCOMES, ago, outcomeLabel, outcomeTone } from '@/lib/outcomes';
 
-type U = { id: number; email: string; role: string; country?: string | null; decks: number; tokens: number };
+type U = { id: number; email: string; role: string; country?: string | null; decks: number; tokens: number; status?: string; experience?: string | null; applied_at?: string | null };
 type Stats = {
   days: number;
   totals: { calls: number; interested: number; meetings: number; emails: number; companies: number };
@@ -36,6 +36,10 @@ export default function Admin() {
   const [fo, setFo] = useState('');
   const [fc, setFc] = useState('');
   const [users, setUsers] = useState<U[]>([]);
+  // Applicants from the public /join form wait here until approved; they are not real users yet.
+  const pending = users.filter((u) => u.status === 'pending');
+  const members = users.filter((u) => u.status !== 'pending');
+  const [appCountry, setAppCountry] = useState<Record<number, string>>({});
   const [err, setErr] = useState('');
   const [f, setF] = useState({ email: '', password: '', role: 'user', country: '' });
 
@@ -102,6 +106,12 @@ export default function Admin() {
     loadCalls();
   }
 
+  async function decide(u: U, action: 'approve' | 'reject') {
+    if (action === 'reject' && !confirm(`Reject ${u.email}? The application is deleted.`)) return;
+    await fetch('/api/admin/applications', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id: u.id, action, country: appCountry[u.id] || null }) });
+    loadUsers();
+  }
+
   const max = Math.max(1, ...(stats?.perDay || []).map((d) => d.n));
   const t = stats?.totals;
   const csv = `/api/admin/calls?format=csv&days=${days}${fu ? `&user=${fu}` : ''}${fo ? `&outcome=${fo}` : ''}${fc ? `&country=${fc}` : ''}`;
@@ -119,7 +129,7 @@ export default function Admin() {
         <div className="tabs">
           <button className={tab === 'calls' ? 'on' : ''} onClick={() => setTab('calls')}>Call dashboard</button>
           <button className={tab === 'companies' ? 'on' : ''} onClick={() => setTab('companies')}>Companies</button>
-          <button className={tab === 'users' ? 'on' : ''} onClick={() => setTab('users')}>Users</button>
+          <button className={tab === 'users' ? 'on' : ''} onClick={() => setTab('users')}>Users{pending.length > 0 ? ` (${pending.length} new)` : ''}</button>
         </div>
         {tab === 'calls' && (
           <select value={days} onChange={(e) => setDays(Number(e.target.value))} style={{ marginLeft: 'auto' }}>
@@ -227,7 +237,7 @@ export default function Admin() {
             <input style={{ flex: 1, minWidth: 180 }} placeholder="Search name, website, phone..." value={cq} onChange={(e) => setCq(e.target.value)} />
             <select value={cOwner} onChange={(e) => setCOwner(e.target.value)}>
               <option value="">All callers</option>
-              {users.map((u) => <option key={u.id} value={u.id}>{u.email}</option>)}
+              {members.map((u) => <option key={u.id} value={u.id}>{u.email}</option>)}
             </select>
             <select value={cCountry} onChange={(e) => setCCountry(e.target.value)}>
               <option value="">All countries</option>
@@ -244,7 +254,7 @@ export default function Admin() {
             <b style={{ fontSize: 13 }}>{sel.size} selected</b>
             <select value={target} onChange={(e) => setTarget(e.target.value)}>
               <option value="">Move selected to...</option>
-              {users.map((u) => <option key={u.id} value={u.id}>{u.email}</option>)}
+              {members.map((u) => <option key={u.id} value={u.id}>{u.email}</option>)}
             </select>
             <button className="btn sm" disabled={!sel.size || !target} onClick={moveSelected}>Move</button>
             <button className="btn ghost sm" disabled={!sel.size} onClick={deleteSelected}>Delete selected</button>
@@ -271,6 +281,25 @@ export default function Admin() {
 
       {tab === 'users' && (
         <>
+          {pending.length > 0 && (
+            <div className="card apps">
+              <h3>PARTNER APPLICATIONS ({pending.length})</h3>
+              {pending.map((u) => (
+                <div className="app" key={u.id}>
+                  <div className="who"><b>{u.email}</b><span className="pill">{u.applied_at ? `applied ${ago(u.applied_at)}` : 'pending'}</span></div>
+                  <div className="exp">{u.experience || '(no experience given)'}</div>
+                  <div className="acts">
+                    <select value={appCountry[u.id] || ''} onChange={(e) => setAppCountry({ ...appCountry, [u.id]: e.target.value })} title="Which country's companies this caller will see">
+                      <option value="">Country: set later</option>
+                      {COUNTRIES.map((c) => <option key={c.code} value={c.code}>{c.label}</option>)}
+                    </select>
+                    <button className="btn sm" onClick={() => decide(u, 'approve')}>Approve</button>
+                    <button className="btn ghost sm" onClick={() => decide(u, 'reject')}>Reject</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
           <div className="card" style={{ marginBottom: 18 }}>
             <h3>ADD USER</h3>
             <form className="row" onSubmit={add}>
@@ -288,7 +317,7 @@ export default function Admin() {
           <div className="card">
             <table className="t">
               <thead><tr><th>EMAIL</th><th>ROLE</th><th>CALLS COMPANIES FROM</th><th>DECKS</th><th>TOKENS USED</th><th></th></tr></thead>
-              <tbody>{users.map((u) => (
+              <tbody>{members.map((u) => (
                 <tr key={u.id}><td>{u.email}</td><td><span className="pill">{u.role}</span></td>
                   <td>{u.role === 'admin' ? <span style={{ color: 'var(--mute)' }}>all</span> : (
                     <select value={u.country || ''} onChange={async (e) => { await fetch('/api/admin/users', { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id: u.id, country: e.target.value }) }); loadUsers(); }}>

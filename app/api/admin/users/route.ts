@@ -4,7 +4,11 @@ import { q } from '@/lib/db';
 
 export async function GET() {
   const rows = await q(
+    // status/experience/applied_at go through to_jsonb so this works before those columns exist.
     `select u.id,u.email,u.role,u.country,u.created_at,
+       coalesce(to_jsonb(u)->>'status','approved') as status,
+       to_jsonb(u)->>'experience' as experience,
+       to_jsonb(u)->>'applied_at' as applied_at,
        (select count(*)::int from decks d join companies c on c.id=d.company_id where c.country=u.country) as decks,
        (select coalesce(sum(tokens),0)::int from usage_log l where l.user_id=u.id) as tokens
      from users u order by u.id`
