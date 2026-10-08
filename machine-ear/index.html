@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Machine Ear: hear failures before they happen | Swiftrix</title>
+  <meta name="description" content="Machine Ear is a small sensor with AI that listens to your machine for a week, learns how it should sound and warns you when the sound changes.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Machine Ear: hear failures before they happen | Swiftrix">
+  <meta property="og:description" content="Machine Ear is a small sensor with AI that listens to your machine for a week, learns how it should sound and warns you when the sound changes.">
+  <link rel="icon" href="/assets/images/swiftrixLogo.png">
+  <link rel="canonical" href="https://www.swiftrix.eu/machine-ear">
+  <link rel="alternate" hreflang="en" href="https://www.swiftrix.eu/machine-ear">
+  <link rel="alternate" hreflang="lt" href="https://www.swiftrix.eu/lt/masinos-ausis">
+  <link rel="alternate" hreflang="de" href="https://www.swiftrix.eu/de/maschinenohr">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&display=swap">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/machine-ear/machine-ear.css">
+  <script>try { if (/[?&]theme=light/.test(location.search) || (!/[?&]theme=dark/.test(location.search) && localStorage.getItem('swiftrix-theme') === 'light')) document.documentElement.setAttribute('data-theme', 'light') } catch (e) {}</script>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <nav class="vex-nav">
+    <a class="vex-logo" data-site="" href="/" aria-label="Swiftrix">
+      <img class="logo-dark" src="/assets/images/swiftrixLogo.png" alt="Swiftrix">
+      <img class="logo-light" src="/light/assets/images/swiftrixLogo.png" alt="Swiftrix">
+    </a>
+    <div class="vex-links" id="vexLinks">
+      <a href="#demo">Live demo</a><a href="#how">How it works</a><a href="#hears">What it hears</a><a href="#kit">What you get</a>
+      <span class="langs"><a data-page="/machine-ear" href="/machine-ear" hreflang="en" aria-current="true">EN</a><a data-page="/lt/masinos-ausis" href="/lt/masinos-ausis" hreflang="lt">LT</a><a data-page="/de/maschinenohr" href="/de/maschinenohr" hreflang="de">DE</a></span>
+      <a class="vex-mlink" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book a call</a>
+    </div>
+    <a class="vex-cta" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book a call</a>
+    <button class="vex-burger" id="vexBurger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="wrap">
+    <header class="hero">
+      <p class="eyebrow"><span>HARDWARE + SOFTWARE</span></p>
+      <h1>Hear problems <span class="hl">before</span> your machine stops</h1>
+      <p>Machine Ear is a small sensor with AI. It listens to your machine for a week, learns how it should sound, and sends you a message when the sound changes.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#demo">Try the live demo</a>
+        <a class="btn btn-ghost" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book a call</a>
+      </div>
+    </header>
+
+    <section class="block" id="demo">
+      <span class="sec-badge"><i></i>Live demo</span>
+      <h2>Hear it work</h2>
+      <p class="lead">This is a simulated machine. The sound is generated in your browser, and the detector below listens to it the way the real device listens to yours. Turn the sound on, let it learn, then break something.</p>
+      <div class="me-demo" id="machine-ear-demo" data-state="idle" data-mode="idle">
+        <div class="me-head">
+          <div class="me-machine"><span class="me-dot"></span><b>Compressor 03</b></div>
+          <span class="me-pill" id="me-pill" data-state="idle">Waiting</span>
+          <button class="me-sound" id="me-sound" type="button" aria-pressed="false" aria-label="Sound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg><span>Sound off</span></button>
+        </div>
+        <div class="me-screen">
+          <canvas id="me-canvas" role="img" aria-label="Live sound spectrum of the simulated machine"></canvas>
+          <button class="btn btn-primary me-start" id="me-start" type="button">Start the learning week</button>
+        </div>
+        <div class="me-progress" id="me-progress" hidden><span></span><em></em></div>
+        <div class="me-legend"><span><i class="l-band"></i>Learned normal range</span><span><i class="l-live"></i>Live sound</span><span><i class="l-bad"></i>Above normal</span></div>
+        <div class="me-controls">
+          <p class="me-hint" id="me-hint"></p>
+          <div class="me-buttons" role="group" aria-label="Now change the sound"><button type="button" data-scn="normal" aria-pressed="true">Normal running</button><button type="button" data-scn="bearing" aria-pressed="false">Bearing wear</button><button type="button" data-scn="leak" aria-pressed="false">Air leak</button><button type="button" data-scn="knock" aria-pressed="false">Loose part</button><button type="button" data-scn="voice" aria-pressed="false">Someone talks nearby</button><button type="button" data-scn="vehicle" aria-pressed="false">Forklift passes</button></div>
+        </div>
+        <div class="me-bottom">
+          <div class="me-log" id="me-log"><h4>What Machine Ear decided</h4><ul aria-live="polite"></ul></div>
+          <div>
+            <div class="me-phone" id="me-phone" aria-live="assertive"><div class="n"><div class="n-top"><img src="/assets/images/swiftrixLogo.png" alt=""><span>Machine Ear</span><time>now</time></div><div class="n-text" data-p="text"></div></div></div>
+            <p class="me-phone-empty">Your phone stays quiet while everything is normal.</p>
+          </div>
+        </div>
+        <p class="me-caption">Simulated demo. The real device learns from your own machine.</p>
+      </div>
+      <script type="application/json" id="me-i18n">{"status": {"idle": "Waiting", "learning": "Learning", "normal": "Normal", "attention": "Attention"}, "learning": "Day {d} of 7: learning what normal sounds like", "soundOn": "Sound on", "soundOff": "Sound off", "hintStart": "Start the learning week. It runs sped up: seven days in nine seconds.", "hintGuard": "It has learned the normal sound. Now change what the machine sounds like.", "noAudio": "This browser cannot play the demo sound.", "events": {"bearing": ["Bearing wear suspected", "High-pitched whine, {db} dB above normal."], "leak": ["Air leak suspected", "Hissing at high frequencies, {db} dB above normal."], "knock": ["Loose or knocking part", "Regular knocking at {hz} Hz."], "voice": ["Ignored: people talking", "Human voices are not a machine fault."], "vehicle": ["Ignored: passing vehicle", "Low rumble that comes and goes."]}, "back": ["Back to normal", "The sound matches the learned pattern again."], "notif": "Compressor 03: {title}. {text} Please check it soon."}</script>
+    </section>
+
+    <section class="block" id="how">
+      <span class="sec-badge"><i></i>How it works</span>
+      <h2>Three steps, no changes to your machine</h2>
+      <p class="lead">The sensor only listens. Nothing is wired into your machine or its controls.</p>
+      <div class="cards"><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><h3>Place the sensor</h3><p>A small box with a microphone goes next to the machine. We set it up on site.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>It listens for a week</h3><p>The AI learns how your machine sounds when it starts, runs under load and idles, and which noises around it are normal.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 16v-5a6 6 0 1 0-12 0v5l-2 2h16z"/><path d="M10 21h4"/></svg></div><h3>It warns you</h3><p>When the sound drifts away from normal, you get a message on your phone, by email or in Teams, saying what it heard.</p></div></div>
+    </section>
+
+    <section class="block" id="hears">
+      <span class="sec-badge"><i></i>What it hears</span>
+      <h2>Faults that change the sound first</h2>
+      <p class="lead">Many failures start with a sound long before anything stops.</p>
+      <div class="cards"><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></div><h3>Bearings and gears</h3><p>A worn bearing whines or grinds long before it seizes.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></div><h3>Leaks</h3><p>Air, steam and gas leaks hiss at frequencies people rarely notice.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg></div><h3>Loose parts</h3><p>Belts, fans and guards start to knock or rattle.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg></div><h3>Pumps and compressors</h3><p>Cavitation, dry running and valve trouble change the sound.</p></div></div>
+      <div class="me-wide"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M17 5a3 3 0 0 1 0 6M21 20a5 5 0 0 0-3-4.5"/></svg></div><div><h3>What it ignores</h3><p>People talking, doors, forklifts and radios are learned as background, so they do not set off alerts.</p></div></div>
+      <p class="me-note">Not every fault makes a sound. Before we install anything, we listen to your machine and tell you honestly whether this will work for it.</p>
+    </section>
+
+    <section class="block" id="kit">
+      <span class="sec-badge"><i></i>What you get</span>
+      <h2>Hardware and software, from one team</h2>
+      <div class="cards"><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg></div><h3>The sensor</h3><p>A small box with an industrial microphone. A vibration sensor can be added for machines that need it.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div><h3>The software</h3><p>Learning, detection and a simple page that shows every machine as normal or needs attention.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 16v-5a6 6 0 1 0-12 0v5l-2 2h16z"/><path d="M10 21h4"/></svg></div><h3>Alerts</h3><p>On your phone, by email or in Teams, with a short note on what it heard and since when.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg></div><h3>Setup and support</h3><p>We install it, tune it to your machine and keep it working.</p></div></div>
+    </section>
+
+    <section class="block" id="fit">
+      <span class="sec-badge"><i></i>Who it is for</span>
+      <p class="me-fit">Workshops and factories with pumps, compressors, fans, conveyors, CNC machines and production lines. Anywhere a breakdown costs more than a sensor.</p>
+      <section class="notice"><h3>Built to listen to machines, not people</h3><p>Raw audio is analysed on the device and is not stored. Only numbers that describe the sound leave it.</p></section>
+    </section>
+
+    <section class="cta" id="contact">
+      <span class="sec-badge"><i></i>Talk to us</span>
+      <h2>Have a machine you worry about?</h2>
+      <p>Tell us what it is and what it does. We will say honestly whether listening to it can help, and what a pilot would look like.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book a call</a>
+        <a class="btn btn-ghost" href="mailto:info@swiftrix.eu?subject=Machine%20Ear">Email us</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Swiftrix · <a data-site="" href="/">swiftrix.eu</a></footer>
+  <script src="/js/pages.js" defer></script>
+  <script src="/machine-ear/machine-ear.js" defer></script>
+</body>
+</html>

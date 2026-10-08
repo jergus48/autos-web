@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="lt" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mašinos ausis: išgirskite gedimą dar prieš jam įvykstant | Swiftrix</title>
+  <meta name="description" content="Mašinos ausis yra mažas jutiklis su DI, kuris savaitę klausosi jūsų įrenginio, išmoksta, kaip jis turi skambėti, ir įspėja, kai garsas pasikeičia.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Mašinos ausis: išgirskite gedimą dar prieš jam įvykstant | Swiftrix">
+  <meta property="og:description" content="Mašinos ausis yra mažas jutiklis su DI, kuris savaitę klausosi jūsų įrenginio, išmoksta, kaip jis turi skambėti, ir įspėja, kai garsas pasikeičia.">
+  <link rel="icon" href="/assets/images/swiftrixLogo.png">
+  <link rel="canonical" href="https://www.swiftrix.eu/lt/masinos-ausis">
+  <link rel="alternate" hreflang="en" href="https://www.swiftrix.eu/machine-ear">
+  <link rel="alternate" hreflang="lt" href="https://www.swiftrix.eu/lt/masinos-ausis">
+  <link rel="alternate" hreflang="de" href="https://www.swiftrix.eu/de/maschinenohr">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&display=swap">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/machine-ear/machine-ear.css">
+  <script>try { if (/[?&]theme=light/.test(location.search) || (!/[?&]theme=dark/.test(location.search) && localStorage.getItem('swiftrix-theme') === 'light')) document.documentElement.setAttribute('data-theme', 'light') } catch (e) {}</script>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <nav class="vex-nav">
+    <a class="vex-logo" data-site="" href="/lt" aria-label="Swiftrix">
+      <img class="logo-dark" src="/assets/images/swiftrixLogo.png" alt="Swiftrix">
+      <img class="logo-light" src="/light/assets/images/swiftrixLogo.png" alt="Swiftrix">
+    </a>
+    <div class="vex-links" id="vexLinks">
+      <a href="#demo">Gyvas demo</a><a href="#how">Kaip veikia</a><a href="#hears">Ką girdi</a><a href="#kit">Ką gaunate</a>
+      <span class="langs"><a data-page="/machine-ear" href="/machine-ear" hreflang="en">EN</a><a data-page="/lt/masinos-ausis" href="/lt/masinos-ausis" hreflang="lt" aria-current="true">LT</a><a data-page="/de/maschinenohr" href="/de/maschinenohr" hreflang="de">DE</a></span>
+      <a class="vex-mlink" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Rezervuoti skambutį</a>
+    </div>
+    <a class="vex-cta" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Rezervuoti skambutį</a>
+    <button class="vex-burger" id="vexBurger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="wrap">
+    <header class="hero">
+      <p class="eyebrow"><span>ĮRANGA + PROGRAMINĖ ĮRANGA</span></p>
+      <h1>Išgirskite problemą <span class="hl">prieš</span> sustojant įrenginiui</h1>
+      <p>Mašinos ausis yra mažas jutiklis su DI. Jis savaitę klausosi jūsų įrenginio, išmoksta, kaip jis turi skambėti, ir atsiunčia žinutę, kai garsas pasikeičia.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#demo">Išbandyti gyvą demo</a>
+        <a class="btn btn-ghost" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Rezervuoti skambutį</a>
+      </div>
+    </header>
+
+    <section class="block" id="demo">
+      <span class="sec-badge"><i></i>Gyvas demo</span>
+      <h2>Išgirskite, kaip tai veikia</h2>
+      <p class="lead">Tai imituojamas įrenginys. Garsas generuojamas jūsų naršyklėje, o žemiau esantis detektorius jo klausosi taip, kaip tikras prietaisas klausytųsi jūsų įrenginio. Įjunkite garsą, leiskite išmokti, o tada kažką sugadinkite.</p>
+      <div class="me-demo" id="machine-ear-demo" data-state="idle" data-mode="idle">
+        <div class="me-head">
+          <div class="me-machine"><span class="me-dot"></span><b>Kompresorius 03</b></div>
+          <span class="me-pill" id="me-pill" data-state="idle">Laukia</span>
+          <button class="me-sound" id="me-sound" type="button" aria-pressed="false" aria-label="Garsas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg><span>Garsas išjungtas</span></button>
+        </div>
+        <div class="me-screen">
+          <canvas id="me-canvas" role="img" aria-label="Imituojamo įrenginio garso spektras gyvai"></canvas>
+          <button class="btn btn-primary me-start" id="me-start" type="button">Pradėti mokymosi savaitę</button>
+        </div>
+        <div class="me-progress" id="me-progress" hidden><span></span><em></em></div>
+        <div class="me-legend"><span><i class="l-band"></i>Išmokta normos riba</span><span><i class="l-live"></i>Gyvas garsas</span><span><i class="l-bad"></i>Virš normos</span></div>
+        <div class="me-controls">
+          <p class="me-hint" id="me-hint"></p>
+          <div class="me-buttons" role="group" aria-label="Dabar pakeiskite garsą"><button type="button" data-scn="normal" aria-pressed="true">Įprastas veikimas</button><button type="button" data-scn="bearing" aria-pressed="false">Guolio dėvėjimasis</button><button type="button" data-scn="leak" aria-pressed="false">Oro nuotėkis</button><button type="button" data-scn="knock" aria-pressed="false">Atsilaisvinusi detalė</button><button type="button" data-scn="voice" aria-pressed="false">Šalia kalba žmogus</button><button type="button" data-scn="vehicle" aria-pressed="false">Pravažiuoja krautuvas</button></div>
+        </div>
+        <div class="me-bottom">
+          <div class="me-log" id="me-log"><h4>Ką nusprendė Mašinos ausis</h4><ul aria-live="polite"></ul></div>
+          <div>
+            <div class="me-phone" id="me-phone" aria-live="assertive"><div class="n"><div class="n-top"><img src="/assets/images/swiftrixLogo.png" alt=""><span>Machine Ear</span><time>dabar</time></div><div class="n-text" data-p="text"></div></div></div>
+            <p class="me-phone-empty">Kol viskas normalu, jūsų telefonas tyli.</p>
+          </div>
+        </div>
+        <p class="me-caption">Imituojamas demo. Tikras prietaisas mokosi iš jūsų pačių įrenginio.</p>
+      </div>
+      <script type="application/json" id="me-i18n">{"status": {"idle": "Laukia", "learning": "Mokosi", "normal": "Normalu", "attention": "Dėmesio"}, "learning": "Diena {d} iš 7: mokosi, kaip skamba normali veikla", "soundOn": "Garsas įjungtas", "soundOff": "Garsas išjungtas", "hintStart": "Pradėkite mokymosi savaitę. Ji vyksta pagreitintai: septynios dienos per devynias sekundes.", "hintGuard": "Jis išmoko normalų garsą. Dabar pakeiskite, kaip skamba įrenginys.", "noAudio": "Ši naršyklė negali paleisti demo garso.", "events": {"bearing": ["Įtariamas guolio nusidėvėjimas", "Aukšto tono cypimas, {db} dB virš normos."], "leak": ["Įtariamas oro nuotėkis", "Šnypštimas aukštuose dažniuose, {db} dB virš normos."], "knock": ["Atsilaisvinusi arba beldžianti detalė", "Reguliarus beldimas, dažnis {hz} Hz."], "voice": ["Ignoruota: kalba žmonės", "Žmonių balsai nėra įrenginio gedimas."], "vehicle": ["Ignoruota: pravažiuojanti transporto priemonė", "Žemas ūžesys, kuris ateina ir praeina."]}, "back": ["Vėl normalu", "Garsas vėl atitinka išmoktą modelį."], "notif": "Kompresorius 03: {title}. {text} Patikrinkite artimiausiu metu."}</script>
+    </section>
+
+    <section class="block" id="how">
+      <span class="sec-badge"><i></i>Kaip veikia</span>
+      <h2>Trys žingsniai, jūsų įrenginio nekeičiant</h2>
+      <p class="lead">Jutiklis tik klausosi. Nieko neprijungiama prie jūsų įrenginio ar jo valdymo.</p>
+      <div class="cards"><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div><h3>Pastatykite jutiklį</h3><p>Mažą dėžutę su mikrofonu pastatome šalia įrenginio. Sumontuojame vietoje.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Jis savaitę klausosi</h3><p>DI išmoksta, kaip jūsų įrenginys skamba paleidžiamas, dirbdamas su apkrova ir tuščiąja eiga, ir kokie aplinkos garsai yra normalūs.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 16v-5a6 6 0 1 0-12 0v5l-2 2h16z"/><path d="M10 21h4"/></svg></div><h3>Jis jus įspėja</h3><p>Kai garsas nukrypsta nuo normos, gaunate žinutę telefone, el. paštu arba „Teams“, nurodant, ką jis išgirdo.</p></div></div>
+    </section>
+
+    <section class="block" id="hears">
+      <span class="sec-badge"><i></i>Ką girdi</span>
+      <h2>Gedimai, kurie pirmiausia pakeičia garsą</h2>
+      <p class="lead">Daug gedimų prasideda nuo garso, gerokai anksčiau, nei kas nors sustoja.</p>
+      <div class="cards"><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg></div><h3>Guoliai ir krumpliaračiai</h3><p>Nusidėvėjęs guolis cypia ar tarška gerokai anksčiau, nei užstringa.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></div><h3>Nuotėkiai</h3><p>Oro, garų ir dujų nuotėkis šnypščia dažniais, kurių žmonės retai pastebi.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg></div><h3>Atsilaisvinusios detalės</h3><p>Diržai, ventiliatoriai ir apsaugos pradeda belsti ar barškėti.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l5 3"/></svg></div><h3>Siurbliai ir kompresoriai</h3><p>Kavitacija, sausoji eiga ir vožtuvų problemos keičia garsą.</p></div></div>
+      <div class="me-wide"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M17 5a3 3 0 0 1 0 6M21 20a5 5 0 0 0-3-4.5"/></svg></div><div><h3>Ką ignoruoja</h3><p>Kalbantys žmonės, durys, krautuvai ir radijas išmokstami kaip fonas, todėl neiššaukia įspėjimų.</p></div></div>
+      <p class="me-note">Ne kiekvienas gedimas skleidžia garsą. Prieš ką nors montuodami, paklausome jūsų įrenginio ir sąžiningai pasakome, ar tai jam tiks.</p>
+    </section>
+
+    <section class="block" id="kit">
+      <span class="sec-badge"><i></i>Ką gaunate</span>
+      <h2>Įranga ir programinė įranga iš vienos komandos</h2>
+      <div class="cards"><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg></div><h3>Jutiklis</h3><p>Maža dėžutė su pramoniniu mikrofonu. Įrenginiams, kuriems to reikia, galima pridėti vibracijos jutiklį.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div><h3>Programinė įranga</h3><p>Mokymasis, aptikimas ir paprastas puslapis, kuriame kiekvienas įrenginys rodomas kaip normalus arba reikalaujantis dėmesio.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 16v-5a6 6 0 1 0-12 0v5l-2 2h16z"/><path d="M10 21h4"/></svg></div><h3>Įspėjimai</h3><p>Telefone, el. paštu arba „Teams“, su trumpa pastaba, ką jis išgirdo ir nuo kada.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg></div><h3>Montavimas ir priežiūra</h3><p>Sumontuojame, suderiname pagal jūsų įrenginį ir prižiūrime, kad veiktų.</p></div></div>
+    </section>
+
+    <section class="block" id="fit">
+      <span class="sec-badge"><i></i>Kam skirta</span>
+      <p class="me-fit">Dirbtuvėms ir gamykloms su siurbliais, kompresoriais, ventiliatoriais, konvejeriais, CNC staklėmis ir gamybos linijomis. Visur, kur gedimas kainuoja brangiau nei jutiklis.</p>
+      <section class="notice"><h3>Sukurta klausytis įrenginių, o ne žmonių</h3><p>Neapdorotas garsas analizuojamas pačiame prietaise ir nesaugomas. Iš jo išeina tik skaičiai, aprašantys garsą.</p></section>
+    </section>
+
+    <section class="cta" id="contact">
+      <span class="sec-badge"><i></i>Pakalbėkime</span>
+      <h2>Turite įrenginį, dėl kurio nerimaujate?</h2>
+      <p>Papasakokite, kas tai per įrenginys ir ką jis daro. Sąžiningai pasakysime, ar klausymasis gali padėti, ir kaip atrodytų bandomasis projektas.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Rezervuoti skambutį</a>
+        <a class="btn btn-ghost" href="mailto:info@swiftrix.eu?subject=Mašinos%20ausis">Parašyti el. paštu</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Swiftrix · <a data-site="" href="/lt">swiftrix.eu</a></footer>
+  <script src="/js/pages.js" defer></script>
+  <script src="/machine-ear/machine-ear.js" defer></script>
+</body>
+</html>
