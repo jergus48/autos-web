@@ -88,8 +88,8 @@
       for (var r = 0; r < rows; r++) {
         var x = -rnd() * w * 0.6
         while (x < w) {
-          var len = w * (0.45 + rnd() * 0.5), v = 168 + Math.round(rnd() * 26)
-          g.fillStyle = 'rgb(' + (v + 26) + ',' + (v + 2) + ',' + (v - 46) + ')'
+          var len = w * (0.45 + rnd() * 0.5), v = 150 + Math.round(rnd() * 22)
+          g.fillStyle = 'rgb(' + (v + 24) + ',' + (v + 8) + ',' + (v - 16) + ')'
           g.fillRect(x, r * pw, len, pw)
           for (var q = 0; q < 26; q++) {
             g.globalAlpha = 0.05 + rnd() * 0.07
@@ -110,73 +110,23 @@
     }, true)
     floorTex.repeat.set(RW / 2, RD / 2)
 
-    var rugTex = canvasTex(512, 384, function (g, w, h) {
-      g.fillStyle = '#e9dfcd'; g.fillRect(0, 0, w, h)
-      g.strokeStyle = '#c2674a'; g.lineWidth = 10; g.strokeRect(22, 22, w - 44, h - 44)
-      g.strokeStyle = '#b9a98b'; g.lineWidth = 3; g.strokeRect(40, 40, w - 80, h - 80)
-      for (var i = 0; i < 6; i++) {
-        var cx = 90 + i * 66, cy = h / 2
-        g.fillStyle = i % 2 ? '#c2674a' : '#7f8f77'
-        g.beginPath(); g.moveTo(cx, cy - 70); g.lineTo(cx + 30, cy); g.lineTo(cx, cy + 70); g.lineTo(cx - 30, cy); g.closePath(); g.fill()
-        g.fillStyle = '#e9dfcd'
-        g.beginPath(); g.moveTo(cx, cy - 22); g.lineTo(cx + 10, cy); g.lineTo(cx, cy + 22); g.lineTo(cx - 10, cy); g.closePath(); g.fill()
-      }
-      for (var k = 0; k < 2600; k++) {
-        g.globalAlpha = 0.07
-        g.fillStyle = rnd() > 0.5 ? '#000' : '#fff'
-        g.fillRect(rnd() * w, rnd() * h, 2, 2)
-      }
-      g.globalAlpha = 1
-    })
-
-    function artTex(kind) {
-      return canvasTex(256, 320, function (g, w, h) {
-        g.fillStyle = kind ? '#e8dccb' : '#f1ece2'; g.fillRect(0, 0, w, h)
-        if (kind) {
-          g.fillStyle = '#c2674a'; g.beginPath(); g.arc(w / 2, h * 0.62, 78, Math.PI, 0); g.lineTo(w / 2 + 78, h * 0.62 + 80); g.lineTo(w / 2 - 78, h * 0.62 + 80); g.fill()
-          g.fillStyle = '#7f8f77'; g.beginPath(); g.arc(w / 2, h * 0.62, 46, Math.PI, 0); g.lineTo(w / 2 + 46, h * 0.62 + 80); g.lineTo(w / 2 - 46, h * 0.62 + 80); g.fill()
-          g.fillStyle = '#d9a441'; g.beginPath(); g.arc(w * 0.72, h * 0.2, 24, 0, 7); g.fill()
-        } else {
-          g.fillStyle = '#5c6b8a'; g.beginPath(); g.arc(w * 0.38, h * 0.4, 70, 0, 7); g.fill()
-          g.fillStyle = '#d9a441'; g.beginPath(); g.arc(w * 0.62, h * 0.58, 52, 0, 7); g.fill()
-          g.fillStyle = '#2b2d31'; g.fillRect(34, h * 0.8, w - 68, 5)
-        }
-      })
-    }
-
-    var skyTex = canvasTex(8, 256, function (g, w, h) {
-      var gr = g.createLinearGradient(0, 0, 0, h)
-      gr.addColorStop(0, '#6fa8e6'); gr.addColorStop(0.7, '#cfe4f8'); gr.addColorStop(1, '#f5efe0')
-      g.fillStyle = gr; g.fillRect(0, 0, w, h)
-    })
-
     // ---------- materials ----------
     var M = {
-      wall: mat('#ece6dc', { roughness: 0.95 }, 'wall'),
-      base: mat('#f6f2ea', { roughness: 0.6 }, 'wall'),
+      wall: mat('#f1f0ec', { roughness: 0.95 }, 'wall'),
+      base: mat('#f6f4ef', { roughness: 0.6 }, 'wall'),
       slab: mat('#6f6a62', { roughness: 0.9 }, 'wall'),
-      floor: mat('#ffffff', { map: floorTex, roughness: 0.5 }, 'floor'),
-      rug: mat('#ffffff', { map: rugTex, roughness: 1 }),
-      sofa: mat('#5f7088', { roughness: 1 }),
-      sofaDk: mat('#56657c', { roughness: 1 }),
-      terra: mat('#c2674a', { roughness: 0.95 }),
-      mustard: mat('#d9a441', { roughness: 0.95 }),
-      linen: mat('#e8e1d3', { roughness: 1 }),
-      walnut: mat('#7a5438', { roughness: 0.55 }),
-      oak: mat('#c9a06c', { roughness: 0.5 }),
-      black: mat('#26282c', { roughness: 0.5, metalness: 0.2 }),
-      brass: mat('#c1a062', { roughness: 0.35, metalness: 0.45 }),
-      ceramic: mat('#efe9dd', { roughness: 0.35 }),
-      leaf: mat('#4f7d46', { roughness: 0.7, side: T.DoubleSide }),
-      leaf2: mat('#3f6a3b', { roughness: 0.7, side: T.DoubleSide }),
-      pot: mat('#d6cbb8', { roughness: 0.8 }),
-      soil: mat('#2a2018', { roughness: 1 }),
-      shade: mat('#f3e6c8', { roughness: 0.9, side: T.DoubleSide, emissive: srgb('#ffb866').multiplyScalar(0.55) }),
-      art1: mat('#ffffff', { map: artTex(1), roughness: 0.9 }),
-      art2: mat('#ffffff', { map: artTex(0), roughness: 0.9 }),
-      book1: mat('#8b3a2e'), book2: mat('#34495e'), book3: mat('#d9a441'), book4: mat('#6b7f5a'), book5: mat('#e8e1d3')
+      floor: mat('#ffffff', { map: floorTex, roughness: 0.55 }, 'floor'),
+      rug: mat('#d8d4cb', { roughness: 1 }),
+      sofa: mat('#8e9297', { roughness: 1 }),
+      sofaDk: mat('#82868b', { roughness: 1 }),
+      pillow: mat('#c4c7ca', { roughness: 1 }),
+      charcoal: mat('#3b3c3e', { roughness: 0.6 }),
+      oak: mat('#c9a573', { roughness: 0.55 }),
+      white: mat('#f3f2ee', { roughness: 0.55 }),
+      black: mat('#26282c', { roughness: 0.45, metalness: 0.2 }),
+      ceramic: mat('#efe9dd', { roughness: 0.35 })
     }
-    var skyMat = new T.MeshBasicMaterial({ map: skyTex, toneMapped: false })
+    var skyMat = new T.MeshBasicMaterial({ color: srgb('#e3eaee'), toneMapped: false })
 
     // ---------- geometry helpers ----------
     var edgeMat = new T.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 })
@@ -251,183 +201,70 @@
     sky.position.set(wx, (WIN.y0 + WIN.y1) / 2, -0.14)
     world.add(sky)
 
-    // curtains: a pleated box per side, plus a rod
-    function curtain(x) {
-      var geo = new T.BoxGeometry(0.52, 2.0, 0.05, 28, 1, 1), pos = geo.attributes.position
-      for (var i = 0; i < pos.count; i++) pos.setZ(i, pos.getZ(i) + Math.sin(pos.getX(i) * 36) * 0.028)
-      geo.computeVertexNormals()
-      addMesh(shell, geo, M.linen, x, 0.22 + 1.0, 0.12, { edge: false })
-    }
-    curtain(WIN.x0 - 0.12)
-    curtain(WIN.x1 + 0.12)
-    addMesh(shell, new T.CylinderGeometry(0.014, 0.014, ww + 1.0, 10), M.brass, wx, 2.27, 0.12, { rz: Math.PI / 2, edge: false })
-
-    // ---------- furniture ----------
+    // ---------- furniture: a restrained architect's model, neutral colours ----------
     var furn = new T.Group()
     world.add(furn)
 
-    // rug
     bx(furn, 2.6, 0.012, 1.9, M.rug, 2.0, 0, 2.0, { cast: false, edge: true })
 
     // sofa: built facing +z, then turned to face the room along the left wall
-    function sofa(x, z) {
+    ;(function () {
       var g = new T.Group()
-      ;[[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(function (s) { cyl(g, 0.022, 0.016, 0.13, M.walnut, s[0] * 1.02, 0, s[1] * 0.4) })
-      rbx(g, 2.2, 0.2, 0.95, 0.07, M.sofaDk, 0, 0.12, 0, { edge: true })
-      rbx(g, 2.2, 0.5, 0.22, 0.09, M.sofa, 0, 0.3, -0.365, { edge: true })
-      rbx(g, 0.2, 0.32, 0.95, 0.08, M.sofa, -1.0, 0.3, 0, { edge: true })
-      rbx(g, 0.2, 0.32, 0.95, 0.08, M.sofa, 1.0, 0.3, 0, { edge: true })
+      ;[[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(function (s) { cyl(g, 0.02, 0.014, 0.13, M.black, s[0] * 1.02, 0, s[1] * 0.4) })
+      rbx(g, 2.2, 0.2, 0.95, 0.05, M.sofaDk, 0, 0.12, 0, { edge: true })
+      rbx(g, 2.2, 0.5, 0.22, 0.06, M.sofa, 0, 0.3, -0.365, { edge: true })
+      rbx(g, 0.2, 0.32, 0.95, 0.06, M.sofa, -1.0, 0.3, 0, { edge: true })
+      rbx(g, 0.2, 0.32, 0.95, 0.06, M.sofa, 1.0, 0.3, 0, { edge: true })
       ;[-0.6, 0, 0.6].forEach(function (cx) {
-        rbx(g, 0.6, 0.14, 0.66, 0.06, M.sofa, cx, 0.32, 0.1, { edge: false })
-        rbx(g, 0.58, 0.36, 0.14, 0.06, M.sofa, cx, 0.46, -0.2, { rx: -0.2, edge: false })
+        rbx(g, 0.6, 0.14, 0.66, 0.04, M.sofa, cx, 0.32, 0.1, { edge: false })
+        rbx(g, 0.58, 0.36, 0.14, 0.04, M.sofa, cx, 0.46, -0.2, { rx: -0.2, edge: false })
       })
-      rbx(g, 0.42, 0.42, 0.12, 0.07, M.terra, -0.72, 0.5, 0.0, { rx: -0.35, ry: 0.25, edge: false })
-      rbx(g, 0.4, 0.4, 0.11, 0.07, M.mustard, 0.62, 0.5, 0.0, { rx: -0.35, ry: -0.3, edge: false })
-      g.position.set(x, 0, z)
+      rbx(g, 0.42, 0.42, 0.12, 0.05, M.pillow, -0.72, 0.5, 0.0, { rx: -0.35, ry: 0.25, edge: false })
+      g.position.set(0.62, 0, 1.9)
       g.rotation.y = Math.PI / 2
       furn.add(g)
-    }
-    sofa(0.62, 1.9)
+    })()
 
     // armchair
-    function armchair(x, z, ry) {
-      var g = new T.Group()
-      ;[[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(function (s) { cyl(g, 0.02, 0.014, 0.16, M.walnut, s[0] * 0.3, 0, s[1] * 0.3) })
-      rbx(g, 0.8, 0.2, 0.8, 0.08, M.terra, 0, 0.16, 0, { edge: true })
-      rbx(g, 0.8, 0.5, 0.2, 0.09, M.terra, 0, 0.3, -0.3, { rx: -0.12, edge: true })
-      rbx(g, 0.14, 0.26, 0.7, 0.06, M.terra, -0.33, 0.3, 0.05, { edge: false })
-      rbx(g, 0.14, 0.26, 0.7, 0.06, M.terra, 0.33, 0.3, 0.05, { edge: false })
-      rbx(g, 0.54, 0.12, 0.54, 0.06, M.terra, 0, 0.36, 0.06, { edge: false })
-      g.position.set(x, 0, z)
-      g.rotation.y = ry
-      furn.add(g)
-    }
-    armchair(2.7, 3.0, -2.55)
-
-    // coffee table with things on it
-    ;(function () {
-      var g = new T.Group(), x = 1.95, z = 1.95
-      cyl(g, 0.5, 0.5, 0.04, M.oak, x, 0.34, z, { edge: true })
-      ;[0, 2.09, 4.19].forEach(function (a) { cyl(g, 0.022, 0.016, 0.34, M.black, x + Math.cos(a) * 0.3, 0, z + Math.sin(a) * 0.3) })
-      bx(g, 0.28, 0.035, 0.2, M.book2, x - 0.12, 0.38, z + 0.05, { ry: 0.3, edge: false })
-      bx(g, 0.24, 0.03, 0.17, M.book1, x - 0.12, 0.415, z + 0.05, { ry: 0.5, edge: false })
-      cyl(g, 0.11, 0.07, 0.07, M.ceramic, x + 0.17, 0.38, z - 0.1)
-      cyl(g, 0.05, 0.05, 0.05, M.black, x + 0.17, 0.45, z - 0.1)
-      furn.add(g)
-    })()
-
-    // plant: pot, soil, stems with leaf blades
-    function plant(x, z, s, n) {
-      var g = new T.Group()
-      cyl(g, 0.2 * s, 0.14 * s, 0.34 * s, M.pot, x, 0, z)
-      cyl(g, 0.185 * s, 0.185 * s, 0.01, M.soil, x, 0.335 * s, z)
-      var leafGeo = new T.SphereGeometry(1, 10, 8)
-      for (var i = 0; i < n; i++) {
-        var a = rnd() * 6.283, rad = 0.05 + rnd() * 0.17 * s, h = (0.5 + rnd() * 0.95) * s
-        var sx = 0.1 * s + rnd() * 0.05 * s
-        var leaf = addMesh(g, leafGeo, i % 3 ? M.leaf : M.leaf2, x + Math.cos(a) * rad, 0.35 * s + h, z + Math.sin(a) * rad, { edge: false })
-        leaf.scale.set(sx * 1.5, sx * 0.14, sx * 1.1)
-        leaf.rotation.set((rnd() - 0.5) * 0.9, a, 0.5 + rnd() * 0.5)
-        var st = cyl(g, 0.006, 0.006, h, M.leaf2, x + Math.cos(a) * rad * 0.5, 0.35 * s, z + Math.sin(a) * rad * 0.5, { cast: false })
-        st.rotation.z = -Math.cos(a) * 0.12
-        st.rotation.x = Math.sin(a) * 0.12
-      }
-      furn.add(g)
-    }
-    plant(0.4, 0.4, 1.35, 22)
-
-    // floor lamp beside the sofa
-    ;(function () {
-      var g = new T.Group(), x = 0.4, z = 3.25
-      cyl(g, 0.15, 0.15, 0.02, M.black, x, 0, z)
-      cyl(g, 0.01, 0.01, 1.48, M.black, x, 0.02, z)
-      var sh = addMesh(g, new T.CylinderGeometry(0.17, 0.22, 0.28, 28, 1, true), M.shade, x, 1.62, z, { cast: false, recv: false, edge: false })
-      sh.scale.set(1, 1, 1)
-      furn.add(g)
-    })()
-
-    // sideboard with a lamp, vase and books; art above it
-    ;(function () {
-      var g = new T.Group(), x = 1.6, z = 0.22
-      ;[[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(function (s) { cyl(g, 0.02, 0.012, 0.16, M.black, x + s[0] * 0.72, 0, z + s[1] * 0.14) })
-      bx(g, 1.6, 0.52, 0.4, M.walnut, x, 0.16, z)
-      ;[-0.53, 0, 0.53].forEach(function (dx) {
-        bx(g, 0.5, 0.44, 0.012, M.oak, x + dx, 0.2, z + 0.205, { edge: false })
-        bx(g, 0.1, 0.012, 0.012, M.brass, x + dx + (dx > 0 ? -0.18 : 0.18), 0.4, z + 0.216, { edge: false })
-      })
-      // table lamp
-      cyl(g, 0.06, 0.07, 0.2, M.ceramic, x - 0.55, 0.68, z)
-      addMesh(g, new T.CylinderGeometry(0.1, 0.15, 0.2, 24, 1, true), M.shade, x - 0.55, 0.98, z, { cast: false, edge: false })
-      // vase with dried stems
-      cyl(g, 0.045, 0.07, 0.22, M.terra, x + 0.45, 0.68, z)
-      for (var i = 0; i < 5; i++) {
-        var st = cyl(g, 0.004, 0.004, 0.45, M.walnut, x + 0.45 + (i - 2) * 0.012, 0.85, z, { cast: false })
-        st.rotation.z = (i - 2) * 0.16
-      }
-      bx(g, 0.26, 0.04, 0.18, M.book3, x + 0.05, 0.68, z, { edge: false })
-      bx(g, 0.22, 0.04, 0.16, M.book5, x + 0.05, 0.72, z, { ry: 0.2, edge: false })
-      furn.add(g)
-      // framed art on the back wall
-      frame(furn, 0.74, 0.96, M.art1, 1.2, 1.2, 0.045)
-      frame(furn, 0.46, 0.6, M.art2, 2.0, 1.12, 0.045)
-    })()
-    function frame(p, w, h, art, x, y, z) {
-      bx(p, w, h, 0.03, M.black, x, y, z, { edge: false })
-      var pl = new T.Mesh(new T.PlaneGeometry(w - 0.06, h - 0.06), art)
-      pl.position.set(x, y + h / 2, z + 0.017)
-      pl.receiveShadow = true
-      p.add(pl)
-    }
-
-    // two floating shelves and a frame above the sofa
     ;(function () {
       var g = new T.Group()
-      ;[1.15, 1.6].forEach(function (y, i) {
-        bx(g, 0.22, 0.035, 1.2, M.oak, 0.11, y, 1.9)
-        var z0 = 1.45
-        ;[M.book1, M.book2, M.book3, M.book4, M.book5].forEach(function (m, k) {
-          var bh = 0.22 + (k % 3) * 0.04
-          bx(g, 0.15, bh, 0.04, m, 0.12, y + 0.035, z0 + k * 0.045 + i * 0.5, { edge: false })
-        })
-        if (i === 0) { cyl(g, 0.05, 0.07, 0.14, M.ceramic, 0.12, y + 0.035, 2.2); plantSmall(g, 0.12, y + 0.18, 2.2) }
-        else { cyl(g, 0.08, 0.07, 0.04, M.black, 0.12, y + 0.035, 2.2) }
-      })
+      ;[[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(function (s) { cyl(g, 0.018, 0.012, 0.16, M.black, s[0] * 0.3, 0, s[1] * 0.3) })
+      rbx(g, 0.8, 0.2, 0.8, 0.05, M.charcoal, 0, 0.16, 0, { edge: true })
+      rbx(g, 0.8, 0.5, 0.2, 0.06, M.charcoal, 0, 0.3, -0.3, { rx: -0.12, edge: true })
+      rbx(g, 0.14, 0.26, 0.7, 0.04, M.charcoal, -0.33, 0.3, 0.05, { edge: false })
+      rbx(g, 0.14, 0.26, 0.7, 0.04, M.charcoal, 0.33, 0.3, 0.05, { edge: false })
+      rbx(g, 0.54, 0.12, 0.54, 0.04, M.charcoal, 0, 0.36, 0.06, { edge: false })
+      g.position.set(2.7, 0, 3.0)
+      g.rotation.y = -2.55
       furn.add(g)
     })()
-    function plantSmall(p, x, y, z) {
-      var leafGeo = new T.SphereGeometry(1, 8, 6)
-      for (var i = 0; i < 6; i++) {
-        var a = i * 1.05, l = addMesh(p, leafGeo, i % 2 ? M.leaf : M.leaf2, x + Math.cos(a) * 0.03, y + 0.1 + (i % 3) * 0.04, z + Math.sin(a) * 0.03, { edge: false })
-        l.scale.set(0.045, 0.012, 0.03)
-        l.rotation.set(0.3, a, 0.9)
-      }
-    }
-    // large frame on the left wall
+
+    // round coffee table
     ;(function () {
-      var w = 0.7, h = 0.9
-      bx(furn, 0.03, h, w, M.black, 0.017, 0.82, 1.9 - 0.0, { edge: false })
+      var x = 1.95, z = 1.95
+      cyl(furn, 0.5, 0.5, 0.04, M.oak, x, 0.34, z, { edge: true })
+      ;[0, 2.09, 4.19].forEach(function (a) { cyl(furn, 0.02, 0.015, 0.34, M.black, x + Math.cos(a) * 0.3, 0, z + Math.sin(a) * 0.3) })
+    })()
+
+    // low sideboard along the back wall
+    ;(function () {
+      var x = 1.6, z = 0.22
+      ;[[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(function (s) { cyl(furn, 0.018, 0.012, 0.16, M.black, x + s[0] * 0.72, 0, z + s[1] * 0.14) })
+      bx(furn, 1.6, 0.52, 0.4, M.white, x, 0.16, z)
+      bx(furn, 1.62, 0.03, 0.42, M.oak, x, 0.68, z, { edge: false })
+      ;[-0.53, 0, 0.53].forEach(function (dx) { bx(furn, 0.012, 0.3, 0.012, M.black, x + dx + 0.2, 0.28, z + 0.206, { edge: false }) })
     })()
 
     // dining table and four chairs
     ;(function () {
-      var g = new T.Group(), x = 4.15, z = 2.6
-      bx(g, 1.4, 0.04, 0.85, M.walnut, x, 0.72, z)
-      ;[[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(function (s) { bx(g, 0.05, 0.72, 0.05, M.walnut, x + s[0] * 0.62, 0, z + s[1] * 0.35, { edge: false }) })
-      cyl(g, 0.07, 0.05, 0.2, M.ceramic, x, 0.76, z)
-      for (var i = 0; i < 3; i++) {
-        var l = addMesh(g, new T.SphereGeometry(1, 8, 6), M.leaf, x + (i - 1) * 0.03, 1.0 + i * 0.03, z, { edge: false })
-        l.scale.set(0.05, 0.12, 0.02); l.rotation.z = (i - 1) * 0.4
-      }
-      cyl(g, 0.09, 0.09, 0.018, M.ceramic, x - 0.4, 0.76, z + 0.18)
-      cyl(g, 0.09, 0.09, 0.018, M.ceramic, x + 0.4, 0.76, z - 0.18)
-      furn.add(g)
+      var x = 4.15, z = 2.6
+      bx(furn, 1.4, 0.04, 0.85, M.oak, x, 0.72, z)
+      ;[[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(function (s) { bx(furn, 0.05, 0.72, 0.05, M.oak, x + s[0] * 0.62, 0, z + s[1] * 0.35, { edge: false }) })
       function chair(cx, cz, ry) {
         var c = new T.Group()
-        ;[[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(function (s) { bx(c, 0.03, 0.45, 0.03, M.black, s[0] * 0.19, 0, s[1] * 0.19, { edge: false }) })
-        rbx(c, 0.44, 0.05, 0.44, 0.03, M.linen, 0, 0.43, 0, { edge: false })
-        bx(c, 0.03, 0.4, 0.03, M.black, -0.19, 0.45, -0.19, { edge: false })
-        bx(c, 0.03, 0.4, 0.03, M.black, 0.19, 0.45, -0.19, { edge: false })
-        rbx(c, 0.42, 0.22, 0.04, 0.02, M.oak, 0, 0.62, -0.2, { edge: false })
+        ;[[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(function (s) { bx(c, 0.03, 0.45, 0.03, M.charcoal, s[0] * 0.19, 0, s[1] * 0.19, { edge: false }) })
+        rbx(c, 0.44, 0.04, 0.44, 0.02, M.charcoal, 0, 0.43, 0, { edge: false })
+        rbx(c, 0.42, 0.34, 0.035, 0.015, M.charcoal, 0, 0.5, -0.2, { edge: false })
         c.position.set(cx, 0, cz)
         c.rotation.y = ry
         furn.add(c)
@@ -441,7 +278,7 @@
     // ---------- lights ----------
     var hemi = new T.HemisphereLight(0xdfe9ff, 0xcdb89a, 0.62)
     scene.add(hemi)
-    var sun = new T.DirectionalLight(0xfff0d6, 1.7)
+    var sun = new T.DirectionalLight(0xfff6ea, 1.6)
     sun.position.set(3.9, 3.4, -4.5)
     sun.target.position.set(2.4, 0, 2.3)
     sun.castShadow = true
@@ -451,16 +288,9 @@
     sun.shadow.bias = -0.0006
     sun.shadow.normalBias = 0.02
     scene.add(sun, sun.target)
-    var fill = new T.DirectionalLight(0xffe6c8, 0.28)
+    var fill = new T.DirectionalLight(0xffffff, 0.3)
     fill.position.set(-2, 3, 6)
     scene.add(fill)
-    var lamp = new T.PointLight(0xffb866, 0.9, 4.2, 2)
-    lamp.position.set(0.45, 1.5, 3.2)
-    scene.add(lamp)
-    var tableLamp = new T.PointLight(0xffb866, 0.35, 2.6, 2)
-    tableLamp.position.set(1.05, 1.0, 0.45)
-    scene.add(tableLamp)
-
     // ---------- the plan overlay: grid, dimensions and labels, drawn on a plane over the floor ----------
     var OX = -0.6, OZ = -0.5, OW = 6.0, OH = 4.7, PPM = 200
     var overlayMat = new T.MeshBasicMaterial({ transparent: true, depthWrite: false, toneMapped: false })
@@ -560,8 +390,6 @@
         hemi.intensity = 0.62 * tt
         sun.intensity = 1.7 * tt
         fill.intensity = 0.28 * tt
-        lamp.intensity = 0.9 * tt
-        tableLamp.intensity = 0.35 * tt
         renderer.shadowMap.needsUpdate = true
       }
       var w = viz.clientWidth, h = viz.clientHeight
