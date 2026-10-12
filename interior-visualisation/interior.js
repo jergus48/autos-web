@@ -36,6 +36,7 @@
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
     var RW = 5.0, RD = 3.6, WH = 2.6          // room width (x), depth (z), wall height (y), metres
     var WIN = { x0: 2.9, x1: 4.5, y0: 0.9, y1: 2.1 }
+    var DOOR = { z0: 0.6, z1: 1.5 }             // doorway in the right wall (shown on the plan)
 
     // ---------- renderer ----------
     var canvas = document.createElement('canvas')
@@ -114,22 +115,22 @@
     var M = {
       wall: mat('#f1f0ec', { roughness: 0.95 }, 'wall'),
       base: mat('#f6f4ef', { roughness: 0.6 }, 'wall'),
-      slab: mat('#6f6a62', { roughness: 0.9 }, 'wall'),
+      slab: mat('#6f6a62', { roughness: 0.9 }, 'bg'),
       floor: mat('#ffffff', { map: floorTex, roughness: 0.55 }, 'floor'),
-      rug: mat('#d8d4cb', { roughness: 1 }),
-      sofa: mat('#8e9297', { roughness: 1 }),
-      sofaDk: mat('#82868b', { roughness: 1 }),
-      pillow: mat('#c4c7ca', { roughness: 1 }),
-      charcoal: mat('#3b3c3e', { roughness: 0.6 }),
-      oak: mat('#c9a573', { roughness: 0.55 }),
-      white: mat('#f3f2ee', { roughness: 0.55 }),
-      black: mat('#26282c', { roughness: 0.45, metalness: 0.2 }),
-      ceramic: mat('#efe9dd', { roughness: 0.35 })
+      rug: mat('#d8d4cb', { roughness: 1 }, 'rug'),
+      sofa: mat('#8e9297', { roughness: 1 }, 'sofa'),
+      sofaDk: mat('#82868b', { roughness: 1 }, 'sofa'),
+      pillow: mat('#c4c7ca', { roughness: 1 }, 'sofa'),
+      charcoal: mat('#3b3c3e', { roughness: 0.6 }, 'chair'),
+      oak: mat('#c9a573', { roughness: 0.55 }, 'wood'),
+      white: mat('#f3f2ee', { roughness: 0.55 }, 'white'),
+      black: mat('#26282c', { roughness: 0.45, metalness: 0.2 }, 'frame'),
+      ceramic: mat('#efe9dd', { roughness: 0.35 }, 'white')
     }
     var skyMat = new T.MeshBasicMaterial({ color: srgb('#e3eaee'), toneMapped: false })
 
     // ---------- geometry helpers ----------
-    var edgeMat = new T.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 })
+    var edgeMat = new T.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9, toneMapped: false })
     var edgeMeshes = []
     function addMesh(parent, geo, m, x, y, z, o) {
       o = o || {}
@@ -175,15 +176,16 @@
     var shell = new T.Group()
     world.add(shell)
     addMesh(shell, new T.PlaneGeometry(RW, RD), M.floor, RW / 2, 0, RD / 2, { cast: false, edge: false }).rotation.x = -Math.PI / 2
-    bx(shell, RW + 0.14, 0.1, RD + 0.14, M.slab, RW / 2, -0.13, RD / 2, { cast: false, recv: false })
-    var T0 = 0.12
+    bx(shell, RW + 0.4, 0.1, RD + 0.4, M.slab, RW / 2, -0.13, RD / 2, { cast: false, recv: false, edge: false })
+    var T0 = 0.15
     bx(shell, RW + T0, WIN.y0, T0, M.wall, (RW - T0) / 2, 0, -T0 / 2)                               // back wall, below the window
     bx(shell, RW + T0, WH - WIN.y1, T0, M.wall, (RW - T0) / 2, WIN.y1, -T0 / 2)                      // above
     bx(shell, WIN.x0 + T0, WIN.y1 - WIN.y0, T0, M.wall, (WIN.x0 - T0) / 2, WIN.y0, -T0 / 2)          // left of the window
     bx(shell, RW - WIN.x1, WIN.y1 - WIN.y0, T0, M.wall, (WIN.x1 + RW) / 2, WIN.y0, -T0 / 2)          // right of the window
     bx(shell, T0, WH, RD, M.wall, -T0 / 2, 0, RD / 2)                                                // left wall
-    bx(shell, RW + T0, 0.07, 0.06, M.wall, (RW - T0) / 2, 0, RD + 0.03, { edge: false })             // cut-away front and right edges
-    bx(shell, 0.06, 0.07, RD, M.wall, RW + 0.03, 0, RD / 2, { edge: false })
+    bx(shell, RW + T0, 0.07, T0, M.wall, (RW - T0) / 2, 0, RD + T0 / 2, { edge: false })            // cut-away front and right walls
+    bx(shell, T0, 0.07, DOOR.z0 + T0, M.wall, RW + T0 / 2, 0, (DOOR.z0 - T0) / 2, { edge: false })   // right wall, either side of the doorway
+    bx(shell, T0, 0.07, RD + T0 - DOOR.z1, M.wall, RW + T0 / 2, 0, (DOOR.z1 + RD + T0) / 2, { edge: false })
     bx(shell, WIN.x0 - 0.05, 0.1, 0.018, M.base, (WIN.x0 - 0.05) / 2, 0, 0.009, { edge: false })      // skirting
     bx(shell, RW - WIN.x1 - 0.05, 0.1, 0.018, M.base, (WIN.x1 + RW + 0.05) / 2, 0, 0.009, { edge: false })
     bx(shell, WIN.x1 - WIN.x0, 0.1, 0.018, M.base, (WIN.x0 + WIN.x1) / 2, 0, 0.009, { edge: false })
@@ -292,46 +294,73 @@
     fill.position.set(-2, 3, 6)
     scene.add(fill)
     // ---------- the plan overlay: grid, dimensions and labels, drawn on a plane over the floor ----------
-    var OX = -0.6, OZ = -0.5, OW = 6.0, OH = 4.7, PPM = 200
+    var OX = -1.1, OZ = -0.9, OW = 6.6, OH = 5.1, PPM = 300
     var overlayMat = new T.MeshBasicMaterial({ transparent: true, depthWrite: false, toneMapped: false })
     var overlay = new T.Mesh(new T.PlaneGeometry(OW, OH), overlayMat)
     overlay.rotation.x = -Math.PI / 2
     overlay.position.set(OX + OW / 2, 0.045, OZ + OH / 2)
     overlay.renderOrder = 5
     scene.add(overlay)
-    var LABELS = [['SOFA', 0.62, 1.9, -1], ['COFFEE TABLE', 1.95, 2.3], ['ARMCHAIR', 2.75, 3.12], ['SIDEBOARD', 1.6, 0.22], ['DINING TABLE', 4.15, 2.6], ['WINDOW', 3.7, 0.0, 1]]
-    function drawOverlay(acc) {
+    var LABELS = [['SOFA', 0.62, 1.9, -1], ['COFFEE TABLE', 1.95, 2.3], ['ARMCHAIR', 2.75, 3.12], ['SIDEBOARD', 1.6, 0.22], ['DINING TABLE', 4.15, 2.6]]
+    var MONO = '"IBM Plex Mono", ui-monospace, Consolas, "Courier New", monospace'
+    function drawOverlay(P) {
       var c = overlayMat.map ? overlayMat.map.image : document.createElement('canvas')
       c.width = OW * PPM; c.height = OH * PPM
       var g = c.getContext('2d')
       g.clearRect(0, 0, c.width, c.height)
-      function X(x) { return (x - OX) * PPM }
-      function Z(z) { return (z - OZ) * PPM }
-      g.lineWidth = 1
-      g.strokeStyle = acc
-      for (var x = 0; x <= RW + 0.001; x += 0.5) { g.globalAlpha = x % 1 ? 0.12 : 0.28; g.beginPath(); g.moveTo(X(x), Z(0)); g.lineTo(X(x), Z(RD)); g.stroke() }
-      for (var z = 0; z <= RD + 0.001; z += 0.5) { g.globalAlpha = z % 1 ? 0.12 : 0.28; g.beginPath(); g.moveTo(X(0), Z(z)); g.lineTo(X(RW), Z(z)); g.stroke() }
-      g.globalAlpha = 1
-      g.lineWidth = 2
-      // dimension lines
-      var by = Z(RD + 0.3), lx = X(-0.34)
-      g.beginPath(); g.moveTo(X(0), by); g.lineTo(X(RW), by); g.moveTo(X(0), by - 8); g.lineTo(X(0), by + 8); g.moveTo(X(RW), by - 8); g.lineTo(X(RW), by + 8)
-      g.moveTo(lx, Z(0)); g.lineTo(lx, Z(RD)); g.moveTo(lx - 8, Z(0)); g.lineTo(lx + 8, Z(0)); g.moveTo(lx - 8, Z(RD)); g.lineTo(lx + 8, Z(RD)); g.stroke()
-      g.fillStyle = acc
-      g.font = '500 24px "Instrument Sans", system-ui, sans-serif'
-      g.textAlign = 'center'; g.textBaseline = 'bottom'
-      g.fillText('5.00 m', X(RW / 2), by - 8)
-      g.save(); g.translate(lx - 10, Z(RD / 2)); g.rotate(-Math.PI / 2); g.fillText('3.60 m', 0, 0); g.restore()
-      g.font = '600 17px "Instrument Sans", system-ui, sans-serif'
-      g.textBaseline = 'middle'
-      g.globalAlpha = 0.95
-      LABELS.forEach(function (l) {
-        g.save(); g.translate(X(l[1]), Z(l[2]))
-        if (l[3] === -1) g.rotate(-Math.PI / 2)
-        if (l[3] === 1) g.translate(0, -26)
-        g.fillText(l[0], 0, 0); g.restore()
-      })
-      g.globalAlpha = 1
+      g.scale(PPM / 200, PPM / 200)               // drawn at 200 px per metre, rendered sharper
+      function X(x) { return (x - OX) * 200 }
+      function Z(z) { return (z - OZ) * 200 }
+      function mm(v) { var n = Math.round(v * 1000).toString(); return n.length > 3 ? n.slice(0, -3) + ' ' + n.slice(-3) : n }
+      function text(str, x, y, size, color, rot, weight) {
+        g.save(); g.translate(x, y); if (rot) g.rotate(rot)
+        g.font = (weight || 500) + ' ' + size + 'px ' + MONO
+        g.textAlign = 'center'; g.textBaseline = 'middle'
+        g.lineWidth = 4; g.lineJoin = 'round'; g.strokeStyle = P.halo; g.strokeText(str, 0, 0)
+        g.fillStyle = color; g.fillText(str, 0, 0); g.restore()
+      }
+      // dimension chain on a horizontal (h) or vertical line, architect-style slash ticks;
+      // `from` is where the extension lines start (the building edge)
+      function dim(h, at, pts, from) {
+        var p = h ? Z(at) : X(at), q0 = h ? X(pts[0]) : Z(pts[0]), q1 = h ? X(pts[pts.length - 1]) : Z(pts[pts.length - 1])
+        g.strokeStyle = P.dim; g.lineWidth = 2
+        g.beginPath()
+        if (h) { g.moveTo(q0 - 14, p); g.lineTo(q1 + 14, p) } else { g.moveTo(p, q0 - 14); g.lineTo(p, q1 + 14) }
+        pts.forEach(function (v) {
+          var q = h ? X(v) : Z(v)
+          if (h) { g.moveTo(q - 7, p + 7); g.lineTo(q + 7, p - 7) } else { g.moveTo(p - 7, q + 7); g.lineTo(p + 7, q - 7) }
+        })
+        g.stroke()
+        g.lineWidth = 1; g.globalAlpha = 0.55; g.beginPath()
+        pts.forEach(function (v) {
+          var q = h ? X(v) : Z(v), f = h ? Z(from) : X(from), end = p + (p < f ? -12 : 12)
+          if (h) { g.moveTo(q, f); g.lineTo(q, end) } else { g.moveTo(f, q); g.lineTo(end, q) }
+        })
+        g.stroke(); g.globalAlpha = 1
+        for (var i = 0; i < pts.length - 1; i++) {
+          var mid = (pts[i] + pts[i + 1]) / 2, len = pts[i + 1] - pts[i]
+          if (h) text(mm(len), X(mid), p - 15, 20, P.dim)
+          else text(mm(len), p - 17, Z(mid), 20, P.dim, -Math.PI / 2)
+        }
+      }
+      dim(true, -0.62, [0, WIN.x0, WIN.x1, RW], -0.15)
+      dim(true, RD + 0.55, [0, RW], RD)
+      dim(false, -0.52, [0, 0.8, 3.0, RD], -0.15)
+      dim(false, -0.88, [0, RD], -0.15)
+      // window glazing lines in the wall thickness
+      g.strokeStyle = P.line; g.lineWidth = 2
+      g.beginPath()
+      g.moveTo(X(WIN.x0), Z(-0.15)); g.lineTo(X(WIN.x0), Z(0)); g.moveTo(X(WIN.x1), Z(-0.15)); g.lineTo(X(WIN.x1), Z(0))
+      g.moveTo(X(WIN.x0), Z(-0.05)); g.lineTo(X(WIN.x1), Z(-0.05)); g.moveTo(X(WIN.x0), Z(-0.1)); g.lineTo(X(WIN.x1), Z(-0.1)); g.stroke()
+      // door: open leaf and swing arc
+      var hx = X(RW), hz = Z(DOOR.z1), r = (DOOR.z1 - DOOR.z0) * 200
+      g.lineWidth = 2; g.beginPath(); g.moveTo(hx, hz); g.lineTo(hx - r, hz); g.stroke()
+      g.setLineDash([9, 7]); g.lineWidth = 1.5; g.beginPath(); g.arc(hx, hz, r, -Math.PI / 2, Math.PI, true); g.stroke(); g.setLineDash([])
+      text('LIVING ROOM', X(2.35), Z(0.86), 30, P.mute, 0, 600)
+      text('18.0 m\u00b2', X(2.35), Z(1.08), 20, P.mute)
+      text('WINDOW', X(wx), Z(-0.28), 16, P.mute)
+      text('DOOR', X(RW + 0.42), Z((DOOR.z0 + DOOR.z1) / 2), 16, P.mute, Math.PI / 2)
+      LABELS.forEach(function (l) { text(l[0], X(l[1]), Z(l[2]), 16, P.lab, l[3] === -1 ? -Math.PI / 2 : 0, 500) })
       if (!overlayMat.map) {
         overlayMat.map = new T.CanvasTexture(c)
         overlayMat.map.encoding = T.sRGBEncoding
@@ -341,27 +370,30 @@
     }
 
     // ---------- plan colours follow the page theme ----------
-    var plan = { wall: new T.Color(), fill: new T.Color(), floor: new T.Color() }
+    var PAL = {
+      dark: { wall: '#e5e9e6', frame: '#e5e9e6', floor: '#2b2722', rug: '#352f29', sofa: '#a9adb2', wood: '#c49b6c', chair: '#16191b', white: '#f4f3ef', line: '#e3e9e6', dim: '#7db4cf', lab: '#f4f6f3', mute: '#98a5a6', halo: 'rgba(12,12,12,.7)' },
+      light: { wall: '#1f2a2e', frame: '#1f2a2e', floor: '#e6ded1', rug: '#ddd4c5', sofa: '#b4b8bc', wood: '#c49b6c', chair: '#3a3f43', white: '#f8f9f6', line: '#1f2a2e', dim: '#2c6a8a', lab: '#1f2a2e', mute: '#5b686a', halo: 'rgba(246,242,234,.85)' }
+    }
+    var plan = {}
     function readTheme() {
-      var cs = getComputedStyle(document.documentElement)
-      var acc = cs.getPropertyValue('--accent').trim() || '#b0e562'
-      var bg = cs.getPropertyValue('--bg').trim() || '#0a0a0c'
-      var A, B
-      try { A = new T.Color(acc); B = new T.Color(bg) } catch (e) { A = new T.Color('#b0e562'); B = new T.Color('#0a0a0c') }
-      plan.wall.copy(A).convertSRGBToLinear()
-      plan.fill.copy(B).lerp(A, 0.3).convertSRGBToLinear()
-      plan.floor.copy(B).lerp(A, 0.05).convertSRGBToLinear()
-      edgeMat.color.copy(A).convertSRGBToLinear()
-      drawOverlay(acc)
+      var light = document.documentElement.getAttribute('data-theme') === 'light'
+      var P = Object.assign({}, light ? PAL.light : PAL.dark)
+      P.bg = getComputedStyle(document.documentElement).getPropertyValue('--surface').trim() || (light ? '#f8f9fa' : '#0b0d10')
+      ;['wall', 'frame', 'floor', 'rug', 'sofa', 'wood', 'chair', 'white', 'bg'].forEach(function (k) {
+        plan[k] = new T.Color(P[k]).convertSRGBToLinear()
+      })
+      // furniture outlines contrast with the furniture fill; walls get no visible outline
+      edgeMat.color.set(light ? '#1f2a2e' : '#e3e9e6').convertSRGBToLinear()
+      drawOverlay(P)
       dirty = true
       paintedT = -1
     }
 
     // ---------- state, camera rig ----------
-    var state = 'plan', t = 0, touched = false, dirty = true, paintedT = -1
+    var wasFlat = false, state = 'plan', t = 0, touched = false, dirty = true, paintedT = -1
     var azUser = 0.5, polUser = 1.0, time = 0
     var tmp = new T.Color()
-    var cx0 = 2.4, cz0 = 1.85
+    var cx0 = 2.4, cz0 = 1.75
     function fitDist(fov, hw, hh, aspect) {
       var tn = Math.tan(fov * Math.PI / 360)
       return Math.max(hh / tn, hw / (tn * aspect))
@@ -371,7 +403,7 @@
       reg.forEach(function (r) {
         var m = r.m
         m.color.copy(r.base).multiplyScalar(tt)
-        m.emissive.copy(plan[r.kind] || plan.fill).multiplyScalar(1 - tt)
+        m.emissive.copy(plan[r.kind] || plan.sofa).multiplyScalar(1 - tt)
         tmp.copy(r.em).multiplyScalar(tt)
         m.emissive.add(tmp)
       })
@@ -382,6 +414,8 @@
       if (tt !== paintedT) {
         paintedT = tt
         paint(tt)
+        var flat = tt < 0.02          // flat plan colours skip tone mapping so they match the drawing
+        if (flat !== wasFlat) { wasFlat = flat; reg.forEach(function (r) { r.m.toneMapped = !flat; r.m.needsUpdate = true }) }
         world.scale.y = lerp(0.012, 1, tt)
         overlayMat.opacity = Math.max(0, 1 - tt * 1.6)
         overlay.visible = overlayMat.opacity > 0.01
@@ -395,13 +429,15 @@
       var w = viz.clientWidth, h = viz.clientHeight
       var aspect = w / h
       var fov = lerp(12, 30, tt)
-      var dPlan = fitDist(12, 3.12, 2.42, aspect)
+      var dPlan = fitDist(12, 3.55, 2.72, aspect)
       var d3 = fitDist(30, 3.55, 2.45, aspect) * 1.2
       var dist = lerp(dPlan, d3, tt)
       var az = azUser * tt + (touched || reduce ? 0 : Math.sin(time * 0.35) * 0.07 * tt)
       var pol = lerp(0.0015, polUser, tt)
       var ty = 0.75 * tt
       camera.fov = fov
+      camera.near = dist * 0.3                // keeps depth precision when the plan is viewed from far away
+      camera.far = dist * 3
       camera.aspect = aspect
       camera.updateProjectionMatrix()
       camera.position.set(
