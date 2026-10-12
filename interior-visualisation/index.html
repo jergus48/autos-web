@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2D to 3D interior visualisation | Swiftrix</title>
+  <meta name="description" content="Send a floor plan, a sketch or photos and get realistic 3D visuals of the finished interior. Swiftrix turns 2D plans into 3D interior visualisations for designers, developers and home owners.">
+  <link rel="canonical" href="https://www.swiftrix.eu/interior-visualisation">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.swiftrix.eu/interior-visualisation">
+  <meta property="og:title" content="2D to 3D interior visualisation | Swiftrix">
+  <meta property="og:description" content="Send a floor plan, a sketch or photos and get realistic 3D visuals of the finished interior. Swiftrix turns 2D plans into 3D interior visualisations for designers, developers and home owners.">
+  <link rel="icon" href="/assets/images/swiftrixLogo.png">
+  <link rel="alternate" hreflang="en" href="https://www.swiftrix.eu/interior-visualisation">
+  <link rel="alternate" hreflang="lt" href="https://www.swiftrix.eu/lt/interjero-vizualizacija">
+  <link rel="alternate" hreflang="de" href="https://www.swiftrix.eu/de/innenraum-visualisierung">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&display=swap">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/interior-visualisation/interior.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Service", "name": "2D to 3D interior visualisation", "description": "Send a floor plan, a sketch or photos and get realistic 3D visuals of the finished interior. Swiftrix turns 2D plans into 3D interior visualisations for designers, developers and home owners.", "provider": {"@type": "Organization", "name": "Swiftrix", "url": "https://www.swiftrix.eu"}, "url": "https://www.swiftrix.eu/interior-visualisation"}</script>
+  <script>try { if (/[?&]theme=light/.test(location.search) || (!/[?&]theme=dark/.test(location.search) && localStorage.getItem('swiftrix-theme') === 'light')) document.documentElement.setAttribute('data-theme', 'light') } catch (e) {}</script>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <nav class="vex-nav">
+    <a class="vex-logo" data-site="" href="/" aria-label="Swiftrix">
+      <img class="logo-dark" src="/assets/images/swiftrixLogo.png" alt="Swiftrix">
+      <img class="logo-light" src="/light/assets/images/swiftrixLogo.png" alt="Swiftrix">
+    </a>
+    <div class="vex-links" id="vexLinks">
+      <a href="#how">How it works</a><a href="#get">What you get</a><a href="#who">Who it is for</a><a href="#good">Good to know</a>
+      <span class="langs"><a data-page="/interior-visualisation" href="/interior-visualisation" hreflang="en" aria-current="true">EN</a><a data-page="/lt/interjero-vizualizacija" href="/lt/interjero-vizualizacija" hreflang="lt">LT</a><a data-page="/de/innenraum-visualisierung" href="/de/innenraum-visualisierung" hreflang="de">DE</a></span>
+      <a class="vex-mlink" href="#contact">Get a quote</a>
+    </div>
+    <a class="vex-cta" href="#contact">Get a quote</a>
+    <button class="vex-burger" id="vexBurger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="wrap">
+    <header class="hero">
+      <p class="eyebrow"><span>2D TO 3D INTERIOR VISUALISATION</span></p>
+      <h1>Turn a flat plan into a <span class="hl">realistic 3D interior</span></h1>
+      <p>Send us a floor plan, a sketch or a few photos. We build the space in 3D and return realistic visuals, so you and your clients can see the result before anything is built or bought.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#contact">Get a quote</a>
+        <a class="btn btn-ghost" href="#how">See how it works</a>
+      </div>
+    </header>
+
+    <section class="stage" aria-label="Sample room shown first as a 2D floor plan, then as a 3D interior">
+      <div class="viz" id="viz" data-state="plan" role="img" aria-label="Sample room shown first as a 2D floor plan, then as a 3D interior"><div class="viz-scene"></div></div>
+      <div class="viz-bar">
+        <div class="seg" role="group">
+          <button type="button" data-mode="plan" aria-pressed="true">2D plan</button>
+          <button type="button" data-mode="3d" aria-pressed="false">3D view</button>
+        </div>
+        <span class="viz-hint" id="vizHint" aria-hidden="true">Drag to rotate</span>
+      </div>
+      <p class="viz-note">Illustration of a sample room, not a client project.</p>
+    </section>
+
+    <section class="block" id="how">
+      <span class="sec-badge"><i></i>The process</span>
+      <h2>From plan to picture in four steps</h2>
+      <p class="lead">You send the plan, we do the modelling.</p>
+      <div class="cards psteps"><div class="card pstep"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></div><span class="no">1</span><h3>Send your plan</h3><p>A floor plan, a sketch, photos or measurements of the space, plus a few pictures of the style you like.</p></div><div class="card pstep"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12L4 7.5M12 12v9"/></svg></div><span class="no">2</span><h3>We build it in 3D</h3><p>We model the rooms, furniture, materials and lighting to match your plan.</p></div><div class="card pstep"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div><span class="no">3</span><h3>You review</h3><p>You see a first version and tell us what to change: layout, colours, materials, furniture.</p></div><div class="card pstep"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg></div><span class="no">4</span><h3>You get the final visuals</h3><p>High-resolution images of each room, ready for clients, listings or presentations.</p></div></div>
+    </section>
+
+    <section class="block" id="get">
+      <span class="sec-badge"><i></i>What you get</span>
+      <h2>Visuals that match the real space</h2>
+      <div class="cards"><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg></div><h3>Realistic renders</h3><p>High-resolution images of every room from the angles you choose.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></svg></div><h3>True to your plan</h3><p>Proportions follow your measurements, so what you see matches the real space.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></div><h3>Style options</h3><p>Compare materials, colours and furniture layouts before you commit.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-15.5 6.2M3 12a9 9 0 0 1 15.5-6.2"/><path d="M21 4v5h-5M3 20v-5h5"/></svg></div><h3>Revisions included</h3><p>We refine the visuals with you until they fit the brief. The number of rounds is set in the quote.</p></div></div>
+    </section>
+
+    <section class="block" id="who">
+      <span class="sec-badge"><i></i>Who it is for</span>
+      <h2>Show the result before it exists</h2>
+      <div class="minis"><div class="mini"><h4>Interior designers and architects</h4><p>Present concepts to clients in a way a drawing cannot.</p></div><div class="mini"><h4>Developers and estate agents</h4><p>Show apartments and houses before they are finished.</p></div><div class="mini"><h4>Furniture and kitchen studios</h4><p>Show customers their own room furnished with your products.</p></div><div class="mini"><h4>Home owners</h4><p>See a renovation or a new layout before you start.</p></div></div>
+    </section>
+
+    <section class="block" id="good">
+      <span class="sec-badge"><i></i>Good to know</span>
+      <h2>How we work</h2>
+      <div class="rules"><ul class="ticks"><li>We quote per project after seeing your plan, based on the number of rooms and the level of detail you need.</li><li>Turnaround depends on the same two things, and we confirm it in the quote.</li><li>Send plans in whatever form you have: PDF, drawing, sketch, photo or measurements.</li><li>Your plans and photos are used only for your project and are treated as confidential.</li></ul><p class="rules-note">Not sure what you need? Send what you have and we will tell you what is possible.</p></div>
+    </section>
+
+    <section class="cta" id="contact">
+      <span class="sec-badge"><i></i>Get started</span>
+      <h2>Send us your plan</h2>
+      <p>Tell us about the space and attach a plan, a sketch or photos. We reply with a quote.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="mailto:info@swiftrix.eu?subject=3D%20interior%20visualisation&body=Hello%2C%0A%0AI%20would%20like%20a%20quote%20for%20a%203D%20interior%20visualisation.%0A%0ASpace%20%28apartment%2C%20house%2C%20office...%29%3A%0ANumber%20of%20rooms%3A%0APlan%2C%20sketch%20or%20photos%3A%20attached%0AStyle%20or%20references%3A%0ADeadline%3A%0A%0A">Request a quote</a>
+        <a class="btn btn-ghost" href="https://cal.com/swiftrix/30-minute-call" target="_blank" rel="noopener">Book a 30-minute call</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Swiftrix · <a data-site="" href="/">swiftrix.eu</a></footer>
+  <script src="/js/pages.js" defer></script>
+  <script src="/interior-visualisation/interior.js" defer></script>
+</body>
+</html>
