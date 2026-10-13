@@ -9,7 +9,38 @@ html { scroll-padding-top: 110px; }
 .vex-links .langs a { font-size: 14px; padding: 4px 8px; border-radius: 8px; color: var(--muted); }
 .vex-links .langs a::after { display: none; }
 .vex-links .langs a[aria-current] { color: var(--accent-ink); background: var(--grad); }
-@media (max-width: 860px) {
+
+/* This page's menu has longer labels plus the EN/LT/DE switch, so it needs more room than the
+   890px pill that css/pages.css sizes for the homepage menu. Wide pill on big screens (it stops
+   short of the theme switch in the top-right corner), burger menu below 1160px. */
+@media (min-width: 1161px) {
+  .vex-nav { max-width: min(1060px, calc(100vw - 220px)); }
+}
+@media (max-width: 1160px) {
+  .vex-nav { gap: 12px; }
+  .vex-links {
+    display: none; position: absolute; top: calc(100% + 12px); right: 8px; z-index: 80;
+    flex-direction: column; align-items: stretch; gap: 2px; min-width: 230px;
+    background: var(--menu-bg); border-radius: 18px; padding: 10px;
+    box-shadow: 0 18px 44px -12px rgba(10, 10, 12, .18);
+  }
+  .vex-links.open { display: flex; }
+  .vex-links a { display: block; width: 100%; padding: 13px 16px; border-radius: 12px; font-size: 16px; }
+  .vex-links a::after { display: none; }
+  .vex-links a:hover { background: var(--menu-hover); }
+  .vex-mlink { display: block; margin-top: 6px; text-align: center; color: var(--accent-ink) !important; background: var(--grad); font-weight: 600; }
+  .vex-mlink:hover { filter: brightness(1.05); background: var(--grad) !important; }
+  .vex-cta { display: none; }
+  .vex-burger {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    width: 48px; height: 44px; flex: 0 0 auto; cursor: pointer;
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 50%;
+  }
+  .vex-burger span { display: block; width: 18px; height: 2px; background: var(--text); border-radius: 2px; transition: .25s; }
+  .vex-burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .vex-burger.open span:nth-child(2) { opacity: 0; }
+  .vex-burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  .dts-switch { top: auto; bottom: 20px; right: 18px; }   /* same place as on phones, so it never covers the burger */
   .langs { border-left: 0; margin: 6px 0 0; padding: 8px 8px 2px; border-top: 1px solid var(--border); border-radius: 0; gap: 8px; }
   .vex-links .langs a { flex: 1; width: auto; text-align: center; padding: 10px 8px; }
 }
