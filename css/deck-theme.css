@@ -463,7 +463,6 @@ a.swiftrix-rDUM3:hover {
 html { overflow-x: clip; }
 @media (max-width: 600px) {
   .vex-stats { gap: 10px; }
-  .dts-switch { transform: scale(.9); transform-origin: bottom right; }
 }
 
 /* ---- honor reduced motion ---- */

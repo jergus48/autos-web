@@ -1,9 +1,8 @@
 /* Shared look of the standalone pages (/demo, /assistant and their /lt
    versions). The Framer export's inline_styles.css is not loaded on them, so
    the parts they share with the homepage are copied here from it: the nav
-   (.vex-* rules in lt/index.html), the theme switch (js/theme-switch.js), the
-   hero eyebrow and highlight, card and badge styles. Dark mirrors "/", light
-   mirrors the "/light" build (white, lavender hero, purple accent).
+   (.vex-* rules in lt/index.html), the hero eyebrow and highlight, card and badge
+   styles. The site has one theme, dark, which mirrors "/".
    Page-specific styles live next to each page's script. */
 
 :root {
@@ -39,35 +38,6 @@
   --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
   color-scheme: dark;
 }
-:root[data-theme="light"] {
-  --bg: #ffffff;
-  --surface: #f8f9fa;
-  --surface-2: #f0eef6;
-  --border: #e8e6ef;
-  --text: #191919;
-  --muted: #4d4d4d;
-  --muted-2: #666666;
-  --faint: #8d889b;
-  --accent: #7c3aed;
-  --accent-2: #a855f7;
-  --grad: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
-  --btn-shadow: rgba(139, 61, 242, .7) 0 10px 22px -8px;
-  --accent-ink: #ffffff;
-  --accent-soft: rgba(124, 58, 237, .08);
-  --accent-ring: rgba(124, 58, 237, .3);
-  --warn: #b45309;
-  --warn-soft: rgba(217, 119, 6, .1);
-  --sheet-head: #f3f2f8;
-  --sheet-grid: #e8e6ef;
-  --shadow: 0 18px 50px -34px rgba(80, 60, 140, .4);
-  --nav-bg: #ffffff;
-  --nav-border: 0;
-  --nav-shadow: rgba(150, 140, 180, .2) 0 8px 28px 0;
-  --menu-bg: #ffffff;
-  --menu-hover: #f3f0fa;
-  --badge-shadow: rgba(182, 182, 182, .2) 0 2px 3px 0;
-  color-scheme: light;
-}
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -88,8 +58,7 @@ button, textarea, input, select { font: inherit; color: inherit; }
 h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 500; }
 .wrap { width: min(1240px, 100% - 32px); margin-inline: auto; position: relative; }
 
-/* Hero backdrop: dark = soft lime glow over a dot grid (like the homepage's
-   dot field), light = the /light build's lavender wash. */
+/* Hero backdrop: soft lime glow over a dot grid (like the homepage's dot field). */
 .backdrop { position: absolute; inset: 0 0 auto 0; height: 760px; pointer-events: none; z-index: 0; }
 .backdrop::before {
   content: ""; position: absolute; inset: 0;
@@ -98,12 +67,6 @@ h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 500; }
     radial-gradient(rgba(244, 242, 239, .10) 1px, transparent 1.4px) 0 0 / 18px 18px;
   -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, .6) 45%, transparent 100%);
   mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, .6) 45%, transparent 100%);
-}
-:root[data-theme="light"] .backdrop::before {
-  background:
-    radial-gradient(70% 60% at 50% 0%, rgba(168, 85, 247, .22), transparent 70%),
-    linear-gradient(180deg, #ece2ff 0%, #f4edff 45%, rgba(255, 255, 255, 0) 100%);
-  -webkit-mask-image: none; mask-image: none;
 }
 main, footer { position: relative; z-index: 1; }
 
@@ -120,8 +83,6 @@ main, footer { position: relative; z-index: 1; }
 .vex-logo { display: flex; align-items: center; flex: 0 0 auto; }
 .vex-logo img { height: 49px; width: auto; display: block; object-fit: contain; }
 .vex-logo .logo-dark { filter: invert(1) brightness(1.9); }
-.vex-logo .logo-light, :root[data-theme="light"] .vex-logo .logo-dark { display: none; }
-:root[data-theme="light"] .vex-logo .logo-light { display: block; }
 .vex-links { display: flex; align-items: center; gap: 22px; }
 .vex-nav { transition: padding .3s ease, box-shadow .3s ease, background .3s ease; }
 /* css/deck-theme.css (dark) and light/css/enhance.css: slimmer once scrolled */
@@ -130,7 +91,6 @@ main, footer { position: relative; z-index: 1; }
   background: rgba(14, 14, 16, .82); border-color: rgba(176, 229, 98, .2);
   box-shadow: rgba(0, 0, 0, .55) 0 14px 40px 0;
 }
-:root[data-theme="light"] .vex-nav.scrolled { background: rgba(255, 255, 255, .85); box-shadow: rgba(80, 60, 140, .16) 0 12px 36px 0; }
 .vex-links a {
   position: relative; text-decoration: none; color: var(--text); font-family: var(--font-ui);
   font-size: 17px; font-weight: 500; white-space: nowrap; transition: color .2s;
@@ -182,25 +142,6 @@ main, footer { position: relative; z-index: 1; }
   .vex-burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 }
 
-/* ---- theme switch: js/theme-switch.js's look; toggles in place here ---- */
-.dts-switch { position: fixed; top: 22px; right: 24px; z-index: 100000; border: 0; padding: 0; cursor: pointer; background: transparent; -webkit-tap-highlight-color: transparent; }
-.dts-track {
-  position: relative; display: flex; align-items: center; justify-content: space-between;
-  width: 70px; height: 34px; border-radius: 100px; padding: 0 8px; box-sizing: border-box;
-  transition: background .3s ease, border-color .3s ease, box-shadow .3s ease;
-}
-.dts-ic { width: 16px; height: 16px; display: grid; place-items: center; position: relative; z-index: 2; transition: color .3s ease; }
-.dts-ic svg { width: 16px; height: 16px; display: block; }
-.dts-knob { position: absolute; top: 4px; left: 4px; width: 26px; height: 26px; border-radius: 50%; z-index: 1; transition: transform .32s cubic-bezier(.34, 1.56, .64, 1), background .3s ease; }
-.dts-switch.is-dark .dts-track { background: rgba(18, 18, 21, .85); border: 1px solid rgba(176, 229, 98, .35); box-shadow: 0 6px 20px -8px rgba(0, 0, 0, .6), 0 0 18px -8px rgba(176, 229, 98, .4); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
-.dts-switch.is-dark .dts-knob { transform: translateX(36px); background: linear-gradient(135deg, #c5f07a, #a0d64a); }
-.dts-switch.is-dark .dts-sun { color: #6b6b6b; } .dts-switch.is-dark .dts-moon { color: #0a0a0c; }
-.dts-switch.is-light .dts-track { background: rgba(255, 255, 255, .9); border: 1px solid rgba(124, 58, 237, .28); box-shadow: 0 8px 24px -10px rgba(80, 60, 140, .35); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
-.dts-switch.is-light .dts-knob { transform: translateX(0); background: linear-gradient(135deg, #a855f7, #7c3aed); }
-.dts-switch.is-light .dts-sun { color: #fff; } .dts-switch.is-light .dts-moon { color: #b8b3c4; }
-.dts-switch:hover .dts-track { filter: brightness(1.05); }
-.dts-switch:active .dts-knob { width: 30px; }
-@media (max-width: 860px) { .dts-switch { top: auto; bottom: 20px; right: 18px; } }
 
 /* ---- buttons ---- */
 .btn {
@@ -228,14 +169,12 @@ main, footer { position: relative; z-index: 1; }
   .eyebrow { font-size: 11.5px; letter-spacing: 1.2px; }
   .eyebrow::before, .eyebrow::after { display: none; }
 }
-:root[data-theme="light"] .eyebrow { font-family: var(--font-body); font-style: italic; letter-spacing: .3px; font-size: 13.5px; color: var(--text); }
-:root[data-theme="light"] .eyebrow span { background: #fff; border-color: rgba(124, 58, 237, .16); box-shadow: var(--badge-shadow); }
 .hero h1 {
   font-size: clamp(34px, 4.4vw, 52px); line-height: 1.2; font-weight: 500;
   margin: 22px auto 18px; max-width: 820px; text-wrap: balance;
 }
 .hl { background-image: var(--grad); color: var(--accent-ink); border-radius: .08em; padding: 0 .12em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
-:root:not([data-theme="light"]) .hl { background-image: linear-gradient(0deg, #b0e562, #b0e562); }
+.hl { background-image: linear-gradient(0deg, #b0e562, #b0e562); }
 .hero p { color: var(--muted); font-size: 18px; line-height: 1.5; max-width: 640px; margin: 0 auto; text-wrap: pretty; }
 
 /* ---- panels (demo / assistant UI) ---- */
@@ -299,13 +238,12 @@ section.block { padding: 96px 0 0; text-align: center; }
   background: var(--bg); border-radius: 100px; box-shadow: var(--badge-shadow);
   font-family: var(--font-mono); font-style: italic; font-weight: 500; font-size: 15px; color: var(--muted);
 }
-:root:not([data-theme="light"]) .sec-badge { border: 1px solid var(--border); }
+.sec-badge { border: 1px solid var(--border); }
 .sec-badge i { width: 24px; height: 24px; border-radius: 50%; background: var(--grad); box-shadow: 0 0 14px -2px var(--accent-ring); }
 .block h2 { font-size: clamp(30px, 4vw, 48px); line-height: 1.2; margin: 0 0 12px; text-wrap: balance; }
 .block .lead { color: var(--muted); font-size: 18px; max-width: 640px; margin: 0 auto 40px; text-wrap: pretty; }
 .cards { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); text-align: left; }
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 30px; transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease; }
-:root[data-theme="light"] .card { border-color: transparent; }
 .card:hover { border-color: var(--accent-ring); transform: translateY(-3px); }
 .card .ico { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--grad); color: var(--accent-ink); margin-bottom: 16px; box-shadow: 0 0 18px -4px var(--accent-ring); }
 .card .ico svg { width: 20px; height: 20px; }
