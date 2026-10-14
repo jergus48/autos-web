@@ -3,8 +3,8 @@
 // so with JS disabled everything stays fully visible. Respects reduced-motion.
 (function () {
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var LIGHT = location.pathname.indexOf("/light") === 0;   // the original light build
-  var IS_LT = location.pathname.indexOf("/lt") !== -1;     // works for /lt/ and /light/lt/
+  var LIGHT = false;   // the light build was removed
+  var IS_LT = location.pathname.indexOf("/lt") !== -1;     // works for /lt/
   var IS_DE = /^(\/light)?\/de(\/|$)/.test(location.pathname);
 
   // ---- scroll progress bar ----

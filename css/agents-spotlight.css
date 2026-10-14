@@ -1,22 +1,3 @@
-/* DI agents spotlight on the homepage (all four builds): a section right
-   under the "Most teams are bleeding time" card that points to the demo and the AI assistant. It is built
-   like the homepage's own sections (Why us, Process...): the same eyebrow
-   badge with its side lines, a centred heading with one marked word, and
-   cards in the site's card style. The data-swiftrix-name attributes hook it
-   into js/deck-motion.js, so the badge, heading and cards get the same
-   reveal and hover motion as the rest of the page. Dark styles by default;
-   the /light builds mark the section .swx-spot--light. Fonts (Clash Grotesk,
-   Instrument Sans, Roboto) are already loaded by the homepage. */
-
-.swx-spot {
-  --swx-accent: #b0e562;
-  --swx-hl-ink: #0a0a0c;
-  width: min(996px, 100%); box-sizing: border-box;
-  display: flex; flex-direction: column; align-items: center; text-align: center;
-  padding: 24px 0 0;
-  font-family: "Instrument Sans", system-ui, sans-serif;
-}
-
 /* eyebrow badge: same pill + side-line art as the site's "Section Badge" */
 .swx-tag-wrap { width: 100%; display: flex; justify-content: center; overflow: hidden; padding: 14px 0; }
 .swx-tag {
@@ -126,26 +107,3 @@
   .swx-spot__actions { width: 100%; }
   .swx-btn { flex: 1 1 100%; }
 }
-
-/* light build: the light theme's purple tokens */
-.swx-spot--light { --swx-accent: #923bf6; --swx-hl-ink: #fff; }
-.swx-spot--light .swx-tag { background: #fff; border-color: #edeff3; box-shadow: rgba(182, 182, 182, .2) 0 2px 3px 0; }
-.swx-spot--light .swx-tag__txt {
-  font-family: "Instrument Sans", sans-serif; font-weight: 400; text-transform: none; letter-spacing: normal; color: #4d4d4d;
-}
-.swx-spot--light h2 { color: #191919; }
-.swx-spot--light .swx-hl { background-image: linear-gradient(0deg, #7c3aed, #a855f7); }
-.swx-spot--light .swx-spot__lead { color: #4d4d4d; }
-.swx-spot--light .swx-btn--primary {
-  background: linear-gradient(180deg, #9f54f7 0%, #8523f5 100%); color: #fff;
-  box-shadow: rgba(178, 178, 178, .28) 4px 4px 18px 0 inset;
-}
-.swx-spot--light .swx-btn--primary:hover {
-  box-shadow: rgba(178, 178, 178, .28) 4px 4px 18px 0 inset, 0 16px 34px -10px rgba(133, 35, 245, .55);
-}
-.swx-spot--light .swx-btn--ghost { background: #fff; color: #191919; border-color: #e6e9ee; box-shadow: rgba(182, 182, 182, .2) 0 2px 3px 0; }
-.swx-spot--light .swx-btn--ghost:hover { border-color: rgba(146, 59, 246, .5); }
-.swx-spot--light .swx-spot__grid li { background: #f8f9fa; border-color: #e6e9ee; }
-.swx-spot--light .swx-ico { color: #fff; }
-.swx-spot--light .swx-spot__grid b { color: #191919; }
-.swx-spot--light .swx-spot__grid small { color: #666; }

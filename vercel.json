@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/light", "destination": "/", "permanent": false },
+    { "source": "/light/:path*", "destination": "/:path*", "permanent": false }
+  ]
+}
