@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="fi" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tekoälyavustaja | Swiftrix</title>
+  <meta name="description" content="Kuvaile yrityksesi ongelma. Tekoälyavustaja ehdottaa, miten automaatio tai tekoälyagentti voisi ratkaista sen, ja luonnostelee viestin tiimillemme. Voit varata keskusteluajan heti tästä.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tekoälyavustaja | Swiftrix">
+  <meta property="og:description" content="Kerro, mikä hidastaa työtänne, niin ehdotamme, miten se ratkaistaan.">
+  <link rel="icon" href="/assets/images/swiftrixLogo.png">
+  <link rel="alternate" hreflang="en" href="https://www.swiftrix.eu/assistant">
+  <link rel="alternate" hreflang="lt" href="https://www.swiftrix.eu/lt/asistentas">
+  <link rel="alternate" hreflang="de" href="https://www.swiftrix.eu/de/assistent">
+  <link rel="alternate" hreflang="fr" href="https://www.swiftrix.eu/fr/assistant">
+  <link rel="alternate" hreflang="es" href="https://www.swiftrix.eu/es/asistente">
+  <link rel="alternate" hreflang="no" href="https://www.swiftrix.eu/no/assistent">
+  <link rel="alternate" hreflang="da" href="https://www.swiftrix.eu/da/assistent">
+  <link rel="alternate" hreflang="fi" href="https://www.swiftrix.eu/fi/avustaja">
+  <link rel="alternate" hreflang="sv" href="https://www.swiftrix.eu/sv/assistent">
+  <link rel="alternate" hreflang="pt" href="https://www.swiftrix.eu/pt/assistente">
+  <link rel="canonical" href="https://www.swiftrix.eu/fi/avustaja">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&display=swap">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/assistant/assistant.css">
+  <script>try { if (/[?&]theme=light/.test(location.search) || (!/[?&]theme=dark/.test(location.search) && localStorage.getItem('swiftrix-theme') === 'light')) document.documentElement.setAttribute('data-theme', 'light') } catch (e) {}</script>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <nav class="vex-nav">
+    <a class="vex-logo" data-site="" href="/fi" aria-label="Swiftrix">
+      <img class="logo-dark" src="/assets/images/swiftrixLogo.png" alt="Swiftrix">
+      <img class="logo-light" src="/light/assets/images/swiftrixLogo.png" alt="Swiftrix">
+    </a>
+    <div class="vex-links" id="vexLinks">
+      <a data-site="#process" href="/fi#process">Näin se toimii</a>
+      <a data-site="#testimonial" href="/fi#testimonial">Referenssit</a>
+      <a data-site="" href="/fi">Meistä</a>
+      <a data-page="/fi/avustaja" href="/fi/avustaja" aria-current="page">Tekoälyavustaja</a>
+      <a data-site="#faq" href="/fi#faq">UKK</a>
+      <a class="vex-mlink" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Varaa puhelu</a>
+    </div>
+    <a class="vex-cta" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Varaa puhelu</a>
+    <button class="vex-burger" id="vexBurger" type="button" aria-label="Valikko" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="wrap">
+    <header class="hero">
+      <p class="eyebrow"><span>TEKOÄLYAVUSTAJA · MAKSUTON ARVIO</span></p>
+      <h1>Kerro, mikä hidastaa työtänne, niin ehdotamme, miten se <span class="hl">ratkaistaan</span></h1>
+      <p>Kuvaile toistuva työvaihe tai ongelma yrityksessänne. Tekoälyavustaja ehdottaa muutamassa sekunnissa ratkaisuideoita esimerkkeineen ja luonnostelee viestin tiimillemme. Voit varata keskusteluajan myös heti tästä.</p>
+    </header>
+
+    <div class="flow">
+      <section class="panel" id="card-problem" aria-labelledby="h-problem">
+        <div class="panel-head"><span class="step-no">1</span><span id="h-problem">Ongelmanne</span></div>
+        <div class="panel-body">
+          <div class="field">
+            <label for="problem">Mikä yrityksessänne vie liikaa aikaa tai aiheuttaa ongelmia?</label>
+            <textarea class="textarea" id="problem" maxlength="2500" placeholder="Esim.: Saamme päivittäin noin 40 tilausta sähköpostilla, ja toimistopäällikkömme kirjaa ne käsin Exceliin ja kirjanpito-ohjelmaan. Siihen menee pari tuntia, ja virheitä sattuu."></textarea>
+          </div>
+          <span class="label">Tai aloita näistä:</span>
+          <div class="chips">
+            <button class="chip" type="button" data-starter="Tilaukset tulevat sähköpostilla, ja työntekijämme kirjaavat ne käsin järjestelmään ">Tilaukset sähköpostista</button>
+            <button class="chip" type="button" data-starter="Saamme joka päivä paljon samanlaisia asiakaskysymyksiä aiheesta ">Asiakaskysymykset</button>
+            <button class="chip" type="button" data-starter="Käsittelemme laskuja ja asiakirjoja käsin: ">Laskut ja asiakirjat</button>
+            <button class="chip" type="button" data-starter="Teemme viikoittain tai kuukausittain raportteja käsin lähteistä ">Raportit</button>
+            <button class="chip" type="button" data-starter="Syötämme samat tiedot useaan järjestelmään: ">Tiedot järjestelmien välillä</button>
+            <button class="chip" type="button" data-starter="Tarjouspyynnöt ja liidit jäävät hoitamatta, koska seuraamme niitä ">Myynti ja CRM</button>
+          </div>
+          <div class="field">
+            <label for="context">Toimialanne ja yrityksenne koko (valinnainen)</label>
+            <input class="input" id="context" maxlength="200" placeholder="esim. logistiikka, 20 työntekijää">
+          </div>
+          <div class="actions"><button class="btn btn-primary" id="ask" type="button">Hae ratkaisuideoita</button></div>
+          <p class="msg" id="ask-msg" role="alert"></p>
+          <div class="thinking" id="thinking" hidden aria-live="polite"></div>
+          <p class="hint">Älä syötä henkilötietoja tai luottamuksellisia tietoja. Kuvauksen käsittelee tekoälymalli, emmekä tallenna sitä, ellet itse lähetä viestiä.</p>
+        </div>
+      </section>
+
+      <section class="panel" id="card-ideas" hidden aria-labelledby="h-ideas">
+        <div class="panel-head"><span class="step-no">2</span><span id="h-ideas">Ratkaisuideat</span></div>
+        <div class="panel-body">
+          <div id="ideas" aria-live="polite" data-cases="Vastaavia toteuttamiamme projekteja"></div>
+          <div class="refine" id="refine" hidden>
+            <h3 class="sub-h">Haluatko tarkempia ideoita? Vastaa muutamaan kysymykseen</h3>
+            <ul class="qs" id="questions"></ul>
+            <textarea class="textarea" id="answers" maxlength="1500" placeholder="Vastauksenne…" aria-label="Vastaukset kysymyksiin"></textarea>
+            <div class="actions" style="margin-top:12px"><button class="btn btn-ghost" id="refine-btn" type="button">Päivitä ideat</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="card-calc" aria-labelledby="h-calc">
+        <div class="panel-head"><span class="step-no">€</span><span id="h-calc">Mitä tämä työ teille maksaa?</span></div>
+        <div class="panel-body">
+          <p class="lead-note">Syötä, kuinka paljon aikaa manuaalinen työ vie ja mitä työntekijöidenne tunti maksaa. Näet, mitä työ maksaa nyt ja paljonko automaatiolla säästäisitte.</p>
+          <p class="msg" id="calc-note" hidden></p>
+          <div class="calc-grid">
+            <div class="field"><label for="c-amount">Työhön kuluva aika</label><div class="combo"><input class="input" id="c-amount" type="number" min="0" step="0.5" inputmode="decimal" placeholder="esim. 4"><select class="input" id="c-per" aria-label="Jakso"><option value="day">tuntia päivässä</option><option value="week" selected>tuntia viikossa</option><option value="month">tuntia kuussa</option></select></div></div>
+            <div class="field"><label for="c-people">Työtä tekevien määrä</label><input class="input" id="c-people" type="number" min="1" step="1" value="1" inputmode="numeric"></div>
+            <div class="field"><label for="c-rate">Henkilöstökulut</label><div class="combo"><input class="input" id="c-rate" type="number" min="0" step="1" inputmode="decimal" placeholder="esim. 35"><select class="input" id="c-rate-unit" aria-label="Yksikkö"><option value="hour">€ tunnilta</option><option value="month">€ kuukaudessa (palkka)</option></select></div></div>
+            <div class="field"><label for="c-errors">Virheiden tai viivästysten kustannus kuukaudessa <span class="opt">(valinnainen)</span></label><input class="input" id="c-errors" type="number" min="0" step="10" inputmode="decimal" placeholder="€"></div>
+          </div>
+          <div class="field"><label for="c-share">Osuus, jonka automaatio hoitaisi: <b id="c-share-val">70 %</b></label><input type="range" id="c-share" min="30" max="95" step="5" value="70"><span class="hint" style="margin:0">Tämä on oma oletuksesi. Tarkemman arvion annamme keskustelussa.</span></div>
+          <div class="field"><label for="c-invest">Ratkaisun hinta, jos haluat nähdä takaisinmaksuajan <span class="opt">(valinnainen)</span></label><input class="input" id="c-invest" type="number" min="0" step="100" inputmode="decimal" placeholder="€"></div>
+          <p class="placeholder" id="calc-empty">Syötä työhön kuluva aika ja henkilöstökulut, niin tulokset näkyvät tässä.</p>
+          <div id="calc-out" hidden>
+            <div class="tiles">
+              <div class="tile"><span>Maksaa nyt</span><b id="r-now-month"></b><small id="r-now-year"></small></div>
+              <div class="tile hl"><span>Säästäisitte</span><b id="r-save-year"></b><small id="r-save-month"></small></div>
+              <div class="tile"><span>Vapautuva aika</span><b id="r-hours"></b><small id="r-days"></small></div>
+              <div class="tile" id="r-payback-box" hidden><span>Maksaa itsensä takaisin</span><b id="r-payback"></b><small>antamallasi ratkaisun hinnalla</small></div>
+            </div>
+            <div class="bars">
+              <div class="bar-row"><span class="bar-label">Nyt</span><div class="bar"><i id="bar-now"></i></div><span class="bar-val" id="bar-now-val"></span></div>
+              <div class="bar-row"><span class="bar-label">Automaatiolla</span><div class="bar"><i id="bar-after" class="after"></i></div><span class="bar-val" id="bar-after-val"></span></div>
+            </div>
+            <p class="hint">Laskettu 21 työpäivällä ja 168 työtunnilla kuukaudessa. Tulos on suuntaa antava arvio.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="card-lead" hidden aria-labelledby="h-lead">
+        <div class="panel-head"><span class="step-no">3</span><span id="h-lead">Viesti tiimillemme</span></div>
+        <div class="panel-body">
+          <div id="lead-form">
+            <p class="lead-note">Olemme valmistelleet viestin ongelmanne pohjalta. Muokkaa sitä tarvittaessa, lisää yhteystietosi ja lähetä. Vastaus tulee oikealta ihmiseltä.</p>
+            <div class="email-draft">
+              <input class="input" id="subject" maxlength="150" aria-label="Viestin aihe">
+              <textarea class="textarea" id="body" maxlength="4000" aria-label="Viestin teksti"></textarea>
+            </div>
+            <div class="form-grid">
+              <div class="field"><label for="name">Nimi <b>*</b></label><input class="input" id="name" autocomplete="name" maxlength="100"></div>
+              <div class="field"><label for="email">Sähköposti <b>*</b></label><input class="input" id="email" type="email" autocomplete="email" maxlength="150"></div>
+              <div class="field"><label for="company">Yritys</label><input class="input" id="company" autocomplete="organization" maxlength="150"></div>
+              <div class="field"><label for="phone">Puhelin</label><input class="input" id="phone" type="tel" autocomplete="tel" maxlength="40"></div>
+            </div>
+            <div class="hp" aria-hidden="true"><label>Website <input id="website" tabindex="-1" autocomplete="off"></label></div>
+            <label class="consent"><input type="checkbox" id="consent"><span>Hyväksyn, että Swiftrix ottaa minuun yhteyttä tämän tiedustelun johdosta. Tietoja käytetään vain vastaamiseen.</span></label>
+            <div class="actions"><button class="btn btn-primary" id="send" type="button">Lähetä viesti</button></div>
+            <p class="msg" id="send-msg" role="alert"></p>
+          </div>
+          <div class="done-box" id="lead-done" hidden><span class="ok"></span><span></span></div>
+        </div>
+      </section>
+
+      <section class="panel" id="card-book" hidden aria-labelledby="h-book">
+        <div class="panel-head"><span class="step-no">4</span><span id="h-book">Keskustellaan asiasta</span></div>
+        <div class="panel-body">
+          <p class="lead-note">Valitse sopiva aika 30 minuutin puhelulle. Käymme yhdessä läpi ideat ja tilanteenne. Näemme yllä kirjoittamasi jo ennen puhelua.</p>
+          <div class="actions"><button class="btn btn-primary" id="book" type="button">Valitse aika</button></div>
+          <div id="cal-embed"></div>
+          <p class="alt-link" id="cal-alt-wrap" hidden>Eikö kalenteri aukea? <a id="cal-alt" href="https://cal.com/swiftrix/30-minute-call" target="_blank" rel="noopener">Avaa se uuteen ikkunaan</a></p>
+        </div>
+      </section>
+    </div>
+
+    <p class="demo-link">Haluatko nähdä tekoälyagentin työssä? <a data-page="/fi/demo" href="/fi/demo">Kokeile tilausagentin demoa →</a></p>
+  </main>
+
+  <footer>© 2026 Swiftrix · <a data-site="" href="/fi">swiftrix.eu</a></footer>
+  <script src="/i18n/fi.js"></script>
+  <script src="/js/pages.js" defer></script>
+  <script src="/assistant/calculator.js" defer></script>
+  <script src="/assistant/assistant.js" defer></script>
+</body>
+</html>

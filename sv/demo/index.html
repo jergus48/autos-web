@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="sv" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI-agent demo | Swiftrix</title>
+  <meta name="description" content="Testa en AI-agent: den läser ett beställningsmejl, kontrollerar era system, för in beställningen i tabellen och förbereder ett svar till kunden.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AI-agent demo | Swiftrix">
+  <meta property="og:description" content="Från mejl till beställning, helt utan handpåläggning. Se en AI-agent i arbete.">
+  <link rel="canonical" href="https://www.swiftrix.eu/sv/demo">
+  <link rel="alternate" hreflang="en" href="https://www.swiftrix.eu/demo">
+  <link rel="alternate" hreflang="lt" href="https://www.swiftrix.eu/lt/demo">
+  <link rel="alternate" hreflang="de" href="https://www.swiftrix.eu/de/demo">
+  <link rel="alternate" hreflang="fr" href="https://www.swiftrix.eu/fr/demo">
+  <link rel="alternate" hreflang="es" href="https://www.swiftrix.eu/es/demo">
+  <link rel="alternate" hreflang="no" href="https://www.swiftrix.eu/no/demo">
+  <link rel="alternate" hreflang="da" href="https://www.swiftrix.eu/da/demo">
+  <link rel="alternate" hreflang="fi" href="https://www.swiftrix.eu/fi/demo">
+  <link rel="alternate" hreflang="sv" href="https://www.swiftrix.eu/sv/demo">
+  <link rel="alternate" hreflang="pt" href="https://www.swiftrix.eu/pt/demo">
+  <link rel="icon" href="/assets/images/swiftrixLogo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&display=swap">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/demo/demo.css">
+  <script>try { if (/[?&]theme=light/.test(location.search) || (!/[?&]theme=dark/.test(location.search) && localStorage.getItem('swiftrix-theme') === 'light')) document.documentElement.setAttribute('data-theme', 'light') } catch (e) {}</script>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <nav class="vex-nav">
+    <a class="vex-logo" data-site="" href="/sv" aria-label="Swiftrix">
+      <img class="logo-dark" src="/assets/images/swiftrixLogo.png" alt="Swiftrix">
+      <img class="logo-light" src="/light/assets/images/swiftrixLogo.png" alt="Swiftrix">
+    </a>
+    <div class="vex-links" id="vexLinks">
+      <a data-site="#process" href="/sv#process">Så fungerar det</a>
+      <a data-site="#testimonial" href="/sv#testimonial">Referenser</a>
+      <a data-site="" href="/sv">Om oss</a>
+      <a data-page="/sv/assistent" href="/sv/assistent">AI-assistent</a>
+      <a data-site="#faq" href="/sv#faq">FAQ</a>
+      <a class="vex-mlink" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Boka ett möte</a>
+    </div>
+    <a class="vex-cta" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Boka ett möte</a>
+    <button class="vex-burger" id="vexBurger" type="button" aria-label="Meny" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="wrap">
+    <header class="hero">
+      <p class="eyebrow"><span>AI-AGENT DEMO · TESTA SJÄLV</span></p>
+      <h1>Från mejl till <span class="hl">beställning</span>, helt utan handpåläggning</h1>
+      <p>Välj ett mejl och se hur AI-agenten läser det, kontrollerar era system, för in beställningen i tabellen och förbereder ett svar till kunden. Ni behöver bara godkänna.</p>
+    </header>
+
+    <div class="app">
+      <section class="panel" aria-label="Inkorg">
+        <div class="panel-head"><span class="step-no">1</span>Inkorg</div>
+        <ul class="mail-list" id="mail-list" role="tablist"></ul>
+        <div class="panel-body">
+          <div id="reader"
+            data-placeholder="Klistra in en beställning, prisförfrågan eller något annat mejl som ert företag får…"
+            data-privacy="Klistra inte in personuppgifter. Mejlet behandlas av en AI-modell och sparas inte av oss."></div>
+          <div class="run-row"><button class="btn btn-primary" id="run" type="button">Starta agenten</button></div>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-agent" aria-label="Agent">
+        <div class="panel-head"><span class="step-no">2</span>Agent<span class="pill" id="agent-pill"><i></i><span></span></span></div>
+        <div class="panel-body">
+          <div class="systems"><span class="sys" data-sys="mail"></span><span class="sys" data-sys="crm"></span><span class="sys" data-sys="stock"></span><span class="sys" data-sys="sheet"></span></div>
+          <ul class="steps" id="steps" aria-live="polite"></ul>
+        </div>
+      </section>
+
+      <section class="panel panel-result" aria-label="Resultat">
+        <div class="panel-head"><span class="step-no">3</span>Resultat<span class="pill" id="result-pill"><i></i><span></span></span></div>
+        <div class="panel-body" id="result-body" aria-live="polite"></div>
+      </section>
+    </div>
+
+    <section class="panel sheet" aria-label="Beställningstabell">
+      <div class="panel-head"><span class="xls">X</span>Beställningar.xlsx</div>
+      <div class="sheet-scroll"><table><thead><tr id="sheet-head"></tr></thead><tbody id="sheet-body"></tbody></table></div>
+    </section>
+
+    <section class="block">
+      <span class="sec-badge"><i></i>Varför en agent</span>
+      <h2>Vad skiljer den från ChatGPT?</h2>
+      <p class="lead">ChatGPT svarar när ni frågar. En agent utför arbetet själv, kopplad till era system och enligt era regler.</p>
+      <div class="cards">
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3M15 7V3M6 7h12v4a6 6 0 0 1-12 0V7zM12 17v4"/></svg></div>
+          <h3>Kopplad till era system</h3>
+          <p>Den läser er inkorg, kontrollerar priser och lagersaldo i er katalog samt kundhistoriken i CRM och skriver till ert Excel, Google Sheets eller affärssystem.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3>Arbetar självständigt, dygnet runt</h3>
+          <p>Kom mejlet på natten eller i helgen? När ni öppnar inkorgen på morgonen är beställningen redan registrerad och svaret förberett.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
+          <h3>Ni behåller kontrollen</h3>
+          <p>Svar skickas först när ni godkänner dem, eller automatiskt om ni vill det. Oklara fall flaggar agenten, och ni ser allt den har gjort.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <span class="sec-badge"><i></i>Möjligheter</span>
+      <h2>Vad AI-agenter mer kan göra</h2>
+      <p class="lead">Beställningsagenten är bara ett exempel. Vi bygger agenter där ert team förlorar mest tid.</p>
+      <div class="cards">
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
+          <h3>E-post- och beställningsagent</h3>
+          <p>För över beställningar, fakturor och förfrågningar från inkorgen till era system.</p>
+          <span class="tag">← Den här demon</span>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div>
+          <h3>Kundserviceagent</h3>
+          <p>Besvarar kundfrågor dygnet runt via e-post eller webbchatt, bokar möten och lämnar svåra fall vidare till en människa.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></div>
+          <h3>Dokument- och rapportagent</h3>
+          <p>Skapar offerter, fakturor och rapporter och kontrollerar om uppgifter saknas i dokument.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+          <h3>Säljagent</h3>
+          <p>Bedömer nya förfrågningar, följer upp kunder i tid och håller CRM uppdaterat så att ingen intressent försvinner.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <span class="sec-badge"><i></i>Samtal</span>
+      <h2>Vill ni ha en sådan agent för ert företag?</h2>
+      <p>I ett samtal på 15 minuter tar vi reda på vilket återkommande arbete en agent kan ta över i ert företag.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Boka ett samtal</a>
+        <a class="btn btn-ghost" data-page="/sv/assistent" href="/sv/assistent">Beskriv ert problem</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Swiftrix · <a data-site="" href="/sv">swiftrix.eu</a></footer>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/i18n/sv.js"></script>
+  <script src="/js/pages.js" defer></script>
+  <script src="/demo/demo.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="da" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI-assistent | Swiftrix</title>
+  <meta name="description" content="Beskriv et problem i din virksomhed. AI-assistenten foreslår, hvordan en automatisering eller en AI-agent kan løse det, og skriver et udkast til en e-mail til vores team. Du kan booke en samtale lige her.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AI-assistent | Swiftrix">
+  <meta property="og:description" content="Fortæl os, hvad der bremser dig, så viser vi, hvordan det kan løses.">
+  <link rel="canonical" href="https://www.swiftrix.eu/da/assistent">
+  <link rel="icon" href="/assets/images/swiftrixLogo.png">
+  <link rel="alternate" hreflang="en" href="https://www.swiftrix.eu/assistant">
+  <link rel="alternate" hreflang="lt" href="https://www.swiftrix.eu/lt/asistentas">
+  <link rel="alternate" hreflang="de" href="https://www.swiftrix.eu/de/assistent">
+  <link rel="alternate" hreflang="fr" href="https://www.swiftrix.eu/fr/assistant">
+  <link rel="alternate" hreflang="es" href="https://www.swiftrix.eu/es/asistente">
+  <link rel="alternate" hreflang="no" href="https://www.swiftrix.eu/no/assistent">
+  <link rel="alternate" hreflang="da" href="https://www.swiftrix.eu/da/assistent">
+  <link rel="alternate" hreflang="fi" href="https://www.swiftrix.eu/fi/avustaja">
+  <link rel="alternate" hreflang="sv" href="https://www.swiftrix.eu/sv/assistent">
+  <link rel="alternate" hreflang="pt" href="https://www.swiftrix.eu/pt/assistente">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&display=swap">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/assistant/assistant.css">
+  <script>try { if (/[?&]theme=light/.test(location.search) || (!/[?&]theme=dark/.test(location.search) && localStorage.getItem('swiftrix-theme') === 'light')) document.documentElement.setAttribute('data-theme', 'light') } catch (e) {}</script>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <nav class="vex-nav">
+    <a class="vex-logo" data-site="" href="/da" aria-label="Swiftrix">
+      <img class="logo-dark" src="/assets/images/swiftrixLogo.png" alt="Swiftrix">
+      <img class="logo-light" src="/light/assets/images/swiftrixLogo.png" alt="Swiftrix">
+    </a>
+    <div class="vex-links" id="vexLinks">
+      <a data-site="#process" href="/da#process">Sådan fungerer det</a>
+      <a data-site="#testimonial" href="/da#testimonial">Referencer</a>
+      <a data-site="" href="/da">Om os</a>
+      <a data-page="/da/assistent" href="/da/assistent" aria-current="page">AI-assistent</a>
+      <a data-site="#faq" href="/da#faq">FAQ</a>
+      <a class="vex-mlink" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book et møde</a>
+    </div>
+    <a class="vex-cta" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book et møde</a>
+    <button class="vex-burger" id="vexBurger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="wrap">
+    <header class="hero">
+      <p class="eyebrow"><span>AI-ASSISTENT · GRATIS VURDERING</span></p>
+      <h1>Fortæl os, hvad der bremser dig, så viser vi, hvordan det kan <span class="hl">løses</span></h1>
+      <p>Beskriv en tilbagevendende opgave eller et problem i din virksomhed. AI-assistenten foreslår på få sekunder løsningsidéer med eksempler og skriver et udkast til en e-mail til vores team. Du kan booke en samtale lige her.</p>
+    </header>
+
+    <div class="flow">
+      <section class="panel" id="card-problem" aria-labelledby="h-problem">
+        <div class="panel-head"><span class="step-no">1</span><span id="h-problem">Dit problem</span></div>
+        <div class="panel-body">
+          <div class="field">
+            <label for="problem">Hvad koster for meget tid eller giver problemer i din virksomhed?</label>
+            <textarea class="textarea" id="problem" maxlength="2500" placeholder="F.eks.: Vi får cirka 40 ordrer om dagen på e-mail, og en medarbejder taster dem ind i Excel og bogholderiet i hånden. Det tager et par timer, og der sker fejl."></textarea>
+          </div>
+          <span class="label">Eller start med:</span>
+          <div class="chips">
+            <button class="chip" type="button" data-starter="Ordrerne kommer på e-mail, og vores medarbejdere indtaster dem i hånden i ">Ordrer på e-mail</button>
+            <button class="chip" type="button" data-starter="Vi får hver dag mange ens kundespørgsmål om ">Kundehenvendelser</button>
+            <button class="chip" type="button" data-starter="Fakturaer og dokumenter behandler vi i hånden: ">Fakturaer & dokumenter</button>
+            <button class="chip" type="button" data-starter="Hver uge eller måned laver vi rapporter i hånden ud fra ">Rapporter</button>
+            <button class="chip" type="button" data-starter="Vi vedligeholder de samme data i flere systemer: ">Data mellem systemer</button>
+            <button class="chip" type="button" data-starter="Henvendelser og kundeemner går tabt, fordi vi følger dem i ">Salg & CRM</button>
+          </div>
+          <div class="field">
+            <label for="context">Din branche og virksomhedens størrelse (valgfrit)</label>
+            <input class="input" id="context" maxlength="200" placeholder="f.eks. logistik, 20 medarbejdere">
+          </div>
+          <div class="actions"><button class="btn btn-primary" id="ask" type="button">Få løsningsidéer</button></div>
+          <p class="msg" id="ask-msg" role="alert"></p>
+          <div class="thinking" id="thinking" hidden aria-live="polite"></div>
+          <p class="hint">Indtast ikke personlige eller fortrolige oplysninger. Beskrivelsen behandles af en AI-model og gemmes ikke af os, medmindre du selv sender e-mailen.</p>
+        </div>
+      </section>
+
+      <section class="panel" id="card-ideas" hidden aria-labelledby="h-ideas">
+        <div class="panel-head"><span class="step-no">2</span><span id="h-ideas">Løsningsidéer</span></div>
+        <div class="panel-body">
+          <div id="ideas" aria-live="polite" data-cases="Lignende projekter fra os"></div>
+          <div class="refine" id="refine" hidden>
+            <h3 class="sub-h">Vil du have mere præcise idéer? Svar på et par spørgsmål</h3>
+            <ul class="qs" id="questions"></ul>
+            <textarea class="textarea" id="answers" maxlength="1500" placeholder="Dine svar…" aria-label="Svar på spørgsmålene"></textarea>
+            <div class="actions" style="margin-top:12px"><button class="btn btn-ghost" id="refine-btn" type="button">Opdater idéerne</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="card-calc" aria-labelledby="h-calc">
+        <div class="panel-head"><span class="step-no">€</span><span id="h-calc">Hvad koster dette arbejde dig?</span></div>
+        <div class="panel-body">
+          <p class="lead-note">Angiv, hvor meget tid det manuelle arbejde tager, og hvad en time koster for dine medarbejdere. Så kan du se, hvad arbejdet koster i dag, og hvad du ville spare med automatisering.</p>
+          <p class="msg" id="calc-note" hidden></p>
+          <div class="calc-grid">
+            <div class="field"><label for="c-amount">Tidsforbrug</label><div class="combo"><input class="input" id="c-amount" type="number" min="0" step="0.5" inputmode="decimal" placeholder="f.eks. 4"><select class="input" id="c-per" aria-label="Periode"><option value="day">timer pr. dag</option><option value="week" selected>timer pr. uge</option><option value="month">timer pr. måned</option></select></div></div>
+            <div class="field"><label for="c-people">Hvor mange personer udfører det</label><input class="input" id="c-people" type="number" min="1" step="1" value="1" inputmode="numeric"></div>
+            <div class="field"><label for="c-rate">Lønomkostninger</label><div class="combo"><input class="input" id="c-rate" type="number" min="0" step="1" inputmode="decimal" placeholder="f.eks. 35"><select class="input" id="c-rate-unit" aria-label="Enhed"><option value="hour">€ pr. time</option><option value="month">€ pr. måned (løn)</option></select></div></div>
+            <div class="field"><label for="c-errors">Omkostninger ved fejl eller forsinkelser pr. måned <span class="opt">(valgfrit)</span></label><input class="input" id="c-errors" type="number" min="0" step="10" inputmode="decimal" placeholder="€"></div>
+          </div>
+          <div class="field"><label for="c-share">Andel, som en automatisering overtager: <b id="c-share-val">70 %</b></label><input type="range" id="c-share" min="30" max="95" step="5" value="70"><span class="hint" style="margin:0">Det er din antagelse. Et mere præcist estimat giver vi dig i samtalen.</span></div>
+          <div class="field"><label for="c-invest">Prisen på løsningen, hvis du vil se tilbagebetalingstiden <span class="opt">(valgfrit)</span></label><input class="input" id="c-invest" type="number" min="0" step="100" inputmode="decimal" placeholder="€"></div>
+          <p class="placeholder" id="calc-empty">Angiv tidsforbrug og lønomkostninger, så vises resultaterne her.</p>
+          <div id="calc-out" hidden>
+            <div class="tiles">
+              <div class="tile"><span>Koster i dag</span><b id="r-now-month"></b><small id="r-now-year"></small></div>
+              <div class="tile hl"><span>Du ville spare</span><b id="r-save-year"></b><small id="r-save-month"></small></div>
+              <div class="tile"><span>Vundet tid</span><b id="r-hours"></b><small id="r-days"></small></div>
+              <div class="tile" id="r-payback-box" hidden><span>Tjent ind på</span><b id="r-payback"></b><small>ved den angivne pris på løsningen</small></div>
+            </div>
+            <div class="bars">
+              <div class="bar-row"><span class="bar-label">I dag</span><div class="bar"><i id="bar-now"></i></div><span class="bar-val" id="bar-now-val"></span></div>
+              <div class="bar-row"><span class="bar-label">Med automatisering</span><div class="bar"><i id="bar-after" class="after"></i></div><span class="bar-val" id="bar-after-val"></span></div>
+            </div>
+            <p class="hint">Beregnet med 21 arbejdsdage og 168 arbejdstimer pr. måned. Resultatet er et vejledende tal.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="card-lead" hidden aria-labelledby="h-lead">
+        <div class="panel-head"><span class="step-no">3</span><span id="h-lead">E-mail til vores team</span></div>
+        <div class="panel-body">
+          <div id="lead-form">
+            <p class="lead-note">Ud fra dit problem har vi lavet et udkast til en e-mail. Tilpas den, hvis du vil, tilføj dine kontaktoplysninger og send den. Et menneske svarer dig.</p>
+            <div class="email-draft">
+              <input class="input" id="subject" maxlength="150" aria-label="Emne">
+              <textarea class="textarea" id="body" maxlength="4000" aria-label="E-mailens tekst"></textarea>
+            </div>
+            <div class="form-grid">
+              <div class="field"><label for="name">Navn <b>*</b></label><input class="input" id="name" autocomplete="name" maxlength="100"></div>
+              <div class="field"><label for="email">E-mail <b>*</b></label><input class="input" id="email" type="email" autocomplete="email" maxlength="150"></div>
+              <div class="field"><label for="company">Virksomhed</label><input class="input" id="company" autocomplete="organization" maxlength="150"></div>
+              <div class="field"><label for="phone">Telefon</label><input class="input" id="phone" type="tel" autocomplete="tel" maxlength="40"></div>
+            </div>
+            <div class="hp" aria-hidden="true"><label>Website <input id="website" tabindex="-1" autocomplete="off"></label></div>
+            <label class="consent"><input type="checkbox" id="consent"><span>Jeg accepterer, at Swiftrix kontakter mig om denne henvendelse. Oplysningerne bruges kun til at svare mig.</span></label>
+            <div class="actions"><button class="btn btn-primary" id="send" type="button">Send e-mail</button></div>
+            <p class="msg" id="send-msg" role="alert"></p>
+          </div>
+          <div class="done-box" id="lead-done" hidden><span class="ok"></span><span></span></div>
+        </div>
+      </section>
+
+      <section class="panel" id="card-book" hidden aria-labelledby="h-book">
+        <div class="panel-head"><span class="step-no">4</span><span id="h-book">Lad os tale sammen</span></div>
+        <div class="panel-body">
+          <p class="lead-note">Vælg et passende tidspunkt til en samtale på 30 minutter. Vi gennemgår idéerne og din situation sammen. Det, du har skrevet ovenfor, ser vi før samtalen.</p>
+          <div class="actions"><button class="btn btn-primary" id="book" type="button">Vælg tidspunkt</button></div>
+          <div id="cal-embed"></div>
+          <p class="alt-link" id="cal-alt-wrap" hidden>Åbner kalenderen ikke? <a id="cal-alt" href="https://cal.com/swiftrix/30-minute-call" target="_blank" rel="noopener">Åbn den i et nyt vindue</a></p>
+        </div>
+      </section>
+    </div>
+
+    <p class="demo-link">Vil du se en AI-agent i arbejde? <a data-page="/da/demo" href="/da/demo">Prøv demoen af ordreagenten →</a></p>
+  </main>
+
+  <footer>© 2026 Swiftrix · <a data-site="" href="/da">swiftrix.eu</a></footer>
+  <script src="/i18n/da.js"></script>
+  <script src="/js/pages.js" defer></script>
+  <script src="/assistant/calculator.js" defer></script>
+  <script src="/assistant/assistant.js" defer></script>
+</body>
+</html>

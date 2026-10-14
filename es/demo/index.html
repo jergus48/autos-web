@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo de agente de IA | Swiftrix</title>
+  <meta name="description" content="Pruebe un agente de IA: lee un correo de pedido, consulta sus sistemas, registra el pedido en la hoja de cálculo y prepara una respuesta para el cliente.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Demo de agente de IA | Swiftrix">
+  <meta property="og:description" content="Del correo al pedido, sin trabajo manual. Vea a un agente de IA en acción.">
+  <link rel="canonical" href="https://www.swiftrix.eu/es/demo">
+  <link rel="icon" href="/assets/images/swiftrixLogo.png">
+  <link rel="alternate" hreflang="en" href="https://www.swiftrix.eu/demo">
+  <link rel="alternate" hreflang="lt" href="https://www.swiftrix.eu/lt/demo">
+  <link rel="alternate" hreflang="de" href="https://www.swiftrix.eu/de/demo">
+  <link rel="alternate" hreflang="fr" href="https://www.swiftrix.eu/fr/demo">
+  <link rel="alternate" hreflang="es" href="https://www.swiftrix.eu/es/demo">
+  <link rel="alternate" hreflang="no" href="https://www.swiftrix.eu/no/demo">
+  <link rel="alternate" hreflang="da" href="https://www.swiftrix.eu/da/demo">
+  <link rel="alternate" hreflang="fi" href="https://www.swiftrix.eu/fi/demo">
+  <link rel="alternate" hreflang="sv" href="https://www.swiftrix.eu/sv/demo">
+  <link rel="alternate" hreflang="pt" href="https://www.swiftrix.eu/pt/demo">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&display=swap">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/demo/demo.css">
+  <script>try { if (/[?&]theme=light/.test(location.search) || (!/[?&]theme=dark/.test(location.search) && localStorage.getItem('swiftrix-theme') === 'light')) document.documentElement.setAttribute('data-theme', 'light') } catch (e) {}</script>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <nav class="vex-nav">
+    <a class="vex-logo" data-site="" href="/es" aria-label="Swiftrix">
+      <img class="logo-dark" src="/assets/images/swiftrixLogo.png" alt="Swiftrix">
+      <img class="logo-light" src="/light/assets/images/swiftrixLogo.png" alt="Swiftrix">
+    </a>
+    <div class="vex-links" id="vexLinks">
+      <a data-site="#process" href="/es#process">Cómo funciona</a>
+      <a data-site="#testimonial" href="/es#testimonial">Casos de éxito</a>
+      <a data-site="" href="/es">Sobre nosotros</a>
+      <a data-page="/es/asistente" href="/es/asistente">Asistente de IA</a>
+      <a data-site="#faq" href="/es#faq">Preguntas frecuentes</a>
+      <a class="vex-mlink" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Reservar una llamada</a>
+    </div>
+    <a class="vex-cta" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Reservar una llamada</a>
+    <button class="vex-burger" id="vexBurger" type="button" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="wrap">
+    <header class="hero">
+      <p class="eyebrow"><span>DEMO DE AGENTE DE IA · PRUÉBELO USTED MISMO</span></p>
+      <h1>Del correo al <span class="hl">pedido</span>, sin trabajo manual</h1>
+      <p>Elija un correo y vea cómo el agente de IA lo lee, consulta sus sistemas, registra el pedido en la hoja de cálculo y prepara una respuesta para el cliente. Usted solo tiene que aprobarla.</p>
+    </header>
+
+    <div class="app">
+      <section class="panel" aria-label="Bandeja de entrada">
+        <div class="panel-head"><span class="step-no">1</span>Bandeja de entrada</div>
+        <ul class="mail-list" id="mail-list" role="tablist"></ul>
+        <div class="panel-body">
+          <div id="reader"
+            data-placeholder="Pegue un pedido, una solicitud de presupuesto u otro correo como los que recibe su empresa…"
+            data-privacy="No pegue datos personales. El correo lo procesa un modelo de IA y nosotros no lo guardamos."></div>
+          <div class="run-row"><button class="btn btn-primary" id="run" type="button">Iniciar el agente</button></div>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-agent" aria-label="Agente">
+        <div class="panel-head"><span class="step-no">2</span>Agente<span class="pill" id="agent-pill"><i></i><span></span></span></div>
+        <div class="panel-body">
+          <div class="systems"><span class="sys" data-sys="mail"></span><span class="sys" data-sys="crm"></span><span class="sys" data-sys="stock"></span><span class="sys" data-sys="sheet"></span></div>
+          <ul class="steps" id="steps" aria-live="polite"></ul>
+        </div>
+      </section>
+
+      <section class="panel panel-result" aria-label="Resultado">
+        <div class="panel-head"><span class="step-no">3</span>Resultado<span class="pill" id="result-pill"><i></i><span></span></span></div>
+        <div class="panel-body" id="result-body" aria-live="polite"></div>
+      </section>
+    </div>
+
+    <section class="panel sheet" aria-label="Hoja de pedidos">
+      <div class="panel-head"><span class="xls">X</span>Pedidos.xlsx</div>
+      <div class="sheet-scroll"><table><thead><tr id="sheet-head"></tr></thead><tbody id="sheet-body"></tbody></table></div>
+    </section>
+
+    <section class="block">
+      <span class="sec-badge"><i></i>Por qué un agente</span>
+      <h2>¿En qué se diferencia de ChatGPT?</h2>
+      <p class="lead">ChatGPT responde cuando usted pregunta. Un agente hace el trabajo por sí mismo, conectado a sus sistemas y siguiendo sus reglas.</p>
+      <div class="cards">
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3M15 7V3M6 7h12v4a6 6 0 0 1-12 0V7zM12 17v4"/></svg></div>
+          <h3>Conectado a sus sistemas</h3>
+          <p>Lee su bandeja de entrada, consulta precios y existencias en su catálogo y el historial del cliente en el CRM, y escribe en su Excel, Google Sheets o ERP.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3>Trabaja solo, las 24 horas</h3>
+          <p>¿El correo llegó de noche o en fin de semana? Cuando abra su bandeja por la mañana, el pedido ya estará registrado y la respuesta preparada.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
+          <h3>Usted mantiene el control</h3>
+          <p>Las respuestas solo salen cuando usted las aprueba, o automáticamente si así lo desea. El agente marca los casos dudosos y usted ve todo lo que ha hecho.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <span class="sec-badge"><i></i>Posibilidades</span>
+      <h2>Qué más pueden hacer los agentes de IA</h2>
+      <p class="lead">El agente de pedidos es solo un ejemplo. Creamos agentes allí donde su equipo pierde más tiempo.</p>
+      <div class="cards">
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
+          <h3>Agente de correo y pedidos</h3>
+          <p>Pasa pedidos, facturas y consultas de la bandeja de entrada a sus sistemas.</p>
+          <span class="tag">← Esta demo</span>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div>
+          <h3>Agente de atención al cliente</h3>
+          <p>Responde a las consultas de los clientes las 24 horas, por correo o en el chat de su web, reserva citas y pasa los casos difíciles a una persona.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></div>
+          <h3>Agente de documentos e informes</h3>
+          <p>Elabora presupuestos, facturas e informes y comprueba si a los documentos les falta algún dato.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+          <h3>Agente de ventas</h3>
+          <p>Valora las nuevas consultas, hace seguimiento a los clientes a tiempo y mantiene el CRM al día para que no se pierda ningún cliente potencial.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <span class="sec-badge"><i></i>Llamada</span>
+      <h2>¿Quiere un agente así para su empresa?</h2>
+      <p>En una llamada de 15 minutos descubriremos qué trabajo repetitivo podría asumir un agente en su empresa.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Reservar una llamada</a>
+        <a class="btn btn-ghost" data-page="/es/asistente" href="/es/asistente">Describir su problema</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Swiftrix · <a data-site="" href="/es">swiftrix.eu</a></footer>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/i18n/es.js"></script>
+  <script src="/js/pages.js" defer></script>
+  <script src="/demo/demo.js" defer></script>
+</body>
+</html>
