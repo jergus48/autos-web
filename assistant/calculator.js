@@ -6,7 +6,9 @@
 (function () {
   'use strict'
 
-  var LANG = { lt: 'lt', de: 'de' }[document.documentElement.lang] || 'en'
+  var I18N = window.SWX_I18N || {}
+  var LANG = document.documentElement.lang
+  if (LANG !== 'lt' && LANG !== 'de' && !I18N[LANG]) LANG = 'en'
   var DAYS_PER_MONTH = 21      // working days
   var WEEKS_PER_MONTH = 4.33
   var HOURS_PER_MONTH = 168    // full-time hours, to turn a monthly salary into €/h
@@ -43,9 +45,9 @@
           f.money(c.saveYear) + '/Jahr und ' + f.num(c.hoursFreedYear) + ' Std./Jahr' + (c.payback ? ', Amortisation in ~' + f.num(c.payback, 1) + ' Monaten' : '') + '.'
       }
     }
-  }[LANG]
+  }[LANG] || I18N[LANG].calcT
 
-  var locale = { lt: 'lt-LT', de: 'de-DE' }[LANG] || 'en-IE'
+  var locale = { lt: 'lt-LT', de: 'de-DE' }[LANG] || (I18N[LANG] && I18N[LANG].locale) || 'en-IE'
   var fmt = {
     money: function (v) { return new Intl.NumberFormat(locale, { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(Math.round(v)) },
     num: function (v, d) { return new Intl.NumberFormat(locale, { maximumFractionDigits: d || 0 }).format(v) }

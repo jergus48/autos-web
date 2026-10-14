@@ -9,7 +9,10 @@
 (function () {
   'use strict'
 
-  var LANG = { lt: 'lt', de: 'de' }[document.documentElement.lang] || 'en'
+  // Extra languages register their strings in /i18n/<lang>.js (window.SWX_I18N).
+  var I18N = window.SWX_I18N || {}
+  var LANG = document.documentElement.lang
+  if (LANG !== 'lt' && LANG !== 'de' && !I18N[LANG]) LANG = 'en'
   var CAL_LINK = 'swiftrix/30-minute-call'
   var CONTACT = 'info@swiftrix.eu'
 
@@ -68,7 +71,7 @@
       calFail: 'Der Kalender konnte nicht geladen werden.',
       notesPrefix: 'Vom KI-Assistenten auf swiftrix.eu'
     }
-  }[LANG]
+  }[LANG] || I18N[LANG].assistantT
 
   // The site's own case-study wording (index.html, lt/ and de/), keyed by
   // the ids /api/assistant may return.
@@ -100,7 +103,7 @@
       urbarlamac: ['Monatliche Eigentumsabrechnung', 'Eine Automatisierung, die die monatlichen Excel-Auszahlungsberechnungen der Genossenschaft für ihre Mitglieder auf Basis der aktuellen Grundbuchauszüge erstellt. Eine mühsame Handarbeit, die jetzt automatisch läuft.', 'urbarlamac.sk'],
       joinupshift: ['Portal für Clipper-Recruiting & -Verwaltung', 'Ein komplettes Portal, um Clipper von A bis Z zu verwalten: gewinnen und einarbeiten, Konten verwalten, Auszahlungen automatisieren und in einem Dashboard verfolgen, welche Verkäufe, Aufrufe und Umsätze jeder Clipper erzielt.', 'joinupshift.com']
     }
-  }[LANG]
+  }[LANG] || I18N[LANG].assistantCases
 
   function $(id) { return document.getElementById(id) }
   function el(tag, cls, text) {

@@ -56,6 +56,8 @@
   }
 
   function init() {
+    var X = (window.SWX_I18N || {})[document.documentElement.lang]  // other languages: /i18n/<lang>.js
+    if (X && X.faq) Object.keys(X.faq).forEach(function (k) { ANSWERS[norm(k)] = X.faq[k] })
     var questions = document.querySelectorAll('[data-swiftrix-name="Question"]');
     questions.forEach(function (q) {
       var head = q.querySelector("h3, p");

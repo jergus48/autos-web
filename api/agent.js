@@ -16,6 +16,7 @@
 'use strict'
 
 const { send, readBody, guard, clientIp, rateLimiter, clip, hasAiKey, ai } = require('./_lib/common.js')
+const { LANGS, pickLang } = require('./_lib/langs.js')
 
 const MAX_CHARS = 3000
 const limited = rateLimiter(6, 10 * 60 * 1000)
@@ -55,7 +56,7 @@ const SCHEMA = {
 // slips into the page's language (or the examples' one), so the language is
 // detected here and named in the prompt. Diacritics decide first, then
 // common words; anything else counts as English.
-function emailLanguage(text) {
+function emailLanguage(text, pageLang) {
   const t = text.toLowerCase()
   if (/[ąčęėįšųūž]/.test(t)) return 'Lithuanian'
   if (/[äöüß]/.test(t)) return 'German'
@@ -65,11 +66,13 @@ function emailLanguage(text) {
   const en = words(/\b(the|and|please|we|you|with|for|thanks|hello|order)\b/g)
   if (de > en && de >= lt) return 'German'
   if (lt > en && lt > de) return 'Lithuanian'
-  return 'English'
+  // Not German or Lithuanian and no clear English: the page's own language
+  // (the sample emails there are in it), otherwise English.
+  return en < 2 && pageLang && pageLang !== 'en' && !['de', 'lt'].includes(pageLang) ? LANGS[pageLang].name : 'English'
 }
 
 function instructions(lang, replyLang) {
-  const ui = { lt: 'Lithuanian', de: 'German' }[lang] || 'English'
+  const ui = LANGS[lang].name
   const today = new Date().toISOString().slice(0, 10)
   return `You are the order-intake agent in a public demo on swiftrix.eu. A website visitor pasted an email that a business might receive.
 
@@ -111,10 +114,10 @@ module.exports = async function handler(req, res) {
 
   const body = await readBody(req)
   const email = body && typeof body.email === 'string' ? body.email.trim() : ''
-  const lang = body && (body.lang === 'lt' || body.lang === 'de') ? body.lang : 'en'
+  const lang = pickLang(body && body.lang)
   if (email.length < 40 || email.length > MAX_CHARS) return send(res, 400, { error: 'length' })
 
-  const out = await ai({ system: instructions(lang, emailLanguage(email)), user: 'EMAIL:\n"""\n' + email + '\n"""', schema: SCHEMA, maxTokens: 1500 })
+  const out = await ai({ system: instructions(lang, emailLanguage(email, lang)), user: 'EMAIL:\n"""\n' + email + '\n"""', schema: SCHEMA, maxTokens: 1500 })
   if (out.status !== 200) return send(res, out.status, { error: out.status === 429 ? 'rate' : out.status === 503 ? 'off' : 'model' })
   return send(res, 200, { result: sanitize(out.json) })
 }

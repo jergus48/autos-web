@@ -6,6 +6,7 @@
   var LIGHT = location.pathname.indexOf("/light") === 0;   // the original light build
   var IS_LT = location.pathname.indexOf("/lt") !== -1;     // works for /lt/ and /light/lt/
   var IS_DE = /^(\/light)?\/de(\/|$)/.test(location.pathname);
+  var X = (window.SWX_I18N || {})[document.documentElement.lang] || {};  // other languages: /i18n/<lang>.js
 
   // ---- scroll progress bar ----
   function progressBar() {
@@ -57,7 +58,7 @@
   }
 
   function heroHighlight() {
-    markWord(document.querySelector("h1"), ["workflows", "procesus", "procesą", "darbus"]);
+    markWord(document.querySelector("h1"), ["workflows", "procesus", "procesą", "darbus"].concat(X.heroWords || []));
   }
 
   // ---- kill the blurry glow blobs inside cards (the "mud") ----
@@ -109,9 +110,9 @@
     if (!h) return;
     var eb = document.createElement("div");
     eb.className = "deck-eyebrow";
-    eb.textContent = IS_LT ? "/ APIE MUS" : IS_DE ? "/ ÜBER UNS" : "/ ABOUT US";
+    eb.textContent = IS_LT ? "/ APIE MUS" : IS_DE ? "/ ÜBER UNS" : X.aboutLabel || "/ ABOUT US";
     h.parentNode.insertBefore(eb, h);
-    markWord(h, ["agency", "agentūra", "agentūros", "agentur"]);
+    markWord(h, ["agency", "agentūra", "agentūros", "agentur"].concat(X.aboutWords || []));
   }
 
   // ---- benefits: split the run-together "Title Description..." paragraphs ----

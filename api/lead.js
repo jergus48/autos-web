@@ -15,6 +15,7 @@
 'use strict'
 
 const { send, readBody, guard, clientIp, rateLimiter, clip } = require('./_lib/common.js')
+const { LANGS, pickLang } = require('./_lib/langs.js')
 
 const limited = rateLimiter(3, 60 * 60 * 1000)
 const EMAIL_RE = /^[^\s@<>"]+@[^\s@<>"]+\.[a-z]{2,}$/i
@@ -24,8 +25,7 @@ const L = {
   lt: { contacts: 'Kontaktai', name: 'Vardas', company: 'Įmonė', email: 'El. paštas', phone: 'Telefonas', ideas: 'Ką pasiūlė DI asistentas', cases: 'Panašūs projektai', original: 'Pradinis problemos aprašymas', context: 'Apie įmonę', answers: 'Atsakymai į klausimus' },
   en: { contacts: 'Contact', name: 'Name', company: 'Company', email: 'Email', phone: 'Phone', ideas: 'What the AI assistant suggested', cases: 'Similar projects', original: 'Original problem description', context: 'About the company', answers: 'Answers to questions' }
 }
-L.de = L.en // German leads: the visitor's email is in German, the labels stay English for the team
-const PAGE = { en: '/assistant', lt: '/lt/asistentas', de: '/de/assistent' }
+for (const k of Object.keys(LANGS)) if (!L[k]) L[k] = L.en // the visitor's email is in their language, the labels stay English for the team
 
 function compose(d, t) {
   const lines = [d.body, '', '---', t.contacts + ':', `${t.name}: ${d.name}`]
@@ -44,7 +44,7 @@ function compose(d, t) {
   lines.push('', '---', t.original + ':', d.problem)
   if (d.context) lines.push('', t.context + ': ' + d.context)
   if (d.answers) lines.push('', t.answers + ':', d.answers)
-  lines.push('', `swiftrix.eu ${PAGE[d.lang]}`)
+  lines.push('', `swiftrix.eu ${LANGS[d.lang].page}`)
   return lines.join('\n')
 }
 
@@ -57,7 +57,7 @@ module.exports = async function handler(req, res) {
 
   const ideas = body.ideas && typeof body.ideas === 'object' ? body.ideas : {}
   const d = {
-    lang: body.lang === 'lt' || body.lang === 'de' ? body.lang : 'en',
+    lang: pickLang(body.lang),
     name: oneLine(clip(body.name, 100)),
     email: oneLine(clip(body.email, 150)),
     company: oneLine(clip(body.company, 150)),

@@ -6,7 +6,9 @@
 (function () {
   'use strict'
 
-  var LANG = { lt: 'lt', de: 'de' }[document.documentElement.lang] || 'en'
+  var I18N = window.SWX_I18N || {}
+  var LANG = document.documentElement.lang
+  if (LANG !== 'lt' && LANG !== 'de' && !I18N[LANG]) LANG = 'en'
   // Theme handling is shared with the assistant page: /js/pages.js.
 
   var T = {
@@ -82,7 +84,7 @@
       },
       sys: { mail: 'E-Mail', crm: 'CRM', stock: 'Lager', sheet: 'Bestelltabelle' }
     }
-  }[LANG]
+  }[LANG] || I18N[LANG].demoT
 
   // ---- sample runs ----
   var SAMPLES = {
@@ -272,7 +274,7 @@
         }
       }
     ]
-  }[LANG]
+  }[LANG] || I18N[LANG].demoSamples
 
   // ---- elements ----
   function $(s) { return document.querySelector(s) }
