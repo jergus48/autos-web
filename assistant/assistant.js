@@ -350,7 +350,7 @@
     box.classList.add('on')
     // Cal.com's standard embed loader (https://cal.com/docs/core-features/embed).
     ;(function (C, A, L) { var p = function (a, ar) { a.q.push(ar) }; var d = C.document; C.Cal = C.Cal || function () { var cal = C.Cal; var ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; var s = d.head.appendChild(d.createElement('script')); s.src = A; s.onerror = calFailed; cal.loaded = true } if (ar[0] === L) { var api = function () { p(api, arguments) }; var namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]) } else p(cal, ar); return } p(cal, ar) } })(window, 'https://app.cal.com/embed/embed.js', 'init')
-    var theme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark'
+    var theme = 'dark'
     var config = { layout: 'month_view', theme: theme, notes: calNotes() }
     if ($('name').value.trim()) config.name = $('name').value.trim()
     if ($('email').value.trim()) config.email = $('email').value.trim()

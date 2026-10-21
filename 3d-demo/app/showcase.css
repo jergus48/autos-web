@@ -1,0 +1,60 @@
+/* The public showcase (showcase.html): what is added to styles.css for it. */
+body.sc-mode { background-image: none; min-height: 0; }
+.sc-mode main { max-width: 1240px; padding-top: 20px; }
+/* nothing to unlock, no balance, no "plan read" chips: this is a demo room */
+.sc-mode .room-head { display: none; }
+.sc-mode #nav-tokens, .sc-mode .readnote, .sc-mode #scalenote { display: none !important; }
+
+.sc-plans { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin-bottom: 18px; }
+.sc-plan { text-align: left; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; color: var(--ink); font: inherit; cursor: pointer; display: grid; gap: 3px; transition: border-color .15s, background .15s; }
+.sc-plan:hover { border-color: #4a4f5a; }
+.sc-plan.on { border-color: var(--lime); background: #171b12; box-shadow: 0 0 0 1px var(--lime) inset; }
+.sc-plan b { font-size: 15px; }
+.sc-area { font-family: var(--mono); font-size: 12.5px; color: var(--lime); }
+.sc-pd { font-size: 12.5px; line-height: 1.35; color: var(--muted); }
+
+.sc-note { display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; }
+.sc-note p { color: #cdd1d8; font-size: 14.5px; line-height: 1.5; }
+.sc-note .btn { flex: none; text-decoration: none; }
+.sc-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 8px; }
+.sc-bar .chipbar { margin: 0; }
+.sc-bar #sc-clear { margin-left: auto; }
+.sc-room { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); }
+.sc-room select { background: var(--panel2); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; font: inherit; font-size: 14px; max-width: 220px; }
+.sc-msg { min-height: 22px; font-size: 14px; color: var(--lime); margin-bottom: 8px; }
+.sc-msg.bad { color: var(--warn); }
+
+.sc-added { margin-bottom: 18px; }
+.sc-added h3 { font-size: 15px; margin-bottom: 8px; }
+.sc-added ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.sc-added li { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; font-size: 14px; }
+.sc-acts { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+
+.sc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.sc-card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; }
+.sc-card.in { border-color: var(--lime); }
+.sc-pic { aspect-ratio: 4 / 3; background: #dfe2e5; display: grid; place-items: center; }
+.sc-pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sc-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.sc-body h3 { font-size: 15px; }
+.sc-dims { font-family: var(--mono); font-size: 12.5px; color: var(--lime); }
+.sc-desc { font-size: 13.5px; color: var(--muted); line-height: 1.4; flex: 1; }
+.sc-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 4px; }
+.sc-link { font-size: 13px; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line); }
+.sc-link:hover { color: var(--ink); }
+@media (max-width: 640px) { .sc-note { flex-direction: column; } .sc-bar #sc-clear { margin-left: 0; } .sc-plans { grid-template-columns: repeat(2, 1fr); } }
+
+/* the two tabs are the two halves of the demo: make the furniture one impossible to miss */
+.sc-mode .tabs { border-bottom: 0; gap: 10px; margin: 4px 0 18px; }
+.sc-mode .tab { border: 1px solid var(--line); border-radius: 999px; padding: 11px 22px; margin: 0; background: var(--panel); color: var(--ink); font-size: 15.5px; }
+.sc-mode .tab.sel { background: #e8ecec; color: #0e0f12; border-color: #e8ecec; }
+.sc-mode .tab[data-t="furniture"]:not(.sel) { background: var(--lime); color: var(--lime-ink); border-color: var(--lime); box-shadow: 0 6px 22px rgba(176,229,98,.22); }
+.sc-mode .tab[data-t="furniture"]::before { content: "+ "; }
+.viewer-bar #vIkea { background: var(--lime); color: var(--lime-ink); border-color: var(--lime); }
+
+.sc-modes { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: -6px 0 14px; }
+.sc-modehint { font-size: 13.5px; color: var(--muted); }
+.sc-orig { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 16px; }
+.sc-orig summary { cursor: pointer; padding: 12px 16px; font-size: 14.5px; color: var(--ink); }
+.sc-origimg { padding: 4px 14px 14px; max-width: 900px; margin: 0 auto; }
+.sc-origimg img { display: block; width: 100%; max-height: 560px; object-fit: contain; border-radius: 8px; background: #fff; }

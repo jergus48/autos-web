@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swiftrix 3D demo</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="showcase.css">
+<script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }</script>
+<script src="showcase-config.js"></script>
+</head>
+<body class="sc-mode">
+<!-- the showcase has no header, no account and no tokens: the page around it (swiftrix.eu) has the menu. These elements are only here because the shared screens look them up. -->
+<div hidden><button id="reset" type="button"></button><a id="nav-rooms" href="#/rooms"></a><a id="nav-tokens" href="#/buy"><span id="token-count">0</span></a><button id="acct" type="button"></button></div>
+<main id="screen" tabindex="-1"></main>
+<div id="modal-root"></div>
+<div id="toasts" aria-live="polite"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
