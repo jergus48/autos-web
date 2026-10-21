@@ -58,6 +58,7 @@ const SCHEMA = {
 // common words; anything else counts as English.
 function emailLanguage(text, pageLang) {
   const t = text.toLowerCase()
+  if (/[āēģīķļņ]/.test(t)) return 'Latvian'
   if (/[ąčęėįšųūž]/.test(t)) return 'Lithuanian'
   if (/[äöüß]/.test(t)) return 'German'
   const words = re => (t.match(re) || []).length
@@ -85,7 +86,7 @@ Fill in:
 - items: each product or service requested, with quantity and unit as written. Empty for "other".
 - delivery: the date/time as written, with the resolved date in brackets if it's relative (today is ${today}), e.g. "next Tuesday (2026-03-10)"; address and on-site contact. Only if stated.
 - missing: in ${ui}, the specific details the SENDER still has to provide to fulfil THIS request that the email doesn't give (e.g. delivery address, exact quantities, a date). Empty if nothing is missing. Don't ask for things the request doesn't need. Questions the SENDER asks (price, discount, stock, whether a date is possible) are NOT missing information: the business answers those, so they go in the reply, never in this list.
-- reply: a short, polite draft reply written AS the business that received the email (the supplier), TO the sender, in ${replyLang} (the language the email is written in), addressed to the sender by first name if known (in the vocative case in Lithuanian). Short paragraphs separated by blank lines; a list if there are several items or questions. Confirm what was understood and ask for anything missing. If the sender asks something this demo can't answer (price, discount, stock, delivery date), acknowledge the question and say you'll come back with an answer shortly. End with one short friendly closing line in ${replyLang} (Lithuanian: "Gražios dienos!", German: "Einen schönen Tag noch!", English: "Have a good day!"), never a sign-off like "Pagarbiai," / "Mit freundlichen Grüßen," / "Regards," and no name. Never state prices, totals, stock levels or delivery promises, as this demo has no catalog. For type "other", reply politely that the message doesn't look like an order or enquiry.
+- reply: a short, polite draft reply written AS the business that received the email (the supplier), TO the sender, in ${replyLang} (the language the email is written in), addressed to the sender by first name if known (in the vocative case in Lithuanian). Short paragraphs separated by blank lines; a list if there are several items or questions. Confirm what was understood and ask for anything missing. If the sender asks something this demo can't answer (price, discount, stock, delivery date), acknowledge the question and say you'll come back with an answer shortly. End with one short friendly closing line in ${replyLang} (Lithuanian: "Gražios dienos!", German: "Einen schönen Tag noch!", Latvian: "Jauku dienu!", English: "Have a good day!"), never a sign-off like "Pagarbiai," / "Ar cieņu," / "Mit freundlichen Grüßen," / "Regards," and no name. Never state prices, totals, stock levels or delivery promises, as this demo has no catalog. For type "other", reply politely that the message doesn't look like an order or enquiry.
 
 Never invent facts that the email doesn't contain; leave fields empty instead. Never use em dashes (—) in any text; use commas, colons or full stops instead.`
 }

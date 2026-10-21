@@ -1,0 +1,184 @@
+{
+ "tx": {
+  "modeFurnished": "Mēbelējusi programma",
+  "modeEmpty": "Tukšas telpas: iekārtošana manā ziņā",
+  "modeHint": "Tukšas telpas: pievienojiet mēbeles IKEA cilnē, un tās tiks novietotas Jūsu vietā.",
+  "orig": "Oriģinālais 2D plāns, no kura tas izveidots",
+  "origHide": "Paslēpt",
+  "origShow": "Rādīt oriģinālo 2D plānu",
+  "plan": "Plānojums",
+  "pickPlan": "Izvēlieties plānojumu",
+  "furniture": "IKEA mēbeles",
+  "layout": "Izkārtojums",
+  "intro": "Pilnajā Swiftrix 3D programmā Jūs ievietojat jebkuru IKEA vai citas veikala saiti. Programma nolasa īstos izmērus no lapas, izveido 3D modeli no produkta attēliem un pielāgo telpu ap to. Šajā demo ir sagatavotas 16 IKEA mēbeles. Pievienojiet dažas telpai un vērojiet, kā mainās izkārtojums.",
+  "all": "Visas",
+  "home": "Mājai",
+  "office": "Birojam",
+  "addTo": "Pievienot telpai",
+  "room": "Telpa",
+  "add": "Pievienot",
+  "remove": "Noņemt",
+  "show": "Rādīt plānā",
+  "view": "Skatīt 3D",
+  "ikea": "Skatīt IKEA",
+  "added": "Jūsu telpā",
+  "none": "Vēl nekas nav pievienots.",
+  "cm": "cm",
+  "limit": "Šajā demo var ievietot līdz 14 mēbelēm. Vispirms noņemiet vienu.",
+  "book": "Pieteikt sarunu",
+  "ctaTitle": "Vēlaties šo savam uzņēmumam?",
+  "ctaText": "Swiftrix 3D nolasa plānojumu, iekārto to un parāda 3D. Pilnā programma paredzēta uzņēmumiem: mēbeļu veikaliem, attīstītājiem, nekustamo īpašumu aģentiem un dizaineriem.",
+  "pieces": "mēbeles",
+  "ready": "Gatavs plānojums",
+  "reset": "Notīrīt mēbeles"
+ },
+ "plans": {
+  "studio": [
+   "Studija",
+   "Vienam cilvēkam vai pārim: dzīvojamā istaba, guļamistaba, virtuve un vannas istaba."
+  ],
+  "small": [
+   "Neliels dzīvoklis",
+   "Divas guļamistabas 54 m²: jaunai ģimenei vai izīrēšanai."
+  ],
+  "family": [
+   "Ģimenes dzīvoklis",
+   "Trīs guļamistabas, priekštelpa un balkons."
+  ],
+  "home": [
+   "Liela ģimenes māja",
+   "Liela māja ar kabinetu, garderobes telpu un divām vannas istabām."
+  ],
+  "office-s": [
+   "Mazs birojs",
+   "Desmit cilvēku komandai: atvērta darba telpa, sapulču telpa un reģistratūra."
+  ],
+  "office-l": [
+   "Liels birojs",
+   "Uzņēmuma stāvs ar atvērtu darba telpu, sapulču telpām, apmācību telpu un atpūtas telpu."
+  ]
+ },
+ "rooms": {
+  "Living room": "Dzīvojamā istaba",
+  "Kitchen and dining": "Virtuve un ēdamzona",
+  "Balcony": "Balkons",
+  "Hall": "Priekštelpa",
+  "Bedroom 1": "Guļamistaba 1",
+  "Bathroom": "Vannas istaba",
+  "Bedroom 2": "Guļamistaba 2",
+  "Bedroom 3": "Guļamistaba 3",
+  "Utility room": "Saimniecības telpa",
+  "Study": "Kabinets",
+  "Master bedroom": "Vecāku guļamistaba",
+  "Dressing room": "Garderobes telpa",
+  "Bathroom 2": "Vannas istaba 2",
+  "Open space": "Atvērta biroja telpa",
+  "Meeting room 1": "Sapulču telpa 1",
+  "Meeting room 2": "Sapulču telpa 2",
+  "Director office": "Direktora kabinets",
+  "Break room": "Atpūtas telpa",
+  "Reception": "Reģistratūra",
+  "Toilet 1": "Tualete 1",
+  "Toilet 2": "Tualete 2",
+  "Server and storage": "Serveru un noliktavas telpa",
+  "Training room": "Apmācību telpa",
+  "Open workspace": "Atvērta darba telpa",
+  "Meeting room": "Sapulču telpa",
+  "Kitchenette": "Virtuvīte",
+  "Toilet": "Tualete",
+  "Manager office": "Vadītāja kabinets",
+  "Living and kitchen": "Dzīvojamā istaba ar virtuvi",
+  "Bedroom": "Guļamistaba",
+  "Kids room": "Bērnu istaba",
+  "Kitchen": "Virtuve"
+ },
+ "furn": {
+  "glostad": "Kompakts trīsvietīgs dīvāns mazai dzīvojamai istabai vai studijai.",
+  "vimle": "Liels stūra dīvāns plašai dzīvojamai istabai vai biroja atpūtas zonai.",
+  "strandmon": "Klasisks atzveltnes krēsls ar ausīm lasīšanas stūrītim.",
+  "vihals": "Divguļamās gultas rāmis guļamistabai.",
+  "besta": "Zems TV galdiņš ar trim durvīm, piekarams pie sienas.",
+  "lack": "Vienkāršs žurnālgaldiņš ar plauktu atpūtas vai uzgaidāmajai zonai.",
+  "skogsta": "Garš koka ēdamgalds visai ģimenei.",
+  "odger": "Veidots ēdamistabas krēsls, der arī sapulču telpai.",
+  "pax": "Augsts drēbju skapja korpuss guļamistabai vai garderobes telpai.",
+  "billy": "Augsts grāmatplaukts grāmatām, mapēm un dekoriem.",
+  "kallax": "Kubu plaukts, kas noder arī kā telpas dalītājs.",
+  "mittzon-desk": "Elektriski regulējams galds darbam sēdus un stāvus biroja darba vietai.",
+  "markus": "Biroja krēsls ar augstu atzveltni un tīklveida muguru.",
+  "mittzon-table": "Sapulču galds ar kabeļu kanālu vidū.",
+  "alex": "Neliela atvilktņu sekcija, kas der zem galda vai blakus gultai.",
+  "tornviken": "Neliela virtuves sala mājas virtuvei vai biroja virtuvītei."
+ },
+ "page": {
+  "title": "Izmēģiniet Swiftrix 3D: iekārtoti plānojumi 3D | Swiftrix",
+  "desc": "Swiftrix 3D tiešsaistes demo. Izvēlieties gatavu plānojumu, studiju, ģimenes māju vai biroju, iekārtojiet to ar IKEA mēbelēm un apskatiet 3D.",
+  "nav": [
+   "Demo",
+   "Pilnā programma",
+   "Kam tā paredzēta"
+  ],
+  "quote": "Pieprasīt piedāvājumu",
+  "eyebrow": "TIEŠSAISTES DEMO",
+  "h1": "Izmēģiniet plānojumu, <span class=\"hl\">iekārtotu 3D</span>",
+  "hero": "Izvēlieties vienu no sešiem gataviem plānojumiem, no studijas līdz lielam birojam, pievienojiet IKEA mēbeles un vērojiet, kā atjaunojas izkārtojums, kustību ceļi un 3D telpa.",
+  "open": "Atvērt demo",
+  "call": "Pieteikt sarunu",
+  "b1": "Demo",
+  "h2a": "Seši plānojumi, sešpadsmit IKEA mēbeles",
+  "lead1": "Viss darbojas Jūsu pārlūkprogrammā. Nekas netiek augšupielādēts un nekas netiek saglabāts.",
+  "note": "Šī ir demonstrācija ar sagatavotiem plānojumiem un mēbelēm. Pilnā programma nolasa Jūsu pašu plānojumu un jebkuru veikala saiti.",
+  "frame": "Swiftrix 3D demo: plānojumi un IKEA mēbeles",
+  "b2": "Pilnā programma",
+  "h2b": "Ko Swiftrix 3D dara Jūsu uzņēmumam",
+  "cards": [
+   [
+    "plan",
+    "Nolasa plānojumu",
+    "Augšupielādējiet plānu kā attēlu vai PDF. Programma atrod telpas, sienas, durvis un logus un aprēķina īstos izmērus."
+   ],
+   [
+    "check",
+    "Iekārto un pārbauda",
+    "Tā piedāvā trīs izkārtojumus katrai telpai un izmēra kustību ceļus, brīvo vietu un attālumus, lai izkārtojums būtu praktisks, nevis tikai skaists."
+   ],
+   [
+    "link",
+    "Mēbeles no saites",
+    "Ievietojiet IKEA vai citas veikala saiti. Programma nolasa izmēru no lapas, izveido 3D modeli no produkta attēliem un pielāgo telpu ap to."
+   ],
+   [
+    "cube",
+    "3D Jūsu klientiem",
+    "Interaktīvs 3D, skati no augšas un acu augstumā, kā arī HD attēli, gatavi Jūsu klientiem, sludinājumiem vai mājaslapai."
+   ]
+  ],
+  "b3": "Kam tā paredzēta",
+  "h2c": "Parādiet telpu, pirms tā ir iekārtota",
+  "minis": [
+   [
+    "Mēbeļu un virtuvju veikali",
+    "Parādiet katram klientam viņa paša telpu, iekārtotu ar Jūsu sortimentu."
+   ],
+   [
+    "Attīstītāji un nekustamo īpašumu aģenti",
+    "Iekārtojiet dzīvokļus un mājas, pirms tie ir pabeigti."
+   ],
+   [
+    "Interjera dizaineri",
+    "Pārbaudiet izkārtojumus minūtēs un prezentējiet tos 3D."
+   ],
+   [
+    "Biroji un objektu pārvaldnieki",
+    "Plānojiet darba vietas, sapulču telpas un atpūtas telpas."
+   ]
+  ],
+  "b4": "Sākt darbu",
+  "h2d": "Vēlaties šo savam uzņēmumam?",
+  "cta": "Swiftrix 3D tiek pārdota kā programma uzņēmumiem. Pastāstiet, kas Jums nepieciešams, un mēs parādīsim demo ar Jūsu pašu plānojumu.",
+  "quote2": "Pieprasīt piedāvājumu",
+  "call2": "Pieteikt 30 minūšu sarunu",
+  "mail_subject": "Swiftrix 3D mūsu uzņēmumam",
+  "mail_body": "Labdien!\n\nVēlos uzzināt vairāk par Swiftrix 3D.\n\nUzņēmums:\nKas mums nepieciešams (mēbeļu veikals, attīstītājs, dizainers, birojs ...):\nMūsu plānojumi:\n\n"
+ }
+}

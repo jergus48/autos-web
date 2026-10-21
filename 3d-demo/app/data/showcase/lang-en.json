@@ -1,0 +1,184 @@
+{
+ "tx": {
+  "modeFurnished": "Furnished by the program",
+  "modeEmpty": "Empty rooms: I furnish them",
+  "modeHint": "Empty rooms: add pieces from the IKEA tab and they are placed for you.",
+  "orig": "The original 2D floor plan this was made from",
+  "origHide": "Hide",
+  "origShow": "Show the original 2D plan",
+  "plan": "Floor plan",
+  "pickPlan": "Choose a floor plan",
+  "furniture": "IKEA furniture",
+  "layout": "Layout",
+  "intro": "In the full Swiftrix 3D program you paste any IKEA or other shop link. The program reads the real size from the page, builds a 3D model from the product pictures and fits your room around it. This demo has 16 IKEA pieces prepared in advance. Add some to the room and watch the layout adjust.",
+  "all": "All",
+  "home": "Home",
+  "office": "Office",
+  "addTo": "Add to",
+  "room": "Room",
+  "add": "Add",
+  "remove": "Remove",
+  "show": "Show in the plan",
+  "view": "View in 3D",
+  "ikea": "View on IKEA",
+  "added": "In your room",
+  "none": "Nothing added yet.",
+  "cm": "cm",
+  "limit": "This demo holds up to 14 pieces. Remove one first.",
+  "book": "Book a call",
+  "ctaTitle": "Want this for your business?",
+  "ctaText": "Swiftrix 3D reads a floor plan, furnishes it and shows it in 3D. The full program is for companies: furniture shops, developers, estate agents and designers.",
+  "pieces": "pieces",
+  "ready": "Ready-made plan",
+  "reset": "Clear furniture"
+ },
+ "plans": {
+  "studio": [
+   "Studio",
+   "One person or a couple: a living room, a bedroom, a kitchen and a bathroom."
+  ],
+  "small": [
+   "Small apartment",
+   "Two bedrooms in 54 m²: a young family or a rental."
+  ],
+  "family": [
+   "Family apartment",
+   "Three bedrooms, a hall and a balcony."
+  ],
+  "home": [
+   "Big family home",
+   "A large house with a study, a dressing room and two bathrooms."
+  ],
+  "office-s": [
+   "Small office",
+   "A team of ten: open workspace, meeting room and reception."
+  ],
+  "office-l": [
+   "Big office",
+   "A company floor with open space, meeting rooms, a training room and a break room."
+  ]
+ },
+ "rooms": {
+  "Living room": "Living room",
+  "Kitchen and dining": "Kitchen and dining",
+  "Balcony": "Balcony",
+  "Hall": "Hall",
+  "Bedroom 1": "Bedroom 1",
+  "Bathroom": "Bathroom",
+  "Bedroom 2": "Bedroom 2",
+  "Bedroom 3": "Bedroom 3",
+  "Utility room": "Utility room",
+  "Study": "Study",
+  "Master bedroom": "Master bedroom",
+  "Dressing room": "Dressing room",
+  "Bathroom 2": "Bathroom 2",
+  "Open space": "Open space",
+  "Meeting room 1": "Meeting room 1",
+  "Meeting room 2": "Meeting room 2",
+  "Director office": "Director office",
+  "Break room": "Break room",
+  "Reception": "Reception",
+  "Toilet 1": "Toilet 1",
+  "Toilet 2": "Toilet 2",
+  "Server and storage": "Server and storage",
+  "Training room": "Training room",
+  "Open workspace": "Open workspace",
+  "Meeting room": "Meeting room",
+  "Kitchenette": "Kitchenette",
+  "Toilet": "Toilet",
+  "Manager office": "Manager office",
+  "Living and kitchen": "Living and kitchen",
+  "Bedroom": "Bedroom",
+  "Kids room": "Kids room",
+  "Kitchen": "Kitchen"
+ },
+ "furn": {
+  "glostad": "Compact 3-seat sofa for a small living room or studio.",
+  "vimle": "Large corner sofa for a big living room or an office lounge.",
+  "strandmon": "Classic wing chair for a reading corner.",
+  "vihals": "Double bed frame for a bedroom.",
+  "besta": "Low TV bench with three doors, hung on the wall.",
+  "lack": "Simple coffee table with a shelf, for a lounge or a waiting area.",
+  "skogsta": "Long wooden dining table for the whole family.",
+  "odger": "Moulded dining chair, also fine for a meeting room.",
+  "pax": "Tall wardrobe frame for a bedroom or a dressing room.",
+  "billy": "Tall bookcase for books, files and display.",
+  "kallax": "Cube shelf that also works as a room divider.",
+  "mittzon-desk": "Electric sit/stand desk for an office workstation.",
+  "markus": "High-back office chair with a mesh back.",
+  "mittzon-table": "Meeting table with a cable channel in the middle.",
+  "alex": "Small drawer unit that fits under a desk or beside a bed.",
+  "tornviken": "Small kitchen island for a home kitchen or an office kitchenette."
+ },
+ "page": {
+  "title": "Try Swiftrix 3D: floor plans furnished in 3D | Swiftrix",
+  "desc": "Live demo of Swiftrix 3D. Pick a ready-made floor plan, a studio, a family home or an office, furnish it with IKEA pieces and see it in 3D.",
+  "nav": [
+   "The demo",
+   "The full program",
+   "Who it is for"
+  ],
+  "quote": "Get a quote",
+  "eyebrow": "LIVE DEMO",
+  "h1": "Try a floor plan, <span class=\"hl\">furnished in 3D</span>",
+  "hero": "Pick one of six ready-made floor plans, from a studio to a big office, add IKEA furniture and watch the layout, the walking routes and the 3D room update.",
+  "open": "Open the demo",
+  "call": "Book a call",
+  "b1": "The demo",
+  "h2a": "Six plans, sixteen IKEA pieces",
+  "lead1": "Everything runs in your browser. Nothing is uploaded and nothing is saved.",
+  "note": "This is a showcase with prepared plans and furniture. The full program reads your own floor plan and any shop link.",
+  "frame": "Swiftrix 3D demo: floor plans and IKEA furniture",
+  "b2": "The full program",
+  "h2b": "What Swiftrix 3D does for your business",
+  "cards": [
+   [
+    "plan",
+    "Reads a floor plan",
+    "Upload a plan as an image or PDF. The program finds the rooms, walls, doors and windows and works out the real measurements."
+   ],
+   [
+    "check",
+    "Furnishes it and checks it",
+    "It proposes three arrangements per room and measures walking routes, clear space and distances, so the layout is practical, not just pretty."
+   ],
+   [
+    "link",
+    "Furniture from a link",
+    "Paste an IKEA or other shop link. The program reads the size from the page, builds a 3D model from the product pictures and fits the room around it."
+   ],
+   [
+    "cube",
+    "3D for your customers",
+    "Interactive 3D, top views, eye-level views and HD pictures, ready for your customers, your listings or your website."
+   ]
+  ],
+  "b3": "Who it is for",
+  "h2c": "Show the room before it is furnished",
+  "minis": [
+   [
+    "Furniture and kitchen shops",
+    "Show every customer their own room furnished with your range."
+   ],
+   [
+    "Developers and estate agents",
+    "Furnish flats and houses before they are finished."
+   ],
+   [
+    "Interior designers",
+    "Test layouts in minutes and present them in 3D."
+   ],
+   [
+    "Offices and facility managers",
+    "Plan desks, meeting rooms and break rooms."
+   ]
+  ],
+  "b4": "Get started",
+  "h2d": "Want this for your company?",
+  "cta": "Swiftrix 3D is sold as a program for companies. Tell us what you need and we will show you a demo with your own plan.",
+  "quote2": "Request a quote",
+  "call2": "Book a 30-minute call",
+  "mail_subject": "Swiftrix 3D for our company",
+  "mail_body": "Hello,\n\nI would like to know more about Swiftrix 3D.\n\nCompany:\nWhat we need (furniture shop, developer, designer, office...):\nOur floor plans:\n\n"
+ }
+}

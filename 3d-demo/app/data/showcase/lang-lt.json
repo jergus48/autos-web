@@ -1,0 +1,184 @@
+{
+ "tx": {
+  "modeFurnished": "Įrengta programos",
+  "modeEmpty": "Tuščios patalpos: įrengiu pats",
+  "modeHint": "Tuščios patalpos: pridėkite baldų iš IKEA skirtuko ir jie bus išdėstyti už jus.",
+  "orig": "Originalus 2D planas, pagal kurį sukurta",
+  "origHide": "Slėpti",
+  "origShow": "Rodyti originalų 2D planą",
+  "plan": "Planas",
+  "pickPlan": "Pasirinkite planą",
+  "furniture": "IKEA baldai",
+  "layout": "Išplanavimas",
+  "intro": "Pilnoje „Swiftrix 3D“ programoje įklijuojate bet kurią IKEA ar kitos parduotuvės nuorodą. Programa perskaito tikrus matmenis iš puslapio, pagal prekės nuotraukas sukuria 3D modelį ir pritaiko patalpą aplink jį. Šioje demonstracijoje paruošta 16 IKEA baldų. Įdėkite kelis į patalpą ir stebėkite, kaip keičiasi išplanavimas.",
+  "all": "Visi",
+  "home": "Namams",
+  "office": "Biurui",
+  "addTo": "Įdėti į",
+  "room": "Patalpa",
+  "add": "Įdėti",
+  "remove": "Pašalinti",
+  "show": "Rodyti plane",
+  "view": "Žiūrėti 3D",
+  "ikea": "Žiūrėti IKEA",
+  "added": "Jūsų patalpoje",
+  "none": "Dar nieko neįdėta.",
+  "cm": "cm",
+  "limit": "Šioje demonstracijoje telpa iki 14 baldų. Pirmiausia vieną pašalinkite.",
+  "book": "Užsakyti skambutį",
+  "ctaTitle": "Norite to savo verslui?",
+  "ctaText": "„Swiftrix 3D“ perskaito planą, įrengia jį baldais ir parodo 3D. Pilna programa skirta įmonėms: baldų parduotuvėms, vystytojams, nekilnojamojo turto agentams ir dizaineriams.",
+  "pieces": "baldai",
+  "ready": "Paruoštas planas",
+  "reset": "Išvalyti baldus"
+ },
+ "plans": {
+  "studio": [
+   "Studija",
+   "Vienam žmogui ar porai: svetainė, miegamasis, virtuvė ir vonios kambarys."
+  ],
+  "small": [
+   "Mažas butas",
+   "Du miegamieji 54 m²: jaunai šeimai ar nuomai."
+  ],
+  "family": [
+   "Šeimos butas",
+   "Trys miegamieji, koridorius ir balkonas."
+  ],
+  "home": [
+   "Didelis šeimos namas",
+   "Didelis namas su kabinetu, drabužine ir dviem vonios kambariais."
+  ],
+  "office-s": [
+   "Mažas biuras",
+   "Dešimties žmonių komandai: atvira erdvė, susitikimų kambarys ir registratūra."
+  ],
+  "office-l": [
+   "Didelis biuras",
+   "Įmonės aukštas: atvira erdvė, susitikimų kambariai, mokymų salė ir poilsio kambarys."
+  ]
+ },
+ "rooms": {
+  "Living room": "Svetainė",
+  "Kitchen and dining": "Virtuvė ir valgomasis",
+  "Balcony": "Balkonas",
+  "Hall": "Prieškambaris",
+  "Bedroom 1": "Miegamasis 1",
+  "Bathroom": "Vonios kambarys",
+  "Bedroom 2": "Miegamasis 2",
+  "Bedroom 3": "Miegamasis 3",
+  "Utility room": "Ūkio patalpa",
+  "Study": "Kabinetas",
+  "Master bedroom": "Pagrindinis miegamasis",
+  "Dressing room": "Drabužinė",
+  "Bathroom 2": "Vonios kambarys 2",
+  "Open space": "Atvira darbo erdvė",
+  "Meeting room 1": "Susitikimų kambarys 1",
+  "Meeting room 2": "Susitikimų kambarys 2",
+  "Director office": "Direktoriaus kabinetas",
+  "Break room": "Poilsio kambarys",
+  "Reception": "Registratūra",
+  "Toilet 1": "Tualetas 1",
+  "Toilet 2": "Tualetas 2",
+  "Server and storage": "Serverinė ir sandėlis",
+  "Training room": "Mokymų salė",
+  "Open workspace": "Atvira darbo erdvė",
+  "Meeting room": "Susitikimų kambarys",
+  "Kitchenette": "Virtuvėlė",
+  "Toilet": "Tualetas",
+  "Manager office": "Vadovo kabinetas",
+  "Living and kitchen": "Svetainė ir virtuvė",
+  "Bedroom": "Miegamasis",
+  "Kids room": "Vaikų kambarys",
+  "Kitchen": "Virtuvė"
+ },
+ "furn": {
+  "glostad": "Kompaktiška trijų vietų sofa nedidelei svetainei ar studijai.",
+  "vimle": "Didelė kampinė sofa erdviai svetainei ar biuro poilsio zonai.",
+  "strandmon": "Klasikinis krėslas skaitymo kampeliui.",
+  "vihals": "Dvigulės lovos rėmas miegamajam.",
+  "besta": "Žema TV spintelė su trejomis durelėmis, kabinama ant sienos.",
+  "lack": "Paprastas kavos staliukas su lentyna svetainei ar laukimo zonai.",
+  "skogsta": "Ilgas medinis valgomojo stalas visai šeimai.",
+  "odger": "Formuota valgomojo kėdė, tinka ir susitikimų kambariui.",
+  "pax": "Aukštas spintos karkasas miegamajam ar drabužinei.",
+  "billy": "Aukšta lentyna knygoms, segtuvams ir dekoracijoms.",
+  "kallax": "Kubų lentyna, kuri tinka ir kaip erdvės skirstytuvas.",
+  "mittzon-desk": "Elektra reguliuojamo aukščio stalas darbo vietai.",
+  "markus": "Aukšto atlošo biuro kėdė su tinkleliu.",
+  "mittzon-table": "Susitikimų stalas su kabelių kanalu per vidurį.",
+  "alex": "Maža stalčių spintelė po stalu ar prie lovos.",
+  "tornviken": "Maža virtuvės sala namų virtuvei ar biuro virtuvėlei."
+ },
+ "page": {
+  "title": "Išbandykite Swiftrix 3D: planai su baldais 3D | Swiftrix",
+  "desc": "Gyva Swiftrix 3D demonstracija. Pasirinkite paruoštą planą, studiją, šeimos namą ar biurą, įrenkite jį IKEA baldais ir pamatykite 3D.",
+  "nav": [
+   "Demonstracija",
+   "Pilna programa",
+   "Kam skirta"
+  ],
+  "quote": "Gauti pasiūlymą",
+  "eyebrow": "GYVA DEMONSTRACIJA",
+  "h1": "Išbandykite planą, <span class=\"hl\">įrengtą 3D</span>",
+  "hero": "Pasirinkite vieną iš šešių paruoštų planų, nuo studijos iki didelio biuro, pridėkite IKEA baldų ir stebėkite, kaip keičiasi išplanavimas, praėjimai ir 3D patalpa.",
+  "open": "Atidaryti demonstraciją",
+  "call": "Užsakyti skambutį",
+  "b1": "Demonstracija",
+  "h2a": "Šeši planai, šešiolika IKEA baldų",
+  "lead1": "Viskas veikia jūsų naršyklėje. Niekas neįkeliama ir nieko nesaugome.",
+  "note": "Tai pavyzdys su paruoštais planais ir baldais. Pilna programa perskaito jūsų planą ir bet kurią parduotuvės nuorodą.",
+  "frame": "Swiftrix 3D demonstracija: planai ir IKEA baldai",
+  "b2": "Pilna programa",
+  "h2b": "Ką „Swiftrix 3D“ daro jūsų verslui",
+  "cards": [
+   [
+    "plan",
+    "Perskaito planą",
+    "Įkelkite planą kaip paveikslėlį ar PDF. Programa randa patalpas, sienas, duris ir langus ir apskaičiuoja tikrus matmenis."
+   ],
+   [
+    "check",
+    "Įrengia ir patikrina",
+    "Kiekvienai patalpai pasiūlo tris išplanavimus ir išmatuoja praėjimus, laisvą vietą bei atstumus, kad išplanavimas būtų praktiškas, o ne tik gražus."
+   ],
+   [
+    "link",
+    "Baldai iš nuorodos",
+    "Įklijuokite IKEA ar kitos parduotuvės nuorodą. Programa perskaito matmenis iš puslapio, pagal prekės nuotraukas sukuria 3D modelį ir pritaiko patalpą aplink jį."
+   ],
+   [
+    "cube",
+    "3D jūsų klientams",
+    "Interaktyvus 3D, vaizdai iš viršaus ir iš akių lygio, HD paveikslėliai klientams, skelbimams ar svetainei."
+   ]
+  ],
+  "b3": "Kam skirta",
+  "h2c": "Parodykite patalpą dar neįrengtą",
+  "minis": [
+   [
+    "Baldų ir virtuvių parduotuvės",
+    "Parodykite kiekvienam klientui jo paties patalpą, įrengtą jūsų asortimento baldais."
+   ],
+   [
+    "Vystytojai ir nekilnojamojo turto agentai",
+    "Įrenkite butus ir namus dar prieš jiems pasibaigiant statyboms."
+   ],
+   [
+    "Interjero dizaineriai",
+    "Išbandykite išplanavimus per kelias minutes ir pateikite juos 3D."
+   ],
+   [
+    "Biurai ir patalpų valdytojai",
+    "Suplanuokite darbo vietas, susitikimų ir poilsio kambarius."
+   ]
+  ],
+  "b4": "Pradėkime",
+  "h2d": "Norite to savo įmonei?",
+  "cta": "„Swiftrix 3D“ parduodama kaip programa įmonėms. Papasakokite, ko jums reikia, ir parodysime demonstraciją su jūsų pačių planu.",
+  "quote2": "Prašyti pasiūlymo",
+  "call2": "Užsakyti 30 min. pokalbį",
+  "mail_subject": "Swiftrix 3D mūsų įmonei",
+  "mail_body": "Sveiki,\n\nnorėčiau sužinoti daugiau apie Swiftrix 3D.\n\nĮmonė:\nKo mums reikia (baldų parduotuvė, vystytojas, dizaineris, biuras...):\nMūsų planai:\n\n"
+ }
+}

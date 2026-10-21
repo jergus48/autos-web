@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="lv" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MI aģenta demo | Swiftrix</title>
+  <meta name="description" content="Izmēģiniet MI aģentu: tas izlasa pasūtījuma e-pastu, pārbauda Jūsu sistēmas, ievada pasūtījumu tabulā un sagatavo atbildi klientam.">
+  <link rel="canonical" href="https://www.swiftrix.eu/lv/demo">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MI aģenta demo | Swiftrix">
+  <meta property="og:description" content="No e-pasta līdz pasūtījumam bez manuāla darba. Redziet, kā strādā MI aģents.">
+  <link rel="icon" href="/assets/images/swiftrixLogo.png">
+  <link rel="alternate" hreflang="en" href="https://www.swiftrix.eu/demo">
+  <link rel="alternate" hreflang="lt" href="https://www.swiftrix.eu/lt/demo">
+  <link rel="alternate" hreflang="de" href="https://www.swiftrix.eu/de/demo">
+  <link rel="alternate" hreflang="fr" href="https://www.swiftrix.eu/fr/demo">
+  <link rel="alternate" hreflang="es" href="https://www.swiftrix.eu/es/demo">
+  <link rel="alternate" hreflang="no" href="https://www.swiftrix.eu/no/demo">
+  <link rel="alternate" hreflang="da" href="https://www.swiftrix.eu/da/demo">
+  <link rel="alternate" hreflang="fi" href="https://www.swiftrix.eu/fi/demo">
+  <link rel="alternate" hreflang="sv" href="https://www.swiftrix.eu/sv/demo">
+  <link rel="alternate" hreflang="pt" href="https://www.swiftrix.eu/pt/demo">
+  <link rel="alternate" hreflang="lv" href="https://www.swiftrix.eu/lv/demo">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&display=swap">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/demo/demo.css">
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <nav class="vex-nav">
+    <a class="vex-logo" data-site="" href="/lv" aria-label="Swiftrix">
+      <img class="logo-dark" src="/assets/images/swiftrixLogo.png" alt="Swiftrix">
+    </a>
+    <div class="vex-links" id="vexLinks">
+      <a data-site="#process" href="/lv#process">Kā tas darbojas</a>
+      <a data-site="#testimonial" href="/lv#testimonial">Piemēri</a>
+      <a data-site="" href="/lv">Par mums</a>
+      <a data-page="/lv/asistents" href="/lv/asistents">MI asistents</a>
+      <a data-site="#faq" href="/lv#faq">BUJ</a>
+      <a class="vex-mlink" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Rezervēt sarunu</a>
+    </div>
+    <a class="vex-cta" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Rezervēt sarunu</a>
+    <button class="vex-burger" id="vexBurger" type="button" aria-label="Izvēlne" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="wrap">
+    <header class="hero">
+      <p class="eyebrow"><span>MI AĢENTA DEMO · IZMĒĢINIET PATS</span></p>
+      <h1>No e-pasta līdz <span class="hl">pasūtījumam</span> bez manuāla darba</h1>
+      <p>Izvēlieties e-pastu un redziet, kā MI aģents to izlasa, pārbauda Jūsu sistēmas, ievada pasūtījumu tabulā un sagatavo atbildi klientam. Jums atliek tikai apstiprināt.</p>
+    </header>
+
+    <div class="app">
+      <section class="panel" aria-label="Iesūtne">
+        <div class="panel-head"><span class="step-no">1</span>Iesūtne</div>
+        <ul class="mail-list" id="mail-list" role="tablist"></ul>
+        <div class="panel-body">
+          <div id="reader"
+            data-placeholder="Ielīmējiet pasūtījumu, cenas pieprasījumu vai citu e-pastu, kādus saņem Jūsu uzņēmums…"
+            data-privacy="Neielīmējiet personas datus. E-pastu apstrādā MI modelis, un mēs to neglabājam."></div>
+          <div class="run-row"><button class="btn btn-primary" id="run" type="button">Palaist aģentu</button></div>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-agent" aria-label="Aģents">
+        <div class="panel-head"><span class="step-no">2</span>Aģents<span class="pill" id="agent-pill"><i></i><span></span></span></div>
+        <div class="panel-body">
+          <div class="systems"><span class="sys" data-sys="mail"></span><span class="sys" data-sys="crm"></span><span class="sys" data-sys="stock"></span><span class="sys" data-sys="sheet"></span></div>
+          <ul class="steps" id="steps" aria-live="polite"></ul>
+        </div>
+      </section>
+
+      <section class="panel panel-result" aria-label="Rezultāts">
+        <div class="panel-head"><span class="step-no">3</span>Rezultāts<span class="pill" id="result-pill"><i></i><span></span></span></div>
+        <div class="panel-body" id="result-body" aria-live="polite"></div>
+      </section>
+    </div>
+
+    <section class="panel sheet" aria-label="Pasūtījumu tabula">
+      <div class="panel-head"><span class="xls">X</span>Pasūtījumi.xlsx</div>
+      <div class="sheet-scroll"><table><thead><tr id="sheet-head"></tr></thead><tbody id="sheet-body"></tbody></table></div>
+    </section>
+
+    <section class="block">
+      <span class="sec-badge"><i></i>Kāpēc aģents</span>
+      <h2>Kā tas atšķiras no ChatGPT?</h2>
+      <p class="lead">ChatGPT atbild, kad to kaut ko pajautā. Aģents strādā pats, savienots ar Jūsu sistēmām un darbojas pēc Jūsu noteikumiem.</p>
+      <div class="cards">
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3M15 7V3M6 7h12v4a6 6 0 0 1-12 0V7zM12 17v4"/></svg></div>
+          <h3>Savienots ar Jūsu sistēmām</h3>
+          <p>Lasa Jūsu e-pasta iesūtni, pārbauda cenas un atlikumus katalogā, klienta vēsturi CRM un raksta Jūsu Excel, Google Sheets vai ERP.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3>Strādā pats, visu diennakti</h3>
+          <p>E-pasts atnāca naktī vai brīvdienās? Kad no rīta atverat pastu, pasūtījums jau ir ievadīts un atbilde sagatavota.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
+          <h3>Kontrole paliek Jums</h3>
+          <p>Atbildes tiek nosūtītas tikai pēc Jūsu apstiprinājuma vai automātiski, ja tā izlemsiet. Neskaidros gadījumus aģents atzīmē, un Jūs redzat visu, ko tas ir izdarījis.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <span class="sec-badge"><i></i>Iespējas</span>
+      <h2>Ko vēl var darīt MI aģenti</h2>
+      <p class="lead">Pasūtījumu aģents ir tikai viens piemērs. Aģentus veidojam tur, kur Jūsu komanda zaudē visvairāk laika.</p>
+      <div class="cards">
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
+          <h3>E-pastu un pasūtījumu aģents</h3>
+          <p>Pārnes pasūtījumus, rēķinus un pieprasījumus no e-pasta uz Jūsu sistēmām.</p>
+          <span class="tag">← Šis demo</span>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div>
+          <h3>Klientu apkalpošanas aģents</h3>
+          <p>Visu diennakti atbild uz klientu jautājumiem pa e-pastu vai tīmekļa vietnes tērzētavā, pieraksta uz tikšanos un sarežģītus gadījumus nodod cilvēkam.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></div>
+          <h3>Dokumentu un atskaišu aģents</h3>
+          <p>Sagatavo piedāvājumus, rēķinus un atskaites, kā arī pārbauda, vai dokumentos netrūkst datu.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+          <h3>Pārdošanas aģents</h3>
+          <p>Novērtē jaunus pieprasījumus, laikus atgādina klientiem un uztur CRM, lai neviens potenciālais klients nepazustu.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <span class="sec-badge"><i></i>Saruna</span>
+      <h2>Vēlaties šādu aģentu savam uzņēmumam?</h2>
+      <p>15 minūšu sarunā noskaidrosim, kuru atkārtojamo darbu aģents varētu pārņemt Jūsu uzņēmumā.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Rezervēt sarunu</a>
+        <a class="btn btn-ghost" data-page="/lv/asistents" href="/lv/asistents">Aprakstīt savu problēmu</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Swiftrix · <a data-site="" href="/lv">swiftrix.eu</a></footer>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/i18n/lv.js"></script>
+  <script src="/js/pages.js" defer></script>
+  <script src="/demo/demo.js" defer></script>
+  <script src="/js/cal-popup.js" defer></script>
+</body>
+</html>

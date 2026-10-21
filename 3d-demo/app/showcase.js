@@ -8,43 +8,9 @@ import { drawModelViews } from './modelshot.js'
 import { MODELS, modelKeyOf } from '../layout/models.js'
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]))
-export const LANG = (() => { const l = new URLSearchParams(location.search).get('lang'); return ['en', 'lt', 'de'].includes(l) ? l : 'en' })()
+import { LANG, LANGS, PLANS, translatePlan, TX, EXTRA } from './showcase-text.js'
+export { LANG, LANGS, PLANS, translatePlan, TX }
 export const BOOK_URL = 'https://cal.com/swiftrix/30-minute-call'
-
-export const PLANS = [
-  { id: 'studio', area: 44, t: { en: ['Studio', 'One person or a couple: a living room, a bedroom, a kitchen and a bathroom.'], lt: ['Studija', 'Vienam žmogui ar porai: svetainė, miegamasis, virtuvė ir vonios kambarys.'], de: ['Studio', 'Für eine Person oder ein Paar: Wohnzimmer, Schlafzimmer, Küche und Bad.'] } },
-  { id: 'small', area: 54, t: { en: ['Small apartment', 'Two bedrooms in 54 m²: a young family or a rental.'], lt: ['Mažas butas', 'Du miegamieji 54 m²: jaunai šeimai ar nuomai.'], de: ['Kleine Wohnung', 'Zwei Schlafzimmer auf 54 m²: junge Familie oder Vermietung.'] } },
-  { id: 'family', area: 103, t: { en: ['Family apartment', 'Three bedrooms, a hall and a balcony.'], lt: ['Šeimos butas', 'Trys miegamieji, koridorius ir balkonas.'], de: ['Familienwohnung', 'Drei Schlafzimmer, Flur und Balkon.'] } },
-  { id: 'home', area: 188, t: { en: ['Big family home', 'A large house with a study, a dressing room and two bathrooms.'], lt: ['Didelis šeimos namas', 'Didelis namas su kabinetu, drabužine ir dviem vonios kambariais.'], de: ['Großes Familienhaus', 'Ein großes Haus mit Arbeitszimmer, Ankleide und zwei Bädern.'] } },
-  { id: 'office-s', area: 63, t: { en: ['Small office', 'A team of ten: open workspace, meeting room and reception.'], lt: ['Mažas biuras', 'Dešimties žmonių komandai: atvira erdvė, susitikimų kambarys ir registratūra.'], de: ['Kleines Büro', 'Für ein Team von zehn: Großraum, Besprechungsraum und Empfang.'] } },
-  { id: 'office-l', area: 216, t: { en: ['Big office', 'A company floor with open space, meeting rooms, a training room and a break room.'], lt: ['Didelis biuras', 'Įmonės aukštas: atvira erdvė, susitikimų kambariai, mokymų salė ir poilsio kambarys.'], de: ['Großes Büro', 'Eine Firmenetage mit Großraum, Besprechungsräumen, Schulungsraum und Pausenraum.'] } },
-]
-
-// the names of the rooms in the plan files are English; they are shown in the language of the page
-const ROOM_NAMES = {
-  lt: {  Kitchen: 'Virtuvė', Hall: 'Prieškambaris', Bathroom: 'Vonios kambarys', 'Living and kitchen': 'Svetainė ir virtuvė', Bedroom: 'Miegamasis', 'Kids room': 'Vaikų kambarys', 'Living room': 'Svetainė', 'Kitchen and dining': 'Virtuvė ir valgomasis', Balcony: 'Balkonas', 'Bedroom 1': 'Miegamasis 1', 'Bedroom 2': 'Miegamasis 2', 'Bedroom 3': 'Miegamasis 3', 'Utility room': 'Ūkio patalpa', Study: 'Kabinetas', 'Master bedroom': 'Pagrindinis miegamasis', 'Dressing room': 'Drabužinė', 'Bathroom 2': 'Vonios kambarys 2', 'Open workspace': 'Atvira darbo erdvė', 'Meeting room': 'Susitikimų kambarys', Kitchenette: 'Virtuvėlė', Reception: 'Registratūra', Toilet: 'Tualetas', 'Manager office': 'Vadovo kabinetas', 'Open space': 'Atvira darbo erdvė', 'Meeting room 1': 'Susitikimų kambarys 1', 'Meeting room 2': 'Susitikimų kambarys 2', 'Director office': 'Direktoriaus kabinetas', 'Break room': 'Poilsio kambarys', 'Toilet 1': 'Tualetas 1', 'Toilet 2': 'Tualetas 2', 'Server and storage': 'Serverinė ir sandėlis', 'Training room': 'Mokymų salė' },
-  de: { 'Living and sleeping': 'Wohnen und Schlafen', Kitchen: 'Küche', Hall: 'Flur', Bathroom: 'Badezimmer', 'Living and kitchen': 'Wohnen und Küche', Bedroom: 'Schlafzimmer', 'Kids room': 'Kinderzimmer', 'Living room': 'Wohnzimmer', 'Kitchen and dining': 'Küche und Essbereich', Balcony: 'Balkon', 'Bedroom 1': 'Schlafzimmer 1', 'Bedroom 2': 'Schlafzimmer 2', 'Bedroom 3': 'Schlafzimmer 3', 'Utility room': 'Hauswirtschaftsraum', Study: 'Arbeitszimmer', 'Master bedroom': 'Elternschlafzimmer', 'Dressing room': 'Ankleidezimmer', 'Bathroom 2': 'Badezimmer 2', 'Open workspace': 'Offener Arbeitsbereich', 'Meeting room': 'Besprechungsraum', Kitchenette: 'Teeküche', Reception: 'Empfang', Toilet: 'WC', 'Manager office': 'Büro der Leitung', 'Open space': 'Großraumbüro', 'Meeting room 1': 'Besprechungsraum 1', 'Meeting room 2': 'Besprechungsraum 2', 'Director office': 'Direktionsbüro', 'Break room': 'Pausenraum', 'Toilet 1': 'WC 1', 'Toilet 2': 'WC 2', 'Server and storage': 'Server und Lager', 'Training room': 'Schulungsraum' },
-}
-export const translatePlan = (plan) => { const m = ROOM_NAMES[LANG]; if (m) plan.rooms.forEach((r) => { r.name = m[r.name] || r.name }); return plan }
-
-const S = {
-  en: { modeFurnished: 'Furnished by the program', modeEmpty: 'Empty rooms: I furnish them', modeHint: 'Empty rooms: add pieces from the IKEA tab and they are placed for you.', orig: 'The original 2D floor plan this was made from', origHide: 'Hide', origShow: 'Show the original 2D plan', plan: 'Floor plan', pickPlan: 'Choose a floor plan', furniture: 'IKEA furniture', layout: 'Layout',
-    intro: 'In the full Swiftrix 3D program you paste any IKEA or other shop link. The program reads the real size from the page, builds a 3D model from the product pictures and fits your room around it. This demo has 16 IKEA pieces prepared in advance. Add some to the room and watch the layout adjust.',
-    all: 'All', home: 'Home', office: 'Office', addTo: 'Add to', room: 'Room', add: 'Add', remove: 'Remove', show: 'Show in the plan', view: 'View in 3D', ikea: 'View on IKEA', added: 'In your room', none: 'Nothing added yet.',
-    cm: 'cm', limit: 'This demo holds up to 14 pieces. Remove one first.', book: 'Book a call', ctaTitle: 'Want this for your business?', ctaText: 'Swiftrix 3D reads a floor plan, furnishes it and shows it in 3D. The full program is for companies: furniture shops, developers, estate agents and designers.', pieces: 'pieces', ready: 'Ready-made plan',
-    reset: 'Clear furniture' },
-  lt: { modeFurnished: 'Įrengta programos', modeEmpty: 'Tuščios patalpos: įrengiu pats', modeHint: 'Tuščios patalpos: pridėkite baldų iš IKEA skirtuko ir jie bus išdėstyti už jus.', orig: 'Originalus 2D planas, pagal kurį sukurta', origHide: 'Slėpti', origShow: 'Rodyti originalų 2D planą', plan: 'Planas', pickPlan: 'Pasirinkite planą', furniture: 'IKEA baldai', layout: 'Išplanavimas',
-    intro: 'Pilnoje „Swiftrix 3D“ programoje įklijuojate bet kurią IKEA ar kitos parduotuvės nuorodą. Programa perskaito tikrus matmenis iš puslapio, pagal prekės nuotraukas sukuria 3D modelį ir pritaiko patalpą aplink jį. Šioje demonstracijoje paruošta 16 IKEA baldų. Įdėkite kelis į patalpą ir stebėkite, kaip keičiasi išplanavimas.',
-    all: 'Visi', home: 'Namams', office: 'Biurui', addTo: 'Įdėti į', room: 'Patalpa', add: 'Įdėti', remove: 'Pašalinti', show: 'Rodyti plane', view: 'Žiūrėti 3D', ikea: 'Žiūrėti IKEA', added: 'Jūsų patalpoje', none: 'Dar nieko neįdėta.',
-    cm: 'cm', limit: 'Šioje demonstracijoje telpa iki 14 baldų. Pirmiausia vieną pašalinkite.', book: 'Užsakyti skambutį', ctaTitle: 'Norite to savo verslui?', ctaText: '„Swiftrix 3D“ perskaito planą, įrengia jį baldais ir parodo 3D. Pilna programa skirta įmonėms: baldų parduotuvėms, vystytojams, nekilnojamojo turto agentams ir dizaineriams.', pieces: 'baldai', ready: 'Paruoštas planas',
-    reset: 'Išvalyti baldus' },
-  de: { modeFurnished: 'Vom Programm möbliert', modeEmpty: 'Leere Räume: ich möbliere', modeHint: 'Leere Räume: Fügen Sie Möbel im IKEA-Tab hinzu, sie werden für Sie platziert.', orig: 'Der originale 2D-Grundriss, aus dem dies erstellt wurde', origHide: 'Ausblenden', origShow: 'Originalen 2D-Grundriss zeigen', plan: 'Grundriss', pickPlan: 'Grundriss wählen', furniture: 'IKEA-Möbel', layout: 'Aufteilung',
-    intro: 'Im vollständigen Swiftrix-3D-Programm fügen Sie einen beliebigen IKEA- oder anderen Shop-Link ein. Das Programm liest die echten Maße von der Seite, baut aus den Produktbildern ein 3D-Modell und passt Ihren Raum darum herum an. In dieser Demo sind 16 IKEA-Möbel vorbereitet. Stellen Sie einige in den Raum und sehen Sie, wie sich die Aufteilung anpasst.',
-    all: 'Alle', home: 'Wohnen', office: 'Büro', addTo: 'Hinzufügen zu', room: 'Raum', add: 'Hinzufügen', remove: 'Entfernen', show: 'Im Plan zeigen', view: 'In 3D ansehen', ikea: 'Bei IKEA ansehen', added: 'In Ihrem Raum', none: 'Noch nichts hinzugefügt.',
-    cm: 'cm', limit: 'Diese Demo fasst bis zu 14 Möbel. Entfernen Sie zuerst eines.', book: 'Gespräch buchen', ctaTitle: 'Das für Ihr Unternehmen?', ctaText: 'Swiftrix 3D liest einen Grundriss, möbliert ihn und zeigt ihn in 3D. Das vollständige Programm ist für Unternehmen gedacht: Möbelhäuser, Bauträger, Makler und Designer.', pieces: 'Möbel', ready: 'Fertiger Grundriss',
-    reset: 'Möbel entfernen' },
-}
-export const TX = S[LANG]
 
 // ---- the choice of the plan, above the room
 let origOpen = true          // the original 2D plan stays open or shut while the visitor switches plans
@@ -70,7 +36,7 @@ export function mountPlanBar(host, currentId, onPick, { empty = false, onMode = 
 
 // ---- the furniture: a card per piece, a model picture drawn from our own 3D model, a link to the shop
 let catalog = null
-const loadCatalog = () => (catalog ||= fetch('./data/showcase/furniture.json').then((r) => r.json()))
+const loadCatalog = () => (catalog ||= fetch('./data/showcase/furniture.json').then((r) => r.json()).then((c) => { if (EXTRA?.furn) for (const x of c) x.desc[LANG] = EXTRA.furn[x.id] || x.desc.en; return c }))
 const cmText = (d) => [d.w, d.d, d.h].map((v) => Math.round(v * 100)).join(' × ') + ' ' + TX.cm
 const newId = (() => { let n = 0; return (k) => `sc-${k}-${Date.now().toString(36)}${n++}` })()
 

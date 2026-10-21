@@ -1,0 +1,184 @@
+{
+ "tx": {
+  "modeFurnished": "Ohjelman sisustama",
+  "modeEmpty": "Tyhjät huoneet: sisustan itse",
+  "modeHint": "Tyhjät huoneet: lisää kalusteita IKEA-välilehdeltä, niin ne sijoitetaan puolestasi.",
+  "orig": "Alkuperäinen 2D-pohjapiirros, josta tämä on tehty",
+  "origHide": "Piilota",
+  "origShow": "Näytä alkuperäinen 2D-pohja",
+  "plan": "Pohjapiirros",
+  "pickPlan": "Valitse pohjapiirros",
+  "furniture": "IKEA-kalusteet",
+  "layout": "Sijoittelu",
+  "intro": "Täydessä Swiftrix 3D -ohjelmassa liität minkä tahansa IKEA- tai muun verkkokaupan linkin. Ohjelma lukee todelliset mitat sivulta, rakentaa tuotekuvista 3D-mallin ja sovittaa huoneen sen ympärille. Tässä demossa on valmiina 16 IKEA-kalustetta. Lisää niitä huoneeseen ja katso, miten sijoittelu mukautuu.",
+  "all": "Kaikki",
+  "home": "Koti",
+  "office": "Toimisto",
+  "addTo": "Lisää kohteeseen",
+  "room": "Huone",
+  "add": "Lisää",
+  "remove": "Poista",
+  "show": "Näytä pohjassa",
+  "view": "Katso 3D:nä",
+  "ikea": "Katso IKEAssa",
+  "added": "Huoneessanne",
+  "none": "Mitään ei ole vielä lisätty.",
+  "cm": "cm",
+  "limit": "Tähän demoon mahtuu enintään 14 kalustetta. Poista ensin yksi.",
+  "book": "Varaa puhelu",
+  "ctaTitle": "Haluatteko tämän yrityksellenne?",
+  "ctaText": "Swiftrix 3D lukee pohjapiirroksen, sisustaa sen ja näyttää sen 3D:nä. Täysi ohjelma on tarkoitettu yrityksille: huonekalukaupoille, rakennuttajille, kiinteistönvälittäjille ja suunnittelijoille.",
+  "pieces": "kalustetta",
+  "ready": "Valmis pohja",
+  "reset": "Tyhjennä kalusteet"
+ },
+ "plans": {
+  "studio": [
+   "Yksiö",
+   "Yhdelle tai parille: olohuone, makuuhuone, keittiö ja kylpyhuone."
+  ],
+  "small": [
+   "Pieni asunto",
+   "Kaksi makuuhuonetta 54 m²:llä: nuorelle perheelle tai vuokrakäyttöön."
+  ],
+  "family": [
+   "Perheasunto",
+   "Kolme makuuhuonetta, eteinen ja parveke."
+  ],
+  "home": [
+   "Iso perhetalo",
+   "Suuri talo, jossa on työhuone, vaatehuone ja kaksi kylpyhuonetta."
+  ],
+  "office-s": [
+   "Pieni toimisto",
+   "Kymmenen hengen tiimille: avotoimisto, neuvotteluhuone ja vastaanotto."
+  ],
+  "office-l": [
+   "Iso toimisto",
+   "Yrityksen kerros, jossa on avotila, neuvotteluhuoneita, koulutustila ja taukotila."
+  ]
+ },
+ "rooms": {
+  "Living room": "Olohuone",
+  "Kitchen and dining": "Keittiö ja ruokailutila",
+  "Balcony": "Parveke",
+  "Hall": "Eteinen",
+  "Bedroom 1": "Makuuhuone 1",
+  "Bathroom": "Kylpyhuone",
+  "Bedroom 2": "Makuuhuone 2",
+  "Bedroom 3": "Makuuhuone 3",
+  "Utility room": "Kodinhoitohuone",
+  "Study": "Työhuone",
+  "Master bedroom": "Päämakuuhuone",
+  "Dressing room": "Vaatehuone",
+  "Bathroom 2": "Kylpyhuone 2",
+  "Open space": "Avotoimisto",
+  "Meeting room 1": "Neuvotteluhuone 1",
+  "Meeting room 2": "Neuvotteluhuone 2",
+  "Director office": "Johtajan huone",
+  "Break room": "Taukotila",
+  "Reception": "Vastaanotto",
+  "Toilet 1": "WC 1",
+  "Toilet 2": "WC 2",
+  "Server and storage": "Palvelin- ja varastotila",
+  "Training room": "Koulutustila",
+  "Open workspace": "Avoin työtila",
+  "Meeting room": "Neuvotteluhuone",
+  "Kitchenette": "Keittokomero",
+  "Toilet": "WC",
+  "Manager office": "Esimiehen huone",
+  "Living and kitchen": "Olohuone ja keittiö",
+  "Bedroom": "Makuuhuone",
+  "Kids room": "Lastenhuone",
+  "Kitchen": "Keittiö"
+ },
+ "furn": {
+  "glostad": "Kompakti 3-istuttava sohva pieneen olohuoneeseen tai yksiöön.",
+  "vimle": "Iso kulmasohva suureen olohuoneeseen tai toimiston oleskelutilaan.",
+  "strandmon": "Klassinen korvatuoli lukunurkkaukseen.",
+  "vihals": "Parisängyn runko makuuhuoneeseen.",
+  "besta": "Matala TV-taso kolmella ovella, seinälle kiinnitettävä.",
+  "lack": "Yksinkertainen sohvapöytä hyllyllä oleskelu- tai odotustilaan.",
+  "skogsta": "Pitkä puinen ruokapöytä koko perheelle.",
+  "odger": "Muotoiltu ruokapöydän tuoli, sopii myös neuvotteluhuoneeseen.",
+  "pax": "Korkea vaatekaapin runko makuuhuoneeseen tai vaatehuoneeseen.",
+  "billy": "Korkea kirjahylly kirjoille, kansioille ja esillepanolle.",
+  "kallax": "Kuutiohylly, joka toimii myös tilanjakajana.",
+  "mittzon-desk": "Sähkösäätöinen istuen ja seisten käytettävä työpöytä toimistotyöpisteeseen.",
+  "markus": "Korkeaselkäinen toimistotuoli verkkoselkänojalla.",
+  "mittzon-table": "Neuvottelupöytä, jonka keskellä on johtokouru.",
+  "alex": "Pieni laatikosto, joka sopii työpöydän alle tai sängyn viereen.",
+  "tornviken": "Pieni keittiösaareke kodin keittiöön tai toimiston keittokomeroon."
+ },
+ "page": {
+  "title": "Kokeile Swiftrix 3D:tä: sisustetut pohjapiirrokset 3D:nä | Swiftrix",
+  "desc": "Swiftrix 3D:n live-demo. Valitse valmis pohjapiirros, yksiö, perheasunto tai toimisto, sisusta se IKEA-kalusteilla ja katso lopputulos 3D:nä.",
+  "nav": [
+    "Demo",
+    "Täysi ohjelma",
+    "Kenelle"
+  ],
+  "quote": "Pyydä tarjous",
+  "eyebrow": "LIVE-DEMO",
+  "h1": "Kokeile pohjapiirrosta, <span class=\"hl\">sisustettuna 3D:nä</span>",
+  "hero": "Valitse yksi kuudesta valmiista pohjapiirroksesta yksiöstä isoon toimistoon, lisää IKEA-kalusteita ja seuraa, kuinka sijoittelu, kulkureitit ja 3D-huone päivittyvät.",
+  "open": "Avaa demo",
+  "call": "Varaa puhelu",
+  "b1": "Demo",
+  "h2a": "Kuusi pohjaa, kuusitoista IKEA-kalustetta",
+  "lead1": "Kaikki toimii selaimessanne. Mitään ei lähetetä eikä tallenneta.",
+  "note": "Tämä on esittelyversio valmiilla pohjilla ja kalusteilla. Täysi ohjelma lukee oman pohjapiirroksenne ja minkä tahansa verkkokaupan linkin.",
+  "frame": "Swiftrix 3D -demo: pohjapiirrokset ja IKEA-kalusteet",
+  "b2": "Täysi ohjelma",
+  "h2b": "Mitä Swiftrix 3D tekee yrityksellenne",
+  "cards": [
+   [
+    "plan",
+    "Lukee pohjapiirroksen",
+    "Lataa suunnitelma kuvana tai PDF-tiedostona. Ohjelma tunnistaa huoneet, seinät, ovet ja ikkunat ja laskee todelliset mitat."
+   ],
+   [
+    "check",
+    "Sisustaa ja tarkistaa",
+    "Se ehdottaa jokaiseen huoneeseen kolme sijoitteluvaihtoehtoa ja mittaa kulkureitit, vapaan tilan ja etäisyydet, jotta sijoittelu on käytännöllinen eikä vain kaunis."
+   ],
+   [
+    "link",
+    "Kalusteet linkistä",
+    "Liitä IKEA- tai muun verkkokaupan linkki. Ohjelma lukee koon sivulta, rakentaa tuotekuvista 3D-mallin ja sovittaa huoneen sen ympärille."
+   ],
+   [
+    "cube",
+    "3D asiakkaillenne",
+    "Interaktiivinen 3D, ylä- ja silmänkorkeusnäkymät sekä HD-kuvat valmiina asiakkaillenne, ilmoituksiinne tai verkkosivuillenne."
+   ]
+  ],
+  "b3": "Kenelle",
+  "h2c": "Näytä tila ennen kuin se on sisustettu",
+  "minis": [
+   [
+    "Huonekalu- ja keittiöliikkeet",
+    "Näyttäkää jokaiselle asiakkaalle hänen oma huoneensa sisustettuna valikoimallanne."
+   ],
+   [
+    "Rakennuttajat ja kiinteistönvälittäjät",
+    "Sisustakaa asunnot ja talot jo ennen kuin ne ovat valmiita."
+   ],
+   [
+    "Sisustussuunnittelijat",
+    "Testatkaa sijoitteluja minuuteissa ja esitelkää ne 3D:nä."
+   ],
+   [
+    "Toimistot ja kiinteistöpäälliköt",
+    "Suunnitelkaa työpisteet, neuvotteluhuoneet ja taukotilat."
+   ]
+  ],
+  "b4": "Aloittaminen",
+  "h2d": "Haluatteko tämän yrityksellenne?",
+  "cta": "Swiftrix 3D myydään ohjelmana yrityksille. Kertokaa tarpeenne, niin näytämme demon omalla pohjapiirroksellanne.",
+  "quote2": "Pyydä tarjous",
+  "call2": "Varaa 30 minuutin puhelu",
+  "mail_subject": "Swiftrix 3D yrityksellemme",
+  "mail_body": "Hei,\n\nhaluaisin tietää lisää Swiftrix 3D:stä.\n\nYritys:\nMitä tarvitsemme (huonekalukauppa, rakennuttaja, suunnittelija, toimisto ...):\nPohjapiirroksemme:\n\n"
+ }
+}

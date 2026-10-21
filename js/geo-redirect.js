@@ -8,10 +8,11 @@
     LT: 'lt',
     DE: 'de', AT: 'de', CH: 'de', LI: 'de',
     FR: 'fr', ES: 'es', NO: 'no', DK: 'da', FI: 'fi', SE: 'sv',
-    PT: 'pt', BR: 'pt'
+    PT: 'pt', BR: 'pt',
+    LV: 'lv'
   }
   // Languages that have a translated site (folder /<code>).
-  var AVAILABLE = { lt: 1, de: 1, fr: 1, es: 1, no: 1, da: 1, fi: 1, sv: 1, pt: 1 }
+  var AVAILABLE = { lt: 1, de: 1, fr: 1, es: 1, no: 1, da: 1, fi: 1, sv: 1, pt: 1, lv: 1 }
 
   var p = location.pathname
   if (p !== '/' && p !== '/index.html') return

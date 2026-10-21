@@ -13,7 +13,8 @@ const LANGS = {
   da: { name: 'Danish', note: ' (use "I"/"du"; say "AI" as Danes do: "AI-agent", "AI-assistent")', page: '/da/assistent' },
   fi: { name: 'Finnish', ai: 'tekoäly', note: ' (formal "te"; say "tekoäly", not "AI": "tekoälyagentti", "tekoälyavustaja")', page: '/fi/avustaja' },
   sv: { name: 'Swedish', note: ' (use "ni"; say "AI" as Swedes do: "AI-agent", "AI-assistent")', page: '/sv/assistent' },
-  pt: { name: 'Portuguese (European)', ai: 'IA', note: ' (formal "o senhor/a senhora" or neutral "você"; say "IA", not "AI": "agente de IA", "assistente de IA")', page: '/pt/assistente' }
+  pt: { name: 'Portuguese (European)', ai: 'IA', note: ' (formal "o senhor/a senhora" or neutral "você"; say "IA", not "AI": "agente de IA", "assistente de IA")', page: '/pt/assistente' },
+  lv: { name: 'Latvian', ai: 'MI', note: ' (formal "Jūs"; say "MI", not "AI": "MI aģents", "MI asistents")', page: '/lv/asistents' }
 }
 
 // 'xx' from the request body, or 'en' for anything unknown.

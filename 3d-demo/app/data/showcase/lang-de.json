@@ -1,0 +1,184 @@
+{
+ "tx": {
+  "modeFurnished": "Vom Programm möbliert",
+  "modeEmpty": "Leere Räume: ich möbliere",
+  "modeHint": "Leere Räume: Fügen Sie Möbel im IKEA-Tab hinzu, sie werden für Sie platziert.",
+  "orig": "Der originale 2D-Grundriss, aus dem dies erstellt wurde",
+  "origHide": "Ausblenden",
+  "origShow": "Originalen 2D-Grundriss zeigen",
+  "plan": "Grundriss",
+  "pickPlan": "Grundriss wählen",
+  "furniture": "IKEA-Möbel",
+  "layout": "Aufteilung",
+  "intro": "Im vollständigen Swiftrix-3D-Programm fügen Sie einen beliebigen IKEA- oder anderen Shop-Link ein. Das Programm liest die echten Maße von der Seite, baut aus den Produktbildern ein 3D-Modell und passt Ihren Raum darum herum an. In dieser Demo sind 16 IKEA-Möbel vorbereitet. Stellen Sie einige in den Raum und sehen Sie, wie sich die Aufteilung anpasst.",
+  "all": "Alle",
+  "home": "Wohnen",
+  "office": "Büro",
+  "addTo": "Hinzufügen zu",
+  "room": "Raum",
+  "add": "Hinzufügen",
+  "remove": "Entfernen",
+  "show": "Im Plan zeigen",
+  "view": "In 3D ansehen",
+  "ikea": "Bei IKEA ansehen",
+  "added": "In Ihrem Raum",
+  "none": "Noch nichts hinzugefügt.",
+  "cm": "cm",
+  "limit": "Diese Demo fasst bis zu 14 Möbel. Entfernen Sie zuerst eines.",
+  "book": "Gespräch buchen",
+  "ctaTitle": "Das für Ihr Unternehmen?",
+  "ctaText": "Swiftrix 3D liest einen Grundriss, möbliert ihn und zeigt ihn in 3D. Das vollständige Programm ist für Unternehmen gedacht: Möbelhäuser, Bauträger, Makler und Designer.",
+  "pieces": "Möbel",
+  "ready": "Fertiger Grundriss",
+  "reset": "Möbel entfernen"
+ },
+ "plans": {
+  "studio": [
+   "Studio",
+   "Für eine Person oder ein Paar: Wohnzimmer, Schlafzimmer, Küche und Bad."
+  ],
+  "small": [
+   "Kleine Wohnung",
+   "Zwei Schlafzimmer auf 54 m²: junge Familie oder Vermietung."
+  ],
+  "family": [
+   "Familienwohnung",
+   "Drei Schlafzimmer, Flur und Balkon."
+  ],
+  "home": [
+   "Großes Familienhaus",
+   "Ein großes Haus mit Arbeitszimmer, Ankleide und zwei Bädern."
+  ],
+  "office-s": [
+   "Kleines Büro",
+   "Für ein Team von zehn: Großraum, Besprechungsraum und Empfang."
+  ],
+  "office-l": [
+   "Großes Büro",
+   "Eine Firmenetage mit Großraum, Besprechungsräumen, Schulungsraum und Pausenraum."
+  ]
+ },
+ "rooms": {
+  "Living room": "Wohnzimmer",
+  "Kitchen and dining": "Küche und Essbereich",
+  "Balcony": "Balkon",
+  "Hall": "Flur",
+  "Bedroom 1": "Schlafzimmer 1",
+  "Bathroom": "Badezimmer",
+  "Bedroom 2": "Schlafzimmer 2",
+  "Bedroom 3": "Schlafzimmer 3",
+  "Utility room": "Hauswirtschaftsraum",
+  "Study": "Arbeitszimmer",
+  "Master bedroom": "Elternschlafzimmer",
+  "Dressing room": "Ankleidezimmer",
+  "Bathroom 2": "Badezimmer 2",
+  "Open space": "Großraumbüro",
+  "Meeting room 1": "Besprechungsraum 1",
+  "Meeting room 2": "Besprechungsraum 2",
+  "Director office": "Direktionsbüro",
+  "Break room": "Pausenraum",
+  "Reception": "Empfang",
+  "Toilet 1": "WC 1",
+  "Toilet 2": "WC 2",
+  "Server and storage": "Server und Lager",
+  "Training room": "Schulungsraum",
+  "Open workspace": "Offener Arbeitsbereich",
+  "Meeting room": "Besprechungsraum",
+  "Kitchenette": "Teeküche",
+  "Toilet": "WC",
+  "Manager office": "Büro der Leitung",
+  "Living and kitchen": "Wohnen und Küche",
+  "Bedroom": "Schlafzimmer",
+  "Kids room": "Kinderzimmer",
+  "Kitchen": "Küche"
+ },
+ "furn": {
+  "glostad": "Kompaktes 3-Sitzer-Sofa für ein kleines Wohnzimmer oder Studio.",
+  "vimle": "Großes Ecksofa für ein weites Wohnzimmer oder eine Büro-Lounge.",
+  "strandmon": "Klassischer Ohrensessel für die Leseecke.",
+  "vihals": "Doppelbettgestell für das Schlafzimmer.",
+  "besta": "Niedriges TV-Board mit drei Türen, wandhängend.",
+  "lack": "Einfacher Couchtisch mit Ablage für Lounge oder Wartebereich.",
+  "skogsta": "Langer Esstisch aus Holz für die ganze Familie.",
+  "odger": "Geformter Esszimmerstuhl, passt auch in den Besprechungsraum.",
+  "pax": "Hoher Schrankkorpus für Schlafzimmer oder Ankleide.",
+  "billy": "Hohes Regal für Bücher, Ordner und Deko.",
+  "kallax": "Würfelregal, das auch als Raumteiler dient.",
+  "mittzon-desk": "Elektrischer Sitz-Steh-Schreibtisch für den Arbeitsplatz.",
+  "markus": "Bürostuhl mit hoher Rückenlehne und Netzrücken.",
+  "mittzon-table": "Besprechungstisch mit Kabelkanal in der Mitte.",
+  "alex": "Kleiner Rollcontainer für unter den Schreibtisch oder neben das Bett.",
+  "tornviken": "Kleine Kücheninsel für die Küche oder die Büro-Teeküche."
+ },
+ "page": {
+  "title": "Swiftrix 3D ausprobieren: Grundrisse in 3D möbliert | Swiftrix",
+  "desc": "Live-Demo von Swiftrix 3D. Wählen Sie einen fertigen Grundriss, ein Studio, ein Familienhaus oder ein Büro, möblieren Sie ihn mit IKEA-Möbeln und sehen Sie ihn in 3D.",
+  "nav": [
+   "Die Demo",
+   "Das ganze Programm",
+   "Für wen"
+  ],
+  "quote": "Angebot anfragen",
+  "eyebrow": "LIVE-DEMO",
+  "h1": "Probieren Sie einen Grundriss, <span class=\"hl\">in 3D möbliert</span>",
+  "hero": "Wählen Sie einen von sechs fertigen Grundrissen, vom Studio bis zum großen Büro, fügen Sie IKEA-Möbel hinzu und sehen Sie, wie sich Aufteilung, Laufwege und 3D-Raum anpassen.",
+  "open": "Demo öffnen",
+  "call": "Gespräch buchen",
+  "b1": "Die Demo",
+  "h2a": "Sechs Grundrisse, sechzehn IKEA-Möbel",
+  "lead1": "Alles läuft in Ihrem Browser. Es wird nichts hochgeladen und nichts gespeichert.",
+  "note": "Das ist ein Showcase mit vorbereiteten Grundrissen und Möbeln. Das vollständige Programm liest Ihren eigenen Grundriss und jeden Shop-Link.",
+  "frame": "Swiftrix-3D-Demo: Grundrisse und IKEA-Möbel",
+  "b2": "Das ganze Programm",
+  "h2b": "Was Swiftrix 3D für Ihr Unternehmen tut",
+  "cards": [
+   [
+    "plan",
+    "Liest einen Grundriss",
+    "Laden Sie einen Plan als Bild oder PDF hoch. Das Programm erkennt Räume, Wände, Türen und Fenster und ermittelt die echten Maße."
+   ],
+   [
+    "check",
+    "Möbliert und prüft",
+    "Es schlägt pro Raum drei Aufteilungen vor und misst Laufwege, freie Flächen und Abstände, damit die Aufteilung praktisch ist und nicht nur hübsch."
+   ],
+   [
+    "link",
+    "Möbel per Link",
+    "Fügen Sie einen IKEA- oder anderen Shop-Link ein. Das Programm liest die Maße von der Seite, baut aus den Produktbildern ein 3D-Modell und passt den Raum darum herum an."
+   ],
+   [
+    "cube",
+    "3D für Ihre Kunden",
+    "Interaktives 3D, Ansichten von oben und auf Augenhöhe sowie HD-Bilder für Ihre Kunden, Ihre Inserate oder Ihre Website."
+   ]
+  ],
+  "b3": "Für wen",
+  "h2c": "Den Raum zeigen, bevor er möbliert ist",
+  "minis": [
+   [
+    "Möbel- und Küchenhäuser",
+    "Zeigen Sie jedem Kunden seinen eigenen Raum, möbliert mit Ihrem Sortiment."
+   ],
+   [
+    "Bauträger und Makler",
+    "Möblieren Sie Wohnungen und Häuser, bevor sie fertig sind."
+   ],
+   [
+    "Innenarchitekten",
+    "Testen Sie Aufteilungen in Minuten und präsentieren Sie sie in 3D."
+   ],
+   [
+    "Büros und Facility-Manager",
+    "Planen Sie Arbeitsplätze, Besprechungs- und Pausenräume."
+   ]
+  ],
+  "b4": "Los geht es",
+  "h2d": "Das für Ihr Unternehmen?",
+  "cta": "Swiftrix 3D wird als Programm für Unternehmen verkauft. Sagen Sie uns, was Sie brauchen, und wir zeigen Ihnen eine Demo mit Ihrem eigenen Grundriss.",
+  "quote2": "Angebot anfragen",
+  "call2": "30-Minuten-Gespräch buchen",
+  "mail_subject": "Swiftrix 3D für unser Unternehmen",
+  "mail_body": "Hallo,\n\nich möchte mehr über Swiftrix 3D erfahren.\n\nUnternehmen:\nWas wir brauchen (Möbelhaus, Bauträger, Designer, Büro ...):\nUnsere Grundrisse:\n\n"
+ }
+}

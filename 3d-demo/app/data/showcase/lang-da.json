@@ -1,0 +1,184 @@
+{
+ "tx": {
+  "modeFurnished": "Møbleret af programmet",
+  "modeEmpty": "Tomme rum: jeg møblerer",
+  "modeHint": "Tomme rum: tilføj møbler fra IKEA-fanen, så bliver de placeret for dig.",
+  "orig": "Den oprindelige 2D-plantegning, dette er lavet ud fra",
+  "origHide": "Skjul",
+  "origShow": "Vis den oprindelige 2D-tegning",
+  "plan": "Plantegning",
+  "pickPlan": "Vælg en plantegning",
+  "furniture": "IKEA-møbler",
+  "layout": "Indretning",
+  "intro": "I det fulde Swiftrix 3D-program indsætter du et hvilket som helst link fra IKEA eller en anden butik. Programmet læser den rigtige størrelse fra siden, bygger en 3D-model ud fra produktbillederne og tilpasser dit rum omkring den. Denne demo har 16 IKEA-møbler klar på forhånd. Tilføj nogle til rummet, og se, hvordan indretningen justerer sig.",
+  "all": "Alle",
+  "home": "Bolig",
+  "office": "Kontor",
+  "addTo": "Tilføj til",
+  "room": "Rum",
+  "add": "Tilføj",
+  "remove": "Fjern",
+  "show": "Vis i tegningen",
+  "view": "Se i 3D",
+  "ikea": "Se hos IKEA",
+  "added": "I dit rum",
+  "none": "Intet tilføjet endnu.",
+  "cm": "cm",
+  "limit": "Denne demo kan rumme op til 14 møbler. Fjern først et.",
+  "book": "Book en samtale",
+  "ctaTitle": "Vil du have dette til din virksomhed?",
+  "ctaText": "Swiftrix 3D læser en plantegning, møblerer den og viser den i 3D. Det fulde program er til virksomheder: møbelforretninger, bygherrer, ejendomsmæglere og designere.",
+  "pieces": "møbler",
+  "ready": "Færdig tegning",
+  "reset": "Fjern møbler"
+ },
+ "plans": {
+  "studio": [
+   "Ettværelses",
+   "Én person eller et par: en stue, et soveværelse, et køkken og et badeværelse."
+  ],
+  "small": [
+   "Lille lejlighed",
+   "To soveværelser på 54 m²: en ung familie eller udlejning."
+  ],
+  "family": [
+   "Familielejlighed",
+   "Tre soveværelser, en entré og en altan."
+  ],
+  "home": [
+   "Stort familiehjem",
+   "Et stort hus med arbejdsværelse, påklædningsrum og to badeværelser."
+  ],
+  "office-s": [
+   "Lille kontor",
+   "Et team på ti: åbent kontorlandskab, mødelokale og reception."
+  ],
+  "office-l": [
+   "Stort kontor",
+   "En hel kontoretage med åbent landskab, mødelokaler, kursusrum og pauserum."
+  ]
+ },
+ "rooms": {
+  "Living room": "Stue",
+  "Kitchen and dining": "Køkken og spisestue",
+  "Balcony": "Altan",
+  "Hall": "Entré",
+  "Bedroom 1": "Soveværelse 1",
+  "Bathroom": "Badeværelse",
+  "Bedroom 2": "Soveværelse 2",
+  "Bedroom 3": "Soveværelse 3",
+  "Utility room": "Bryggers",
+  "Study": "Arbejdsværelse",
+  "Master bedroom": "Hovedsoveværelse",
+  "Dressing room": "Påklædningsrum",
+  "Bathroom 2": "Badeværelse 2",
+  "Open space": "Kontorlandskab",
+  "Meeting room 1": "Mødelokale 1",
+  "Meeting room 2": "Mødelokale 2",
+  "Director office": "Direktørkontor",
+  "Break room": "Pauserum",
+  "Reception": "Reception",
+  "Toilet 1": "Toilet 1",
+  "Toilet 2": "Toilet 2",
+  "Server and storage": "Server og depot",
+  "Training room": "Kursusrum",
+  "Open workspace": "Åbent kontorlandskab",
+  "Meeting room": "Mødelokale",
+  "Kitchenette": "Tekøkken",
+  "Toilet": "Toilet",
+  "Manager office": "Chefkontor",
+  "Living and kitchen": "Stue og køkken",
+  "Bedroom": "Soveværelse",
+  "Kids room": "Børneværelse",
+  "Kitchen": "Køkken"
+ },
+ "furn": {
+  "glostad": "Kompakt 3-pers. sofa til en lille stue eller en ettværelses.",
+  "vimle": "Stor hjørnesofa til en stor stue eller en kontorlounge.",
+  "strandmon": "Klassisk lænestol med ører til en læsekrog.",
+  "vihals": "Dobbelt sengeramme til soveværelset.",
+  "besta": "Lavt tv-bord med tre låger, hængt op på væggen.",
+  "lack": "Enkelt sofabord med hylde, til en lounge eller et venteområde.",
+  "skogsta": "Langt spisebord i træ til hele familien.",
+  "odger": "Formstøbt spisestol, som også passer fint i et mødelokale.",
+  "pax": "Højt garderobeskab til soveværelset eller påklædningsrummet.",
+  "billy": "Høj reol til bøger, mapper og pynt.",
+  "kallax": "Kubehylde, der også fungerer som rumdeler.",
+  "mittzon-desk": "Elektrisk hæve-sænkebord til en kontorarbejdsplads.",
+  "markus": "Kontorstol med høj ryg og netryg.",
+  "mittzon-table": "Mødebord med kabelkanal i midten.",
+  "alex": "Lille skuffemodul, der passer under et skrivebord eller ved siden af en seng.",
+  "tornviken": "Lille køkkenø til et køkken i hjemmet eller et tekøkken på kontoret."
+ },
+ "page": {
+  "title": "Prøv Swiftrix 3D: møblerede plantegninger i 3D | Swiftrix",
+  "desc": "Live demo af Swiftrix 3D. Vælg en færdig plantegning, en ettværelses, et familiehjem eller et kontor, møblér den med IKEA-møbler, og se den i 3D.",
+  "nav": [
+   "Demoen",
+   "Det fulde program",
+   "Til hvem"
+  ],
+  "quote": "Bed om et tilbud",
+  "eyebrow": "LIVE DEMO",
+  "h1": "Prøv en plantegning, <span class=\"hl\">møbleret i 3D</span>",
+  "hero": "Vælg en af seks færdige plantegninger, fra ettværelses til stort kontor, tilføj IKEA-møbler, og se indretningen, gangarealerne og 3D-rummet opdatere sig.",
+  "open": "Åbn demoen",
+  "call": "Book en samtale",
+  "b1": "Demoen",
+  "h2a": "Seks plantegninger, seksten IKEA-møbler",
+  "lead1": "Alt kører i din browser. Intet bliver uploadet, og intet bliver gemt.",
+  "note": "Dette er en demonstration med færdige plantegninger og møbler. Det fulde program læser din egen plantegning og ethvert butikslink.",
+  "frame": "Swiftrix 3D-demo: plantegninger og IKEA-møbler",
+  "b2": "Det fulde program",
+  "h2b": "Det gør Swiftrix 3D for din virksomhed",
+  "cards": [
+   [
+    "plan",
+    "Læser en plantegning",
+    "Upload en tegning som billede eller PDF. Programmet finder rum, vægge, døre og vinduer og regner de rigtige mål ud."
+   ],
+   [
+    "check",
+    "Møblerer og kontrollerer",
+    "Det foreslår tre indretninger pr. rum og måler gangarealer, fri plads og afstande, så løsningen er praktisk og ikke bare pæn."
+   ],
+   [
+    "link",
+    "Møbler fra et link",
+    "Indsæt et link fra IKEA eller en anden butik. Programmet læser størrelsen fra siden, bygger en 3D-model ud fra produktbillederne og tilpasser rummet omkring den."
+   ],
+   [
+    "cube",
+    "3D til dine kunder",
+    "Interaktiv 3D, oversigtsbilleder fra oven, billeder i øjenhøjde og HD-billeder, klar til dine kunder, dine annoncer eller din hjemmeside."
+   ]
+  ],
+  "b3": "Til hvem",
+  "h2c": "Vis rummet, før det er møbleret",
+  "minis": [
+   [
+    "Møbel- og køkkenforretninger",
+    "Vis hver kunde deres eget rum møbleret med jeres sortiment."
+   ],
+   [
+    "Bygherrer og ejendomsmæglere",
+    "Møblér lejligheder og huse, før de står færdige."
+   ],
+   [
+    "Indretningsarkitekter",
+    "Test indretninger på få minutter, og præsenter dem i 3D."
+   ],
+   [
+    "Kontorer og ejendomsadministratorer",
+    "Planlæg arbejdspladser, mødelokaler og pauserum."
+   ]
+  ],
+  "b4": "Kom i gang",
+  "h2d": "Vil du have dette til din virksomhed?",
+  "cta": "Swiftrix 3D sælges som et program til virksomheder. Fortæl os, hvad du har brug for, så viser vi dig en demo med din egen plantegning.",
+  "quote2": "Bed om et tilbud",
+  "call2": "Book en samtale på 30 minutter",
+  "mail_subject": "Swiftrix 3D til vores virksomhed",
+  "mail_body": "Hej,\n\nJeg vil gerne vide mere om Swiftrix 3D.\n\nVirksomhed:\nHvad vi har brug for (møbelforretning, bygherre, designer, kontor ...):\nVores plantegninger:\n\n"
+ }
+}
