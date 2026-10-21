@@ -56,5 +56,5 @@ body.sc-mode { background-image: none; min-height: 0; }
 .sc-modehint { font-size: 13.5px; color: var(--muted); }
 .sc-orig { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 16px; }
 .sc-orig summary { cursor: pointer; padding: 12px 16px; font-size: 14.5px; color: var(--ink); }
-.sc-origimg { padding: 4px 14px 14px; max-width: 760px; margin: 0 auto; }
-.sc-origimg img { display: block; width: 100%; max-height: 420px; object-fit: contain; border-radius: 8px; }
+.sc-origimg { padding: 4px 14px 14px; max-width: 900px; margin: 0 auto; }
+.sc-origimg img { display: block; width: 100%; max-height: 560px; object-fit: contain; border-radius: 8px; background: #fff; }

@@ -47,14 +47,23 @@ export const TX = S[LANG]
 
 // ---- the choice of the plan, above the room
 let origOpen = true          // the original 2D plan stays open or shut while the visitor switches plans
+// the plan drawn the way an architect hands it over: white paper, thin black walls, furniture as outlines, room names and measurements
+const DRAWING_CSS = `.fl,.fo{fill:#fff!important}.wl{fill:#fff!important;stroke:#111!important;stroke-width:.022!important}.win{stroke:#111!important;stroke-width:.05!important;opacity:1!important}.wt{stroke:#111!important}.dr,.dra{stroke:#111!important;stroke-width:1.2px!important;fill:none!important;stroke-dasharray:none!important}.dop{stroke:#111!important;opacity:.7!important}.pc rect,.pc circle{fill:#fff!important;stroke:#333!important;stroke-width:.014!important}.pc line{stroke:#999!important;stroke-width:.01!important}.lbl{fill:#666!important;font-weight:400!important;font-size:.11px!important;stroke:none!important;paint-order:normal!important}.rn{fill:#111!important;fill-opacity:1!important;stroke:none!important;font-size:.3px!important;font-weight:400!important;letter-spacing:0!important}.dm{stroke:#111!important;stroke-width:.012!important}.dn>line:first-child{stroke:#fff!important}.dt{fill:#111!important;font-size:.2px!important;stroke:none!important}`
+const drawing = (plan, items) => {
+  try {
+    const svg = planSvg(plan, items, { space: buildSpace(plan), theme: 'light', dims: true, labels: true, zones: 'none' })
+    return svg.replace(/<style>/, '<style>' + DRAWING_CSS)
+  } catch { return '' }
+}
 export function mountPlanBar(host, currentId, onPick, { empty = false, onMode = null, plan = null } = {}) {
-  const svg = () => { try { return planSvg(plan, [], { space: buildSpace(plan), theme: 'light', dims: true, labels: true, zones: 'none' }) } catch { return '' } }
   host.innerHTML = `<div class="sc-plans" role="group" aria-label="${esc(TX.pickPlan)}">${PLANS.map((p) => `<button type="button" class="sc-plan ${p.id === currentId ? 'on' : ''}" data-plan="${p.id}" aria-pressed="${p.id === currentId}"><b>${esc(p.t[LANG][0])}</b><span class="sc-area">${p.area} m²</span><span class="sc-pd">${esc(p.t[LANG][1])}</span></button>`).join('')}</div>
     ${onMode ? `<div class="sc-modes" role="group"><button type="button" class="chipx ${empty ? '' : 'on'}" data-mode="full">${esc(TX.modeFurnished)}</button><button type="button" class="chipx ${empty ? 'on' : ''}" data-mode="empty">${esc(TX.modeEmpty)}</button>${empty ? `<span class="sc-modehint">${esc(TX.modeHint)}</span>` : ''}</div>` : ''}
-    ${plan ? `<details class="sc-orig" ${origOpen ? 'open' : ''}><summary>${esc(TX.orig)}</summary><div class="sc-origimg"><img alt="${esc(TX.orig)}" src="data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg())}"></div></details>` : ''}`
+    ${plan ? `<details class="sc-orig" ${origOpen ? 'open' : ''}><summary>${esc(TX.orig)}</summary><div class="sc-origimg"><img alt="${esc(TX.orig)}"></div></details>` : ''}`
   host.querySelectorAll('[data-plan]').forEach((b) => b.addEventListener('click', () => onPick(b.dataset.plan)))
   host.querySelectorAll('[data-mode]').forEach((b) => b.addEventListener('click', () => { if ((b.dataset.mode === 'empty') !== empty) onMode(b.dataset.mode === 'empty') }))
   host.querySelector('.sc-orig')?.addEventListener('toggle', (e) => { origOpen = e.target.open })
+  const img = host.querySelector('.sc-origimg img')
+  return { update: (items) => { if (img && plan) img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(drawing(plan, items || [])) } }          // the drawing follows the arrangement that is shown
 }
 
 // ---- the furniture: a card per piece, a model picture drawn from our own 3D model, a link to the shop

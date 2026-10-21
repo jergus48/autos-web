@@ -503,7 +503,7 @@ function screenResult(el, room, plan) {
     <section data-p="furniture" class="proj" hidden><div id="pf-host"></div></section>
     <section data-p="photos" hidden><div id="photos-host"></div></section>
     <section data-p="downloads" hidden><div class="dl" id="dl"></div><p class="muted small" style="margin-top:12px">3D model files (GLB) are coming soon.</p></section>`
-  if (SHOW) mountPlanBar($('#sc-planbar', el), room.planId, switchPlan, { empty: Boolean(room.empty), plan, onMode: (empty) => { room.empty = empty; room.custom = null; room.products = []; room.option = 'A'; room.base = 'A'; resetLayouts(plan); resetSpace(plan); render() } })
+  const planBar = !SHOW ? null : mountPlanBar($('#sc-planbar', el), room.planId, switchPlan, { empty: Boolean(room.empty), plan, onMode: (empty) => { room.empty = empty; room.custom = null; room.products = []; room.option = 'A'; room.base = 'A'; resetLayouts(plan); resetSpace(plan); render() } })
   // a double click on a wall (in the 3D view or on the plan): its colour, kept with the room, drawn at once in the 3D view and in every picture made later
   const paintWalls = (hit) => openWallPaint({ ...hit, at: hit, map: (room.wallColors ||= {}), onApply: (map) => { room.wallColors = map; plan.wallColors = map; cache.clear(); save(); viewer.refresh(); const d = $('#dl', el); if (d) d.innerHTML = '' } })
   const viewer = mountViewer($('#vw', el), plan, { option: room.base, items: current(), look: lookOf(room, plan), onWall: paintWalls })
@@ -525,6 +525,7 @@ function screenResult(el, room, plan) {
     $$('[data-r]', el).forEach((b) => b.addEventListener('click', () => setFocus(b.dataset.r === 'all' ? null : Number(b.dataset.r))))
   }
   function drawChips() {
+    planBar?.update(current())
     const list = [...OPTIONS.map((o) => ({ id: o.id, name: `${o.id} · ${labels[o.id] || o.name}` })), ...(room.custom ? [{ id: 'custom', name: 'Yours · edited by you' }] : [])]
     const best = scores ? Object.entries(scores).filter(([k]) => k !== 'custom').sort((a, b) => a[1] - b[1])[0]?.[0] : null
     $('#vchips', el).innerHTML = list.map((c) => `<button class="chipx lg ${room.option === c.id ? 'on' : ''}" data-opt="${c.id}" type="button">${esc(c.name)}${c.id === best ? ' <span class="rec">RECOMMENDED</span>' : ''}</button>`).join('')
