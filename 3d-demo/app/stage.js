@@ -170,10 +170,11 @@ export function mountViewer(container, plan, { option = 'A', look = null, items 
     if (state.lights) { scene.remove(state.lights); state.lights = null }
     state.ceil = null
     const inside = state.mode === 'inside' && state.focus !== null
+    const flat = Boolean(globalThis.SWX_SHOWCASE) && state.focus === null          // the showcase shows the whole flat in the style of its rooms: full-height walls seen from above, the same light
     const outdoorFocus = state.focus !== null && isOutdoor(plan.rooms[state.focus])          // a terrace or balcony: open sky, no ceiling, daylight
     let items = state.items || layoutFor(plan, state.option)
     if (state.focus !== null) items = items.filter((i) => i.room === state.focus)
-    state.room = buildRoom(plan, state.option, { look: state.look, items, tags: state.tags, interior: inside, wallHeight: inside ? plan.ceilingHeight : state.cut ? 0.9 : plan.ceilingHeight, labels: state.focus === null && !globalThis.SWX_SHOWCASE })
+    state.room = buildRoom(plan, state.option, { look: state.look, items, tags: state.tags, interior: inside || flat, wallHeight: inside || flat ? plan.ceilingHeight : state.cut ? 0.9 : plan.ceilingHeight, labels: state.focus === null && !globalThis.SWX_SHOWCASE })
     if (inside) {          // a soft light inside; the ceiling only when asked for, so the room can be seen from above (it also hides itself while the camera is above it)
       const poly = plan.rooms[state.focus].polygon
       if (state.ceiling && !outdoorFocus) {
@@ -185,6 +186,7 @@ export function mountViewer(container, plan, { option = 'A', look = null, items 
       else { const p = new THREE.PointLight(0xfff1dc, 0.9, 18, 1.2); p.position.set(cx, plan.ceilingHeight - 0.35, cz); l.add(p, new THREE.HemisphereLight(0xffffff, 0xd8c8b0, 0.55)) }
       scene.add(l); state.lights = l
     }
+    if (flat) { const l = new THREE.Group(); l.add(new THREE.HemisphereLight(0xffffff, 0xd8c8b0, 0.55)); scene.add(l); state.lights = l }
     scene.add(state.room); tuneMaterials(state.room)
   }
   let touched = false; controls.addEventListener('start', () => { touched = true })
@@ -195,8 +197,8 @@ export function mountViewer(container, plan, { option = 'A', look = null, items 
     const k = Math.max(1, 1.1 / camera.aspect) // back off on narrow (portrait) screens so the whole room fits
     if (kind === 'top') camera.position.set(w / 2, r * 1.7 * k, d / 2 + 0.001)
     else if (globalThis.SWX_SHOWCASE) {          // the showcase fills the viewer with the whole flat, however tall or wide the viewer is
-      const R = Math.hypot(w, d) / 2 * 0.95, vf = (camera.fov * Math.PI) / 180, hf = 2 * Math.atan(Math.tan(vf / 2) * camera.aspect), dist = R / Math.sin(Math.min(vf, hf) / 2), n = Math.hypot(0.55, 0.95, 1.05)
-      camera.position.set(w / 2 + dist * 0.55 / n, dist * 0.95 / n, d / 2 + dist * 1.05 / n)
+      const R = Math.hypot(w, d) / 2 * 0.95, vf = (camera.fov * Math.PI) / 180, hf = 2 * Math.atan(Math.tan(vf / 2) * camera.aspect), dist = R / Math.sin(Math.min(vf, hf) / 2), n = Math.hypot(0.4, 1.25, 0.9)
+      camera.position.set(w / 2 + dist * 0.4 / n, dist * 1.25 / n, d / 2 + dist * 0.9 / n)
     } else camera.position.set(w / 2 + r * 0.55 * k, r * 0.95 * k, d / 2 + r * 1.05 * k)
     controls.update()
   }
