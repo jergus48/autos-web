@@ -370,8 +370,10 @@ function hall(ctx, rank = 0) {
   const area = ctx.room.area
   if (area < 3) return
   if (!ctx.lockedOf('shoe_cabinet')) ctx.takeRanked(ctx.wallCands(ctx.mk('shoe_cabinet', { w: area >= 6 ? 1.2 : 0.9 }), (it) => -Math.min(ctx.doorDist(it.x, it.z), 3) * 0.2, { take: 4, step: 0.1 }), rank)
+  if (!ctx.items.length && !ctx.lockedOf('shoe_cabinet')) ctx.take(ctx.wallCands(ctx.mk('shoe_cabinet', { w: 0.6 }), (it) => -Math.min(ctx.doorDist(it.x, it.z), 3) * 0.2, { take: 4, step: 0.1 }))          // a hall that is all doors: a narrow cabinet, or at least a plant
   if (area >= 8 && !ctx.lockedOf('wardrobe')) ctx.take(ctx.wallCands(ctx.mk('wardrobe', { w: 1.6 }), (it) => -ctx.doorDist(it.x, it.z) * 0.05, { take: 3, step: 0.1 }))
   cornerPlant(ctx)
+  if (!ctx.items.length) ctx.take(ctx.wallCands(ctx.mk('plant'), (it) => -ctx.doorDist(it.x, it.z) * 0.1, { take: 4, step: 0.1 }))
 }
 
 function storage(ctx) {

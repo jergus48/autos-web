@@ -471,7 +471,7 @@ function screenResult(el, room, plan) {
   let furnished = space.rooms.filter((r) => r.kind !== 'none')
   const carried = carry && carry.room === room.id ? carry : null; carry = null
   const carriedAt = carried ? plan.rooms.findIndex((x) => x.id === carried.focusId) : -1
-  let focus = carriedAt >= 0 ? carriedAt : (space.rooms.find((r) => r.kind === 'living' && r.area >= 15) || furnished[0]).i
+  let focus = carriedAt >= 0 ? carriedAt : SHOW ? null : (space.rooms.find((r) => r.kind === 'living' && r.area >= 15) || furnished[0]).i
   let editor = null, lastRep = null, scores = null, viewList = [], labels = {}
   el.innerHTML = `${SHOW ? '<div id="sc-planbar"></div>' : ''}<div class="room-head"><div><span class="chip ok">Unlocked</span> <span id="rchip">${readChip(plan, room)}</span><h1 style="margin-top:8px">${esc(room.name)}</h1></div>
       <span class="chip" id="tokinfo"></span></div>
@@ -712,6 +712,7 @@ function screenResult(el, room, plan) {
     if (t === 'downloads') buildDownloads(); if (t === 'photos') photosPanel($('#photos-host', el), room, plan, { onApply: applyLook })
   }
   $$('.tab', el).forEach((b) => b.addEventListener('click', () => showTab(b.dataset.t)))
+  if (SHOW) { const b = document.createElement('button'); b.type = 'button'; b.id = 'vIkea'; b.className = 'btn sm primary'; b.textContent = '+ IKEA'; b.onclick = () => { showTab('furniture'); $('.tabs', el).scrollIntoView({ behavior: 'smooth', block: 'start' }) }; $('.viewer-bar', el).insertBefore(b, $('#vCeil', el)) }          // the way to the furniture, right on the 3D view
   function applyLook() { viewer.setLook(lookOf(room, plan)); invalidate(); showTab('photos') }
   function buildDownloads() {
     const host = $('#dl', el), vs = views(plan)

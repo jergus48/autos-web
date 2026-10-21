@@ -43,3 +43,11 @@ body.sc-mode { background-image: none; min-height: 0; }
 .sc-link { font-size: 13px; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line); }
 .sc-link:hover { color: var(--ink); }
 @media (max-width: 640px) { .sc-note { flex-direction: column; } .sc-bar #sc-clear { margin-left: 0; } .sc-plans { grid-template-columns: repeat(2, 1fr); } }
+
+/* the two tabs are the two halves of the demo: make the furniture one impossible to miss */
+.sc-mode .tabs { border-bottom: 0; gap: 10px; margin: 4px 0 18px; }
+.sc-mode .tab { border: 1px solid var(--line); border-radius: 999px; padding: 11px 22px; margin: 0; background: var(--panel); color: var(--ink); font-size: 15.5px; }
+.sc-mode .tab.sel { background: #e8ecec; color: #0e0f12; border-color: #e8ecec; }
+.sc-mode .tab[data-t="furniture"]:not(.sel) { background: var(--lime); color: var(--lime-ink); border-color: var(--lime); box-shadow: 0 6px 22px rgba(176,229,98,.22); }
+.sc-mode .tab[data-t="furniture"]::before { content: "+ "; }
+.viewer-bar #vIkea { background: var(--lime); color: var(--lime-ink); border-color: var(--lime); }

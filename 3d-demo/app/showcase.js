@@ -27,17 +27,17 @@ export const translatePlan = (plan) => { const m = ROOM_NAMES[LANG]; if (m) plan
 const S = {
   en: { plan: 'Floor plan', pickPlan: 'Choose a floor plan', furniture: 'IKEA furniture', layout: 'Layout',
     intro: 'In the full Swiftrix 3D program you paste any IKEA or other shop link. The program reads the real size from the page, builds a 3D model from the product pictures and fits your room around it. This demo has 16 IKEA pieces prepared in advance. Add some to the room and watch the layout adjust.',
-    all: 'All', home: 'Home', office: 'Office', addTo: 'Add to', room: 'Room', add: 'Add', remove: 'Remove', show: 'Show in the plan', ikea: 'View on IKEA', added: 'In your room', none: 'Nothing added yet.',
+    all: 'All', home: 'Home', office: 'Office', addTo: 'Add to', room: 'Room', add: 'Add', remove: 'Remove', show: 'Show in the plan', view: 'View in 3D', ikea: 'View on IKEA', added: 'In your room', none: 'Nothing added yet.',
     cm: 'cm', limit: 'This demo holds up to 8 pieces. Remove one first.', book: 'Book a call', ctaTitle: 'Want this for your business?', ctaText: 'Swiftrix 3D reads a floor plan, furnishes it and shows it in 3D. The full program is for companies: furniture shops, developers, estate agents and designers.', pieces: 'pieces', ready: 'Ready-made plan',
     reset: 'Clear furniture' },
   lt: { plan: 'Planas', pickPlan: 'Pasirinkite planą', furniture: 'IKEA baldai', layout: 'Išplanavimas',
     intro: 'Pilnoje „Swiftrix 3D“ programoje įklijuojate bet kurią IKEA ar kitos parduotuvės nuorodą. Programa perskaito tikrus matmenis iš puslapio, pagal prekės nuotraukas sukuria 3D modelį ir pritaiko patalpą aplink jį. Šioje demonstracijoje paruošta 16 IKEA baldų. Įdėkite kelis į patalpą ir stebėkite, kaip keičiasi išplanavimas.',
-    all: 'Visi', home: 'Namams', office: 'Biurui', addTo: 'Įdėti į', room: 'Patalpa', add: 'Įdėti', remove: 'Pašalinti', show: 'Rodyti plane', ikea: 'Žiūrėti IKEA', added: 'Jūsų patalpoje', none: 'Dar nieko neįdėta.',
+    all: 'Visi', home: 'Namams', office: 'Biurui', addTo: 'Įdėti į', room: 'Patalpa', add: 'Įdėti', remove: 'Pašalinti', show: 'Rodyti plane', view: 'Žiūrėti 3D', ikea: 'Žiūrėti IKEA', added: 'Jūsų patalpoje', none: 'Dar nieko neįdėta.',
     cm: 'cm', limit: 'Šioje demonstracijoje telpa iki 8 baldų. Pirmiausia vieną pašalinkite.', book: 'Užsakyti skambutį', ctaTitle: 'Norite to savo verslui?', ctaText: '„Swiftrix 3D“ perskaito planą, įrengia jį baldais ir parodo 3D. Pilna programa skirta įmonėms: baldų parduotuvėms, vystytojams, nekilnojamojo turto agentams ir dizaineriams.', pieces: 'baldai', ready: 'Paruoštas planas',
     reset: 'Išvalyti baldus' },
   de: { plan: 'Grundriss', pickPlan: 'Grundriss wählen', furniture: 'IKEA-Möbel', layout: 'Aufteilung',
     intro: 'Im vollständigen Swiftrix-3D-Programm fügen Sie einen beliebigen IKEA- oder anderen Shop-Link ein. Das Programm liest die echten Maße von der Seite, baut aus den Produktbildern ein 3D-Modell und passt Ihren Raum darum herum an. In dieser Demo sind 16 IKEA-Möbel vorbereitet. Stellen Sie einige in den Raum und sehen Sie, wie sich die Aufteilung anpasst.',
-    all: 'Alle', home: 'Wohnen', office: 'Büro', addTo: 'Hinzufügen zu', room: 'Raum', add: 'Hinzufügen', remove: 'Entfernen', show: 'Im Plan zeigen', ikea: 'Bei IKEA ansehen', added: 'In Ihrem Raum', none: 'Noch nichts hinzugefügt.',
+    all: 'Alle', home: 'Wohnen', office: 'Büro', addTo: 'Hinzufügen zu', room: 'Raum', add: 'Hinzufügen', remove: 'Entfernen', show: 'Im Plan zeigen', view: 'In 3D ansehen', ikea: 'Bei IKEA ansehen', added: 'In Ihrem Raum', none: 'Noch nichts hinzugefügt.',
     cm: 'cm', limit: 'Diese Demo fasst bis zu 8 Möbel. Entfernen Sie zuerst eines.', book: 'Gespräch buchen', ctaTitle: 'Das für Ihr Unternehmen?', ctaText: 'Swiftrix 3D liest einen Grundriss, möbliert ihn und zeigt ihn in 3D. Das vollständige Programm ist für Unternehmen gedacht: Möbelhäuser, Bauträger, Makler und Designer.', pieces: 'Möbel', ready: 'Fertiger Grundriss',
     reset: 'Möbel entfernen' },
 }
@@ -115,7 +115,13 @@ export function mountShowcaseFurniture(host, api) {
     say('')
     let r = await api.add(p)
     if ((!r || !r.ok) && p.mode === 'replace') r = await api.add({ ...p, mode: 'extra' })          // the room cannot be arranged around it instead of its own piece: try it as an extra piece
-    if (!r || !r.ok) say(r?.message || TX.limit, true); else say(r.message || '')
+    if (!r || !r.ok) say(r?.message || TX.limit, true)
+    else {
+      say(r.message || '')
+      const added = api.list().find((q) => q.id === p.id), btn = document.createElement('button')          // straight to the result: the plan and the 3D view of the room with the new piece
+      btn.type = 'button'; btn.className = 'btn sm'; btn.textContent = TX.view; btn.style.marginLeft = '10px'; btn.onclick = () => added && api.show(added)
+      $('#sc-msg').append(btn)
+    }
     refresh()
   }
   $('#sc-clear').onclick = async () => { for (const p of [...api.list()]) await api.remove(p.id); say(''); refresh() }
