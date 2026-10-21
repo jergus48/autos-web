@@ -702,8 +702,8 @@ export function layoutPlan(plan, { rank = 0, space = buildSpace(plan), keep: kee
   const ctxs = new Map(), notes = [], keep = withFixed(plan, space, keep0)
   for (const room of space.rooms) {
     const er = effRank(plan, room, rank), ctx = new Ctx(room, [], overridesOf(plan, room)); ctx.rank = er; ctx.lock(keep.filter((i) => i.room === room.i)); ctxs.set(room.i, ctx)
-    const f = RECIPES[room.kind]
-    if (!f) { notes.push({ room: room.i, name: room.name, note: 'not furnished (' + room.kind + ')' }); continue }
+    const f = plan._empty ? null : RECIPES[room.kind]          // _empty: the rooms are left bare (only fixed pieces and the extras the person adds)
+    if (!f) { if (!plan._empty) notes.push({ room: room.i, name: room.name, note: 'not furnished (' + room.kind + ')' }); continue }
     try { f(ctx, er) } catch (e) { notes.push({ room: room.i, name: room.name, note: 'failed: ' + e.message }) }
   }
   // an open-plan "kitchen and dining" that has no space for the table borrows the living room it opens into
@@ -721,7 +721,7 @@ export function layoutPlan(plan, { rank = 0, space = buildSpace(plan), keep: kee
   for (const room of space.rooms) {
     const ctx = ctxs.get(room.i); if (!RECIPES[room.kind] && !ctx.locked.length) continue
     placeExtras(ctx, extrasOf(plan, room), notes)
-    try { if (RECIPES[room.kind]) rugs(ctx) } catch (e) { notes.push({ room: room.i, name: room.name, note: 'rugs failed: ' + e.message }) }
+    try { if (RECIPES[room.kind] && !plan._empty) rugs(ctx) } catch (e) { notes.push({ room: room.i, name: room.name, note: 'rugs failed: ' + e.message }) }
     items.push(...ctx.items.map(plain))
   }
   return { items, notes, space }
@@ -732,7 +732,7 @@ export function layoutRoom(plan, roomIndex, { rank = 0, space = buildSpace(plan)
   const room = space.rooms[roomIndex]; if (!room) return []
   const keep = withFixed(plan, space, keep0)
   const ctx = new Ctx(room, [], overridesOf(plan, room)); ctx.rank = rank; ctx.lock(keep.filter((i) => i.room === room.i))
-  const f = RECIPES[room.kind]
+  const f = plan._empty ? null : RECIPES[room.kind]
   if (f) {
     try { f(ctx, rank) } catch { /* the room keeps what was placed so far */ }
     if (room.kind === 'living' && !ctx.items.some((i) => i.type === 'dining_table')) {

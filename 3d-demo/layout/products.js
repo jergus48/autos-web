@@ -51,4 +51,4 @@ export function applyProducts(plan, products = []) {
   return plan
 }
 // a short text that changes when any product (or where it goes) changes: part of the key of the layout cache
-export const productKey = (plan) => (plan._overrides || plan._extras ? JSON.stringify([plan._overrides, plan._extras]) : '')
+export const productKey = (plan) => (plan._overrides || plan._extras ? JSON.stringify([plan._overrides, plan._extras, plan._empty ? 1 : 0]) : plan._empty ? 'empty' : '')

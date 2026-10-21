@@ -173,7 +173,7 @@ export function mountViewer(container, plan, { option = 'A', look = null, items 
     const outdoorFocus = state.focus !== null && isOutdoor(plan.rooms[state.focus])          // a terrace or balcony: open sky, no ceiling, daylight
     let items = state.items || layoutFor(plan, state.option)
     if (state.focus !== null) items = items.filter((i) => i.room === state.focus)
-    state.room = buildRoom(plan, state.option, { look: state.look, items, tags: state.tags, interior: inside, wallHeight: inside ? plan.ceilingHeight : state.cut ? 0.9 : plan.ceilingHeight, labels: state.focus === null })
+    state.room = buildRoom(plan, state.option, { look: state.look, items, tags: state.tags, interior: inside, wallHeight: inside ? plan.ceilingHeight : state.cut ? 0.9 : plan.ceilingHeight, labels: state.focus === null && !globalThis.SWX_SHOWCASE })
     if (inside) {          // a soft light inside; the ceiling only when asked for, so the room can be seen from above (it also hides itself while the camera is above it)
       const poly = plan.rooms[state.focus].polygon
       if (state.ceiling && !outdoorFocus) {
@@ -187,17 +187,22 @@ export function mountViewer(container, plan, { option = 'A', look = null, items 
     }
     scene.add(state.room); tuneMaterials(state.room)
   }
+  let touched = false; controls.addEventListener('start', () => { touched = true })
   function setView(kind) {
+    touched = false
     const w = plan.bounds.width, d = plan.bounds.depth, r = Math.max(w, d)          // read now: the plan can be rescaled while the viewer is open
     controls.target.set(w / 2, 0, d / 2); state.baseFov = 42; fitFov()
     const k = Math.max(1, 1.1 / camera.aspect) // back off on narrow (portrait) screens so the whole room fits
     if (kind === 'top') camera.position.set(w / 2, r * 1.7 * k, d / 2 + 0.001)
-    else camera.position.set(w / 2 + r * 0.55 * k, r * 0.95 * k, d / 2 + r * 1.05 * k)
+    else if (globalThis.SWX_SHOWCASE) {          // the showcase fills the viewer with the whole flat, however tall or wide the viewer is
+      const R = Math.hypot(w, d) / 2 * 0.95, vf = (camera.fov * Math.PI) / 180, hf = 2 * Math.atan(Math.tan(vf / 2) * camera.aspect), dist = R / Math.sin(Math.min(vf, hf) / 2), n = Math.hypot(0.55, 0.95, 1.05)
+      camera.position.set(w / 2 + dist * 0.55 / n, dist * 0.95 / n, d / 2 + dist * 1.05 / n)
+    } else camera.position.set(w / 2 + r * 0.55 * k, r * 0.95 * k, d / 2 + r * 1.05 * k)
     controls.update()
   }
   // an eye-level picture keeps the width of view it was made for (a 68 degree lens on a 16:9 picture), whatever the shape of the viewer, but never more than 80 degrees up and down
   function fitFov() { camera.fov = state.mode === 'inside' ? Math.min(80, (2 * Math.atan(Math.tan(state.hfov / 2) / camera.aspect) * 180) / Math.PI) : state.baseFov; camera.updateProjectionMatrix() }
-  function size() { const b = container.getBoundingClientRect(); if (!b.width) return; renderer.setSize(b.width, b.height, false); renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); camera.aspect = b.width / b.height; fitFov() }
+  function size() { const b = container.getBoundingClientRect(); if (!b.width) return; renderer.setSize(b.width, b.height, false); renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); const was = camera.aspect; camera.aspect = b.width / b.height; fitFov(); if (globalThis.SWX_SHOWCASE && !touched && state.focus === null && Math.abs(was - camera.aspect) > 0.01) setView(state.mode === 'top' ? 'top' : 'orbit') }          // the showcase frames the flat again when the viewer gets its real shape (it starts hidden)
   const ro = new ResizeObserver(size); ro.observe(container); size()
   // a double click on a wall: which wall (a face of the room in front of it, or both sides when the top of the wall was hit) goes to onWall, which opens the colour choice
   const ray3 = new THREE.Raycaster()

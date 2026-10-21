@@ -1,4 +1,6 @@
 // The public showcase (app/showcase.html): the same layout engine and 3D view as the product, with nothing to sign in to, nothing to upload and nothing that costs money. A visitor picks one of six ready-made
+import { planSvg } from '../layout/plansvg.js'
+import { buildSpace } from '../layout/space.js'
 // floor plans and adds furniture from a short list of IKEA pieces whose 3D models were made ahead of time with the product's own link-to-model method. The words of this screen come in three languages
 // (?lang=en|lt|de); the texts the layout engine writes about the plan (checks, pros and cons) are English.
 import { drawModelViews } from './modelshot.js'
@@ -25,28 +27,34 @@ const ROOM_NAMES = {
 export const translatePlan = (plan) => { const m = ROOM_NAMES[LANG]; if (m) plan.rooms.forEach((r) => { r.name = m[r.name] || r.name }); return plan }
 
 const S = {
-  en: { plan: 'Floor plan', pickPlan: 'Choose a floor plan', furniture: 'IKEA furniture', layout: 'Layout',
+  en: { modeFurnished: 'Furnished by the program', modeEmpty: 'Empty rooms: I furnish them', modeHint: 'Empty rooms: add pieces from the IKEA tab and they are placed for you.', orig: 'The original 2D floor plan this was made from', origHide: 'Hide', origShow: 'Show the original 2D plan', plan: 'Floor plan', pickPlan: 'Choose a floor plan', furniture: 'IKEA furniture', layout: 'Layout',
     intro: 'In the full Swiftrix 3D program you paste any IKEA or other shop link. The program reads the real size from the page, builds a 3D model from the product pictures and fits your room around it. This demo has 16 IKEA pieces prepared in advance. Add some to the room and watch the layout adjust.',
     all: 'All', home: 'Home', office: 'Office', addTo: 'Add to', room: 'Room', add: 'Add', remove: 'Remove', show: 'Show in the plan', view: 'View in 3D', ikea: 'View on IKEA', added: 'In your room', none: 'Nothing added yet.',
-    cm: 'cm', limit: 'This demo holds up to 8 pieces. Remove one first.', book: 'Book a call', ctaTitle: 'Want this for your business?', ctaText: 'Swiftrix 3D reads a floor plan, furnishes it and shows it in 3D. The full program is for companies: furniture shops, developers, estate agents and designers.', pieces: 'pieces', ready: 'Ready-made plan',
+    cm: 'cm', limit: 'This demo holds up to 14 pieces. Remove one first.', book: 'Book a call', ctaTitle: 'Want this for your business?', ctaText: 'Swiftrix 3D reads a floor plan, furnishes it and shows it in 3D. The full program is for companies: furniture shops, developers, estate agents and designers.', pieces: 'pieces', ready: 'Ready-made plan',
     reset: 'Clear furniture' },
-  lt: { plan: 'Planas', pickPlan: 'Pasirinkite planą', furniture: 'IKEA baldai', layout: 'Išplanavimas',
+  lt: { modeFurnished: 'Įrengta programos', modeEmpty: 'Tuščios patalpos: įrengiu pats', modeHint: 'Tuščios patalpos: pridėkite baldų iš IKEA skirtuko ir jie bus išdėstyti už jus.', orig: 'Originalus 2D planas, pagal kurį sukurta', origHide: 'Slėpti', origShow: 'Rodyti originalų 2D planą', plan: 'Planas', pickPlan: 'Pasirinkite planą', furniture: 'IKEA baldai', layout: 'Išplanavimas',
     intro: 'Pilnoje „Swiftrix 3D“ programoje įklijuojate bet kurią IKEA ar kitos parduotuvės nuorodą. Programa perskaito tikrus matmenis iš puslapio, pagal prekės nuotraukas sukuria 3D modelį ir pritaiko patalpą aplink jį. Šioje demonstracijoje paruošta 16 IKEA baldų. Įdėkite kelis į patalpą ir stebėkite, kaip keičiasi išplanavimas.',
     all: 'Visi', home: 'Namams', office: 'Biurui', addTo: 'Įdėti į', room: 'Patalpa', add: 'Įdėti', remove: 'Pašalinti', show: 'Rodyti plane', view: 'Žiūrėti 3D', ikea: 'Žiūrėti IKEA', added: 'Jūsų patalpoje', none: 'Dar nieko neįdėta.',
-    cm: 'cm', limit: 'Šioje demonstracijoje telpa iki 8 baldų. Pirmiausia vieną pašalinkite.', book: 'Užsakyti skambutį', ctaTitle: 'Norite to savo verslui?', ctaText: '„Swiftrix 3D“ perskaito planą, įrengia jį baldais ir parodo 3D. Pilna programa skirta įmonėms: baldų parduotuvėms, vystytojams, nekilnojamojo turto agentams ir dizaineriams.', pieces: 'baldai', ready: 'Paruoštas planas',
+    cm: 'cm', limit: 'Šioje demonstracijoje telpa iki 14 baldų. Pirmiausia vieną pašalinkite.', book: 'Užsakyti skambutį', ctaTitle: 'Norite to savo verslui?', ctaText: '„Swiftrix 3D“ perskaito planą, įrengia jį baldais ir parodo 3D. Pilna programa skirta įmonėms: baldų parduotuvėms, vystytojams, nekilnojamojo turto agentams ir dizaineriams.', pieces: 'baldai', ready: 'Paruoštas planas',
     reset: 'Išvalyti baldus' },
-  de: { plan: 'Grundriss', pickPlan: 'Grundriss wählen', furniture: 'IKEA-Möbel', layout: 'Aufteilung',
+  de: { modeFurnished: 'Vom Programm möbliert', modeEmpty: 'Leere Räume: ich möbliere', modeHint: 'Leere Räume: Fügen Sie Möbel im IKEA-Tab hinzu, sie werden für Sie platziert.', orig: 'Der originale 2D-Grundriss, aus dem dies erstellt wurde', origHide: 'Ausblenden', origShow: 'Originalen 2D-Grundriss zeigen', plan: 'Grundriss', pickPlan: 'Grundriss wählen', furniture: 'IKEA-Möbel', layout: 'Aufteilung',
     intro: 'Im vollständigen Swiftrix-3D-Programm fügen Sie einen beliebigen IKEA- oder anderen Shop-Link ein. Das Programm liest die echten Maße von der Seite, baut aus den Produktbildern ein 3D-Modell und passt Ihren Raum darum herum an. In dieser Demo sind 16 IKEA-Möbel vorbereitet. Stellen Sie einige in den Raum und sehen Sie, wie sich die Aufteilung anpasst.',
     all: 'Alle', home: 'Wohnen', office: 'Büro', addTo: 'Hinzufügen zu', room: 'Raum', add: 'Hinzufügen', remove: 'Entfernen', show: 'Im Plan zeigen', view: 'In 3D ansehen', ikea: 'Bei IKEA ansehen', added: 'In Ihrem Raum', none: 'Noch nichts hinzugefügt.',
-    cm: 'cm', limit: 'Diese Demo fasst bis zu 8 Möbel. Entfernen Sie zuerst eines.', book: 'Gespräch buchen', ctaTitle: 'Das für Ihr Unternehmen?', ctaText: 'Swiftrix 3D liest einen Grundriss, möbliert ihn und zeigt ihn in 3D. Das vollständige Programm ist für Unternehmen gedacht: Möbelhäuser, Bauträger, Makler und Designer.', pieces: 'Möbel', ready: 'Fertiger Grundriss',
+    cm: 'cm', limit: 'Diese Demo fasst bis zu 14 Möbel. Entfernen Sie zuerst eines.', book: 'Gespräch buchen', ctaTitle: 'Das für Ihr Unternehmen?', ctaText: 'Swiftrix 3D liest einen Grundriss, möbliert ihn und zeigt ihn in 3D. Das vollständige Programm ist für Unternehmen gedacht: Möbelhäuser, Bauträger, Makler und Designer.', pieces: 'Möbel', ready: 'Fertiger Grundriss',
     reset: 'Möbel entfernen' },
 }
 export const TX = S[LANG]
 
 // ---- the choice of the plan, above the room
-export function mountPlanBar(host, currentId, onPick) {
-  host.innerHTML = `<div class="sc-plans" role="group" aria-label="${esc(TX.pickPlan)}">${PLANS.map((p) => `<button type="button" class="sc-plan ${p.id === currentId ? 'on' : ''}" data-plan="${p.id}" aria-pressed="${p.id === currentId}"><b>${esc(p.t[LANG][0])}</b><span class="sc-area">${p.area} m²</span><span class="sc-pd">${esc(p.t[LANG][1])}</span></button>`).join('')}</div>`
+let origOpen = true          // the original 2D plan stays open or shut while the visitor switches plans
+export function mountPlanBar(host, currentId, onPick, { empty = false, onMode = null, plan = null } = {}) {
+  const svg = () => { try { return planSvg(plan, [], { space: buildSpace(plan), theme: 'light', dims: true, labels: true, zones: 'none' }) } catch { return '' } }
+  host.innerHTML = `<div class="sc-plans" role="group" aria-label="${esc(TX.pickPlan)}">${PLANS.map((p) => `<button type="button" class="sc-plan ${p.id === currentId ? 'on' : ''}" data-plan="${p.id}" aria-pressed="${p.id === currentId}"><b>${esc(p.t[LANG][0])}</b><span class="sc-area">${p.area} m²</span><span class="sc-pd">${esc(p.t[LANG][1])}</span></button>`).join('')}</div>
+    ${onMode ? `<div class="sc-modes" role="group"><button type="button" class="chipx ${empty ? '' : 'on'}" data-mode="full">${esc(TX.modeFurnished)}</button><button type="button" class="chipx ${empty ? 'on' : ''}" data-mode="empty">${esc(TX.modeEmpty)}</button>${empty ? `<span class="sc-modehint">${esc(TX.modeHint)}</span>` : ''}</div>` : ''}
+    ${plan ? `<details class="sc-orig" ${origOpen ? 'open' : ''}><summary>${esc(TX.orig)}</summary><div class="sc-origimg"><img alt="${esc(TX.orig)}" src="data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg())}"></div></details>` : ''}`
   host.querySelectorAll('[data-plan]').forEach((b) => b.addEventListener('click', () => onPick(b.dataset.plan)))
+  host.querySelectorAll('[data-mode]').forEach((b) => b.addEventListener('click', () => { if ((b.dataset.mode === 'empty') !== empty) onMode(b.dataset.mode === 'empty') }))
+  host.querySelector('.sc-orig')?.addEventListener('toggle', (e) => { origOpen = e.target.open })
 }
 
 // ---- the furniture: a card per piece, a model picture drawn from our own 3D model, a link to the shop

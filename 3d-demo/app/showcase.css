@@ -51,3 +51,10 @@ body.sc-mode { background-image: none; min-height: 0; }
 .sc-mode .tab[data-t="furniture"]:not(.sel) { background: var(--lime); color: var(--lime-ink); border-color: var(--lime); box-shadow: 0 6px 22px rgba(176,229,98,.22); }
 .sc-mode .tab[data-t="furniture"]::before { content: "+ "; }
 .viewer-bar #vIkea { background: var(--lime); color: var(--lime-ink); border-color: var(--lime); }
+
+.sc-modes { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: -6px 0 14px; }
+.sc-modehint { font-size: 13.5px; color: var(--muted); }
+.sc-orig { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 16px; }
+.sc-orig summary { cursor: pointer; padding: 12px 16px; font-size: 14.5px; color: var(--ink); }
+.sc-origimg { padding: 4px 14px 14px; max-width: 760px; margin: 0 auto; }
+.sc-origimg img { display: block; width: 100%; max-height: 420px; object-fit: contain; border-radius: 8px; }

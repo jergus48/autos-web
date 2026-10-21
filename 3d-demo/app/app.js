@@ -462,6 +462,7 @@ function applyEdits(room, plan) {
 function screenResult(el, room, plan) {
   const tabs = SHOW ? [['layout', TX.layout], ['furniture', TX.furniture]] : [['layout', 'Layout'], ['furniture', 'Furniture from links'], ['photos', 'Property photos'], ['downloads', 'Downloads']]
   applyEdits(room, plan)
+  plan._empty = SHOW && room.empty ? true : null
   room.products = (room.products || []).map(reclassified); room.slots = Math.max(room.slots || 0, INCLUDED_PIECES); delete room.pieces          // pieces from links are real pieces of the layout; the first INCLUDED_PIECES places are free
   applyProducts(plan, room.products)
   let space = buildSpace(plan)
@@ -502,7 +503,7 @@ function screenResult(el, room, plan) {
     <section data-p="furniture" class="proj" hidden><div id="pf-host"></div></section>
     <section data-p="photos" hidden><div id="photos-host"></div></section>
     <section data-p="downloads" hidden><div class="dl" id="dl"></div><p class="muted small" style="margin-top:12px">3D model files (GLB) are coming soon.</p></section>`
-  if (SHOW) mountPlanBar($('#sc-planbar', el), room.planId, switchPlan)
+  if (SHOW) mountPlanBar($('#sc-planbar', el), room.planId, switchPlan, { empty: Boolean(room.empty), plan, onMode: (empty) => { room.empty = empty; room.custom = null; room.products = []; room.option = 'A'; room.base = 'A'; resetLayouts(plan); resetSpace(plan); render() } })
   // a double click on a wall (in the 3D view or on the plan): its colour, kept with the room, drawn at once in the 3D view and in every picture made later
   const paintWalls = (hit) => openWallPaint({ ...hit, at: hit, map: (room.wallColors ||= {}), onApply: (map) => { room.wallColors = map; plan.wallColors = map; cache.clear(); save(); viewer.refresh(); const d = $('#dl', el); if (d) d.innerHTML = '' } })
   const viewer = mountViewer($('#vw', el), plan, { option: room.base, items: current(), look: lookOf(room, plan), onWall: paintWalls })
@@ -762,7 +763,7 @@ function screenResult(el, room, plan) {
     const i = plan.rooms.findIndex((r) => r.id === p.roomId); if (i < 0) return { ok: false, message: 'That room is gone.' }
     const before = room.products, swapped = before.find((q) => p.mode === 'replace' && q.mode === 'replace' && q.roomId === p.roomId && q.type === p.type)
     const next = [...before.filter((q) => q !== swapped), p]
-    if (next.length > (SHOW ? 8 : MAX_PIECES)) return { ok: false, message: SHOW ? TX.limit : `Up to ${MAX_PIECES} pieces per room in this prototype. Remove one first.` }
+    if (next.length > (SHOW ? 14 : MAX_PIECES)) return { ok: false, message: SHOW ? TX.limit : `Up to ${MAX_PIECES} pieces per room in this prototype. Remove one first.` }
     applyProducts(plan, next)          // tried before anything is paid
     const out = tryProduct(p, i)
     if (!out.ok) { applyProducts(plan, before); return out }
