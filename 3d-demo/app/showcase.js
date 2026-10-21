@@ -1,5 +1,6 @@
 // The public showcase (app/showcase.html): the same layout engine and 3D view as the product, with nothing to sign in to, nothing to upload and nothing that costs money. A visitor picks one of six ready-made
 import { planSvg } from '../layout/plansvg.js'
+import { furnitureSymbols } from './furnsymbols.js'
 import { buildSpace } from '../layout/space.js'
 // floor plans and adds furniture from a short list of IKEA pieces whose 3D models were made ahead of time with the product's own link-to-model method. The words of this screen come in three languages
 // (?lang=en|lt|de); the texts the layout engine writes about the plan (checks, pros and cons) are English.
@@ -48,11 +49,12 @@ export const TX = S[LANG]
 // ---- the choice of the plan, above the room
 let origOpen = true          // the original 2D plan stays open or shut while the visitor switches plans
 // the plan drawn the way an architect hands it over: white paper, thin black walls, furniture as outlines, room names and measurements
-const DRAWING_CSS = `.fl,.fo{fill:#fff!important}.wl{fill:#fff!important;stroke:#111!important;stroke-width:.022!important}.win{stroke:#111!important;stroke-width:.05!important;opacity:1!important}.wt{stroke:#111!important}.dr,.dra{stroke:#111!important;stroke-width:1.2px!important;fill:none!important;stroke-dasharray:none!important}.dop{stroke:#111!important;opacity:.7!important}.pc rect,.pc circle{fill:#fff!important;stroke:#333!important;stroke-width:.014!important}.pc line{stroke:#999!important;stroke-width:.01!important}.lbl{fill:#666!important;font-weight:400!important;font-size:.11px!important;stroke:none!important;paint-order:normal!important}.rn{fill:#111!important;fill-opacity:1!important;stroke:none!important;font-size:.3px!important;font-weight:400!important;letter-spacing:0!important}.dm{stroke:#111!important;stroke-width:.012!important}.dn>line:first-child{stroke:#fff!important}.dt{fill:#111!important;font-size:.2px!important;stroke:none!important}`
+const DRAWING_CSS = `.rl{fill:#fff!important;fill-opacity:1!important;stroke:#111!important;stroke-width:.02!important}.fl,.fo{fill:#fff!important}.wl{fill:#fff!important;stroke:#111!important;stroke-width:.022!important}.win{stroke:#111!important;stroke-width:.05!important;opacity:1!important}.wt{stroke:#111!important}.dr,.dra{stroke:#111!important;stroke-width:1.2px!important;fill:none!important;stroke-dasharray:none!important}.dop{stroke:#111!important;opacity:.7!important}.pc rect,.pc circle{fill:#fff!important;stroke:#333!important;stroke-width:.014!important}.pc line{stroke:#999!important;stroke-width:.01!important}.lbl{fill:#666!important;font-weight:400!important;font-size:.11px!important;stroke:none!important;paint-order:normal!important}.rn{fill:#111!important;fill-opacity:1!important;stroke:none!important;font-size:.2px!important;font-weight:400!important;letter-spacing:0!important}.dm{stroke:#111!important;stroke-width:.012!important}.dn>line:first-child{stroke:#fff!important}.dt{fill:#111!important;font-size:.2px!important;stroke:none!important}`
 const drawing = (plan, items) => {
   try {
-    const svg = planSvg(plan, items, { space: buildSpace(plan), theme: 'light', dims: true, labels: true, zones: 'none' })
-    return svg.replace(/<style>/, '<style>' + DRAWING_CSS)
+    const svg = planSvg(plan, [], { space: buildSpace(plan), theme: 'light', dims: true, labels: true, zones: 'none' }).replace(/<style>/, '<style>' + DRAWING_CSS), at = svg.indexOf('<text class="rn')
+    const sym = furnitureSymbols(items)          // the furniture as plan symbols, under the room names
+    return at < 0 ? svg.replace('</svg>', sym + '</svg>') : svg.slice(0, at) + sym + svg.slice(at)
   } catch { return '' }
 }
 export function mountPlanBar(host, currentId, onPick, { empty = false, onMode = null, plan = null } = {}) {
