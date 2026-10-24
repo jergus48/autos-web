@@ -1,6 +1,4 @@
-/* 2D-to-3D interior visualisation page (/interior-visualisation, /lt/interjero-vizualizacija,
-   /de/innenraum-visualisierung). Builds on css/pages.css (nav, hero, sec-badge, cards, cta).
-   Only what this page adds lives here. */
+/* Styles shared by the 3D demo pages (/3d-demo and its language versions). Builds on css/pages.css (nav, hero, sec-badge, cards, cta). */
 
 html { scroll-padding-top: 110px; }
 
