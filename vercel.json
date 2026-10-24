@@ -1,6 +1,17 @@
 {
   "redirects": [
     { "source": "/light", "destination": "/", "permanent": false },
-    { "source": "/light/:path*", "destination": "/:path*", "permanent": false }
+    { "source": "/light/:path*", "destination": "/:path*", "permanent": false },
+    { "source": "/interior-visualisation/:path*", "destination": "/3d-demo", "permanent": true },
+    { "source": "/da/indretningsvisualisering/:path*", "destination": "/da/3d-demo", "permanent": true },
+    { "source": "/de/innenraum-visualisierung/:path*", "destination": "/de/3d-demo", "permanent": true },
+    { "source": "/es/visualizacion-interior/:path*", "destination": "/es/3d-demo", "permanent": true },
+    { "source": "/fi/sisustusvisualisointi/:path*", "destination": "/fi/3d-demo", "permanent": true },
+    { "source": "/fr/visualisation-interieure/:path*", "destination": "/fr/3d-demo", "permanent": true },
+    { "source": "/lt/interjero-vizualizacija/:path*", "destination": "/lt/3d-demo", "permanent": true },
+    { "source": "/lv/interjera-vizualizacija/:path*", "destination": "/lv/3d-demo", "permanent": true },
+    { "source": "/no/interiorvisualisering/:path*", "destination": "/no/3d-demo", "permanent": true },
+    { "source": "/pt/visualizacao-interiores/:path*", "destination": "/pt/3d-demo", "permanent": true },
+    { "source": "/sv/inredningsvisualisering/:path*", "destination": "/sv/3d-demo", "permanent": true }
   ]
 }
