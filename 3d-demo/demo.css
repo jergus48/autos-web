@@ -2,4 +2,6 @@
 .demo-frame { margin: 8px 0 0; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; background: #0a0a0c; text-align: left; }
 .demo-frame iframe { display: block; width: 100%; height: 900px; border: 0; background: #0a0a0c; }
 .demo-note { margin: 16px auto 0; max-width: 720px; color: var(--muted); font-size: 15px; text-wrap: pretty; }
+/* the floating menu is nearly solid once the page is scrolled, so the demo underneath does not shine through it */
+.vex-nav.scrolled { background: rgba(14, 14, 16, .95); }
 @media (max-width: 640px) { .demo-frame { border-radius: 14px; margin-inline: -8px; } }
