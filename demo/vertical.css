@@ -1,0 +1,78 @@
+/* Industry demos (/demo/construction, /demo/accounting and their /lt versions): what they add on top of /css/pages.css and /demo/demo.css. */
+
+/* demo hub tiles on /demo */
+.hub { margin-top: 8px; }
+a.card.link { display: block; text-decoration: none; color: inherit; }
+a.card.link .tag { margin-top: 14px; }
+
+/* the three-panel app has one more row of panels under it */
+.two { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); margin-top: 16px; align-items: start; }
+@media (max-width: 860px) { .two { grid-template-columns: minmax(0, 1fr); } }
+.doc-text { font-family: var(--font-mono, ui-monospace, monospace); font-size: 13.5px; line-height: 1.55; }
+.demo-note { text-align: center; margin: 18px auto 0; max-width: 720px; }
+.placeholder { padding: 4px 0; }
+
+/* price list and rules */
+.price .panel-head { gap: 10px; }
+.price-grid { display: grid; gap: 22px; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: start; }
+@media (max-width: 860px) { .price-grid { grid-template-columns: minmax(0, 1fr); } }
+.price table { min-width: 0; }
+.price td.unit { color: var(--faint); white-space: nowrap; }
+.price td.num input {
+  width: 92px; padding: 7px 10px; border-radius: 10px; background: var(--bg); border: 1px solid var(--border);
+  color: var(--text); font: inherit; text-align: right;
+}
+.price td.num input:focus { outline: none; border-color: var(--accent-ring); box-shadow: 0 0 0 3px var(--accent-soft); }
+.price .hint { font-size: 13px; color: var(--faint); margin: 10px 0 12px; }
+.price .btn-ghost { padding: 8px 14px; font-size: 14px; }
+.rules { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; font-size: 15px; color: var(--muted); }
+.rules li { display: grid; grid-template-columns: 20px 1fr; gap: 10px; }
+.rules li::before { content: ""; width: 8px; height: 8px; margin: 7px 0 0 6px; border-radius: 50%; background: var(--accent); }
+.rules b { color: var(--text); font-weight: 500; }
+
+/* estimate card in the result */
+.est { border: 1px solid var(--border); border-radius: 14px; background: var(--bg); margin: 0 0 14px; overflow: hidden; animation: rise .35s ease both; }
+.est-head { padding: 9px 14px; font-size: 13px; color: var(--muted); border-bottom: 1px solid var(--border); }
+.est-table { min-width: 0; font-size: 14.5px; }
+.est-table td { border-right: 0; padding: 8px 14px; }
+.est-table tr:last-child td { border-bottom: 0; }
+.est-total td { font-weight: 500; background: var(--accent-soft); }
+
+/* accounting: fields and checks */
+.kv { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 16px; margin: 0 0 14px; font-size: 14.5px; }
+.kv dt { color: var(--faint); }
+.kv dd { margin: 0; overflow-wrap: anywhere; }
+.checks { margin: 0 0 14px; font-size: 14.5px; }
+.checks b { display: block; margin-bottom: 6px; font-weight: 500; }
+.checks ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.checks li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; }
+.checks li i { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 12px; margin-top: 1px; }
+.checks li.ok i { background: var(--accent-soft); color: var(--accent); }
+.checks li.ok i::before { content: "\2713"; }
+.checks li.bad { color: var(--warn); }
+.checks li.bad i { background: var(--warn-soft); color: var(--warn); }
+.checks li.bad i::before { content: "!"; font-weight: 600; }
+.checks li.info { color: var(--muted); }
+.checks li.info i { background: var(--surface-2); color: var(--muted); }
+.checks li.info i::before { content: "i"; font-weight: 600; }
+
+/* accounting: month-end status */
+.month-bar { display: flex; gap: 3px; height: 12px; border-radius: 100px; overflow: hidden; margin: 4px 0 14px; background: var(--bg); }
+.seg { display: block; min-width: 6px; }
+.seg-ready { background: var(--accent); }
+.seg-waiting { background: var(--warn); }
+.seg-review { background: #7aa7ff; }
+.seg-dup { background: var(--faint); }
+.seg-pending { background: var(--border); }
+.month-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+.month-legend .lg { display: inline-flex; align-items: center; gap: 7px; }
+.month-legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.month-line { font-size: 14px; color: var(--faint); margin: 0; }
+.sheet .panel-head .btn { margin-left: auto; padding: 7px 14px; font-size: 14px; }
+.run-row .btn-ghost { padding: 12px 18px; }
+
+/* the other demos, as a row of buttons at the bottom */
+.more-demos { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 36px 0 0; }
+.more-demos .btn { padding: 10px 18px; font-size: 15px; }
+
+#client-body .reply textarea { min-height: 250px; }

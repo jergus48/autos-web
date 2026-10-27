@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="lt" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Statybos agento demo | Swiftrix</title>
+  <meta name="description" content="Išbandykite DI agentą statybos įmonei: jis perskaito kliento užklausą, įkainoja darbus pagal jūsų kainoraštį, patikrina jūsų taisykles ir parašo atsakymą.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Statybos agento demo | Swiftrix">
+  <meta property="og:description" content="Nuo užklausos iki kainos per kelias minutes. Pažiūrėkite, kaip agentas dirba su kliento laišku.">
+  <link rel="icon" href="/assets/images/swiftrixLogo.png">
+  <link rel="alternate" hreflang="en" href="https://www.swiftrix.eu/demo/construction">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&display=swap">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/demo/demo.css">
+  <link rel="stylesheet" href="/demo/vertical.css">
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <nav class="vex-nav">
+    <a class="vex-logo" data-site="" href="/lt" aria-label="Swiftrix">
+      <img class="logo-dark" src="/assets/images/swiftrixLogo.png" alt="Swiftrix">
+    </a>
+    <div class="vex-links" id="vexLinks">
+      <a data-site="#process" href="/lt#process">Kaip tai veikia</a>
+      <a data-site="#testimonial" href="/lt#testimonial">Atvejų studijos</a>
+      <a data-page="/lt/demo" href="/lt/demo">Agentų demo</a>
+      <a data-page="/lt/asistentas" href="/lt/asistentas">DI asistentas</a>
+      <a data-site="#faq" href="/lt#faq">DUK</a>
+      <a class="vex-mlink" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Užsisakyti skambutį</a>
+    </div>
+    <a class="vex-cta" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Užsisakyti skambutį</a>
+    <button class="vex-burger" id="vexBurger" type="button" aria-label="Meniu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="wrap">
+    <header class="hero">
+      <p class="eyebrow"><span>STATYBOS AGENTO DEMO · IŠBANDYKITE PATYS</span></p>
+      <h1>Nuo užklausos iki <span class="hl">kainos</span> per kelias minutes</h1>
+      <p>Pasirinkite kliento laišką ir pažiūrėkite, kaip agentas jį perskaito, įkainoja darbus pagal jūsų kainoraštį, patikrina jūsų taisykles ir kalendorių bei parašo atsakymą. Prieš išsiunčiant atsakymą jūs jį patvirtinate.</p>
+    </header>
+
+    <div class="app">
+      <section class="panel" aria-label="Kliento laiškai">
+        <div class="panel-head"><span class="step-no">1</span>Kliento laiškai</div>
+        <ul class="mail-list" id="mail-list" role="tablist"></ul>
+        <div class="panel-body">
+          <div id="reader"
+            data-placeholder="Įklijuokite kliento užklausą…"
+            data-privacy="Veikia jūsų naršyklėje. Niekas, ką įklijuojate, niekur nesiunčiama."></div>
+          <div class="run-row"><button class="btn btn-primary" id="run" type="button">Paleisti agentą</button></div>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-agent" aria-label="Agentas">
+        <div class="panel-head"><span class="step-no">2</span>Agentas<span class="pill" id="agent-pill"><i></i><span></span></span></div>
+        <div class="panel-body">
+          <div class="systems"><span class="sys" data-sys="mail"></span><span class="sys" data-sys="prices"></span><span class="sys" data-sys="rules"></span><span class="sys" data-sys="calendar"></span><span class="sys" data-sys="sheet"></span></div>
+          <ul class="steps" id="steps" aria-live="polite"></ul>
+        </div>
+      </section>
+
+      <section class="panel panel-result" aria-label="Rezultatas">
+        <div class="panel-head"><span class="step-no">3</span>Rezultatas<span class="pill" id="result-pill"><i></i><span></span></span></div>
+        <div class="panel-body" id="result-body" aria-live="polite"></div>
+      </section>
+    </div>
+
+    <section class="panel price" aria-label="Jūsų kainoraštis">
+      <div class="panel-head"><span class="step-no">€</span>Jūsų kainoraštis</div>
+      <div class="panel-body"><div class="price-grid">
+        <div><div class="sheet-scroll"><table><tbody id="price-body"></tbody></table></div><button class="btn btn-ghost" id="price-reset" type="button"></button></div>
+        <div><ul class="rules"><li><span><b>Aptarnaujama teritorija:</b> Vilnius, Kaunas, Klaipėda, Šiauliai, Panevėžys. Kitais atvejais rašomas mandagus atsisakymas.</span></li><li><span><b>Kainos riba:</b> iki 15 000 € darbų kainą agentas nurodo pats.</span></li><li><span><b>Priestatai ir dideli darbai:</b> vietoje kainos el. paštu siūlomas nemokamas apžiūros vizitas.</span></li><li><span><b>Įvertinimas:</b> kainoraštis × plotas, plius 4 % atliekų išvežimui, pateikiamas kaip intervalas (nuo -8 % iki +12 %).</span></li></ul></div>
+      </div></div>
+    </section>
+
+    <section class="panel sheet" aria-label="Jobs.xlsx">
+      <div class="panel-head"><span class="xls">X</span>Jobs.xlsx</div>
+      <div class="sheet-scroll"><table><thead><tr id="sheet-head"></tr></thead><tbody id="sheet-body"></tbody></table></div>
+    </section>
+    <p class="note demo-note">Šis demo veikia jūsų naršyklėje su pavyzdinėmis užklausomis ir pavyzdinėmis kainomis. Nieko, ką įvedate, niekur nesiunčiame. Tikras agentas dirba su jūsų paštu, kainoraščiu ir kalendoriumi.</p>
+
+    <section class="block">
+      <span class="sec-badge"><i></i>Kodėl agentas</span>
+      <h2>Kas pasikeičia statybos įmonėje</h2>
+      <p class="lead">Užklausos ateina bet kuriuo metu, ir daugumai reikia tų pačių pirmų žingsnių. Šiuos žingsnius atlieka agentas, o sprendimai lieka jums.</p>
+      <div class="cards"><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Atsako per kelias minutes, dieną ir naktį</h3><p>Klientas, parašęs 22:00, atsakymą gauna dar prieš tai, kai konkurentas atidaro paštą.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg></div><h3>Kainos pagal jūsų kainoraštį</h3><p>Jokių spėlionių: kiekvienas skaičius paremtas jūsų kainomis ir taisyklėmis, kurias galite keisti bet kada.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div><h3>Sprendžiate jūs</h3><p>Nieko neišsiunčiama, kol nepatvirtinate. Dideliems ar neįprastiems darbams siūlomas apžiūros vizitas, o ne kaina el. paštu.</p></div></div>
+    </section>
+
+    <section class="block">
+      <span class="sec-badge"><i></i>Jūsų įmonėje</span>
+      <h2>Prie ko prijungtas tikras agentas</h2>
+      <p class="lead">Demo viskas imituojama. Jūsų įmonėje agentas dirba su įrankiais, kuriais jau naudojatės.</p>
+      <div class="cards"><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div><h3>Jūsų paštas</h3><p>Skaito užklausas iš Gmail ar Outlook, taip pat su nuotraukomis ir priedais.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg></div><h3>Jūsų kainoraštis</h3><p>Naudoja jūsų Excel, Google Sheets ar skaičiavimo programą, todėl kainos visada jūsų.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></div><h3>Jūsų kalendorius</h3><p>Siūlo tikrus laisvus laikus apžiūrai ir užrašo tą, kurį pasirenka klientas.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3M15 7V3M6 7h12v4a6 6 0 0 1-12 0V7zM12 17v4"/></svg></div><h3>Jūsų CRM ar lentelė</h3><p>Kiekvieną užklausą įrašo su būsena ir kitu žingsniu, kad nieko nepamirštumėte.</p></div></div>
+    </section>
+
+    <section class="cta">
+      <span class="sec-badge"><i></i>Pokalbis</span>
+      <h2>Norite tokio agento savo statybos įmonei?</h2>
+      <p>Per 15 minučių skambutį parodysime, kaip agentas veiktų su jūsų kainoraščiu ir paštu.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Užsisakyti pokalbį</a>
+        <a class="btn btn-ghost" data-page="/lt/asistentas" href="/lt/asistentas">Aprašyti savo problemą</a>
+      </div>
+      <div class="more-demos" aria-label="Daugiau demo"><a class="btn btn-ghost" data-page="/lt/demo" href="/lt/demo">Užsakymų agento demo</a><a class="btn btn-ghost" data-page="/lt/demo/buhalterija" href="/lt/demo/buhalterija">Buhalterijos demo</a></div>
+    </section>
+  </main>
+
+  <footer>© 2026 Swiftrix · <a data-site="" href="/lt">swiftrix.eu</a></footer>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/js/pages.js" defer></script>
+  <script src="/demo/construction/construction.js" defer></script>
+</body>
+</html>
