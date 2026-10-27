@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="lt" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buhalterijos agento demo | Swiftrix</title>
+  <meta name="description" content="Išbandykite DI agentą buhalterijos įmonei: jis perskaito kliento dokumentus, patikrina PVM kodus, sumas ir dublikatus, užpildo žurnalą ir parašo klientui vieną užklausą.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Buhalterijos agento demo | Swiftrix">
+  <meta property="og:description" content="Mėnesio dokumentai sutvarkyti, kol dar neatidarėte pašto. Pažiūrėkite, kaip dirba agentas.">
+  <link rel="icon" href="/assets/images/swiftrixLogo.png">
+  <link rel="alternate" hreflang="en" href="https://www.swiftrix.eu/demo/accounting">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&display=swap">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/demo/demo.css">
+  <link rel="stylesheet" href="/demo/vertical.css">
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <nav class="vex-nav">
+    <a class="vex-logo" data-site="" href="/lt" aria-label="Swiftrix">
+      <img class="logo-dark" src="/assets/images/swiftrixLogo.png" alt="Swiftrix">
+    </a>
+    <div class="vex-links" id="vexLinks">
+      <a data-site="#process" href="/lt#process">Kaip tai veikia</a>
+      <a data-site="#testimonial" href="/lt#testimonial">Atvejų studijos</a>
+      <a data-page="/lt/demo" href="/lt/demo">Agentų demo</a>
+      <a data-page="/lt/asistentas" href="/lt/asistentas">DI asistentas</a>
+      <a data-site="#faq" href="/lt#faq">DUK</a>
+      <a class="vex-mlink" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Užsisakyti skambutį</a>
+    </div>
+    <a class="vex-cta" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Užsisakyti skambutį</a>
+    <button class="vex-burger" id="vexBurger" type="button" aria-label="Meniu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="wrap">
+    <header class="hero">
+      <p class="eyebrow"><span>BUHALTERIJOS AGENTO DEMO · IŠBANDYKITE PATYS</span></p>
+      <h1>Mėnesio <span class="hl">dokumentai</span> sutvarkyti, kol dar neatidarėte pašto</h1>
+      <p>Paleiskite agentą su kliento dokumentų aplanku. Jis perskaito kiekvieną dokumentą, patikrina PVM kodus, sumas, dublikatus ir datas, užpildo žurnalą ir parašo klientui vieną užklausą dėl visko, ko trūksta.</p>
+    </header>
+
+    <div class="app">
+      <section class="panel" aria-label="Kliento dokumentai">
+        <div class="panel-head"><span class="step-no">1</span>Kliento dokumentai</div>
+        <ul class="mail-list" id="mail-list" role="tablist"></ul>
+        <div class="panel-body">
+          <div id="reader"
+            data-placeholder="Įklijuokite sąskaitos ar kvito tekstą…"
+            data-privacy="Veikia jūsų naršyklėje. Niekas, ką įklijuojate, niekur nesiunčiama."></div>
+          <div class="run-row"><button class="btn btn-primary" id="run" type="button">Paleisti agentą</button><button class="btn btn-ghost" id="run-all" type="button"></button></div>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-agent" aria-label="Agentas">
+        <div class="panel-head"><span class="step-no">2</span>Agentas<span class="pill" id="agent-pill"><i></i><span></span></span></div>
+        <div class="panel-body">
+          <div class="systems"><span class="sys" data-sys="inbox"></span><span class="sys" data-sys="read"></span><span class="sys" data-sys="checks"></span><span class="sys" data-sys="ledger"></span><span class="sys" data-sys="client"></span></div>
+          <ul class="steps" id="steps" aria-live="polite"></ul>
+        </div>
+      </section>
+
+      <section class="panel panel-result" aria-label="Rezultatas">
+        <div class="panel-head"><span class="step-no">3</span>Rezultatas<span class="pill" id="result-pill"><i></i><span></span></span></div>
+        <div class="panel-body" id="result-body" aria-live="polite"></div>
+      </section>
+    </div>
+
+    <div class="two">
+      <section class="panel" aria-label="Laikotarpio uždarymo būsena">
+        <div class="panel-head"><span class="step-no">4</span><span id="month-title">Laikotarpio uždarymo būsena</span></div>
+        <div class="panel-body"><div class="month-bar" id="month-bar"></div><div class="month-legend" id="month-legend"></div><p class="month-line" id="month-line"></p></div>
+      </section>
+      <section class="panel" aria-label="Užklausa klientui">
+        <div class="panel-head"><span class="step-no">5</span><span id="client-title">Užklausa klientui</span></div>
+        <div class="panel-body" id="client-body"></div>
+      </section>
+    </div>
+    <section class="panel price" aria-label="Ką agentas tikrina">
+      <div class="panel-head"><span class="step-no">&#10003;</span>Ką agentas tikrina</div>
+      <div class="panel-body"><ul class="rules"><li><span><b>PVM kodas:</b> yra ir tinkamo formato. Kvito be jo PVM atskaityti negalima.</span></li><li><span><b>Sumos:</b> suma be PVM plius PVM turi sutapti su bendra dokumento suma.</span></li><li><span><b>Dublikatai:</b> tas pats tiekėjas, numeris ir suma kaip ankstesniame dokumente.</span></li><li><span><b>Laikotarpis:</b> data turi patekti į 2026 m. kovą.</span></li><li><span><b>Užsienio valiuta ir atvirkštinis apmokestinimas:</b> perskaičiuojama ir pažymima jums patvirtinti.</span></li><li><span><b>Sutartys:</b> agentas jų niekada neįrašo, visada pažymi jums.</span></li></ul></div>
+    </section>
+
+    <section class="panel sheet" aria-label="Journal.xlsx">
+      <div class="panel-head"><span class="xls">X</span>Journal.xlsx<button class="btn btn-ghost" id="csv" type="button"></button></div>
+      <div class="sheet-scroll"><table><thead><tr id="sheet-head"></tr></thead><tbody id="sheet-body"></tbody></table></div>
+    </section>
+    <p class="note demo-note">Šis demo veikia jūsų naršyklėje su pavyzdiniais dokumentais. Nieko, ką įvedate, niekur nesiunčiame. Tikras agentas skaito jūsų klientų failus ir įrašo į jūsų buhalterinę programą.</p>
+
+    <section class="block">
+      <span class="sec-badge"><i></i>Kodėl agentas</span>
+      <h2>Kas pasikeičia buhalterijos įmonėje</h2>
+      <p class="lead">Didžioji mėnesio uždarymo darbo dalis yra tie patys keli patikrinimai su krūva dokumentų. Patikrinimus atlieka agentas, o jūs žiūrite į išimtis.</p>
+      <div class="cards"><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg></div><h3>Kiekvienas dokumentas patikrinamas</h3><p>PVM kodai, sumos, dublikatai ir laikotarpiai tikrinami kiekviename dokumente, todėl jūs žiūrite tik į tai, kas nepraėjo.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div><h3>Viena užklausa klientui</h3><p>Viskas, ko trūksta per mėnesį, surenkama į vieną žinutę, o ne dešimt atskirų laiškų.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div><h3>Sprendžiate jūs</h3><p>Nieko, kas nepraėjo patikrinimo, neįrašoma, o neįprasti dokumentai, pavyzdžiui, sutartys, pažymimi jums.</p></div></div>
+    </section>
+
+    <section class="block">
+      <span class="sec-badge"><i></i>Jūsų įmonėje</span>
+      <h2>Prie ko prijungtas tikras agentas</h2>
+      <p class="lead">Demo viskas imituojama. Jūsų įmonėje agentas dirba su įrankiais, kuriais jau naudojatės.</p>
+      <div class="cards"><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div><h3>Jūsų klientų paštas ar aplankas</h3><p>Renka dokumentus iš bendro pašto, aplanko ar kliento įkėlimo puslapio.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg></div><h3>Jūsų buhalterinė programa</h3><p>Paruošia žurnalą formatu, kurį jūsų programa importuoja, todėl niekas nevedama du kartus.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></div><h3>Jūsų sąskaitų planas</h3><p>Priskiria kiekvieną dokumentą jūsų kategorijoms ir mokosi iš jūsų pataisymų.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Jūsų terminai</h3><p>Primena klientams prieš terminą, kad laikotarpis būtų uždarytas laiku.</p></div></div>
+    </section>
+
+    <section class="cta">
+      <span class="sec-badge"><i></i>Pokalbis</span>
+      <h2>Norite tokio agento savo buhalterijos įmonei?</h2>
+      <p>Per 15 minučių skambutį parodysime, kaip agentas veiktų su jūsų klientų dokumentais ir buhalterine programa.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Užsisakyti pokalbį</a>
+        <a class="btn btn-ghost" data-page="/lt/asistentas" href="/lt/asistentas">Aprašyti savo problemą</a>
+      </div>
+      <div class="more-demos" aria-label="Daugiau demo"><a class="btn btn-ghost" data-page="/lt/demo" href="/lt/demo">Užsakymų agento demo</a><a class="btn btn-ghost" data-page="/lt/demo/statyba" href="/lt/demo/statyba">Statybos demo</a></div>
+    </section>
+  </main>
+
+  <footer>© 2026 Swiftrix · <a data-site="" href="/lt">swiftrix.eu</a></footer>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/js/pages.js" defer></script>
+  <script src="/demo/accounting/accounting.js" defer></script>
+</body>
+</html>
