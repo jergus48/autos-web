@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Construction agent demo | Swiftrix</title>
-  <meta name="description" content="Try an AI agent for a construction company: it reads a customer enquiry, prices the work from your price list, checks your rules and drafts the reply.">
+  <meta name="description" content="Try two AI agents for a construction company: one turns customer enquiries into quotes and site visits, the other turns site messages into progress, orders and alerts.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Construction agent demo | Swiftrix">
-  <meta property="og:description" content="From enquiry to quote in minutes. Watch an agent at work on a customer email.">
+  <meta property="og:description" content="From enquiry to quote, and from site message to progress report. Watch two agents at work.">
   <link rel="icon" href="/assets/images/swiftrixLogo.png">
   <link rel="alternate" hreflang="lt" href="https://www.swiftrix.eu/lt/demo/statyba">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,80 +38,138 @@
 
   <main class="wrap">
     <header class="hero">
-      <p class="eyebrow"><span>CONSTRUCTION AGENT DEMO · TRY IT YOURSELF</span></p>
-      <h1>From enquiry to <span class="hl">quote</span> in minutes</h1>
-      <p>Pick a customer email and watch the agent read it, price the work from your price list, check your rules and your calendar and write the reply. You approve it before anything is sent.</p>
+      <p class="eyebrow"><span>CONSTRUCTION AGENT DEMOS · TRY THEM YOURSELF</span></p>
+      <h1>Two agents for a <span class="hl">construction</span> company</h1>
+      <p>One answers customers: it reads an enquiry, prices the work, books a site visit and writes the quote. The other works from the site: it turns a foreman’s message into progress, a client update, a supplier order and an alert. You approve before anything is sent.</p>
     </header>
 
-    <div class="app">
-      <section class="panel" aria-label="Customer emails">
-        <div class="panel-head"><span class="step-no">1</span>Customer emails</div>
-        <ul class="mail-list" id="mail-list" role="tablist"></ul>
-        <div class="panel-body">
-          <div id="reader"
-            data-placeholder="Paste a customer enquiry…"
-            data-privacy="Runs in your browser. Nothing you paste is sent anywhere."></div>
-          <div class="run-row"><button class="btn btn-primary" id="run" type="button">Run the agent</button></div>
-        </div>
-      </section>
-
-      <section class="panel" id="panel-agent" aria-label="Agent">
-        <div class="panel-head"><span class="step-no">2</span>Agent<span class="pill" id="agent-pill"><i></i><span></span></span></div>
-        <div class="panel-body">
-          <div class="systems"><span class="sys" data-sys="mail"></span><span class="sys" data-sys="prices"></span><span class="sys" data-sys="rules"></span><span class="sys" data-sys="calendar"></span><span class="sys" data-sys="sheet"></span></div>
-          <ul class="steps" id="steps" aria-live="polite"></ul>
-        </div>
-      </section>
-
-      <section class="panel panel-result" aria-label="Result">
-        <div class="panel-head"><span class="step-no">3</span>Result<span class="pill" id="result-pill"><i></i><span></span></span></div>
-        <div class="panel-body" id="result-body" aria-live="polite"></div>
-      </section>
+    <div class="tabs" role="tablist">
+      <button class="tab on" role="tab" type="button" data-agent-tab="quote" aria-selected="true"><b>Enquiry to quote</b><span>Reads emails, prices the work, books site visits</span></button>
+      <button class="tab" role="tab" type="button" data-agent-tab="site" aria-selected="false"><b>Site updates</b><span>Turns a foreman’s message into progress, orders and alerts</span></button>
     </div>
+
+    <div data-agent="quote">
+      <div class="app">
+        <section class="panel" aria-label="Customer emails">
+          <div class="panel-head"><span class="step-no">1</span>Customer emails</div>
+          <ul class="mail-list" id="mail-list" role="tablist"></ul>
+          <div class="panel-body">
+            <div id="reader" data-placeholder="Paste a customer enquiry…" data-privacy="Runs in your browser. Nothing you paste is sent anywhere."></div>
+            <div class="run-row"><button class="btn btn-primary" id="run" type="button">Run the agent</button></div>
+          </div>
+        </section>
+        <section class="panel" aria-label="Agent">
+          <div class="panel-head"><span class="step-no">2</span>Agent<span class="pill" id="agent-pill"><i></i><span></span></span></div>
+          <div class="panel-body">
+            <div class="systems"><span class="sys" data-sys="mail"></span><span class="sys" data-sys="prices"></span><span class="sys" data-sys="rules"></span><span class="sys" data-sys="calendar"></span><span class="sys" data-sys="sheet"></span></div>
+            <ul class="steps" id="steps" aria-live="polite"></ul>
+          </div>
+        </section>
+        <section class="panel panel-result" aria-label="Result">
+          <div class="panel-head"><span class="step-no">3</span>Result<span class="pill" id="result-pill"><i></i><span></span></span></div>
+          <div class="panel-body" id="result-body" aria-live="polite"></div>
+        </section>
+      </div>
 
     <section class="panel price" aria-label="Your price list">
       <div class="panel-head"><span class="step-no">€</span>Your price list</div>
       <div class="panel-body"><div class="price-grid">
-        <div><div class="sheet-scroll"><table><tbody id="price-body"></tbody></table></div><button class="btn btn-ghost" id="price-reset" type="button"></button></div>
-        <div><ul class="rules"><li><span><b>Area served:</b> Vilnius, Kaunas, Klaipėda, Šiauliai, Panevėžys. Anything else gets a polite refusal.</span></li><li><span><b>Quote limit:</b> the agent quotes jobs up to €15,000 on its own.</span></li><li><span><b>Extensions and big jobs:</b> a free site visit instead of a price by email.</span></li><li><span><b>Estimate:</b> price list × area, plus 4% for waste removal, shown as a range (-8% to +12%).</span></li></ul></div>
+        <div><div class="sheet-scroll"><table><tbody id="price-body"></tbody></table></div>
+          <div class="ctl"><label><span id="opt-finish-l"></span><select id="opt-finish"></select></label><label><input type="checkbox" id="opt-vat"><span id="opt-vat-l"></span></label></div>
+          <button class="btn btn-ghost" id="price-reset" type="button"></button></div>
+        <div><ul class="rules"><li><span><b>Area served:</b> Vilnius, Kaunas, Klaipėda, Šiauliai, Panevėžys. Anything else gets a polite refusal.</span></li><li><span><b>Quote limit:</b> the agent quotes jobs up to €15,000 on its own.</span></li><li><span><b>Extensions and big jobs:</b> a free site visit instead of a price by email.</span></li><li><span><b>Estimate:</b> price list × area × finish level, plus 4% for waste removal, shown as a range (-8% to +12%).</span></li></ul></div>
       </div></div>
     </section>
-
-    <section class="panel sheet" aria-label="Jobs.xlsx">
-      <div class="panel-head"><span class="xls">X</span>Jobs.xlsx</div>
-      <div class="sheet-scroll"><table><thead><tr id="sheet-head"></tr></thead><tbody id="sheet-body"></tbody></table></div>
+    <section class="panel sheet" aria-label="Site visit calendar, next week" style="margin-top:16px">
+      <div class="panel-head"><span class="step-no">&#9638;</span>Site visit calendar, next week</div>
+      <div class="panel-body"><div class="cal-wrap" id="cal"></div><p class="cal-hint">Highlighted slots are the ones the agent proposed. Click one to simulate the customer choosing it.</p></div>
     </section>
-    <p class="note demo-note">This demo runs in your browser on example enquiries and example prices. Nothing you type is sent anywhere. The real agent works on your own mailbox, price list and calendar.</p>
+    <section class="panel sheet" aria-label="Jobs.xlsx">
+      <div class="panel-head"><span class="xls">X</span>Jobs.xlsx<div class="seg-toggle" id="view-toggle"><button type="button" data-view="table" aria-pressed="true"></button><button type="button" data-view="board" aria-pressed="false"></button></div></div>
+      <div class="kpi" id="kpi"></div>
+      <div class="sheet-scroll" id="sheet-scroll"><table><thead><tr id="sheet-head"></tr></thead><tbody id="sheet-body"></tbody></table></div>
+      <div class="board" id="board" hidden></div>
+    </section>
+    </div>
+    <div data-agent="site" hidden>
+      <div class="app">
+        <section class="panel" aria-label="Site messages">
+          <div class="panel-head"><span class="step-no">1</span>Site messages</div>
+          <ul class="mail-list" id="s-list" role="tablist"></ul>
+          <div class="panel-body">
+            <div id="s-reader" data-placeholder="Paste a message from the site…" data-privacy="Runs in your browser. Nothing you paste is sent anywhere."></div>
+            <div class="run-row"><button class="btn btn-primary" id="s-run" type="button">Run the agent</button></div>
+          </div>
+        </section>
+        <section class="panel" aria-label="Agent">
+          <div class="panel-head"><span class="step-no">2</span>Agent<span class="pill" id="s-agent-pill"><i></i><span></span></span></div>
+          <div class="panel-body">
+            <div class="systems"><span class="sys" data-ssys="chat"></span><span class="sys" data-ssys="plan"></span><span class="sys" data-ssys="stock"></span><span class="sys" data-ssys="rules"></span><span class="sys" data-ssys="mail"></span><span class="sys" data-ssys="alert"></span></div>
+            <ul class="steps" id="s-steps" aria-live="polite"></ul>
+          </div>
+        </section>
+        <section class="panel panel-result" aria-label="Result">
+          <div class="panel-head"><span class="step-no">3</span>Result<span class="pill" id="s-result-pill"><i></i><span></span></span></div>
+          <div class="panel-body" id="s-result-body" aria-live="polite"></div>
+        </section>
+      </div>
+
+    <section class="panel price" aria-label="Your rules">
+      <div class="panel-head"><span class="step-no">&#10003;</span>Your rules</div>
+      <div class="panel-body"><div class="ctl" style="margin-top:0">
+        <label>Alert the manager from <input type="number" id="s-rule-delay" min="0" step="1"> working days of delay</label>
+        <label>Order on its own up to <input type="number" id="s-rule-limit" min="0" step="10"> €</label>
+      </div></div>
+    </section>
+    <section class="panel sheet" aria-label="Projects" style="margin-top:16px">
+      <div class="panel-head"><span class="step-no">&#9638;</span>Projects</div>
+      <div class="pboard" id="s-board"></div>
+    </section>
+    <div class="two">
+      <section class="panel sheet" style="margin-top:0" aria-label="Orders.xlsx">
+        <div class="panel-head"><span class="xls">X</span>Orders.xlsx</div>
+        <div class="sheet-scroll"><table style="min-width:520px"><thead><tr id="s-orders-head"></tr></thead><tbody id="s-orders-body"></tbody></table></div>
+      </section>
+      <section class="panel sheet" style="margin-top:0" aria-label="Your material prices">
+        <div class="panel-head"><span class="xls">X</span>Your material prices</div>
+        <div class="sheet-scroll"><table style="min-width:320px"><thead><tr id="s-mat-head"></tr></thead><tbody id="s-mat-body"></tbody></table></div>
+      </section>
+    </div>
+    </div>
+
+    <p class="note demo-note">These demos run in your browser on example enquiries, example site messages and example prices. Nothing you type is sent anywhere. The real agents work on your own mailbox, price list, calendar and site chats.</p>
 
     <section class="block">
       <span class="sec-badge"><i></i>Why an agent</span>
       <h2>What changes for a construction company</h2>
-      <p class="lead">Enquiries arrive at all hours and most of them need the same first steps. The agent does those steps and you keep the decisions.</p>
-      <div class="cards"><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Answers in minutes, day and night</h3><p>A customer who writes at 22:00 gets a reply before a competitor has opened their inbox.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg></div><h3>Prices from your own price list</h3><p>No guessing: every number comes from your prices and your rules, and you can change them at any time.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div><h3>You stay in charge</h3><p>Nothing goes out until you approve it. Big or unusual jobs get a site visit instead of a price by email.</p></div></div>
+      <p class="lead">Enquiries and site messages arrive at all hours, and most of them need the same first steps. The agents do those steps and you keep the decisions.</p>
+      <div class="cards"><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Answers in minutes, day and night</h3><p>A customer who writes at 22:00 gets a reply before a competitor has opened their inbox.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg></div><h3>Numbers from your own data</h3><p>Prices come from your price list, dates from your plan and rules from you. No guessing, and you can change every one of them.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div><h3>You stay in charge</h3><p>Nothing goes out until you approve it. Big or unusual jobs get a site visit, and delays reach you as an alert.</p></div></div>
     </section>
 
     <section class="block">
       <span class="sec-badge"><i></i>In your company</span>
-      <h2>What the real agent connects to</h2>
-      <p class="lead">In the demo everything is simulated. In your company the agent works with the tools you already use.</p>
-      <div class="cards"><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div><h3>Your mailbox</h3><p>Reads enquiries from Gmail or Outlook, also with photos and attachments.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg></div><h3>Your price list</h3><p>Uses your Excel, Google Sheets or estimating software, so prices are always yours.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></div><h3>Your calendar</h3><p>Offers real free slots for site visits and books the one the customer picks.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7V3M15 7V3M6 7h12v4a6 6 0 0 1-12 0V7zM12 17v4"/></svg></div><h3>Your CRM or sheet</h3><p>Logs every enquiry with its status and next step, so nothing is forgotten.</p></div></div>
+      <h2>What the real agents connect to</h2>
+      <p class="lead">In the demos everything is simulated. In your company the agents work with the tools you already use.</p>
+      <div class="cards"><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div><h3>Your mailbox</h3><p>Reads enquiries from Gmail or Outlook, also with photos and attachments.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div><h3>Your site chats</h3><p>Reads the daily messages from foremen in WhatsApp or Teams, also voice notes.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg></div><h3>Your prices and plans</h3><p>Uses your Excel, Google Sheets or estimating software, so prices and schedules are always yours.</p></div><div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg></div><h3>Your calendar and CRM</h3><p>Offers real free slots for site visits and logs every enquiry with its status and next step.</p></div></div>
     </section>
 
     <section class="cta">
       <span class="sec-badge"><i></i>Let’s talk</span>
       <h2>Want this for your construction company?</h2>
-      <p>In a 15-minute call we will show how the agent would work with your own price list and mailbox.</p>
+      <p>In a 15-minute call we will show how the agents would work with your own price list, mailbox and site chats.</p>
       <div class="cta-actions">
         <a class="btn btn-primary" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book a call</a>
         <a class="btn btn-ghost" data-page="/assistant" href="/assistant">Describe your problem</a>
       </div>
-      <div class="more-demos" aria-label="More demos"><a class="btn btn-ghost" data-page="/demo" href="/demo">Order agent demo</a><a class="btn btn-ghost" data-page="/demo/accounting" href="/demo/accounting">Accounting demo</a></div>
+      <div class="more-demos" aria-label="More demos"><a class="btn btn-ghost" data-page="/demo" href="/demo">Order agent demo</a><a class="btn btn-ghost" data-page="/demo/accounting" href="/demo/accounting">Accounting demos</a></div>
     </section>
   </main>
 
   <footer>© 2026 Swiftrix · <a data-site="" href="/">swiftrix.eu</a></footer>
   <div class="toast" id="toast" role="status"></div>
   <script src="/js/pages.js" defer></script>
+  <script src="/demo/tabs.js" defer></script>
   <script src="/demo/construction/construction.js" defer></script>
+  <script src="/demo/construction/site.js" defer></script>
 </body>
 </html>

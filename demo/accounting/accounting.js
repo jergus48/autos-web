@@ -1,38 +1,43 @@
-// Accounting demo (/demo/accounting, /lt/demo/buhalterija): month-end document intake. Each client document is read, checked, posted to a journal or held back, and the missing items become one request to the client.
+// Accounting demo, agent 1 (/demo/accounting, /lt/demo/buhalterija): month-end document intake. Each client document is read, checked, posted to a journal or held back, and the missing items become one request to the client.
 // Everything runs in the visitor's browser on example documents: nothing is sent anywhere and no AI service is called.
-// The reading is a small set of rules for labelled invoices and receipts (supplier, VAT number, number, date, amounts); the checks are the ones listed on the page.
+// The reading is a small set of rules for labelled invoices and receipts (supplier, VAT number, number, date, amounts); the checks and the limits are the ones shown on the page, and the visitor can change them.
+// The same reading and checks are offered to the chat agent (js/chat.js) as window.SWX_ACC, so both agents answer from the same books.
 (function () {
   'use strict'
   var LANG = document.documentElement.lang === 'lt' ? 'lt' : 'en'
-  var PERIOD = { y: 2026, m: 3 }, USD_EUR = 0.92, VAT_RATE = 21
+  var USD_EUR = 0.92, VAT_RATE = 21
   var FIRM = LANG === 'lt' ? 'Kreda buhalterija' : 'Kreda Accounting'
+  var rules = { period: { y: 2026, m: 3 }, limit: 500, conf: 80, needVat: true }
 
   var COPY = {
     en: {
       from: 'From', file: 'File', run: 'Run the agent', rerun: 'Run again', runAll: 'Process all documents', own: 'Your own document', ownSubj: 'Paste the text of a document',
-      idle: 'Idle', busy: 'Working', done: 'Done', period: 'March 2026',
+      idle: 'Idle', busy: 'Working', done: 'Done', periods: [{ y: 2026, m: 3, label: 'March 2026' }, { y: 2026, m: 4, label: 'April 2026' }],
       sys: { inbox: 'Inbox', read: 'Reader', checks: 'Checks', ledger: 'Journal.xlsx', client: 'Client request' },
       type: { invoice: 'invoice', receipt: 'receipt', contract: 'contract', other: 'other document' },
       cat: { office: 'Office supplies', fuel: 'Fuel', software: 'Software and hosting', design: 'Design and marketing', rent: 'Rent', other: 'To classify' },
       sInbox: 'Received {file} from {client}', sRead: 'Read the document: {type}, {supplier}, no. {no}', sReadBad: 'Could not read everything: {parts}',
-      sAmounts: 'Amounts: net {net}, VAT {vat}, total {total}', sFx: 'Converted {from} to {to} at {rate}',
+      sAmounts: 'Amounts: net {net}, VAT {vat}, total {total}', sFx: 'Converted {from} to {to} at {rate}', sConf: 'Confidence in the reading: {n}%',
       sChecksOk: 'Checks passed: VAT number, totals, duplicates, period', sChecksBad: 'Check failed: {what}',
       sPost: 'Posted to the journal: {cat}', sHold: 'Held back: waiting for the client', sDup: 'Not posted: duplicate', sReview: 'Not posted: needs your decision',
       sClient: 'Added to the request for the client',
-      fields: { type: 'Type', supplier: 'Supplier', vatCode: 'VAT code', no: 'Document no.', date: 'Date', net: 'Net', vat: 'VAT', total: 'Total', cat: 'Category' },
+      fields: { type: 'Type', supplier: 'Supplier', vatCode: 'VAT code', no: 'Document no.', date: 'Date', net: 'Net', vat: 'VAT', total: 'Total', cat: 'Category', conf: 'Confidence' },
       calc: '(calculated)', none: 'none', eur: 'EUR',
       summary: {
         ready: 'Ready to post. The agent filled in the journal.', readyNote: 'Posted, with a note for you below.',
         waiting: 'Held back: the client has to fix something. A line was added to the request for the client.',
         duplicate: 'This is a duplicate of an earlier document, so it is not posted.',
-        review: 'This is a contract, not a booking document. The agent flags it for you instead of posting it.'
+        review: 'Not posted: this one needs your decision.',
+        contract: 'This is a contract, not a booking document. The agent flags it for you instead of posting it.'
       },
       checksTitle: 'Checks',
-      okVat: 'Supplier VAT number present', badVatNo: 'No supplier VAT number: the VAT cannot be deducted without it', badVatFmt: 'The VAT number {code} does not look valid',
+      okVat: 'Supplier VAT number present', badVatNo: 'No supplier VAT number: the VAT cannot be deducted without it', badVatFmt: 'The VAT number {code} does not look valid', infoVatOff: 'No supplier VAT number, but your rules do not require one',
       okSum: 'Net + VAT equals the total', badSum: 'Net + VAT is {exp} but the total says {got}',
       okDup: 'Not a duplicate', badDup: 'Same supplier, number and total as an earlier document',
       okPeriod: 'The date is in {period}', badPeriod: 'The date {date} is outside {period}',
       badMissing: 'Missing: {parts}', mTotal: 'total', mDate: 'date', mSupplier: 'supplier',
+      badLimit: 'The total {total} is over your limit of {limit} for posting on its own: it needs your approval',
+      badConf: 'Confidence {n}% is below your threshold of {t}%: it needs a human look',
       infoFx: 'Foreign currency: converted at {rate} (an example rate, the real agent uses the bank rate of the invoice date)',
       infoReverse: 'No VAT charged: reverse charge may apply. You confirm.',
       infoRent: 'Monthly rent {rent}: create a recurring entry? Needs your approval.',
@@ -44,12 +49,16 @@
         missing: 'Some data could not be read ({parts}). Please send a clearer copy.'
       },
       st: { ready: 'Posted', waiting: 'Waiting for client', review: 'Needs you', duplicate: 'Duplicate' },
+      post: { title: 'Posting preview', debit: 'Debit', credit: 'Credit', exp: 'Expense: {cat}', vatIn: 'VAT receivable (input VAT)', pay: 'Accounts payable: {supplier}' },
       monthTitle: 'Month-end status', pending: 'not processed yet', legendReady: 'posted', legendWaiting: 'waiting for client', legendReview: 'needs you', legendDup: 'duplicates',
       monthLine: '{n} of {t} documents processed',
+      vat: { net: 'Net purchases posted', input: 'Input VAT posted', held: 'VAT waiting on documents', rc: 'Reverse charge items to confirm' },
       clientTitle: 'Request to the client', clientEmpty: 'Nothing to ask yet. Run the agent on the documents.', approve: 'Approve and send', toast: 'In the real system this message would be sent now.',
+      remind: 'Remind the client on Thursday at 10:00 if there is no reply', remindOn: 'Reminder scheduled: Thursday 10:00', remindOff: 'No reminder scheduled',
       reqBody: 'Hello,\n\nFor the {period} bookkeeping we still need the following:\n\n{list}\n\nPlease send them by Friday so we can close the month.\n\nBest regards,\n{firm}',
       to: 'To', subject: 'Subject', reqSubject: 'Documents we still need for {period}',
-      head: ['#', 'Date', 'Supplier', 'Doc no.', 'Category', 'Net', 'VAT', 'Total (EUR)', 'Status'], emptyRow: 'The journal is empty. Run the agent on a document.', csv: 'Download CSV', csvName: 'Journal-March-2026.csv',
+      head: ['#', 'Date', 'Supplier', 'Doc no.', 'Category', 'Net', 'VAT', 'Total (EUR)', 'Status'], csvHead: ['Date', 'Supplier', 'Doc no.', 'Category', 'Net', 'VAT', 'Total (EUR)', 'Status', 'Confidence (%)'],
+      emptyRow: 'The journal is empty. Run the agent on a document.', csv: 'Download CSV', csvName: 'Journal-{period}.csv',
       pasteNeed: 'Paste the text of an invoice or a receipt first.',
       docs: [
         { id: 'd1', fromName: 'Baltic Trade MB', file: 'invoice_0412.pdf', time: '08:10', text: 'INVOICE INV-2026-0412\nSupplier: Baltic Office Supplies Ltd\nVAT code: LT100012345611\nDate: 03 March 2026\nPaper, toner, folders\nNet: 200.00 EUR\nVAT 21%: 42.00 EUR\nTotal: 242.00 EUR' },
@@ -62,29 +71,32 @@
     },
     lt: {
       from: 'Nuo', file: 'Failas', run: 'Paleisti agentą', rerun: 'Paleisti iš naujo', runAll: 'Apdoroti visus dokumentus', own: 'Jūsų dokumentas', ownSubj: 'Įklijuokite dokumento tekstą',
-      idle: 'Laukia', busy: 'Dirba', done: 'Baigta', period: '2026 m. kovas',
+      idle: 'Laukia', busy: 'Dirba', done: 'Baigta', periods: [{ y: 2026, m: 3, label: '2026 m. kovas' }, { y: 2026, m: 4, label: '2026 m. balandis' }],
       sys: { inbox: 'Paštas', read: 'Skaitytuvas', checks: 'Patikrinimai', ledger: 'Journal.xlsx', client: 'Užklausa klientui' },
       type: { invoice: 'sąskaita faktūra', receipt: 'kvitas', contract: 'sutartis', other: 'kitas dokumentas' },
       cat: { office: 'Biuro prekės', fuel: 'Degalai', software: 'Programinė įranga ir talpinimas', design: 'Dizainas ir rinkodara', rent: 'Nuoma', other: 'Reikia priskirti' },
       sInbox: 'Gautas failas {file} (klientas: {client})', sRead: 'Perskaitytas dokumentas: {type}, {supplier}, nr. {no}', sReadBad: 'Nepavyko perskaityti visko: {parts}',
-      sAmounts: 'Sumos: be PVM {net}, PVM {vat}, iš viso {total}', sFx: 'Perskaičiuota iš {from} į {to} pagal kursą {rate}',
+      sAmounts: 'Sumos: be PVM {net}, PVM {vat}, iš viso {total}', sFx: 'Perskaičiuota iš {from} į {to} pagal kursą {rate}', sConf: 'Skaitymo patikimumas: {n} %',
       sChecksOk: 'Patikrinimai praėjo: PVM kodas, sumos, dublikatai, laikotarpis', sChecksBad: 'Patikrinimas nepraėjo: {what}',
       sPost: 'Įrašyta į žurnalą: {cat}', sHold: 'Sulaikyta: laukiama kliento', sDup: 'Neįrašyta: dublikatas', sReview: 'Neįrašyta: reikia jūsų sprendimo',
       sClient: 'Įtraukta į užklausą klientui',
-      fields: { type: 'Rūšis', supplier: 'Tiekėjas', vatCode: 'PVM kodas', no: 'Dok. nr.', date: 'Data', net: 'Be PVM', vat: 'PVM', total: 'Iš viso', cat: 'Kategorija' },
+      fields: { type: 'Rūšis', supplier: 'Tiekėjas', vatCode: 'PVM kodas', no: 'Dok. nr.', date: 'Data', net: 'Be PVM', vat: 'PVM', total: 'Iš viso', cat: 'Kategorija', conf: 'Patikimumas' },
       calc: '(apskaičiuota)', none: 'nėra', eur: 'EUR',
       summary: {
         ready: 'Paruošta įrašyti. Agentas užpildė žurnalą.', readyNote: 'Įrašyta, žemiau yra pastaba jums.',
         waiting: 'Sulaikyta: klientas turi ką nors ištaisyti. Eilutė įtraukta į užklausą klientui.',
         duplicate: 'Tai ankstesnio dokumento dublikatas, todėl neįrašyta.',
-        review: 'Tai sutartis, o ne apskaitos dokumentas. Agentas jos neįrašo, o pažymi jums.'
+        review: 'Neįrašyta: šiam dokumentui reikia jūsų sprendimo.',
+        contract: 'Tai sutartis, o ne apskaitos dokumentas. Agentas jos neįrašo, o pažymi jums.'
       },
       checksTitle: 'Patikrinimai',
-      okVat: 'Tiekėjo PVM kodas yra', badVatNo: 'Nėra tiekėjo PVM kodo: be jo PVM atskaityti negalima', badVatFmt: 'PVM kodas {code} neatrodo teisingas',
+      okVat: 'Tiekėjo PVM kodas yra', badVatNo: 'Nėra tiekėjo PVM kodo: be jo PVM atskaityti negalima', badVatFmt: 'PVM kodas {code} neatrodo teisingas', infoVatOff: 'Nėra tiekėjo PVM kodo, bet jūsų taisyklės jo nereikalauja',
       okSum: 'Be PVM + PVM lygu bendrai sumai', badSum: 'Be PVM + PVM yra {exp}, o nurodyta suma {got}',
       okDup: 'Ne dublikatas', badDup: 'Tas pats tiekėjas, numeris ir suma kaip ankstesniame dokumente',
       okPeriod: 'Data patenka į laikotarpį: {period}', badPeriod: 'Data {date} nepatenka į laikotarpį: {period}',
       badMissing: 'Trūksta: {parts}', mTotal: 'sumos', mDate: 'datos', mSupplier: 'tiekėjo',
+      badLimit: 'Suma {total} viršija jūsų nustatytą ribą ({limit}) savarankiškam įrašymui: reikia jūsų pritarimo',
+      badConf: 'Patikimumas {n} % yra mažesnis už jūsų ribą ({t} %): reikia žmogaus peržiūros',
       infoFx: 'Užsienio valiuta: perskaičiuota pagal kursą {rate} (pavyzdinis kursas, tikras agentas naudoja sąskaitos dienos banko kursą)',
       infoReverse: 'PVM neskaičiuotas: gali būti taikomas atvirkštinis apmokestinimas. Patvirtinkite jūs.',
       infoRent: 'Mėnesinė nuoma {rent}: sukurti pasikartojantį įrašą? Reikia jūsų pritarimo.',
@@ -96,12 +108,16 @@
         missing: 'Nepavyko perskaityti dalies duomenų ({parts}). Prašome atsiųsti aiškesnę kopiją.'
       },
       st: { ready: 'Įrašyta', waiting: 'Laukiama kliento', review: 'Reikia jūsų', duplicate: 'Dublikatas' },
+      post: { title: 'Įrašo peržiūra', debit: 'Debetas', credit: 'Kreditas', exp: 'Sąnaudos: {cat}', vatIn: 'PVM gautinas (įskaitomas PVM)', pay: 'Mokėtinos sumos: {supplier}' },
       monthTitle: 'Laikotarpio uždarymo būsena', pending: 'dar neapdorota', legendReady: 'įrašyta', legendWaiting: 'laukiama kliento', legendReview: 'reikia jūsų', legendDup: 'dublikatai',
       monthLine: 'Apdorota {n} iš {t} dokumentų',
+      vat: { net: 'Įrašyti pirkimai be PVM', input: 'Įrašytas įskaitomas PVM', held: 'PVM, laukiantis dokumentų', rc: 'Atvirkštinio apmokestinimo atvejai patvirtinti' },
       clientTitle: 'Užklausa klientui', clientEmpty: 'Kol kas nieko klausti nereikia. Paleiskite agentą su dokumentais.', approve: 'Patvirtinti ir siųsti', toast: 'Tikroje sistemoje ši žinutė dabar būtų išsiųsta.',
+      remind: 'Priminti klientui ketvirtadienį 10:00, jei neatsakys', remindOn: 'Priminimas suplanuotas: ketvirtadienis 10:00', remindOff: 'Priminimas nesuplanuotas',
       reqBody: 'Sveiki,\n\nkad galėtume uždaryti laikotarpį ({period}), dar reikia:\n\n{list}\n\nPrašome atsiųsti iki penktadienio.\n\nPagarbiai,\n{firm}',
       to: 'Kam', subject: 'Tema', reqSubject: 'Dokumentai, kurių dar reikia: {period}',
-      head: ['#', 'Data', 'Tiekėjas', 'Dok. nr.', 'Kategorija', 'Be PVM', 'PVM', 'Iš viso (EUR)', 'Būsena'], emptyRow: 'Žurnalas tuščias. Paleiskite agentą su dokumentu.', csv: 'Atsisiųsti CSV', csvName: 'Zurnalas-2026-kovas.csv',
+      head: ['#', 'Data', 'Tiekėjas', 'Dok. nr.', 'Kategorija', 'Be PVM', 'PVM', 'Iš viso (EUR)', 'Būsena'], csvHead: ['Data', 'Tiekėjas', 'Dok. nr.', 'Kategorija', 'Be PVM', 'PVM', 'Iš viso (EUR)', 'Būsena', 'Patikimumas (%)'],
+      emptyRow: 'Žurnalas tuščias. Paleiskite agentą su dokumentu.', csv: 'Atsisiųsti CSV', csvName: 'Zurnalas-{period}.csv',
       pasteNeed: 'Pirmiausia įklijuokite sąskaitos ar kvito tekstą.',
       docs: [
         { id: 'd1', fromName: 'UAB Baltijos prekyba', file: 'saskaita_0412.pdf', time: '08:10', text: 'SĄSKAITA FAKTŪRA BP-2026-0412\nTiekėjas: UAB Biuro Pasaulis\nPVM kodas: LT100012345611\nData: 2026 m. kovo 3 d.\nPopierius, tonerio kasetė, segtuvai\nSuma be PVM: 200,00 EUR\nPVM 21%: 42,00 EUR\nIš viso: 242,00 EUR' },
@@ -119,6 +135,7 @@
   function fill(s, o) { return s.replace(/\{(\w+)\}/g, function (m, k) { return o[k] != null ? o[k] : m }) }
   function r2(n) { return Math.round(n * 100) / 100 }
   function rateStr() { return LANG === 'lt' ? String(USD_EUR).replace('.', ',') : String(USD_EUR) }
+  function periodLabel() { var p = T.periods.filter(function (x) { return x.y === rules.period.y && x.m === rules.period.m })[0]; return p ? p.label : '' }
 
   // ---- reading a document ----
   var MONTHS_EN = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
@@ -179,44 +196,53 @@
     return d
   }
 
-  // ---- the checks ----
-  var seen = {}
-  function check(doc, d) {
+  // ---- the checks (the rules on the page decide what holds a document back) ----
+  function check(doc, d, seenMap) {
     var items = [], holds = [], key = (d.supplier || '') + '|' + (d.no || '') + '|' + (d.total != null ? d.total : '')
-    var st = 'ready', dup = false
+    var dup = false, conf = 100
+    var eur = d.currency === 'EUR' ? d.total : d.total != null ? r2(d.total * USD_EUR) : null
     if (d.type === 'contract') {
       if (d.rent != null) items.push({ ok: true, info: true, text: fill(T.infoRent, { rent: fmt(d.rent) }) })
-      return { items: items, holds: holds, status: 'review', dup: false }
+      return { items: items, holds: holds, status: 'review', kind: 'contract', dup: false, conf: 100 }
     }
     var missing = []
     if (d.total == null) missing.push(T.mTotal)
     if (!d.date) missing.push(T.mDate)
     if (!d.supplier) missing.push(T.mSupplier)
-    if (missing.length) { items.push({ ok: false, text: fill(T.badMissing, { parts: missing.join(', ') }) }); holds.push({ ask: fill(T.ask.missing, { parts: missing.join(', ') }) }) }
-    // VAT number
+    if (missing.length) { items.push({ ok: false, text: fill(T.badMissing, { parts: missing.join(', ') }) }); holds.push({ ask: fill(T.ask.missing, { parts: missing.join(', ') }) }); conf -= 30 }
     if (d.vatCode) {
       if (/^[A-Z]{2}[A-Z0-9]{8,12}$/.test(d.vatCode) && (!/^LT/.test(d.vatCode) || /^LT(\d{9}|\d{12})$/.test(d.vatCode))) items.push({ ok: true, text: T.okVat + ' (' + d.vatCode + ')' })
-      else { items.push({ ok: false, text: fill(T.badVatFmt, { code: d.vatCode }) }); holds.push({ ask: fill(T.ask.badVat, { code: d.vatCode }) }) }
-    } else if (d.reverse || d.currency !== 'EUR') items.push({ ok: true, info: true, text: T.infoReverse })
-    else { items.push({ ok: false, text: T.badVatNo }); holds.push({ ask: T.ask.noVat }) }
-    // totals
+      else { items.push({ ok: false, text: fill(T.badVatFmt, { code: d.vatCode }) }); holds.push({ ask: fill(T.ask.badVat, { code: d.vatCode }) }); conf -= 25 }
+    } else if (d.reverse || d.currency !== 'EUR') { items.push({ ok: true, info: true, text: T.infoReverse }); conf -= 5 }
+    else if (!rules.needVat) { items.push({ ok: true, info: true, text: T.infoVatOff }); conf -= 10 }
+    else { items.push({ ok: false, text: T.badVatNo }); holds.push({ ask: T.ask.noVat }); conf -= 25 }
     if (d.net != null && d.vat != null && d.total != null && !d.derived) {
       var exp = r2(d.net + d.vat)
-      if (Math.abs(exp - d.total) > 0.02) { items.push({ ok: false, text: fill(T.badSum, { exp: fmt(exp), got: fmt(d.total) }) }); holds.push({ ask: fill(T.ask.sum, { exp: fmt(exp), got: fmt(d.total) }) }) }
+      if (Math.abs(exp - d.total) > 0.02) { items.push({ ok: false, text: fill(T.badSum, { exp: fmt(exp), got: fmt(d.total) }) }); holds.push({ ask: fill(T.ask.sum, { exp: fmt(exp), got: fmt(d.total) }) }); conf -= 25 }
       else items.push({ ok: true, text: T.okSum })
     }
-    // period
+    if (d.derived) conf -= 15
     if (d.date) {
-      if (d.date.y === PERIOD.y && d.date.m === PERIOD.m) items.push({ ok: true, text: fill(T.okPeriod, { period: T.period }) })
-      else { items.push({ ok: false, text: fill(T.badPeriod, { date: d.date.iso, period: T.period }) }); holds.push({ ask: fill(T.ask.period, { date: d.date.iso, period: T.period }) }) }
+      if (d.date.y === rules.period.y && d.date.m === rules.period.m) items.push({ ok: true, text: fill(T.okPeriod, { period: periodLabel() }) })
+      else { items.push({ ok: false, text: fill(T.badPeriod, { date: d.date.iso, period: periodLabel() }) }); holds.push({ ask: fill(T.ask.period, { date: d.date.iso, period: periodLabel() }) }); conf -= 20 }
     }
-    // duplicate
-    if (seen[key] && seen[key] !== doc.id && d.total != null && d.no) { dup = true; items.push({ ok: false, text: T.badDup }) }
-    else { seen[key] = doc.id; items.push({ ok: true, text: T.okDup }) }
-    if (d.currency !== 'EUR') items.push({ ok: true, info: true, text: fill(T.infoFx, { rate: '1 ' + d.currency + ' = ' + rateStr() + ' EUR' }) })
-    st = dup ? 'duplicate' : holds.length ? 'waiting' : 'ready'
-    return { items: items, holds: holds, status: st, dup: dup }
+    if (seenMap[key] && seenMap[key] !== doc.id && d.total != null && d.no) { dup = true; items.push({ ok: false, text: T.badDup }) }
+    else { seenMap[key] = doc.id; items.push({ ok: true, text: T.okDup }) }
+    if (d.currency !== 'EUR') { items.push({ ok: true, info: true, text: fill(T.infoFx, { rate: '1 ' + d.currency + ' = ' + rateStr() + ' EUR' }) }); conf -= 10 }
+    conf = Math.max(0, Math.min(100, conf))
+    var status = dup ? 'duplicate' : holds.length ? 'waiting' : 'ready'
+    if (status === 'ready' && eur != null && eur > rules.limit) { items.push({ ok: false, text: fill(T.badLimit, { total: fmt(eur), limit: fmt(rules.limit) }) }); status = 'review' }
+    if (status === 'ready' && conf < rules.conf) { items.push({ ok: false, text: fill(T.badConf, { n: conf, t: rules.conf }) }); status = 'review' }
+    return { items: items, holds: holds, status: status, kind: d.type, dup: dup, conf: conf }
   }
+  function analyse(doc, seenMap) {
+    var d = readDoc(doc.text), c = check(doc, d, seenMap)
+    var eur = d.currency === 'EUR' ? d.total : d.total != null ? r2(d.total * USD_EUR) : null
+    var row = { id: doc.id, date: d.date ? d.date.iso : '-', supplier: d.supplier || '-', no: d.no || '-', cat: d.type === 'contract' ? 'rent' : d.cat, net: d.type === 'contract' ? d.rent : d.currency === 'EUR' ? d.net : null, vat: d.type === 'contract' ? null : d.currency === 'EUR' ? d.vat : null, total: d.type === 'contract' ? d.rent : eur, status: c.status, conf: c.conf }
+    return { doc: doc, d: d, c: c, row: row }
+  }
+  // all example documents in order, with a clean memory of what was seen: what the chat agent answers from
+  function analyseAll() { var seenMap = {}; return T.docs.map(function (doc) { return analyse(doc, seenMap) }) }
 
   // ---- screen ----
   function $(s) { return document.querySelector(s) }
@@ -224,7 +250,7 @@
   var list = $('#mail-list'), reader = $('#reader'), runBtn = $('#run'), allBtn = $('#run-all'), stepsEl = $('#steps'), agentPill = $('#agent-pill'), resultBody = $('#result-body'), resultPill = $('#result-pill')
   var tbody = $('#sheet-body'), toast = $('#toast'), sysEls = {}
   document.querySelectorAll('[data-sys]').forEach(function (n) { n.textContent = T.sys[n.getAttribute('data-sys')]; sysEls[n.getAttribute('data-sys')] = n })
-  var current = 0, busy = false, results = {}, ownText = ''
+  var current = 0, busy = false, results = {}, ownText = '', seen = {}, remindOn = true
 
   function renderList() {
     list.textContent = ''
@@ -260,13 +286,8 @@
   function finishStep(li, state) { li.className = 'step ' + (state || 'ok') }
   function wait(ms) { return new Promise(function (r) { setTimeout(r, ms) }) }
   function showToast(msg) { toast.textContent = msg; toast.classList.add('show'); clearTimeout(showToast.t); showToast.t = setTimeout(function () { toast.classList.remove('show') }, 2600) }
+  function fmtC(n, cur) { return cur === 'EUR' ? fmt(n) : (LANG === 'lt' ? n.toFixed(2).replace('.', ',') + ' ' + cur : cur + ' ' + n.toFixed(2)) }
 
-  function analyse(doc) {
-    var d = readDoc(doc.text), c = check(doc, d)
-    var eur = d.currency === 'EUR' ? d.total : d.total != null ? r2(d.total * USD_EUR) : null
-    var row = { id: doc.id, date: d.date ? d.date.iso : '-', supplier: d.supplier || '-', no: d.no || '-', cat: d.type === 'contract' ? 'rent' : d.cat, net: d.type === 'contract' ? d.rent : d.currency === 'EUR' ? d.net : null, vat: d.type === 'contract' ? null : d.currency === 'EUR' ? d.vat : null, total: d.type === 'contract' ? d.rent : eur, status: c.status }
-    return { doc: doc, d: d, c: c, row: row }
-  }
   function stepsFor(r) {
     var d = r.d, c = r.c, s = [['inbox', fill(T.sInbox, { file: r.doc.file || '-', client: r.doc.fromName }), 'ok']]
     var bad = []
@@ -278,6 +299,7 @@
     if (d.type !== 'contract' && d.total != null) {
       s.push(['read', fill(T.sAmounts, { net: d.net != null ? fmtC(d.net, d.currency) : '-', vat: d.vat != null ? fmtC(d.vat, d.currency) : '-', total: fmtC(d.total, d.currency) }) + (d.derived ? ' ' + T.calc : ''), 'ok'])
       if (d.currency !== 'EUR') s.push(['read', fill(T.sFx, { from: d.currency, to: 'EUR', rate: rateStr() }), 'ok'])
+      s.push(['read', fill(T.sConf, { n: c.conf }), c.conf >= rules.conf ? 'ok' : 'err'])
     }
     if (d.type !== 'contract') {
       var fails = c.items.filter(function (i) { return !i.ok })
@@ -288,11 +310,11 @@
     if (c.holds.length) s.push(['client', T.sClient, 'ok'])
     return s
   }
-  function fmtC(n, cur) { return cur === 'EUR' ? fmt(n) : (LANG === 'lt' ? n.toFixed(2).replace('.', ',') + ' ' + cur : cur + ' ' + n.toFixed(2)) }
 
+  function orderedRows() { return T.docs.concat([{ id: 'own' }]).filter(function (x) { return results[x.id] }).map(function (x) { return results[x.id].row }) }
   function renderSheet(flashId) {
     tbody.textContent = ''
-    var rows = T.docs.concat([{ id: 'own' }]).filter(function (x) { return results[x.id] }).map(function (x) { return results[x.id].row })
+    var rows = orderedRows()
     if (!rows.length) { var tr0 = el('tr', 'empty-row'), td0 = el('td', null, T.emptyRow); td0.colSpan = 9; tr0.appendChild(td0); tbody.appendChild(tr0); return }
     rows.forEach(function (r, i) {
       var tr = el('tr', r.id === flashId ? 'flash' : '')
@@ -314,6 +336,15 @@
     })
     var pl = el('span', 'lg'); pl.appendChild(el('i', 'seg-pending')); pl.appendChild(document.createTextNode((t - n) + ' ' + T.pending)); lg.appendChild(pl)
     $('#month-line').textContent = fill(T.monthLine, { n: n, t: t })
+    // the VAT picture of what is posted and what is held back
+    var net = 0, input = 0, held = 0, rc = 0
+    docs.forEach(function (x) {
+      var r = results[x.id]; if (!r || r.d.type === 'contract') return
+      if (r.c.status === 'ready') { net += r.row.net || (r.row.total && r.d.currency !== 'EUR' ? r.row.total : 0); input += r.row.vat || 0; if (r.d.reverse) rc++ }
+      else if (r.c.status === 'waiting') held += r.row.vat || 0
+    })
+    var vb = $('#vat-body'); vb.textContent = ''
+    ;[[T.vat.net, fmt(net)], [T.vat.input, fmt(input)], [T.vat.held, fmt(held)], [T.vat.rc, String(rc)]].forEach(function (p) { vb.appendChild(el('dt', null, p[0])); vb.appendChild(el('dd', null, p[1])) })
   }
   function renderClient() {
     var body = $('#client-body'); body.textContent = ''
@@ -322,34 +353,49 @@
     if (!asks.length) { body.appendChild(el('p', 'placeholder', T.clientEmpty)); return }
     var card = el('div', 'reply'), head = el('div', 'reply-head')
     var to = el('span'); to.appendChild(el('b', null, T.to + ': ')); to.appendChild(document.createTextNode('accounts@client.example')); head.appendChild(to)
-    var sj = el('span'); sj.appendChild(el('b', null, T.subject + ': ')); sj.appendChild(document.createTextNode(fill(T.reqSubject, { period: T.period }))); head.appendChild(sj); card.appendChild(head)
+    var sj = el('span'); sj.appendChild(el('b', null, T.subject + ': ')); sj.appendChild(document.createTextNode(fill(T.reqSubject, { period: periodLabel() }))); head.appendChild(sj); card.appendChild(head)
     var ta = el('textarea'); ta.readOnly = true
-    ta.value = fill(T.reqBody, { period: T.period, list: asks.map(function (a, i) { return (i + 1) + '. ' + a }).join('\n'), firm: FIRM }); card.appendChild(ta)
+    ta.value = fill(T.reqBody, { period: periodLabel(), list: asks.map(function (a, i) { return (i + 1) + '. ' + a }).join('\n'), firm: FIRM }); card.appendChild(ta)
     var act = el('div', 'reply-actions'), ok = el('button', 'btn btn-primary', T.approve); ok.type = 'button'; ok.addEventListener('click', function () { showToast(T.toast) }); act.appendChild(ok); card.appendChild(act); body.appendChild(card)
+    var rem = el('label', 'remind'), cb = el('input'); cb.type = 'checkbox'; cb.checked = remindOn
+    var stat = el('span', 'remind-s', remindOn ? T.remindOn : T.remindOff)
+    cb.addEventListener('change', function () { remindOn = cb.checked; stat.textContent = remindOn ? T.remindOn : T.remindOff })
+    rem.appendChild(cb); rem.appendChild(el('span', null, T.remind)); body.appendChild(rem); body.appendChild(stat)
   }
 
   function showResult(r) {
     var d = r.d, c = r.c
     resultBody.textContent = ''
     var note = c.items.some(function (i) { return i.info }) && c.status === 'ready'
-    resultBody.appendChild(el('p', 'summary', T.summary[c.status === 'ready' && note ? 'readyNote' : c.status]))
+    resultBody.appendChild(el('p', 'summary', T.summary[c.kind === 'contract' ? 'contract' : c.status === 'ready' && note ? 'readyNote' : c.status]))
     if (d.type !== 'contract') {
       var g = el('dl', 'kv')
       var rows = [['type', T.type[d.type]], ['supplier', d.supplier || T.none], ['vatCode', d.vatCode || T.none], ['no', d.no || T.none], ['date', d.date ? d.date.iso : T.none],
         ['net', d.net != null ? fmtC(d.net, d.currency) + (d.derived ? ' ' + T.calc : '') : T.none], ['vat', d.vat != null ? fmtC(d.vat, d.currency) + (d.derived ? ' ' + T.calc : '') : T.none],
-        ['total', d.total != null ? fmtC(d.total, d.currency) + (d.currency !== 'EUR' ? ' = ' + fmt(r.row.total) : '') : T.none], ['cat', T.cat[d.cat]]]
+        ['total', d.total != null ? fmtC(d.total, d.currency) + (d.currency !== 'EUR' ? ' = ' + fmt(r.row.total) : '') : T.none], ['cat', T.cat[d.cat]], ['conf', c.conf + '%']]
       rows.forEach(function (p) { g.appendChild(el('dt', null, T.fields[p[0]])); g.appendChild(el('dd', null, p[1])) })
       resultBody.appendChild(g)
+      var bar = el('div', 'pbar conf'), f = el('i'); f.style.width = c.conf + '%'; if (c.conf < rules.conf) f.className = 'low'; bar.appendChild(f); resultBody.appendChild(bar)
     }
     if (c.items.length) {
       var box = el('div', 'checks'); box.appendChild(el('b', null, T.checksTitle)); var ul = el('ul')
       c.items.forEach(function (i) { var li = el('li', i.info ? 'info' : i.ok ? 'ok' : 'bad'); li.appendChild(el('i')); li.appendChild(document.createTextNode(i.text)); ul.appendChild(li) })
       box.appendChild(ul); resultBody.appendChild(box)
     }
+    if (c.status === 'ready' && d.type !== 'contract') {          // the entry the agent would post, double entry
+      var p = el('div', 'checks'); p.appendChild(el('b', null, T.post.title))
+      var tb = el('table', 'est-table post'), head = el('tr'); ;['', T.post.debit, T.post.credit].forEach(function (h, i) { head.appendChild(el('th', i ? 'num' : '', h)) }); tb.appendChild(el('thead')).appendChild(head)
+      var body = el('tbody'), eur = r.row.total, vat = d.currency === 'EUR' ? (d.vat || 0) : 0, net = r2(eur - vat)
+      var line = function (label, dr, cr) { var tr = el('tr'); tr.appendChild(el('td', null, label)); tr.appendChild(el('td', 'num', dr == null ? '' : fmt(dr))); tr.appendChild(el('td', 'num', cr == null ? '' : fmt(cr))); body.appendChild(tr) }
+      line(fill(T.post.exp, { cat: T.cat[d.cat] }), net, null)
+      if (vat > 0) line(T.post.vatIn, vat, null)
+      line(fill(T.post.pay, { supplier: d.supplier }), null, eur)
+      tb.appendChild(body); p.appendChild(tb); resultBody.appendChild(p)
+    }
   }
 
   function process(doc, fast) {
-    var r = analyse(doc); results[doc.id] = r
+    var r = analyse(doc, seen); results[doc.id] = r
     var chain = Promise.resolve()
     stepsEl.textContent = ''; resultBody.textContent = ''; resetSys(); setPill(agentPill, 'busy'); setPill(resultPill, 'idle')
     stepsFor(r).forEach(function (st) {
@@ -387,19 +433,33 @@
   })
 
   // ---- journal as a CSV file ----
-  $('#csv').addEventListener('click', function () {
-    var rows = T.docs.concat([{ id: 'own' }]).filter(function (x) { return results[x.id] }).map(function (x) { return results[x.id].row })
-    if (!rows.length) { showToast(T.emptyRow); return }
+  function csvText(rows) {
     var q = function (v) { v = v == null ? '' : String(v); return /[",;\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v }
-    var lines = [T.head.slice(1).map(q).join(',')]
-    rows.forEach(function (r) { lines.push([r.date, r.supplier, r.no, T.cat[r.cat], r.net == null ? '' : r.net.toFixed(2), r.vat == null ? '' : r.vat.toFixed(2), r.total == null ? '' : r.total.toFixed(2), T.st[r.status]].map(q).join(',')) })
-    var blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' }), url = URL.createObjectURL(blob), a = document.createElement('a')
-    a.href = url; a.download = T.csvName; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(url) }, 1000)
-  })
+    var lines = [T.csvHead.map(q).join(',')]
+    rows.forEach(function (r) { lines.push([r.date, r.supplier, r.no, T.cat[r.cat], r.net == null ? '' : r.net.toFixed(2), r.vat == null ? '' : r.vat.toFixed(2), r.total == null ? '' : r.total.toFixed(2), T.st[r.status], r.conf].map(q).join(',')) })
+    return '﻿' + lines.join('\r\n')
+  }
+  function downloadCsv(rows) {
+    var blob = new Blob([csvText(rows)], { type: 'text/csv;charset=utf-8' }), url = URL.createObjectURL(blob), a = document.createElement('a')
+    a.href = url; a.download = fill(T.csvName, { period: periodLabel().replace(/\s+/g, '-').toLowerCase() }); document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(url) }, 1000)
+  }
+  $('#csv').addEventListener('click', function () { var rows = orderedRows(); if (!rows.length) { showToast(T.emptyRow); return } downloadCsv(rows) })
+
+  // ---- the rules the visitor can change ----
+  function initRules() {
+    var ps = $('#r-period'), lim = $('#r-limit'), cf = $('#r-conf'), vt = $('#r-vat')
+    if (ps) { T.periods.forEach(function (p) { var o = el('option', null, p.label); o.value = p.y + '-' + p.m; ps.appendChild(o) }); ps.addEventListener('change', function () { var v = ps.value.split('-'); rules.period = { y: +v[0], m: +v[1] }; renderClient() }) }
+    if (lim) { lim.value = rules.limit; lim.addEventListener('input', function () { var v = parseFloat(lim.value); rules.limit = isFinite(v) && v >= 0 ? v : 0 }) }
+    if (cf) { cf.value = rules.conf; cf.addEventListener('input', function () { var v = parseFloat(cf.value); rules.conf = isFinite(v) ? Math.max(0, Math.min(100, v)) : 0 }) }
+    if (vt) vt.addEventListener('change', function () { rules.needVat = vt.checked })
+  }
+
+  // what the chat agent uses
+  window.SWX_ACC = { T: T, LANG: LANG, analyseAll: analyseAll, fmt: fmt, fill: fill, periodLabel: periodLabel, downloadCsv: downloadCsv, rules: rules, firm: FIRM }
 
   // ---- start ----
   var head = $('#sheet-head'); T.head.forEach(function (h, i) { head.appendChild(el('th', i >= 5 && i <= 7 ? 'num' : '', h)) })
   $('#month-title').textContent = T.monthTitle; $('#client-title').textContent = T.clientTitle; $('#csv').textContent = T.csv; allBtn.textContent = T.runAll
   setPill(agentPill, 'idle'); setPill(resultPill, 'idle')
-  renderList(); renderReader(); renderSheet(); renderMonth(); renderClient()
+  initRules(); renderList(); renderReader(); renderSheet(); renderMonth(); renderClient()
 })()
