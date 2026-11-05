@@ -12,7 +12,8 @@
   --swx-hl-ink: #0a0a0c;
   width: min(996px, 100%); box-sizing: border-box;
   display: flex; flex-direction: column; align-items: center; text-align: center;
-  padding: 24px 0 0;
+  /* bottom padding keeps the round logo badge that hangs above the next card ("Most teams are bleeding time") clear of these cards */
+  padding: 24px 0 90px;
   font-family: "Instrument Sans", system-ui, sans-serif;
 }
 
