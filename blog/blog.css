@@ -1,0 +1,33 @@
+/* Blog (/blog and /blog/<slug>). Builds on css/pages.css (nav, hero, cta, theme variables). */
+html { scroll-padding-top: 110px; }
+
+.plist { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); text-align: left; }
+.pcard {
+  display: block; text-decoration: none; color: inherit; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 24px 26px; transition: border-color .15s, transform .15s;
+}
+.pcard:hover { border-color: var(--accent-ring); transform: translateY(-2px); }
+.pcard .pdate { display: block; color: var(--muted); font-family: var(--font-ui); font-size: 14px; margin-bottom: 8px; }
+.pcard h3 { margin: 0 0 8px; font-family: var(--font-head); font-weight: 500; font-size: 22px; line-height: 1.25; }
+.pcard p { margin: 0; color: var(--muted-2); font-family: var(--font-ui); font-size: 15.5px; line-height: 1.55; }
+
+.post { max-width: 780px; }
+.crumbs { margin: 8px 0 0; font-size: 15px; }
+.crumbs a { color: var(--accent); text-decoration: none; }
+.post-head { margin: 18px 0 30px; text-align: left; }
+.post-head h1 { font-size: clamp(32px, 5vw, 48px); line-height: 1.12; margin: 0 0 14px; text-align: left; }
+.post-head .meta { margin: 0; color: var(--muted); font-size: 15px; }
+
+.prose { text-align: left; font-family: var(--font-ui); font-size: 18px; line-height: 1.7; color: var(--text); }
+.prose p { margin: 0 0 20px; }
+.prose h2 { font-family: var(--font-head); font-weight: 500; font-size: 28px; line-height: 1.2; margin: 44px 0 14px; text-align: left; }
+.prose h3 { font-family: var(--font-head); font-weight: 500; font-size: 22px; margin: 32px 0 10px; text-align: left; }
+.prose ul, .prose ol { margin: 0 0 22px; padding-left: 24px; display: grid; gap: 8px; }
+.prose a { color: var(--accent); }
+.prose blockquote { margin: 0 0 22px; padding: 4px 0 4px 20px; border-left: 3px solid var(--accent-ring); color: var(--muted-2); }
+.prose blockquote p { margin: 0; }
+
+.post-cta { margin-top: 64px; }
+.more-posts { margin-top: 64px; }
+.more-posts h2 { font-size: 24px; margin: 0 0 18px; text-align: left; }
+@media (max-width: 560px) { .prose { font-size: 17px; } .prose h2 { font-size: 24px; } }
