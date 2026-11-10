@@ -5,7 +5,7 @@
 [done 2026-11-07 automate-invoice-handling-without-new-software] How to automate invoice handling without replacing your accounting software
 [done 2026-11-08 automation-vs-ai-agent-which-you-need] What is the difference between automation and an AI agent, and which one do you need
 [done 2026-11-09 automate-order-entry-from-customer-emails] How to automate order entry from customer emails
-How much does business automation cost, and what drives the price
+[done 2026-11-10 how-much-does-business-automation-cost] How much does business automation cost, and what drives the price
 How to tell if a task is too messy to automate
 Automating monthly reports: from copy-paste in Excel to a report that writes itself
 What happens when an AI agent gets something wrong, and how to design for it
