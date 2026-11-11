@@ -6,7 +6,7 @@
 [done 2026-11-08 automation-vs-ai-agent-which-you-need] What is the difference between automation and an AI agent, and which one do you need
 [done 2026-11-09 automate-order-entry-from-customer-emails] How to automate order entry from customer emails
 [done 2026-11-10 how-much-does-business-automation-cost] How much does business automation cost, and what drives the price
-How to tell if a task is too messy to automate
+[done 2026-11-11 how-to-tell-if-task-too-messy-to-automate] How to tell if a task is too messy to automate
 Automating monthly reports: from copy-paste in Excel to a report that writes itself
 What happens when an AI agent gets something wrong, and how to design for it
 GDPR and automation: what a small business should check before connecting tools
