@@ -7,7 +7,7 @@
 [done 2026-11-09 automate-order-entry-from-customer-emails] How to automate order entry from customer emails
 [done 2026-11-10 how-much-does-business-automation-cost] How much does business automation cost, and what drives the price
 [done 2026-11-11 how-to-tell-if-task-too-messy-to-automate] How to tell if a task is too messy to automate
-Automating monthly reports: from copy-paste in Excel to a report that writes itself
+[done 2026-11-12 automate-monthly-reports-from-excel] Automating monthly reports: from copy-paste in Excel to a report that writes itself
 What happens when an AI agent gets something wrong, and how to design for it
 GDPR and automation: what a small business should check before connecting tools
 How to automate quote requests so customers get an answer the same day
