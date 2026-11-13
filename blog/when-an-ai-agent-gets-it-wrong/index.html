@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What happens when an AI agent gets something wrong | Swiftrix</title>
+  <meta name="description" content="AI agents do make mistakes. A well designed one checks its own work, stops when unsure and hands unclear cases to a person, so errors are caught before they cost money.">
+  <link rel="canonical" href="https://www.swiftrix.eu/blog/when-an-ai-agent-gets-it-wrong">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.swiftrix.eu/blog/when-an-ai-agent-gets-it-wrong">
+  <meta property="og:title" content="What happens when an AI agent gets something wrong | Swiftrix">
+  <meta property="og:description" content="AI agents do make mistakes. A well designed one checks its own work, stops when unsure and hands unclear cases to a person, so errors are caught before they cost money.">
+  <link rel="icon" href="/assets/images/swiftrixLogo.png">
+  <link rel="alternate" type="application/rss+xml" title="Swiftrix blog" href="/blog/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&display=swap">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/blog/blog.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"What happens when an AI agent gets something wrong","description":"AI agents do make mistakes. A well designed one checks its own work, stops when unsure and hands unclear cases to a person, so errors are caught before they cost money.","datePublished":"2026-11-13","dateModified":"2026-11-13","mainEntityOfPage":"https://www.swiftrix.eu/blog/when-an-ai-agent-gets-it-wrong","author":{"@type":"Organization","name":"Swiftrix","url":"https://www.swiftrix.eu"},"publisher":{"@type":"Organization","name":"Swiftrix","logo":{"@type":"ImageObject","url":"https://www.swiftrix.eu/assets/images/swiftrixLogo.png"}}}</script>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <nav class="vex-nav">
+    <a class="vex-logo" data-site="" href="/" aria-label="Swiftrix">
+      <img class="logo-dark" src="/assets/images/swiftrixLogo.png" alt="Swiftrix">
+    </a>
+    <div class="vex-links" id="vexLinks">
+      <a href="/blog">All posts</a>
+      <a data-site="" href="/">Our services</a>
+      <a class="vex-mlink" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book a call</a>
+    </div>
+    <a class="vex-cta" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book a call</a>
+    <button class="vex-burger" id="vexBurger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="wrap post">
+    <p class="crumbs"><a href="/blog">Blog</a></p>
+    <article>
+      <header class="post-head">
+        <h1>What happens when an AI agent gets something wrong</h1>
+        <p class="meta"><time datetime="2026-11-13">13 November 2026</time> · 5 min read · ai agents, automation, risk, quality control</p>
+      </header>
+      <div class="prose">
+<p>An AI agent will get things wrong sometimes, just as a new member of staff does. The question is not whether it makes mistakes but whether the system around it catches them before they reach a customer, a supplier or your accounts.</p>
+<p>This post covers the mistakes agents make in office work, how to design for them, and when you should keep a person doing the job.</p>
+<h2 id="what-kinds-of-mistakes-do-ai-agents-make">What kinds of mistakes do AI agents make?</h2>
+<p>In everyday office work, the errors tend to fall into a few groups:</p>
+<ul><li><strong>Misreading a document.</strong> A smudged scan, an unusual invoice layout or a handwritten note can lead to a wrong amount, date or reference number.</li><li><strong>Matching to the wrong record.</strong> Two customers with similar names, a supplier who changed their trading name, or a product code that looks like another one.</li><li><strong>Misunderstanding intent.</strong> A customer email that says &quot;cancel the second item, keep the rest&quot; can be read the wrong way if the order has several lines.</li><li><strong>Sounding sure when it should not.</strong> Language models can produce a confident answer even when the information they were given is incomplete. This is the one to design against most carefully.</li><li><strong>Following a rule that no longer applies.</strong> A price changed, a supplier moved to new payment terms, and nobody updated what the agent works from.</li></ul>
+<p>People make all of these too. The difference is that an agent works at speed, so a flaw in its setup can repeat many times before anyone notices. That is why the checks matter more than the cleverness of the model.</p>
+<h2 id="how-do-you-design-an-agent-so-mistakes-are-caught">How do you design an agent so mistakes are caught?</h2>
+<p>A good agent is built like a careful junior employee with a supervisor. In practice that means a handful of habits.</p>
+<p><strong>1. It checks its work against things it can verify.</strong> If an agent reads an invoice, it should confirm that the line items add up to the total, that the VAT figure is consistent, and that the supplier exists in your system. If it reads an order, it should confirm that the product codes exist and the quantities are sensible. These are plain rules, not AI, and they catch a large share of reading errors.</p>
+<p><strong>2. It knows when to stop.</strong> The agent should hand a case to a person whenever something does not fit: a new supplier, an amount above a set limit, a total that does not match, a customer complaint, or any email it cannot classify with confidence. Handing over is not a failure. It is the agent doing its job properly.</p>
+<p><strong>3. It starts with a person approving everything.</strong> In the first weeks, the agent prepares the work (a draft invoice entry, a reply, an order) and a person clicks approve. Once you have seen it handle real cases well, you let it complete the simple, low-risk ones on its own and keep approval for the rest.</p>
+<p><strong>4. It keeps a record.</strong> Every action should be logged: what came in, what the agent decided, what it changed and why. When something goes wrong, you can see exactly what happened and fix the cause rather than guess.</p>
+<p><strong>5. It has limited permissions.</strong> An agent that enters supplier invoices does not need the ability to make payments. An agent that drafts customer replies does not need to delete records. Giving it only the access the task needs keeps the worst case small.</p>
+<p><strong>6. Changes can be undone.</strong> Entries go in as drafts or can be reversed, rather than being final the moment the agent acts.</p>
+<p>If you want to see how an agent handles a request in practice, you can try the <a href="/demo">live agent demo</a>.</p>
+<h2 id="what-happens-when-a-mistake-gets-through-anyway">What happens when a mistake gets through anyway?</h2>
+<p>Some will. The design goal is that when one does, it is small, visible and easy to correct. A typical sequence looks like this:</p>
+<ol><li>Someone notices a wrong entry, or a daily check flags it.</li><li>The log shows what the agent saw and what it did.</li><li>The entry is corrected or reversed.</li><li>The cause is fixed: a new rule, a better example, a supplier added to the &quot;always check&quot; list, or a threshold lowered.</li></ol>
+<p>Step four is the important one. Once the rule is written down, a properly corrected agent should not repeat that specific mistake. Over the first months, the cases that go to a person usually become fewer and more predictable.</p>
+<h2 id="when-should-a-person-keep-doing-the-task">When should a person keep doing the task?</h2>
+<p>Keep a person in charge, or at least approving every case, when:</p>
+<ul><li><strong>A single error is expensive or hard to reverse.</strong> Paying suppliers, signing contracts, sending legal notices or changing someone's medical or employment records.</li><li><strong>The judgement is genuinely human.</strong> Handling a distressed customer, deciding whether to extend credit to a struggling client, or anything where the right answer depends on a relationship.</li><li><strong>The volume is tiny.</strong> If a task happens five times a month, the effort to build and supervise an agent will not pay back. A checklist is often the better tool.</li><li><strong>The inputs are chaotic.</strong> If every request arrives in a different form and needs a phone call to clarify, the agent will hand nearly everything back. We wrote about spotting this in <a href="/blog/how-to-tell-if-task-too-messy-to-automate">how to tell if a task is too messy to automate</a>.</li></ul>
+<p>In many businesses the best setup is a split: the agent handles the routine bulk, a person handles the exceptions and the decisions that matter.</p>
+<h2 id="what-should-you-ask-before-trusting-an-agent-with-real-work">What should you ask before trusting an agent with real work?</h2>
+<p>Whether you build one yourself or hire someone, these questions are worth asking:</p>
+<ul><li>What does the agent do when it is not sure?</li><li>Which checks run on its output before anything is saved or sent?</li><li>Can I see a log of every action it took?</li><li>What permissions does it have, and why does it need each one?</li><li>How do I undo something it did?</li><li>Who updates the rules when our prices, suppliers or processes change?</li></ul>
+<p>If the answers are vague, the agent is not ready for your business.</p>
+<h2 id="the-short-version">The short version</h2>
+<p>An agent that gets something wrong is not a disaster if it was built to expect it. Verify what can be verified, stop on anything unusual, start with approval, log everything, limit access and keep changes reversible.</p>
+<p>If you are weighing up an agent for invoices, orders or customer emails and want to talk through where the risks are, you can book a short call at <a href="https://cal.com/swiftrix" rel="noopener" target="_blank">cal.com/swiftrix</a>.</p>
+      </div>
+    </article>
+    <section class="cta post-cta">
+      <span class="sec-badge"><i></i>Swiftrix</span>
+      <h2>Have repetitive work you would like off your desk?</h2>
+      <p>Swiftrix builds automations and AI agents for businesses. Book a short call and we will tell you honestly whether it is worth automating.</p>
+      <div class="cta-actions"><a class="btn btn-primary" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book a call</a><a class="btn btn-ghost" href="/demo">Try the live agent demo</a></div>
+    </section>
+    <section class="more-posts"><h2>More from the blog</h2><div class="plist"><a class="pcard" href="/blog/automate-monthly-reports-from-excel"><span class="pdate">12 November 2026</span><h3>How to automate monthly reports instead of copying data into Excel</h3><p>Monthly reports can be automated when the data sits in systems you can export from and the layout stays the same. How it works, and when it is not worth it.</p></a><a class="pcard" href="/blog/how-to-tell-if-task-too-messy-to-automate"><span class="pdate">11 November 2026</span><h3>How to tell if a task is too messy to automate</h3><p>A practical test for whether a messy office task can be automated, can be automated after tidying, or should stay with a person, with signs to look for in each case.</p></a><a class="pcard" href="/blog/how-much-does-business-automation-cost"><span class="pdate">10 November 2026</span><h3>How much does business automation cost, and what drives the price</h3><p>What a small business automation project costs, the factors that push the price up or down, the running costs to expect, and when it is not worth paying for.</p></a></div></section>
+  </main>
+  <footer>© 2026 Swiftrix · <a data-site="" href="/">swiftrix.eu</a> · <a href="/blog">Blog</a></footer>
+  <script src="/js/pages.js" defer></script>
+</body>
+</html>
