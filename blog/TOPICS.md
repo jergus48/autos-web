@@ -9,7 +9,7 @@
 [done 2026-11-11 how-to-tell-if-task-too-messy-to-automate] How to tell if a task is too messy to automate
 [done 2026-11-12 automate-monthly-reports-from-excel] Automating monthly reports: from copy-paste in Excel to a report that writes itself
 [done 2026-11-13 when-an-ai-agent-gets-it-wrong] What happens when an AI agent gets something wrong, and how to design for it
-GDPR and automation: what a small business should check before connecting tools
+[done 2026-11-14 gdpr-checks-before-connecting-tools] GDPR and automation: what a small business should check before connecting tools
 How to automate quote requests so customers get an answer the same day
 Replacing paper forms with digital signing in a factory or workshop
 How to connect your CRM, email and accounting tool without a developer

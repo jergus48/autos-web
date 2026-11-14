@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GDPR and automation: what to check before connecting tools | Swiftrix</title>
+  <meta name="description" content="Before connecting tools or adding an AI agent, check what personal data moves, where it is stored, who processes it and how long it is kept.">
+  <link rel="canonical" href="https://www.swiftrix.eu/blog/gdpr-checks-before-connecting-tools">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.swiftrix.eu/blog/gdpr-checks-before-connecting-tools">
+  <meta property="og:title" content="GDPR and automation: what to check before connecting tools | Swiftrix">
+  <meta property="og:description" content="Before connecting tools or adding an AI agent, check what personal data moves, where it is stored, who processes it and how long it is kept.">
+  <link rel="icon" href="/assets/images/swiftrixLogo.png">
+  <link rel="alternate" type="application/rss+xml" title="Swiftrix blog" href="/blog/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&display=swap">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/blog/blog.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"GDPR and automation: what to check before connecting tools","description":"Before connecting tools or adding an AI agent, check what personal data moves, where it is stored, who processes it and how long it is kept.","datePublished":"2026-11-14","dateModified":"2026-11-14","mainEntityOfPage":"https://www.swiftrix.eu/blog/gdpr-checks-before-connecting-tools","author":{"@type":"Organization","name":"Swiftrix","url":"https://www.swiftrix.eu"},"publisher":{"@type":"Organization","name":"Swiftrix","logo":{"@type":"ImageObject","url":"https://www.swiftrix.eu/assets/images/swiftrixLogo.png"}}}</script>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <nav class="vex-nav">
+    <a class="vex-logo" data-site="" href="/" aria-label="Swiftrix">
+      <img class="logo-dark" src="/assets/images/swiftrixLogo.png" alt="Swiftrix">
+    </a>
+    <div class="vex-links" id="vexLinks">
+      <a href="/blog">All posts</a>
+      <a data-site="" href="/">Our services</a>
+      <a class="vex-mlink" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book a call</a>
+    </div>
+    <a class="vex-cta" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book a call</a>
+    <button class="vex-burger" id="vexBurger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="wrap post">
+    <p class="crumbs"><a href="/blog">Blog</a></p>
+    <article>
+      <header class="post-head">
+        <h1>GDPR and automation: what to check before connecting tools</h1>
+        <p class="meta"><time datetime="2026-11-14">14 November 2026</time> · 5 min read · gdpr, automation, integrations, ai agents, data protection</p>
+      </header>
+      <div class="prose">
+<p>Connecting your tools or adding an AI agent is usually fine under GDPR, as long as you know what personal data moves, where it goes, who handles it and how long it stays there. Most problems come from not asking those questions at the start, not from automation itself.</p>
+<p>This post is a practical checklist for small and mid-sized businesses in the UK, Ireland, Lithuania and the rest of the EU. It is not legal advice. If your data is sensitive (health records, children, criminal records) or you are unsure, talk to a data protection specialist before you build anything.</p>
+<h2 id="does-automation-change-anything-under-gdpr">Does automation change anything under GDPR?</h2>
+<p>The rules are the same whether a person or a program handles the data. What changes is scale: a script copying customer details into a spreadsheet does exactly what a person would, just faster and more often.</p>
+<p>Automation can make compliance easier. A well built integration moves only the fields it needs, logs what it did and deletes things on a schedule, while a busy office often leaves attachments in shared inboxes for years.</p>
+<p>The risk is that a new connection quietly sends data somewhere you did not intend, such as a new cloud service, a country outside the EU or UK, or an AI model provider. That is what the checks below are for.</p>
+<h2 id="what-personal-data-will-the-automation-touch">What personal data will the automation touch?</h2>
+<p>Start with a short list. For each automation, write down:</p>
+<ul><li><strong>Which data it reads.</strong> Names, email addresses, phone numbers, delivery addresses, bank details, signatures, ID numbers, notes about customers or staff.</li><li><strong>Which data it actually needs.</strong> An invoice workflow needs the supplier, amounts, dates and reference numbers. It rarely needs the name of the person who sent the email.</li><li><strong>Where the data comes from and where it ends up.</strong> For example: a customer email, then an AI agent, then your order system and your accounting tool.</li></ul>
+<p>GDPR's principle of data minimisation means processing only what the purpose needs. Ask whoever builds the automation to pass only the necessary fields.</p>
+<h2 id="who-is-processing-the-data-and-do-you-have-agreements-with-them">Who is processing the data, and do you have agreements with them?</h2>
+<p>Every outside service that handles personal data for you is a processor: your email provider, CRM, accounting software, automation platform, hosting and any AI model provider.</p>
+<p>Under GDPR you need a data processing agreement (often called a DPA) with each processor. Most established software companies publish one with their terms, so you usually just find it and keep a copy.</p>
+<p>Check three things for each service:</p>
+<ol><li><strong>Is there a data processing agreement?</strong> If a service cannot give you one, do not send personal data to it.</li><li><strong>Where is the data stored and processed?</strong> Inside the EU or UK is simplest. If it goes elsewhere, the provider should explain the legal basis for the transfer, such as standard contractual clauses or, for the United States, certification under the EU-US Data Privacy Framework.</li><li><strong>Does the provider use your data for its own purposes?</strong> For AI services in particular, check whether your inputs can be used to train their models. Business and API plans from the main providers usually say they do not, but read the terms for the plan you actually use.</li></ol>
+<h2 id="is-it-safe-to-send-customer-data-to-an-ai-agent">Is it safe to send customer data to an AI agent?</h2>
+<p>It can be, with the right setup. The questions are the same as for any processor, plus a few specific ones:</p>
+<ul><li><strong>Which AI provider is used, and under which plan?</strong> Consumer chat apps and business APIs often have different terms on retention and training.</li><li><strong>How long are inputs and outputs kept?</strong> Some providers keep them for a limited period for abuse monitoring. Know what that period is.</li><li><strong>Can you remove what the agent does not need?</strong> An agent that reads invoices can work from the document without seeing the full email thread around it.</li><li><strong>Does a person make the final decision when it matters?</strong> GDPR gives people rights around decisions made solely by automated means that have legal or similarly significant effects on them. For most office work (entering orders, sorting emails, drafting replies) this does not apply. For things like rejecting a job applicant or refusing credit, keep a person in the loop.</li></ul>
+<p>The design we described in <a href="/blog/when-an-ai-agent-gets-it-wrong">what happens when an AI agent gets something wrong</a> helps here too, because sensitive or unusual cases go to a person.</p>
+<h2 id="how-long-should-automated-data-be-kept">How long should automated data be kept?</h2>
+<p>Automations create copies (logs, temporary files, exports), and each copy needs a retention period.</p>
+<p>Decide in advance:</p>
+<ul><li>How long logs that contain personal data are kept (often weeks, not years).</li><li>Whether temporary files are deleted once a job is done.</li><li>That records you must keep for tax or accounting reasons stay in your accounting system, where they belong, and not in a side folder the automation created.</li></ul>
+<p>A short, automatic clean-up step is one of the easiest wins in any project.</p>
+<h2 id="what-should-be-written-down">What should be written down?</h2>
+<p>You do not need a thick binder. For each automation, a one-page note covering the following is a good start:</p>
+<ul><li>What it does and why (the purpose).</li><li>Which personal data it uses.</li><li>Which services it connects, with links to their data processing agreements.</li><li>Where the data is stored.</li><li>How long data is kept and how it is deleted.</li><li>Who to contact if something goes wrong.</li></ul>
+<p>This also feeds your records of processing activities and helps when a customer asks what you hold about them. Large scale processing of sensitive data or systematic monitoring of people may also need a data protection impact assessment; a typical small office workflow usually does not.</p>
+<h2 id="when-should-you-not-automate">When should you not automate?</h2>
+<p>Sometimes the honest answer is to wait. Hold off if:</p>
+<ul><li>You cannot find out where a tool stores its data or it has no data processing agreement.</li><li>The process relies on special category data (health, biometrics and similar) and you have no clear legal basis or advice.</li><li>Nobody in the business will own the automation once it is live, including access rights and the clean-up of old data.</li></ul>
+<h2 id="the-short-version">The short version</h2>
+<p>List the data, keep only what is needed, check every service for a data processing agreement and data location, set retention periods and write it down on one page. Do that and most automations sit comfortably within GDPR.</p>
+<p>If you want to see how an agent handles documents and passes unclear cases to a person, try the <a href="/demo">live demo</a>. If you are planning a project and want to talk through the data side, you can <a href="https://cal.com/swiftrix" rel="noopener" target="_blank">book a call</a>.</p>
+      </div>
+    </article>
+    <section class="cta post-cta">
+      <span class="sec-badge"><i></i>Swiftrix</span>
+      <h2>Have repetitive work you would like off your desk?</h2>
+      <p>Swiftrix builds automations and AI agents for businesses. Book a short call and we will tell you honestly whether it is worth automating.</p>
+      <div class="cta-actions"><a class="btn btn-primary" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book a call</a><a class="btn btn-ghost" href="/demo">Try the live agent demo</a></div>
+    </section>
+    <section class="more-posts"><h2>More from the blog</h2><div class="plist"><a class="pcard" href="/blog/when-an-ai-agent-gets-it-wrong"><span class="pdate">13 November 2026</span><h3>What happens when an AI agent gets something wrong</h3><p>AI agents do make mistakes. A well designed one checks its own work, stops when unsure and hands unclear cases to a person, so errors are caught before they cost money.</p></a><a class="pcard" href="/blog/automate-monthly-reports-from-excel"><span class="pdate">12 November 2026</span><h3>How to automate monthly reports instead of copying data into Excel</h3><p>Monthly reports can be automated when the data sits in systems you can export from and the layout stays the same. How it works, and when it is not worth it.</p></a><a class="pcard" href="/blog/how-to-tell-if-task-too-messy-to-automate"><span class="pdate">11 November 2026</span><h3>How to tell if a task is too messy to automate</h3><p>A practical test for whether a messy office task can be automated, can be automated after tidying, or should stay with a person, with signs to look for in each case.</p></a></div></section>
+  </main>
+  <footer>© 2026 Swiftrix · <a data-site="" href="/">swiftrix.eu</a> · <a href="/blog">Blog</a></footer>
+  <script src="/js/pages.js" defer></script>
+</body>
+</html>
