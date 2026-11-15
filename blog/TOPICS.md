@@ -10,7 +10,7 @@
 [done 2026-11-12 automate-monthly-reports-from-excel] Automating monthly reports: from copy-paste in Excel to a report that writes itself
 [done 2026-11-13 when-an-ai-agent-gets-it-wrong] What happens when an AI agent gets something wrong, and how to design for it
 [done 2026-11-14 gdpr-checks-before-connecting-tools] GDPR and automation: what a small business should check before connecting tools
-How to automate quote requests so customers get an answer the same day
+[done 2026-11-15 automate-quote-requests-same-day-answer] How to automate quote requests so customers get an answer the same day
 Replacing paper forms with digital signing in a factory or workshop
 How to connect your CRM, email and accounting tool without a developer
 Five signs your team is spending too much time on data entry
@@ -20,3 +20,18 @@ Automating customer support emails: what to hand to an agent and what to keep hu
 How to measure whether an automation paid for itself
 Spreadsheet chaos: when to move a business process out of Excel
 What to ask an automation agency before you hire one
+How to automate employee onboarding paperwork in a small company
+Shared inbox overload: how to sort and route incoming email automatically
+How to stop double entry between your webshop and your accounting software
+Should you buy off-the-shelf software or build a custom tool
+How to automate appointment scheduling and reminders without losing the personal touch
+What data does an AI agent need access to, and how to limit it
+How to automate supplier invoice approval in a small finance team
+How to keep stock levels in sync between a spreadsheet and an online shop
+How long does an automation project take from first call to going live
+How to automate payment reminders for overdue invoices politely
+What to do when the person who built your spreadsheet leaves
+How to prepare your team for an automation so they actually use it
+Can an AI agent answer the phone, and when is email the better place to start
+How to automate timesheets and job tracking for a field service team
+How to maintain an automation after it is built: who fixes it when something changes
