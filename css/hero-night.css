@@ -211,3 +211,17 @@
   .hn-clients span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
   .hn-clients img{height:56px}
 }
+
+/* ---------- single column: stats sit under the agent panels ---------- */
+@media (max-width:1020px){
+  .hn-copy{display:contents}
+  .hn-copy>*{position:relative;z-index:3}
+  .hn-wrap{gap:22px}
+  .hn-clock{justify-self:start}
+  .hn-stage{order:1}
+  .hn-tally{order:2;width:100%;max-width:560px;justify-self:center}
+}
+@media (max-width:700px){
+  .hn-wrap{gap:24px}
+  .hn-stage{margin-top:0;margin-bottom:-24px}
+}
