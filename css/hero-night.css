@@ -192,3 +192,22 @@
   .hn-clients{margin-top:6px;justify-content:space-between}
   .hn-clients span{text-align:center}
 }
+
+/* ---------- phone: more breathing room ---------- */
+@media (max-width:700px){
+  .hn{padding-top:128px;padding-bottom:56px}
+  .hn-copy{gap:24px}
+  .hn-clock{margin-bottom:4px}
+  .hn-ctas{margin-top:6px}
+  .hn-tally{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hn-tally div{padding:16px 14px;gap:4px}
+  .hn-tally div+div{border-left:0}
+  .hn-tally div:nth-child(even){border-left:1px solid rgba(255,255,255,.07)}
+  .hn-tally div:nth-child(n+3){border-top:1px solid rgba(255,255,255,.07)}
+  .hn-tally b{font-size:24px}
+  .hn-tally span{font-size:12px}
+  .hn-stage{margin-top:16px}
+  .hn-clients{margin-top:32px;justify-content:center;gap:4px 26px}
+  .hn-clients span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+  .hn-clients img{height:56px}
+}
