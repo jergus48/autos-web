@@ -49,7 +49,7 @@
       p.el.style.transform = 'translate(-50%,-50%) translate3d(' + v[0] + 'px,' + v[1] + 'px,' + v[2] + 'px)';
     });
   }
-  var JOBS = [
+  var JOBS_EN = [
     { k: 'order', from: 'Baltic Timber UAB', ini: 'BT', s: 'Order PO-2291: 40 pallets', f: [['Customer', 'Baltic Timber'], ['Product', 'Pine 45×95'], ['Quantity', '40 pallets'], ['Delivery', 'Thu 07:00']], tag: ['hn-t-order', 'ORDER'], ref: 'PO-2291', who: 'Baltic Timber', val: '€ 6 480', toast: 'Order entered in ERP', c: 96 },
     { k: 'reply', from: 'Rūta Kazlauskienė', ini: 'RK', s: 'Where is my order #8812?', f: [['Intent', 'Order status'], ['Order', '#8812'], ['Status', 'Shipped, DPD'], ['Language', 'Lithuanian']], tag: ['hn-t-reply', 'REPLY'], ref: '#8812', who: 'Rūta K.', val: 'sent', toast: 'Answer sent in Lithuanian', c: 93 },
     { k: 'invoice', from: 'Statybų prekės UAB', ini: 'SP', s: 'Invoice INV-7781.pdf', f: [['Supplier', 'Statybų prekės'], ['Amount', '€ 1 214,60'], ['Due', '28 Nov'], ['Matched to', 'PO-2240']], tag: ['hn-t-invoice', 'INVOICE'], ref: 'INV-7781', who: 'Statybų prekės', val: '€ 1 214,60', toast: 'Invoice booked and matched', c: 98 },
@@ -58,6 +58,50 @@
     { k: 'reply', from: 'Jonas Petraitis', ini: 'JP', s: 'Can I change the delivery address?', f: [['Intent', 'Change address'], ['Order', '#8790'], ['New address', 'Kaunas, Savanorių 12'], ['Updated', 'Yes']], tag: ['hn-t-reply', 'REPLY'], ref: '#8790', who: 'Jonas P.', val: 'sent', toast: 'Address changed, customer told', c: 94 },
     { k: 'invoice', from: 'Krovinių linija UAB', ini: 'KL', s: 'October freight invoice', f: [['Supplier', 'Krovinių linija'], ['Amount', '€ 3 412,80'], ['Due', '30 Nov'], ['Matched to', '212 shipments']], tag: ['hn-t-invoice', 'INVOICE'], ref: 'INV-10/24', who: 'Krovinių linija', val: '€ 3 412,80', toast: 'Invoice checked line by line', c: 97 }
   ];
+
+  // other languages: same jobs, translated text
+  var LANG = (document.documentElement.lang || 'en').slice(0, 2);
+  var I18N = {
+    lt: {
+      st: { read: 'SKAITO', enter: 'SUVEDA', reply: 'ATSAKO', ask: 'KLAUSIA ŽMOGAUS', done: 'ATLIKTA' }, sent: 'išsiųsta',
+      tags: { ORDER: 'UŽSAKYMAS', REPLY: 'ATSAKYMAS', INVOICE: 'SĄSKAITA', HANDOVER: 'PERDUOTA' },
+      seedSubj: 'Užsakymas PO-2290: 24 padėklai',
+      seedF: [['Klientas', 'Baltic Timber'], ['Produktas', 'Pušis 45×95'], ['Kiekis', '24 padėklai'], ['Pristatymas', 'Tre 07:00']],
+      jobs: [
+        { s: 'Užsakymas PO-2291: 40 padėklų', f: [['Klientas', 'Baltic Timber'], ['Produktas', 'Pušis 45×95'], ['Kiekis', '40 padėklų'], ['Pristatymas', 'Ket 07:00']], toast: 'Užsakymas suvestas į ERP' },
+        { s: 'Kur mano užsakymas #8812?', f: [['Tikslas', 'Užsakymo būsena'], ['Užsakymas', '#8812'], ['Būsena', 'Išsiųsta, DPD'], ['Kalba', 'Lietuvių']], toast: 'Atsakyta lietuviškai' },
+        { s: 'Sąskaita INV-7781.pdf', f: [['Tiekėjas', 'Statybų prekės'], ['Suma', '€ 1 214,60'], ['Terminas', '11-28'], ['Susieta su', 'PO-2240']], toast: 'Sąskaita užregistruota ir susieta' },
+        { s: 'Re: armatūra penktadieniui, 12 t', f: [['Klientas', 'Nordic Steel'], ['Produktas', 'Armatūra Ø12'], ['Kiekis', '12 t'], ['Pristatymas', 'Pen 06:30']], toast: 'Užsakymas suvestas į ERP' },
+        { s: 'Re: re: tas reikalas, apie kurį kalbėjom', f: [['Tikslas', 'Neaiškus'], ['Klientas', 'Nerastas'], ['Tikrumas', '41%'], ['Veiksmas', 'Klausti žmogaus']], toast: 'Neaišku, todėl laukia Rasos', who: 'Rasai, 08:00', val: 'pastaba', ref: 'n/d' },
+        { s: 'Ar galiu pakeisti pristatymo adresą?', f: [['Tikslas', 'Adreso keitimas'], ['Užsakymas', '#8790'], ['Naujas adresas', 'Kaunas, Savanorių 12'], ['Atnaujinta', 'Taip']], toast: 'Adresas pakeistas, klientas informuotas' },
+        { s: 'Spalio pervežimų sąskaita', f: [['Tiekėjas', 'Krovinių linija'], ['Suma', '€ 3 412,80'], ['Terminas', '11-30'], ['Susieta su', '212 siuntų']], toast: 'Sąskaita patikrinta eilutė po eilutės' }
+      ]
+    },
+    de: {
+      st: { read: 'LIEST', enter: 'ERFASST', reply: 'ANTWORTET', ask: 'FRAGT EINEN MENSCHEN', done: 'FERTIG' }, sent: 'gesendet',
+      tags: { ORDER: 'AUFTRAG', REPLY: 'ANTWORT', INVOICE: 'RECHNUNG', HANDOVER: 'ÜBERGABE' },
+      seedSubj: 'Bestellung PO-2290: 24 Paletten',
+      seedF: [['Kunde', 'Baltic Timber'], ['Produkt', 'Kiefer 45×95'], ['Menge', '24 Paletten'], ['Lieferung', 'Mi 07:00']],
+      jobs: [
+        { s: 'Bestellung PO-2291: 40 Paletten', f: [['Kunde', 'Baltic Timber'], ['Produkt', 'Kiefer 45×95'], ['Menge', '40 Paletten'], ['Lieferung', 'Do 07:00']], toast: 'Auftrag im ERP erfasst' },
+        { s: 'Wo ist meine Bestellung #8812?', f: [['Anliegen', 'Bestellstatus'], ['Bestellung', '#8812'], ['Status', 'Versendet, DPD'], ['Sprache', 'Litauisch']], toast: 'Antwort auf Litauisch gesendet' },
+        { s: 'Rechnung INV-7781.pdf', f: [['Lieferant', 'Statybų prekės'], ['Betrag', '€ 1 214,60'], ['Fällig', '28.11.'], ['Zugeordnet', 'PO-2240']], toast: 'Rechnung gebucht und zugeordnet' },
+        { s: 'Re: Betonstahl für Freitag, 12 t', f: [['Kunde', 'Nordic Steel'], ['Produkt', 'Betonstahl Ø12'], ['Menge', '12 t'], ['Lieferung', 'Fr 06:30']], toast: 'Auftrag im ERP erfasst' },
+        { s: 'Re: re: die Sache, über die wir sprachen', f: [['Anliegen', 'Unklar'], ['Kunde', 'Nicht gefunden'], ['Sicherheit', '41%'], ['Aktion', 'Mensch fragen']], toast: 'Unsicher, daher wartet es auf Rasa', who: 'Für Rasa, 08:00', val: 'Notiz', ref: 'k. A.' },
+        { s: 'Kann ich die Lieferadresse ändern?', f: [['Anliegen', 'Adresse ändern'], ['Bestellung', '#8790'], ['Neue Adresse', 'Kaunas, Savanorių 12'], ['Aktualisiert', 'Ja']], toast: 'Adresse geändert, Kunde informiert' },
+        { s: 'Frachtrechnung Oktober', f: [['Lieferant', 'Krovinių linija'], ['Betrag', '€ 3 412,80'], ['Fällig', '30.11.'], ['Zugeordnet', '212 Sendungen']], toast: 'Rechnung Zeile für Zeile geprüft' }
+      ]
+    }
+  };
+  var TX = I18N[LANG] || null;
+  var ST = TX ? TX.st : { read: 'READING', enter: 'ENTERING', reply: 'REPLYING', ask: 'ASKING A PERSON', done: 'DONE' };
+  function trTag(t) { return TX ? [t[0], TX.tags[t[1]] || t[1]] : t; }
+  function trVal(v) { return TX && v === 'sent' ? TX.sent : v; }
+  var JOBS = JOBS_EN.map(function (j, i) {
+    var o = {}; for (var k in j) o[k] = j[k];
+    if (TX) { var t = TX.jobs[i]; for (var k2 in t) o[k2] = t[k2]; o.tag = trTag(j.tag); o.val = t.val || trVal(j.val); }
+    return o;
+  });
   function fmt(min) { var m = (18 * 60 + Math.floor(min)) % 1440; return ('0' + Math.floor(m / 60)).slice(-2) + ':' + ('0' + (m % 60)).slice(-2); }
   var raf = 0, timers = [], sim = 0, last = 0, t0 = 0, ji = 0, paused = false, tally, mx = 0, my = 0, cx = 0, cy = 0, scale = 1, visible = false, jobsOn = false;
   function T(fn, ms) { var id = setTimeout(fn, ms); timers.push(id); return id; }
@@ -120,10 +164,10 @@
   function seed() {
     inbox.innerHTML = ''; rows.innerHTML = '';
     [[JOBS[2], '17:52'], [JOBS[1], '17:40'], [JOBS[0], '17:31']].forEach(function (x) { inbox.appendChild(mailRow(x[0], x[1])); });
-    [{ tag: ['hn-t-order', 'ORDER'], ref: 'PO-2290', who: 'Baltic Timber', val: '€ 3 890' }, { tag: ['hn-t-reply', 'REPLY'], ref: '#8807', who: 'Agnė M.', val: 'sent' }, { tag: ['hn-t-invoice', 'INVOICE'], ref: 'INV-7779', who: 'Elektros tinklai', val: '€ 742,10' }].forEach(function (j) { rows.appendChild(erpRow(j)); });
-    subj.textContent = 'Order PO-2290: 24 pallets';
-    showFields({ f: [['Customer', 'Baltic Timber'], ['Product', 'Pine 45×95'], ['Quantity', '24 pallets'], ['Delivery', 'Wed 07:00']] }, false);
-    conf.style.width = '95%'; conf.classList.remove('hn-low'); status.textContent = 'DONE'; status.classList.remove('hn-warn');
+    [{ tag: ['hn-t-order', 'ORDER'], ref: 'PO-2290', who: 'Baltic Timber', val: '€ 3 890' }, { tag: ['hn-t-reply', 'REPLY'], ref: '#8807', who: 'Agnė M.', val: 'sent' }, { tag: ['hn-t-invoice', 'INVOICE'], ref: 'INV-7779', who: 'Elektros tinklai', val: '€ 742,10' }].forEach(function (j) { j.tag = trTag(j.tag); j.val = trVal(j.val); rows.appendChild(erpRow(j)); });
+    subj.textContent = TX ? TX.seedSubj : 'Order PO-2290: 24 pallets';
+    showFields({ f: TX ? TX.seedF : [['Customer', 'Baltic Timber'], ['Product', 'Pine 45×95'], ['Quantity', '24 pallets'], ['Delivery', 'Wed 07:00']] }, false);
+    conf.style.width = '95%'; conf.classList.remove('hn-low'); status.textContent = ST.done; status.classList.remove('hn-warn');
     tally = { orders: 0, replies: 0, invoices: 0, handed: 0 }; Object.keys(tally).forEach(function (k) { tallyEls[k].textContent = 0; });
   }
   function job() {
@@ -135,12 +179,12 @@
     [].forEach.call(inbox.children, function (m) { m.classList.toggle('hn-active', m === mr); });
     T(function () { fly(P[0], P[1], 700); }, 250);
     T(function () {
-      subj.textContent = j.s; status.textContent = 'READING'; status.classList.remove('hn-warn');
+      subj.textContent = j.s; status.textContent = ST.read; status.classList.remove('hn-warn');
       conf.style.width = '0'; conf.classList.toggle('hn-low', j.c < 60);
       beam.classList.remove('hn-go'); void beam.offsetWidth; beam.classList.add('hn-go');
       showFields(j, true);
     }, 850);
-    T(function () { conf.style.width = j.c + '%'; status.textContent = j.k === 'handed' ? 'ASKING A PERSON' : (j.k === 'reply' ? 'REPLYING' : 'ENTERING'); status.classList.toggle('hn-warn', j.k === 'handed'); }, 2000);
+    T(function () { conf.style.width = j.c + '%'; status.textContent = j.k === 'handed' ? ST.ask : (j.k === 'reply' ? ST.reply : ST.enter); status.classList.toggle('hn-warn', j.k === 'handed'); }, 2000);
     T(function () { fly(P[1], P[2], 700); }, 2300);
     T(function () {
       rows.insertBefore(erpRow(j, true), rows.firstChild); while (rows.children.length > 4) rows.removeChild(rows.lastChild);

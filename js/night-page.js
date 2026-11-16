@@ -221,7 +221,7 @@
     ctx.globalAlpha = 1;
   }
 
-  function centerHeads() { $('.nx-proc .nx-head, .nx-faq .nx-head').forEach(function (h) { h.style.setProperty('--hh', (h.offsetHeight / 2) + 'px'); }); }
+  function centerHeads() { $$('.nx-proc .nx-head, .nx-faq .nx-head').forEach(function (h) { h.style.setProperty('--hh', (h.offsetHeight / 2) + 'px'); }); }
   function onResize() { sizeStars(); layoutCases(); buildAnchors(); centerHeads(); update(); }
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', onResize);
