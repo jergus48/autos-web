@@ -158,7 +158,8 @@
     var dt = Math.min(250, now - (last || now)); last = now;
     var e = easeIO(RM ? 1 : clamp((now - t0) / 2300, 0, 1));
     cx += (mx - cx) * .06; cy += (my - cy) * .06;
-    var rx = lerp(64, 9, e) - cy * 7, ry = lerp(0, -21, e) + cx * 12, rz = lerp(-26, 0, e), tz = lerp(-380, 0, e);
+    var mob = stage.clientWidth < 600;
+    var rx = lerp(64, mob ? 18 : 9, e) - cy * 7, ry = lerp(0, mob ? -6 : -21, e) + cx * (mob ? 4 : 12), rz = lerp(-26, 0, e), tz = lerp(-380, mob ? -60 : 0, e);
     cam.style.transform = 'scale(' + scale + ') translateZ(' + tz + 'px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) rotateZ(' + rz + 'deg)';
     if (!paused) { sim += dt * (RM ? .006 : .0165); if (sim >= 840) { sim = 840; showMorning(); } }
     timeEl.textContent = fmt(sim);
@@ -172,7 +173,7 @@
     }
     raf = requestAnimationFrame(frame);
   }
-  function fit() { scale = clamp(stage.clientWidth / 720, .5, 1.08); drawStars(); buildDial(); }
+  function fit() { scale = clamp(stage.clientWidth / 720, .36, 1.08) * (stage.clientWidth < 600 ? .86 : 1); drawStars(); buildDial(); }
   function setVisible(v) {
     visible = v;
     if (v) { if (!raf) { last = 0; raf = requestAnimationFrame(frame); } if (!jobsOn && !paused) T(job, 400); }
