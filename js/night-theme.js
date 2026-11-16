@@ -51,7 +51,7 @@
   }
 
   /* scroll reveals */
-  var sel = '.hero .eyebrow, .hero > p, .app > .panel, .flow > .panel, main > .panel, .block .sec-badge, .block h2, .block .lead, .cards > .card, .cta';
+  var sel = '.hero .eyebrow, .hero > p, .app > .panel, .flow > .panel, main > .panel, .block .sec-badge, .block h2, .block .lead, .cards > .card, .cta, .proj, .proj-about, .proj-jump';
   var pending = $$(sel);
   pending.forEach(function (el) {
     el.classList.add('nt-rv');
