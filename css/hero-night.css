@@ -154,3 +154,25 @@
 @media (prefers-reduced-motion:reduce){
   .hn *,.hn *::before,.hn *::after{animation:none!important;transition-duration:.01ms!important}
 }
+
+/* ---------- phone polish ---------- */
+@media (max-width:700px){
+  .hn{min-height:0;padding-top:104px;padding-bottom:36px}
+  .hn-wrap{gap:12px}
+  .hn-copy{gap:18px}
+  .hn-clock{height:34px;font-size:10.5px;gap:9px;padding:0 12px 0 10px}
+  .hn-time{font-size:12.5px}
+  .hn-h{font-size:clamp(40px,12vw,52px);line-height:.98}
+  .hn-sub{font-size:16px}
+  .hn-ctas{flex-direction:column}
+  .hn-ctas .hn-btn{width:100%;justify-content:center;height:50px}
+  .hn-tally{gap:6px}
+  .hn-tally div{padding:10px 12px;border-radius:14px}
+  .hn-tally b{font-size:20px}
+  .hn-stage{height:330px;margin:4px -16px 0}
+  .hn-dial{display:none}
+  .hn-floor{height:30%}
+  .hn-clients{margin-top:8px;gap:8px 18px}
+  .hn-clients span{width:100%;font-size:12px}
+  .hn-clients img{height:24px}
+}
