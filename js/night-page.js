@@ -43,16 +43,22 @@
   var weekCells = [];
   $$('.nx-hours').forEach(function (row) {
     var m = row.getAttribute('data-m').split(',').map(Number);
-    for (var h = 0; h < 8; h++) { var c = document.createElement('i'); if (m.indexOf(h) > -1) { c.className = 'm'; weekCells.push(c); } row.appendChild(c); }
+    for (var h = 0; h < 8; h++) { var c = document.createElement('i'); if (m.indexOf(h) > -1) { c.className = 'm'; c.style.setProperty('--k', weekCells.length); weekCells.push(c); } row.appendChild(c); }
   });
-  var weekDone = false;
+  var weekDone = false, weekState = 0, weekAuto = null, segBtns = $$('.nx-seg button'), savedEl = root.querySelector('.nx-saved');
+  function setWeek(st) {
+    weekState = st;
+    segBtns.forEach(function (b) { b.classList.toggle('on', +b.getAttribute('data-st') === st); });
+    weekCells.forEach(function (c) { c.className = st ? 'a' : 'm'; });
+    var from = +savedEl.textContent, to = st ? weekCells.length : 0, t0 = performance.now();
+    (function tick(now) { var p = clamp((now - t0) / 800, 0, 1); savedEl.textContent = Math.round(from + (to - from) * p); if (p < 1) requestAnimationFrame(tick); })(t0);
+  }
   function runWeek() {
     if (weekDone) return; weekDone = true;
-    var saved = root.querySelector('.nx-saved'), n = 0;
-    weekCells.forEach(function (c, i) {
-      setTimeout(function () { c.className = 'a'; n += 1; saved.textContent = n; }, RM ? 0 : 600 + i * 170);
-    });
+    setTimeout(function () { setWeek(1); }, RM ? 0 : 700);
+    if (!RM) weekAuto = setInterval(function () { setWeek(weekState ? 0 : 1); }, 4200);
   }
+  segBtns.forEach(function (b) { b.addEventListener('click', function () { clearInterval(weekAuto); setWeek(+b.getAttribute('data-st')); }); });
 
   /* ---- counters ---- */
   function count(el) {
@@ -215,10 +221,11 @@
     ctx.globalAlpha = 1;
   }
 
-  function onResize() { sizeStars(); layoutCases(); buildAnchors(); update(); }
+  function centerHeads() { $('.nx-proc .nx-head, .nx-faq .nx-head').forEach(function (h) { h.style.setProperty('--hh', (h.offsetHeight / 2) + 'px'); }); }
+  function onResize() { sizeStars(); layoutCases(); buildAnchors(); centerHeads(); update(); }
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', onResize);
-  addEventListener('load', function () { layoutCases(); buildAnchors(); update(); });
-  sizeStars(); layoutCases(); buildAnchors(); update();
+  addEventListener('load', function () { layoutCases(); buildAnchors(); centerHeads(); update(); });
+  sizeStars(); layoutCases(); buildAnchors(); centerHeads(); update();
   requestAnimationFrame(drawStars);
 })();

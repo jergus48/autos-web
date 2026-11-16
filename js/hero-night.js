@@ -61,7 +61,7 @@
   function buildDial() {
     var w = root.clientWidth, h = 110, s = '';
     dial.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
-    var d = 'M 24 ' + (h - 14) + ' Q ' + (w / 2) + ' -40 ' + (w - 24) + ' ' + (h - 14);
+    var d = 'M 24 ' + (h - 36) + ' Q ' + (w / 2) + ' -30 ' + (w - 24) + ' ' + (h - 36);
     s += '<defs><linearGradient id="hn-dg" x1="0" x2="1"><stop offset="0" stop-color="#c5f07a" stop-opacity=".1"/><stop offset="1" stop-color="#c5f07a"/></linearGradient><radialGradient id="hn-moon"><stop offset="0" stop-color="#fff"/><stop offset=".4" stop-color="#e9ffc4"/><stop offset="1" stop-color="#c5f07a" stop-opacity="0"/></radialGradient></defs>';
     s += '<path d="' + d + '" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="1"/><path class="hn-dp" d="' + d + '" fill="none" stroke="url(#hn-dg)" stroke-width="1.5"/>';
     dial.innerHTML = s; dialPath = dial.querySelector('path'); dialLen = dialPath.getTotalLength(); dialProg = dial.querySelector('.hn-dp');
@@ -70,7 +70,7 @@
     for (var i = 0; i <= 14; i++) {
       var p = dialPath.getPointAtLength(dialLen * i / 14), hr = (18 + i) % 24;
       ticks += '<circle cx="' + p.x + '" cy="' + p.y + '" r="' + (i % 2 ? 1.2 : 2) + '" fill="rgba(255,255,255,' + (i % 2 ? .25 : .5) + ')"/>';
-      if (i % 2 === 0 && (w > 600 || i % 4 === 0)) ticks += '<text x="' + p.x + '" y="' + (p.y + 18) + '" text-anchor="middle">' + ('0' + hr).slice(-2) + ':00</text>';
+      if (i % 2 === 0 && (w > 600 || i % 4 === 0)) ticks += '<text x="' + p.x + '" y="' + (p.y + 17) + '" text-anchor="middle">' + ('0' + hr).slice(-2) + ':00</text>';
     }
     dial.insertAdjacentHTML('beforeend', ticks + '<circle class="hn-dd" r="14" fill="url(#hn-moon)"/><circle class="hn-dd" r="3.5" fill="#fff"/>');
     dialDots = dial.querySelectorAll('.hn-dd');
