@@ -34,11 +34,21 @@
       starsCv = $('.hn-stars'), dial = $('.hn-dial');
   var tallyEls = {};
   [].forEach.call(root.querySelectorAll('.hn-tally b'), function (b) { tallyEls[b.getAttribute('data-k')] = b; });
-  var panels = [].map.call(root.querySelectorAll('.hn-panel'), function (p) {
+  // desktop: three panels spread in depth. phone: inbox hidden, agent and systems stacked flat.
+  var MOB_POS = [[0, -200, 0], [0, -84, 0], [0, 112, 20]];
+  var panels = [].map.call(root.querySelectorAll('.hn-panel'), function (p, i) {
     var v = p.getAttribute('data-pos').split(',').map(Number);
-    p.style.transform = 'translate(-50%,-50%) translate3d(' + v[0] + 'px,' + v[1] + 'px,' + v[2] + 'px)';
-    return { x: v[0], y: v[1], z: v[2] };
+    return { el: p, d: v, m: MOB_POS[i], x: v[0], y: v[1], z: v[2] };
   });
+  var mobLayout = null;
+  function placePanels() {
+    var mob = stage.clientWidth < 600;
+    if (mob === mobLayout) return; mobLayout = mob;
+    panels.forEach(function (p) {
+      var v = mob ? p.m : p.d; p.x = v[0]; p.y = v[1]; p.z = v[2];
+      p.el.style.transform = 'translate(-50%,-50%) translate3d(' + v[0] + 'px,' + v[1] + 'px,' + v[2] + 'px)';
+    });
+  }
   var JOBS = [
     { k: 'order', from: 'Baltic Timber UAB', ini: 'BT', s: 'Order PO-2291: 40 pallets', f: [['Customer', 'Baltic Timber'], ['Product', 'Pine 45×95'], ['Quantity', '40 pallets'], ['Delivery', 'Thu 07:00']], tag: ['hn-t-order', 'ORDER'], ref: 'PO-2291', who: 'Baltic Timber', val: '€ 6 480', toast: 'Order entered in ERP', c: 96 },
     { k: 'reply', from: 'Rūta Kazlauskienė', ini: 'RK', s: 'Where is my order #8812?', f: [['Intent', 'Order status'], ['Order', '#8812'], ['Status', 'Shipped, DPD'], ['Language', 'Lithuanian']], tag: ['hn-t-reply', 'REPLY'], ref: '#8812', who: 'Rūta K.', val: 'sent', toast: 'Answer sent in Lithuanian', c: 93 },
@@ -158,8 +168,8 @@
     var dt = Math.min(250, now - (last || now)); last = now;
     var e = easeIO(RM ? 1 : clamp((now - t0) / 2300, 0, 1));
     cx += (mx - cx) * .06; cy += (my - cy) * .06;
-    var mob = stage.clientWidth < 600;
-    var rx = lerp(64, mob ? 18 : 9, e) - cy * 7, ry = lerp(0, mob ? -6 : -21, e) + cx * (mob ? 4 : 12), rz = lerp(-26, 0, e), tz = lerp(-380, mob ? -60 : 0, e);
+    var mob = mobLayout;
+    var rx = mob ? lerp(64, 0, e) : lerp(64, 9, e) - cy * 7, ry = mob ? 0 : lerp(0, -21, e) + cx * 12, rz = lerp(mob ? -10 : -26, 0, e), tz = lerp(-380, 0, e);
     cam.style.transform = 'scale(' + scale + ') translateZ(' + tz + 'px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) rotateZ(' + rz + 'deg)';
     if (!paused) { sim += dt * (RM ? .006 : .0165); if (sim >= 840) { sim = 840; showMorning(); } }
     timeEl.textContent = fmt(sim);
@@ -173,7 +183,7 @@
     }
     raf = requestAnimationFrame(frame);
   }
-  function fit() { scale = clamp(stage.clientWidth / 720, .36, 1.08) * (stage.clientWidth < 600 ? .86 : 1); drawStars(); buildDial(); }
+  function fit() { placePanels(); scale = mobLayout ? Math.min(1, (stage.clientWidth - 8) / 404) : clamp(stage.clientWidth / 720, .36, 1.08); drawStars(); buildDial(); }
   function setVisible(v) {
     visible = v;
     if (v) { if (!raf) { last = 0; raf = requestAnimationFrame(frame); } if (!jobsOn && !paused) T(job, 400); }

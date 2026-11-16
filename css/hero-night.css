@@ -176,3 +176,20 @@
   .hn-clients span{width:100%;font-size:12px}
   .hn-clients img{height:24px}
 }
+
+/* ---------- phone: one clean column ---------- */
+@media (max-width:700px){
+  .hn{padding-bottom:20px}
+  .hn-replay{display:none}
+  .hn-ctas .hn-btn-lime{height:52px}
+  .hn-tally{grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-radius:16px;overflow:hidden;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+  .hn-tally div{background:none!important;box-shadow:none!important;-webkit-backdrop-filter:none;backdrop-filter:none;border-radius:0;padding:10px 8px;align-items:center;text-align:center}
+  .hn-tally div::before{display:none}
+  .hn-tally div+div{border-left:1px solid rgba(255,255,255,.07)}
+  .hn-tally b{font-size:18px}
+  .hn-tally span{font-size:10px;line-height:1.2}
+  .hn-p-inbox{display:none}
+  .hn-stage{height:440px;margin:0;perspective:1200px}
+  .hn-clients{margin-top:6px;justify-content:space-between}
+  .hn-clients span{text-align:center}
+}
