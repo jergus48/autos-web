@@ -188,8 +188,7 @@
   .hn-tally div+div{border-left:1px solid rgba(255,255,255,.07)}
   .hn-tally b{font-size:18px}
   .hn-tally span{font-size:10px;line-height:1.2}
-  .hn-p-inbox{display:none}
-  .hn-stage{height:440px;margin:0;perspective:1200px}
+  .hn-stage{height:460px;margin:0 -16px;perspective:1100px;perspective-origin:50% 40%}
   .hn-clients{margin-top:6px;justify-content:space-between}
   .hn-clients span{text-align:center}
 }
