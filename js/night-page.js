@@ -75,7 +75,20 @@
       io.unobserve(el);
     });
   }, { threshold: .18, rootMargin: '0px 0px -6% 0px' });
-  $$('[data-rv]').forEach(function (el) { io.observe(el); });
+  var pending = $$('[data-rv]');
+  function reveal(el) {
+    el.classList.add('is-in');
+    $$('[data-count]', el).forEach(count);
+    if (el.classList.contains('nx-week')) runWeek();
+  }
+  function checkReveal() {
+    var vh = innerHeight;
+    pending = pending.filter(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < vh * .92 && r.bottom > 0) { reveal(el); return false; }
+      return true;
+    });
+  }
   $$('.nx-report').forEach(function (el) { io.observe(el); });
 
   /* ---- mini demos play only while visible ---- */
@@ -119,8 +132,6 @@
   }
 
   /* ---- scroll scenes ---- */
-  var rail = root.querySelector('.nx-rail'), railFill = rail.querySelector('.nx-rail-fill'), railDot = rail.querySelector('.nx-rail-dot'), railTime = rail.querySelector('.nx-rail-time');
-  (function () { for (var i = 0; i <= 14; i += 2) { var t = document.createElement('i'); t.className = 'nx-rail-tick'; t.style.top = (i / 14 * 100) + '%'; rail.appendChild(t); } })();
   var dawn = root.querySelector('.nx-dawn');
   var steps = $$('.nx-step'), stepsWrap = root.querySelector('.nx-steps'), stepsFill = root.querySelector('.nx-steps-line i'), stepsDot = root.querySelector('.nx-steps-line b');
   var cases = root.querySelector('.nx-cases'), casesPin = root.querySelector('.nx-cases-pin'), casesTrack = root.querySelector('.nx-cases-track'), casesBar = root.querySelector('.nx-cases-bar i');
@@ -159,14 +170,9 @@
     ticking = false;
     var y = scrollY, vh = innerHeight;
     if (nav) nav.classList.toggle('scrolled', y > 40);
+    checkReveal();
     var r = root.getBoundingClientRect();
     var total = r.height - vh, p = clamp(-r.top / Math.max(1, total), 0, 1);
-    // time rail
-    var heroOut = hero ? hero.getBoundingClientRect().bottom < vh * .5 : true;
-    rail.classList.toggle('is-on', heroOut && p < .995);
-    var tm = timeAt(y), tp = tm / 840;
-    railFill.style.height = (tp * 100) + '%'; railDot.style.top = (tp * 100) + '%';
-    railTime.textContent = fmt(tm);
     dawn.style.opacity = clamp((p - .72) / .28, 0, 1);
     // scrubbed words
     if (scrubWords.length) {

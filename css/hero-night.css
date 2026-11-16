@@ -5,7 +5,7 @@
   --hn-display:"Clash Grotesk","Instrument Sans",system-ui,sans-serif;
   --hn-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --hn-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
-  position:relative;overflow:hidden;isolation:isolate;width:100%;box-sizing:border-box;
+  position:relative;z-index:2;overflow:hidden;isolation:isolate;width:100%;box-sizing:border-box;
   min-height:max(820px,min(100svh,1000px));
   padding:140px max(20px,env(safe-area-inset-right,0px)) 130px max(20px,env(safe-area-inset-left,0px));
   background:#05070a;color:var(--hn-fg);font-family:var(--hn-body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;
