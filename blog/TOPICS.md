@@ -11,7 +11,7 @@
 [done 2026-11-13 when-an-ai-agent-gets-it-wrong] What happens when an AI agent gets something wrong, and how to design for it
 [done 2026-11-14 gdpr-checks-before-connecting-tools] GDPR and automation: what a small business should check before connecting tools
 [done 2026-11-15 automate-quote-requests-same-day-answer] How to automate quote requests so customers get an answer the same day
-Replacing paper forms with digital signing in a factory or workshop
+[done 2026-11-16 replace-paper-forms-with-digital-signing] Replacing paper forms with digital signing in a factory or workshop
 How to connect your CRM, email and accounting tool without a developer
 Five signs your team is spending too much time on data entry
 How to scan and archive paper invoices and know which ones you can throw away
