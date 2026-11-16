@@ -326,3 +326,18 @@
   [data-rv]{opacity:1;transform:none;filter:none}
   .nx-scrub .sw{opacity:1}
 }
+
+/* ---------- why us: compact ---------- */
+.nx-why{padding-top:110px;padding-bottom:110px}
+.nx-why .nx-h2{font-size:clamp(34px,4vw,56px)}
+.nx-why .nx-stats{margin-top:32px}
+.nx-why .nx-stat{padding-top:20px;padding-bottom:20px;gap:4px}
+.nx-why .nx-stat b{font-size:clamp(30px,3vw,42px)}
+.nx-why .nx-stat > span{font-size:13px}
+.nx-why .nx-bento{gap:14px;margin-top:28px}
+.nx-why .nx-bento .nx-card{display:grid;grid-template-columns:36px minmax(0,1fr);align-items:center;gap:10px 14px;padding:22px;border-radius:20px}
+.nx-why .nx-bento .nx-ico{width:36px;height:36px;border-radius:11px}
+.nx-why .nx-bento .nx-ico svg{width:18px;height:18px}
+.nx-why .nx-bento .nx-card h3{font-size:17px}
+.nx-why .nx-bento .nx-card p{grid-column:1/-1;font-size:14px;line-height:1.5}
+@media (max-width:700px){.nx-why{padding-top:80px;padding-bottom:80px}}
