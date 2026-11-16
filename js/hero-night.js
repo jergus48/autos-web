@@ -35,7 +35,7 @@
   var tallyEls = {};
   [].forEach.call(root.querySelectorAll('.hn-tally b'), function (b) { tallyEls[b.getAttribute('data-k')] = b; });
   // desktop: three panels spread in depth. phone: inbox hidden, agent and systems stacked flat.
-  var MOB_POS = [[0, -200, 0], [0, -84, 0], [0, 112, 20]];
+  var MOB_POS = [[-80, -150, -130], [-5, -25, 0], [55, 128, 120]];
   var panels = [].map.call(root.querySelectorAll('.hn-panel'), function (p, i) {
     var v = p.getAttribute('data-pos').split(',').map(Number);
     return { el: p, d: v, m: MOB_POS[i], x: v[0], y: v[1], z: v[2] };
@@ -169,7 +169,7 @@
     var e = easeIO(RM ? 1 : clamp((now - t0) / 2300, 0, 1));
     cx += (mx - cx) * .06; cy += (my - cy) * .06;
     var mob = mobLayout;
-    var rx = mob ? lerp(64, 0, e) : lerp(64, 9, e) - cy * 7, ry = mob ? 0 : lerp(0, -21, e) + cx * 12, rz = lerp(mob ? -10 : -26, 0, e), tz = lerp(-380, 0, e);
+    var rx = lerp(64, mob ? 12 : 9, e) - cy * (mob ? 3 : 7), ry = lerp(0, mob ? -32 : -21, e) + cx * (mob ? 5 : 12), rz = lerp(-26, 0, e), tz = lerp(-380, mob ? -40 : 0, e);
     cam.style.transform = 'scale(' + scale + ') translateZ(' + tz + 'px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) rotateZ(' + rz + 'deg)';
     if (!paused) { sim += dt * (RM ? .006 : .0165); if (sim >= 840) { sim = 840; showMorning(); } }
     timeEl.textContent = fmt(sim);
@@ -183,7 +183,7 @@
     }
     raf = requestAnimationFrame(frame);
   }
-  function fit() { placePanels(); scale = mobLayout ? Math.min(1, (stage.clientWidth - 8) / 404) : clamp(stage.clientWidth / 720, .36, 1.08); drawStars(); buildDial(); }
+  function fit() { placePanels(); scale = mobLayout ? Math.min(.8, (stage.clientWidth - 20) / 500) : clamp(stage.clientWidth / 720, .36, 1.08); drawStars(); buildDial(); }
   function setVisible(v) {
     visible = v;
     if (v) { if (!raf) { last = 0; raf = requestAnimationFrame(frame); } if (!jobsOn && !paused) T(job, 400); }
