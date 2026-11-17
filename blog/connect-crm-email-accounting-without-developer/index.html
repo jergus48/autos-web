@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connecting your CRM, email and accounting without a developer | Swiftrix</title>
+  <meta name="description" content="Many CRM, email and accounting links can be set up without a developer, using built-in integrations or connector tools. Here is how, and where it stops.">
+  <link rel="canonical" href="https://www.swiftrix.eu/blog/connect-crm-email-accounting-without-developer">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.swiftrix.eu/blog/connect-crm-email-accounting-without-developer">
+  <meta property="og:title" content="Connecting your CRM, email and accounting without a developer | Swiftrix">
+  <meta property="og:description" content="Many CRM, email and accounting links can be set up without a developer, using built-in integrations or connector tools. Here is how, and where it stops.">
+  <link rel="icon" href="/assets/images/swiftrixLogo.png">
+  <link rel="alternate" type="application/rss+xml" title="Swiftrix blog" href="/blog/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600&display=swap">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="/blog/blog.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Connecting your CRM, email and accounting without a developer","description":"Many CRM, email and accounting links can be set up without a developer, using built-in integrations or connector tools. Here is how, and where it stops.","datePublished":"2026-11-17","dateModified":"2026-11-17","mainEntityOfPage":"https://www.swiftrix.eu/blog/connect-crm-email-accounting-without-developer","author":{"@type":"Organization","name":"Swiftrix","url":"https://www.swiftrix.eu"},"publisher":{"@type":"Organization","name":"Swiftrix","logo":{"@type":"ImageObject","url":"https://www.swiftrix.eu/assets/images/swiftrixLogo.png"}}}</script>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <nav class="vex-nav">
+    <a class="vex-logo" data-site="" href="/" aria-label="Swiftrix">
+      <img class="logo-dark" src="/assets/images/swiftrixLogo.png" alt="Swiftrix">
+    </a>
+    <div class="vex-links" id="vexLinks">
+      <a href="/blog">All posts</a>
+      <a data-site="" href="/">Our services</a>
+      <a class="vex-mlink" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book a call</a>
+    </div>
+    <a class="vex-cta" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book a call</a>
+    <button class="vex-burger" id="vexBurger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="wrap post">
+    <p class="crumbs"><a href="/blog">Blog</a></p>
+    <article>
+      <header class="post-head">
+        <h1>Connecting your CRM, email and accounting without a developer</h1>
+        <p class="meta"><time datetime="2026-11-17">17 November 2026</time> · 5 min read · integrations, CRM, accounting, email, automation</p>
+      </header>
+      <div class="prose">
+<p>Often you can, as long as the tools you use already offer built-in integrations or work with a connector service such as Zapier or Make. It stops being a do-it-yourself job when the data is messy, the tools have no proper way to talk to each other, or a mistake would cost you real money.</p>
+<p>Below: the order to try things in and the signs that you need help.</p>
+<h2 id="why-connect-these-three-tools-at-all">Why connect these three tools at all?</h2>
+<p>In most small businesses the same customer exists three times: once in the CRM, once in someone's inbox and once in the accounting software. Every time a deal is won, somebody copies the name, address, VAT number and amounts from one screen to another. When a customer changes their billing address, it is updated in one place and forgotten in the other two.</p>
+<p>Connecting the tools means a piece of information is entered once and flows to where it is needed. The typical wins are simple:</p>
+<ul><li>A won deal in the CRM creates a draft invoice in the accounting software.</li><li>A new enquiry by email creates a contact and a task in the CRM.</li><li>A paid invoice marks the deal as paid in the CRM, so sales stop chasing a customer who has already paid.</li></ul>
+<p>None of this is clever. It just removes copying, and copying is where most small errors come from.</p>
+<h2 id="step-1-check-the-integrations-you-already-have">Step 1: check the integrations you already have</h2>
+<p>Before you look at anything new, open the settings of each tool and find the section called integrations, apps or marketplace. Most popular CRMs and accounting packages connect directly to the common email providers and to each other.</p>
+<p>A built-in integration is usually the safest option. The vendor maintains it, it survives updates and support will help when it breaks. Its weakness is that it does exactly what the vendor decided and nothing more. If it syncs contacts but not invoices, you cannot change that.</p>
+<p>Write down, for each pair of tools, what the built-in link can and cannot do. That list is the start of your plan.</p>
+<h2 id="step-2-use-a-connector-tool-for-the-gaps">Step 2: use a connector tool for the gaps</h2>
+<p>Where no built-in link exists, connector services like Zapier, Make or Power Automate sit between your tools. You set a trigger (&quot;when a deal moves to Won&quot;) and one or more actions (&quot;create a customer and a draft invoice&quot;). No code is needed for the common cases, and a careful office manager can build a working flow in an afternoon.</p>
+<p>A few habits make these flows much more reliable:</p>
+<ul><li><strong>Start with one flow.</strong> Pick the copying task that happens most often and connect only that. Run it for a couple of weeks before adding the next.</li><li><strong>Create drafts, not final records.</strong> Let the flow prepare a draft invoice that a person approves. You keep the speed and remove the risk of sending a wrong invoice to a customer.</li><li><strong>Decide which tool is the master.</strong> For each piece of data (customer address, prices, payment status) pick one tool where it is edited. The others only receive it. Two-way sync of the same field is where most connector setups go wrong.</li><li><strong>Turn on error notifications.</strong> Every connector service can email you when a run fails. Send these to a person who will actually read them.</li><li><strong>Document it.</strong> A short note saying what each flow does and who set it up saves a lot of confusion when that person is on holiday or leaves.</li></ul>
+<h2 id="step-3-clean-the-data-before-you-connect-it">Step 3: clean the data before you connect it</h2>
+<p>Connecting tools spreads whatever is already in them. If your CRM has the same company entered three times with slightly different names, the accounting software will soon have three customers too.</p>
+<p>Before you switch anything on, spend an hour on the basics: merge duplicates, agree on how company names and VAT numbers are written and make sure every customer has the fields the other tool requires. This is boring work, and it is the part that decides whether the connection helps or creates a new mess.</p>
+<h2 id="when-do-you-actually-need-a-developer">When do you actually need a developer?</h2>
+<p>Do-it-yourself connections cover a lot, and it is worth trying them first. They are not the right answer when:</p>
+<ul><li><strong>One of your tools has no integrations and no API.</strong> Older desktop accounting packages and some industry systems only offer manual import and export. A connector service cannot reach them.</li><li><strong>The logic has many exceptions.</strong> &quot;Create an invoice when a deal is won&quot; is easy. &quot;Unless it is a framework contract, in which case split it by delivery, apply the customer's discount and use a different VAT rule for exports&quot; turns a simple flow into a fragile one that nobody dares to touch.</li><li><strong>Volumes are high.</strong> Connector services usually charge per run or per task, and a flow that runs thousands of times a month can cost more than you expect. A small custom integration may be cheaper over a year or two.</li><li><strong>The input is unstructured.</strong> If orders arrive as free-text emails or PDF attachments, a simple trigger cannot read them. This is where an AI agent that reads the email and prepares the record for a person to check makes more sense. We wrote about that in <a href="/blog/automate-order-entry-from-customer-emails">how to automate order entry from customer emails</a>.</li><li><strong>An error would be expensive.</strong> Payments, payroll and anything a regulator might look at deserve proper testing, logging and someone accountable for fixing it.</li><li><strong>Personal data moves to a new place.</strong> Every connector service is another company processing your customers' data. Check the agreement and where the data is stored, as covered in our post on <a href="/blog/gdpr-checks-before-connecting-tools">GDPR checks before connecting tools</a>.</li></ul>
+<h2 id="when-is-it-not-worth-connecting-anything">When is it not worth connecting anything?</h2>
+<p>If a task happens a few times a month and takes two minutes, leave it manual. A connection has to be set up, watched and fixed when one of the tools changes its screens or rules. For rare, quick tasks that upkeep can cost more time than the copying ever did.</p>
+<p>The same applies if you are about to replace one of the tools. Connect the new one, not the one you are leaving.</p>
+<h2 id="where-to-go-from-here">Where to go from here</h2>
+<p>If you get stuck at the developer list above, that is normally the point where a small custom integration or an agent is worth pricing. At Swiftrix we build exactly these connections between tools a company already uses, and you can <a href="/demo">try our AI agent demo</a> before deciding whether you need one at all.</p>
+      </div>
+    </article>
+    <section class="cta post-cta">
+      <span class="sec-badge"><i></i>Swiftrix</span>
+      <h2>Have repetitive work you would like off your desk?</h2>
+      <p>Swiftrix builds automations and AI agents for businesses. Book a short call and we will tell you honestly whether it is worth automating.</p>
+      <div class="cta-actions"><a class="btn btn-primary" href="https://cal.com/swiftrix" target="_blank" rel="noopener">Book a call</a><a class="btn btn-ghost" href="/demo">Try the live agent demo</a></div>
+    </section>
+    <section class="more-posts"><h2>More from the blog</h2><div class="plist"><a class="pcard" href="/blog/replace-paper-forms-with-digital-signing"><span class="pdate">16 November 2026</span><h3>Replacing paper forms with digital signing in a factory</h3><p>Paper sign-off sheets get lost, misread and filed late. Here is how digital signing works on a shop floor, what it involves and when paper is still fine.</p></a><a class="pcard" href="/blog/automate-quote-requests-same-day-answer"><span class="pdate">15 November 2026</span><h3>How to automate quote requests and answer the same day</h3><p>Most quote delays come from collecting details and looking up prices, not from the pricing decision. Here is how to automate the slow parts and keep control.</p></a><a class="pcard" href="/blog/gdpr-checks-before-connecting-tools"><span class="pdate">14 November 2026</span><h3>GDPR and automation: what to check before connecting tools</h3><p>Before connecting tools or adding an AI agent, check what personal data moves, where it is stored, who processes it and how long it is kept.</p></a></div></section>
+  </main>
+  <footer>© 2026 Swiftrix · <a data-site="" href="/">swiftrix.eu</a> · <a href="/blog">Blog</a></footer>
+  <script src="/js/pages.js" defer></script>
+</body>
+</html>
