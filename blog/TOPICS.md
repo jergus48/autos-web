@@ -12,7 +12,7 @@
 [done 2026-11-14 gdpr-checks-before-connecting-tools] GDPR and automation: what a small business should check before connecting tools
 [done 2026-11-15 automate-quote-requests-same-day-answer] How to automate quote requests so customers get an answer the same day
 [done 2026-11-16 replace-paper-forms-with-digital-signing] Replacing paper forms with digital signing in a factory or workshop
-How to connect your CRM, email and accounting tool without a developer
+[done 2026-11-17 connect-crm-email-accounting-without-developer] How to connect your CRM, email and accounting tool without a developer
 Five signs your team is spending too much time on data entry
 How to scan and archive paper invoices and know which ones you can throw away
 How to write a good brief for an automation project
