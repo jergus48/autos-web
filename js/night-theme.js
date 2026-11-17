@@ -10,14 +10,17 @@
   document.body.insertBefore(sky, document.body.firstChild);
   var ctx = cv.getContext('2d'), stars = [], W = 0, H = 0;
   function size() {
-    var d = Math.min(2, window.devicePixelRatio || 1); W = innerWidth; H = innerHeight;
+    var d = Math.min(1.5, window.devicePixelRatio || 1); W = innerWidth; H = innerHeight;
     cv.width = W * d; cv.height = H * d; ctx.setTransform(d, 0, 0, d, 0, 0); stars = [];
     for (var i = 0, n = Math.round(W * H / 6500); i < n; i++) stars.push({ x: Math.random() * W, y: Math.random() * H * 3, r: Math.random() * 1.3 + .2, a: Math.random() * .7 + .15, z: Math.random() * .6 + .2, t: Math.random() * 6.28, g: Math.random() < .08 });
   }
   var last = 0;
+  var lastY = -1;
   function draw(now) {
     requestAnimationFrame(draw);
-    if (document.hidden || now - last < 33) return; last = now;
+    if (document.hidden) return;
+    var moved = scrollY !== lastY;
+    if (now - last < (moved ? 33 : 150)) return; last = now; lastY = scrollY;
     ctx.clearRect(0, 0, W, H);
     for (var i = 0; i < stars.length; i++) {
       var s = stars[i], y = ((s.y - scrollY * s.z * .25) % (H * 3) + H * 3) % (H * 3);

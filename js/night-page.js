@@ -89,11 +89,10 @@
   }
   function checkReveal() {
     var vh = innerHeight;
-    pending = pending.filter(function (el) {
-      var r = el.getBoundingClientRect();
-      if (r.top < vh * .92 && r.bottom > 0) { reveal(el); return false; }
-      return true;
-    });
+    var hit = pending.filter(function (el) { var r = el.getBoundingClientRect(); return r.top < vh * .92 && r.bottom > 0; });
+    if (!hit.length) return;
+    pending = pending.filter(function (el) { return hit.indexOf(el) < 0; });
+    hit.forEach(reveal);
   }
   $$('.nx-report').forEach(function (el) { io.observe(el); });
 
@@ -130,7 +129,7 @@
   /* ---- stars ---- */
   var cv = root.querySelector('.nx-stars'), ctx = cv.getContext('2d'), stars = [], W = 0, H = 0;
   function sizeStars() {
-    var d = Math.min(2, window.devicePixelRatio || 1); W = innerWidth; H = innerHeight;
+    var d = Math.min(1.5, window.devicePixelRatio || 1); W = innerWidth; H = innerHeight;
     cv.width = W * d; cv.height = H * d; ctx.setTransform(d, 0, 0, d, 0, 0);
     stars = [];
     var n = Math.round(W * H / 6500);
@@ -175,40 +174,49 @@
   function update() {
     ticking = false;
     var y = scrollY, vh = innerHeight;
-    if (nav) nav.classList.toggle('scrolled', y > 40);
-    checkReveal();
+    // read every position first, write afterwards: one layout per frame instead of one per element
     var r = root.getBoundingClientRect();
+    var sr = scrubWords.length ? scrub.getBoundingClientRect() : null;
+    var wr = stepsWrap ? stepsWrap.getBoundingClientRect() : null;
+    var stepTops = stepsWrap ? steps.map(function (s) { return s.getBoundingClientRect().top; }) : [];
+    var cr = horiz ? cases.getBoundingClientRect() : null;
+    var fr = final ? final.getBoundingClientRect() : null;
+    if (nav) nav.classList.toggle('scrolled', y > 40);
     var total = r.height - vh, p = clamp(-r.top / Math.max(1, total), 0, 1);
     dawn.style.opacity = clamp((p - .72) / .28, 0, 1);
     // scrubbed words
     if (scrubWords.length) {
-      var sr = scrub.getBoundingClientRect(), sp = clamp((vh * .85 - sr.top) / (sr.height + vh * .45), 0, 1);
+      var sp = clamp((vh * .85 - sr.top) / (sr.height + vh * .45), 0, 1);
       var on = Math.round(sp * scrubWords.length * 1.1);
       for (var i = 0; i < scrubWords.length; i++) scrubWords[i].classList.toggle('on', RM || i < on);
     }
     // process line
     if (stepsWrap) {
-      var wr = stepsWrap.getBoundingClientRect(), pp = clamp((vh * .55 - wr.top) / wr.height, 0, 1);
+      var pp = clamp((vh * .55 - wr.top) / wr.height, 0, 1);
       stepsFill.style.height = (pp * 100) + '%'; stepsDot.style.top = (pp * 100) + '%';
-      steps.forEach(function (s) { var b = s.getBoundingClientRect(); s.classList.toggle('on', RM || b.top < vh * .62); });
+      steps.forEach(function (s, i) { s.classList.toggle('on', RM || stepTops[i] < vh * .62); });
     }
     // horizontal cases
     if (horiz) {
-      var cr = cases.getBoundingClientRect(), cp = clamp(-cr.top / Math.max(1, cr.height - vh), 0, 1);
+      var cp = clamp(-cr.top / Math.max(1, cr.height - vh), 0, 1);
       casesTrack.style.transform = 'translate3d(' + (-cp * travel) + 'px,0,0)';
       casesBar.style.width = (cp * 100) + '%';
     }
     // sun rise
     if (final) {
-      var fr = final.getBoundingClientRect(), fp = clamp((vh - fr.top) / (fr.height + vh * .2), 0, 1);
+      var fp = clamp((vh - fr.top) / (fr.height + vh * .2), 0, 1);
       sun.style.transform = 'translate3d(0,' + ((1 - fp) * 260) + 'px,0) scale(' + (.8 + fp * .3) + ')';
     }
+    checkReveal();
   }
 
   var last = 0;
+  var lastY = -1;
   function drawStars(now) {
     requestAnimationFrame(drawStars);
-    if (document.hidden || now - last < 33) return; last = now;
+    if (document.hidden) return;
+    var moved = scrollY !== lastY;
+    if (now - last < (moved ? 33 : 150)) return; last = now; lastY = scrollY;
     ctx.clearRect(0, 0, W, H);
     var sy = scrollY;
     for (var i = 0; i < stars.length; i++) {
