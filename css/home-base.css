@@ -1,0 +1,18 @@
+/* The only rules the night-design home pages (/, /lt, /de) still used from the old 280 KB
+   css/inline_styles.css (site-builder export). Extracted 2026-11-17 and checked element by
+   element: identical layout. Fonts: only the faces in use; the old Clash Grotesk entries
+   pointed at a host that no longer exists. */
+@font-face{font-family:"Instrument Sans";font-style:normal;font-weight:500 700;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/instrumentsans/v4/pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0She1YmV.woff2) format("woff2");unicode-range:U+100-2BA,U+2BD-2C5,U+2C7-2CC,U+2CE-2D7,U+2DD-2FF,U+304,U+308,U+329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Instrument Sans";font-style:normal;font-weight:500 700;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/instrumentsans/v4/pxiTypc9vsFDm051Uf6KVwgkfoSxQ0GsQv8ToedPibnr0SZe1Q.woff2) format("woff2");unicode-range:U+0-FF,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:Roboto;font-style:normal;font-weight:400 700;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v49/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3KUBGEe.woff2) format("woff2");unicode-range:U+100-2BA,U+2BD-2C5,U+2C7-2CC,U+2CE-2D7,U+2DD-2FF,U+304,U+308,U+329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:Roboto;font-style:normal;font-weight:400 700;font-stretch:100%;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v49/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBA.woff2) format("woff2");unicode-range:U+0-FF,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+html,body,#main{box-sizing:border-box;margin:0;padding:0}
+:root{-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box;-webkit-font-smoothing:inherit}
+h1,h2,h3,h4,h5,h6,p,figure{margin:0}
+body,input,textarea,select,button{font-family:sans-serif;font-size:12px}
+html body{background:#0a0a0c}
+.swiftrix-A8AZy.swiftrix-72rtr7{background-color:#0a0a0c;height:min-content;overflow:clip;flex-flow:column;place-content:center flex-start;align-items:center;gap:0;width:1200px;padding:0;display:flex;position:relative}
+.swiftrix-A8AZy .swiftrix-1h5ax3o-container{z-index:10;flex:0 0 auto;width:100%;height:auto;position:fixed;top:0;left:50%;transform:translate(-50%)}
+@media (min-width:810px) and (max-width:1199.98px){.swiftrix-A8AZy.swiftrix-72rtr7{width:810px}}
+@media (max-width:809.98px){.swiftrix-A8AZy.swiftrix-72rtr7{width:390px}}
