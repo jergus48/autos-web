@@ -15,7 +15,7 @@
 [done 2026-11-17 connect-crm-email-accounting-without-developer] How to connect your CRM, email and accounting tool without a developer
 [done 2026-11-18 signs-team-spends-too-long-on-data-entry] Five signs your team is spending too much time on data entry
 [done 2026-11-19 scan-archive-paper-invoices-safely] How to scan and archive paper invoices and know which ones you can throw away
-How to write a good brief for an automation project
+[done 2026-11-21 write-good-brief-automation-project] How to write a good brief for an automation project
 Automating customer support emails: what to hand to an agent and what to keep human
 How to measure whether an automation paid for itself
 Spreadsheet chaos: when to move a business process out of Excel
