@@ -16,7 +16,7 @@
 [done 2026-11-18 signs-team-spends-too-long-on-data-entry] Five signs your team is spending too much time on data entry
 [done 2026-11-19 scan-archive-paper-invoices-safely] How to scan and archive paper invoices and know which ones you can throw away
 [done 2026-11-21 write-good-brief-automation-project] How to write a good brief for an automation project
-Automating customer support emails: what to hand to an agent and what to keep human
+[done 2026-11-22 automate-customer-support-emails-agent-human] Automating customer support emails: what to hand to an agent and what to keep human
 How to measure whether an automation paid for itself
 Spreadsheet chaos: when to move a business process out of Excel
 What to ask an automation agency before you hire one
