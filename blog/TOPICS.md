@@ -20,7 +20,7 @@
 [done 2026-11-23 measure-whether-automation-paid-for-itself] How to measure whether an automation paid for itself
 [done 2026-11-24 when-to-move-process-out-of-excel] Spreadsheet chaos: when to move a business process out of Excel
 [done 2026-11-25 questions-to-ask-automation-agency] What to ask an automation agency before you hire one
-How to automate employee onboarding paperwork in a small company
+[done 2026-11-26 automate-employee-onboarding-paperwork] How to automate employee onboarding paperwork in a small company
 Shared inbox overload: how to sort and route incoming email automatically
 How to stop double entry between your webshop and your accounting software
 Should you buy off-the-shelf software or build a custom tool
